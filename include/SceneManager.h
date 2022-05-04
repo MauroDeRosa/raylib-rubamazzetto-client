@@ -4,27 +4,17 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdarg.h>
+#include <raylib.h>
 
 typedef enum
 {
-    SCENECBST_FALIURE,
-    SCENECBST_SUCCESS,
-    SCENECBST_SCENECHANGE,
-    SCENECBST_SCMGRCLOSE
-} SceneCallbackStatus;
+    SCENEMGR_FALIURE,
+    SCENEMGR_SUCCESS,
+    SCENEMGR_NEXT,
+    SCENEMGR_CLOSE
+} SceneManagerState;
 
-typedef struct
-{
-    SceneCallbackStatus status;
-    Scene *nextScene;
-} SceneCallbackReturn;
-
-#define SceneReturn(status, nextScenePtr) return (SceneCallbackReturn) {status, nextScenePtr};
-#define SceneReturnFaliure() return (SceneCallbackReturn) {SCENECBST_FALIURE, 0};
-#define SceneReturnChangeScene(nextScenePtr) return (SceneCallbackReturn) {SCENECBST_SCENECHANGE, nextScenePtr};
-#define SceneReturnCloseScMgr() return (SceneCallbackReturn) {SCENECBST_SCMGRCLOSE, 0};
-
-typedef SceneCallbackReturn (*SceneCallback)(int argc, ...);
+typedef void (*SceneCallback)(void** data);
 
 typedef struct
 {
@@ -34,17 +24,29 @@ typedef struct
     SceneCallback onUpdate;
     SceneCallback onRender;
     SceneCallback onExit;
+    void *data;
 } Scene;
 
-#define DefineScene(name, nameString, onInit, onStart, onUpdate, onRender, onExit) static Scene name = (Scene_t) { nameString, onInit, onStart, onUpdate, onRender, onExit };
+#define DefineScene(name, nameString, onInit, onStart, onUpdate, onRender, onExit) static Scene name = (Scene) { nameString, onInit, onStart, onUpdate, onRender, onExit };
 
-Scene *_sceneManagerCurrent = NULL;
-Scene *_sceneManagerQuit = NULL;
+typedef struct
+{
+    bool running;
+    Scene *current;
+    Scene *next;
+    SceneManagerState status;
+}SceneManager_t;
 
-bool SceneManagerInit(Scene *startScene, Scene *quitScene);
-void SceneManagerLoop(bool quitSignal);
-void SceneManagerTransition(Scene *nextScene);
-void SceneManagerClose();
-void SceneManagerOnFaliure(Scene *scene);
+static SceneManager_t SceneManager;
+
+bool SceneManagerInit(Scene *startScene);
+void SceneManagerLoop();
+void SceneManagerSetState(SceneManagerState);
+void SceneManagerSetNext(Scene *nextScene);
+
+void _SceneManagerSceneInit();
+void _SceneManagerNext();
+void _SceneManagerClose();
+
 
 #endif /* __SCENEMANAGER_H__ */
