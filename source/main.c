@@ -1,20 +1,20 @@
 /*******************************************************************************************
-*
-*   raylib [core] examples - basic screen manager
-*
-*   This example illustrates a very simple screen manager based on a states machines
-*
-*   This test has been created using raylib 1.1 (www.raylib.com)
-*   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
-*
-*   Copyright (c) 2021 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
+ *
+ *   raylib [core] examples - basic screen manager
+ *
+ *   This example illustrates a very simple screen manager based on a states machines
+ *
+ *   This test has been created using raylib 1.1 (www.raylib.com)
+ *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
+ *
+ *   Copyright (c) 2021 Ramon Santamaria (@raysan5)
+ *
+ ********************************************************************************************/
 
 #include <raylib.h>
 #include "logger.h"
 #include "SceneManager.h"
-#include "Scene/SceneLogo.h"
+#include "Scene/SceneSplashScreen.h"
 
 
 //------------------------------------------------------------------------------------------
@@ -31,9 +31,9 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic screen manager");
 
-    SetTargetFPS(60);               // Set desired framerate (frames-per-second)
+    SetTargetFPS(60); // Set desired framerate (frames-per-second)
 
-    SceneManagerInit(&SceneLogo);
+    SceneManagerInit(&SceneSplashScreen);
     SceneManagerLoop();
 
     // // Main game loop
@@ -140,7 +140,7 @@ int main(void)
 
     // TODO: Unload all loaded data (textures, fonts, audio) here!
 
-    CloseWindow();        // Close window and OpenGL context
+    CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
     return 0;
