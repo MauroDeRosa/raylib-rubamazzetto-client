@@ -2,8 +2,9 @@
 #define __LOGGER_H__
 
 #include <stdio.h>
+#include <raylib.h>
 
-void Log(int msgType, const char *text, va_list args);
+void Log(int msgType, const char *text, ...);
 
-#endif // __LOGGER_H__
+#endif /* __LOGGER_H__ */
 

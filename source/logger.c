@@ -1,8 +1,7 @@
 #include "logger.h"
 
 #include <time.h>
-
-#include "raylib.h"
+#include <raylib.h>
 
 #define LOG_STYLE_INDENTED 0
 #define LOG_STYLE_BLANK_LINE 1
@@ -19,12 +18,13 @@
 #define LOG_COLOR_WHITE "\033[38m"
 #define LOG_COLOR_DEFAULT "\033[39m"
 
-void Log(int msgType, const char *text, va_list args)
+void Log(int msgType, const char *text, ...)
 {
     char timeStr[64] = {0};
     time_t now = time(NULL);
     struct tm *tm_info = localtime(&now);
     FILE *outputStream = (msgType == LOG_WARNING) || (msgType == LOG_ERROR) || (msgType == LOG_FATAL) ? stderr : stdout;
+    va_list args;
 
     strftime(timeStr, sizeof(timeStr), "%Y-%m-%d %H:%M:%S", tm_info);
 
@@ -71,7 +71,9 @@ void Log(int msgType, const char *text, va_list args)
     if (LOG_STYLE_INDENTED)
         fprintf(outputStream, "\n    ");
 
+    va_start(args, text);
     vfprintf(outputStream, text, args);
+    va_end(args);
     fprintf(outputStream, "\n");
 
     if (LOG_STYLE_BLANK_LINE)
