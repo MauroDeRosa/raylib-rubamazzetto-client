@@ -1,67 +1,67 @@
-#include <stdlib.h>
-
 #include "SceneManager.h"
-#include <raymath.h>
 #include "Scene/SceneSplashScreen.h"
-#include "Scene/SceneTitleScreen.h"
+#include "Scene/SceneLoadScreen.h"
 
-#define SPLASH_SCREEN_DURATION_FRAMES (5 * 60.0f)
+#include <raylib.h>
+#include <raymath.h>
+#include "raygui.h"
+
+#include <stdlib.h>
+#include <math.h>
+#include <stdint.h>
+#include <stdbool.h>
 
 typedef struct
 {
-    int timer;
-    float rotation;
+    int example;
 } SceneSplashScreenData;
 
-void SceneSplashScreenOnInit (void** _data)
+void SceneSplashScreenOnInit (void** _$)
 {
-    *_data = malloc( sizeof(SceneSplashScreenData) );
+    *_$ = malloc( sizeof(SceneSplashScreenData) );
 
     // dynamic allocation and modules initial configuration for the current scene here 
     
 }
 
-void SceneSplashScreenOnStart (void** _data)
+void SceneSplashScreenOnStart (void** _$)
 {
-    SceneSplashScreenData *data = *_data;
+    SceneSplashScreenData *$ = *_$;
 
     // variables setup and initial state configuration here 
-    data->timer = 0;
-    data->rotation = 0;
+    
 }
 
-void SceneSplashScreenOnUpdate (void** _data)
+void SceneSplashScreenOnUpdate (void** _$)
 {
-    SceneSplashScreenData *data = *_data;
+    SceneSplashScreenData *$ = *_$;
 
     // gets executed every frame, update scene state 
-    data->timer++;
-    data->rotation++;
-
-    if(data->timer > SPLASH_SCREEN_DURATION_FRAMES)
-    {
-        SceneManagerSetNext(&SceneTitleScreen);
-    }
+    
 }
 
-void SceneSplashScreenOnRender (void** _data)
+void SceneSplashScreenOnFixedUpdate (void** _$)
 {
-    SceneSplashScreenData *data = *_data;
-    ClearBackground(LIGHTGRAY);
+    SceneSplashScreenData *$ = *_$;
 
-    Vector2 origin = MeasureTextEx(GetFontDefault(), "SPLASH SCREEN", 30, 5);
-    origin = (Vector2){origin.x/2, origin.y/2};
-    DrawTextPro(GetFontDefault(), "SPLASH SCREEN", (Vector2){400,300}, origin, data->rotation, 30, 5, YELLOW); 
+    // gets executed every SCENE_MANAGER_FIXEDUPDATE_STEP, update scene state 
+    
+}
+
+void SceneSplashScreenOnRender (void** _$)
+{
+    SceneSplashScreenData *$ = *_$;
+    ClearBackground(RAYWHITE);
 
     // gets executed every frame, draw your privimitives, text and sprites 
     
 }
 
-void SceneSplashScreenOnExit (void** _data)
+void SceneSplashScreenOnExit (void** _$)
 {
-    SceneSplashScreenData *data = *_data;
+    SceneSplashScreenData *$ = *_$;
 
     // free dynamically allocated memory and reset modules configuration to default here 
     
-    free(data);
+    free($);
 }
