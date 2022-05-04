@@ -24,7 +24,7 @@ test/*.c)
 # Generate target executable
 add_executable(RubamazzettoClient ${all_files})
 
-target_link_libraries(${PROJECT_NAME} raylib)
+target_link_libraries(${PROJECT_NAME} raylib m)
 
 # Checks if OSX and links appropriate frameworks (only required on MacOS)
 if (APPLE)

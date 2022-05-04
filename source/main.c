@@ -16,6 +16,9 @@
 #include "SceneManager.h"
 #include "Scene/SceneSplashScreen.h"
 
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
+#undef RAYGUI_IMPLEMENTATION
 
 //------------------------------------------------------------------------------------------
 // Main entry point
