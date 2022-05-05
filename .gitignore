@@ -1,3 +1,4 @@
 .vscode/*
 !.vscode/c.code-snippets
-build/
+build/*
+!build/resources
