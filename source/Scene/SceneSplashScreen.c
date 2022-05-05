@@ -1,6 +1,7 @@
 #include "SceneManager.h"
+#include "ResourceManager.h"
 #include "Scene/SceneSplashScreen.h"
-#include "Scene/SceneLoadScreen.h"
+//#include "Scene/SceneLoadScreen.h"
 
 #include <raylib.h>
 #include <raymath.h>
@@ -20,14 +21,18 @@ typedef struct
 void SceneSplashScreenOnInit (void** _$)
 {
     *_$ = malloc( sizeof(SceneSplashScreenData) );
-    
+    ResourceManager.Init();
 }
 
 // variables setup and initial state configuration here
 void SceneSplashScreenOnStart (void** _$)
 {
     SceneSplashScreenData *$ = *_$;
-    
+    ResourceManager.AddResource(RESOURCE_IMAGE, "myImage", "./Images/myImage.png");
+    ResourceManager.AddResource(RESOURCE_TEXTURE, "myTexture", "./Textures/myTexture.png");
+    ResourceManager.AddResource(RESOURCE_SOUND, "mySound", "./Sounds/mySound.mp3");
+    ResourceManager.AddResource(RESOURCE_SOUND, "mySound", "./Sounds/mySoundFixed.mp3");
+    ResourceManager.RemoveResource(RESOURCE_TEXTURE, "myTexture");
 }
 
 // gets executed every frame, update scene state
@@ -42,6 +47,10 @@ void SceneSplashScreenOnFixedUpdate (void** _$)
 {
     SceneSplashScreenData *$ = *_$;
     
+    if(SceneManagerGetTime() > 2.0f)
+    {
+        SceneManagerSetState(SCENEMGR_CLOSE);
+    }
 }
 
 // gets executed every frame, draw your privimitives, text and sprites
@@ -56,6 +65,6 @@ void SceneSplashScreenOnRender (void** _$)
 void SceneSplashScreenOnExit (void** _$)
 {
     SceneSplashScreenData *$ = *_$;
-    
+    ResourceManager.Destroy();
     free($);
 }
