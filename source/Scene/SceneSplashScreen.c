@@ -14,7 +14,7 @@
 
 typedef struct
 {
-    int example;
+    Texture2D t;
 } SceneSplashScreenData;
 
 // dynamic allocation and modules initial configuration for the current scene here
@@ -22,24 +22,21 @@ void SceneSplashScreenOnInit (void** _$)
 {
     *_$ = malloc( sizeof(SceneSplashScreenData) );
     ResourceManager.Init();
+    ResourceManager.AddResource(RESOURCE_TEXTURE2D, "hisoka", "./resources/Texture/hisoka.png");
+    ResourceManager.Load();
 }
 
 // variables setup and initial state configuration here
 void SceneSplashScreenOnStart (void** _$)
 {
     SceneSplashScreenData *$ = *_$;
-    ResourceManager.AddResource(RESOURCE_IMAGE, "myImage", "./Images/myImage.png");
-    ResourceManager.AddResource(RESOURCE_TEXTURE, "myTexture", "./Textures/myTexture.png");
-    ResourceManager.AddResource(RESOURCE_SOUND, "mySound", "./Sounds/mySound.mp3");
-    ResourceManager.AddResource(RESOURCE_SOUND, "mySound", "./Sounds/mySoundFixed.mp3");
-    ResourceManager.RemoveResource(RESOURCE_TEXTURE, "myTexture");
+    $->t = *(Texture2D*)(ResourceManager.Get(RESOURCE_TEXTURE2D, "hisoka"));
 }
 
 // gets executed every frame, update scene state
 void SceneSplashScreenOnUpdate (void** _$)
 {
     SceneSplashScreenData *$ = *_$;
-    
 }
 
 // gets executed every SCENE_MANAGER_FIXEDUPDATE_STEP, update scene state
@@ -59,12 +56,14 @@ void SceneSplashScreenOnRender (void** _$)
     SceneSplashScreenData *$ = *_$;
     ClearBackground(RAYWHITE);
     
+    DrawTexture($->t, GetScreenWidth()/2, GetScreenHeight()/2, WHITE);
 }
 
 // free dynamically allocated memory and reset modules configuration to default here
 void SceneSplashScreenOnExit (void** _$)
 {
     SceneSplashScreenData *$ = *_$;
+    ResourceManager.Unload();
     ResourceManager.Destroy();
     free($);
 }

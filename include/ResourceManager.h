@@ -14,32 +14,18 @@
 typedef enum
 {
     RESOURCE_IMAGE,
-    RESOURCE_TEXTURE,
     RESOURCE_TEXTURE2D,
-    RESOURCE_TEXTURECUBEMAP,
-    RESOURCE_RENDERTEXTURE,
-    RESOURCE_RENDERTEXTURE2D,
-    RESOURCE_NPATCHINFO,
-    RESOURCE_GLYPHINFO,
     RESOURCE_FONT,
     RESOURCE_WAVE,
-    RESOURCE_AUDIOSTREAM,
     RESOURCE_SOUND,
     RESOURCE_MUSIC
 } ResourceType;
 
 static const char *__ResourceTypeString[] = {
     "Image",
-    "Texture",
     "Texture2D",
-    "TextureCubemap",
-    "RenderTexture",
-    "RenderTexture2D",
-    "NPatchInfo",
-    "GlyphInfo",
     "Font",
     "Wave",
-    "AudioStream",
     "Sound",
     "Music"};
 
@@ -54,18 +40,11 @@ typedef union
 {
     // 2D data structures (pixels, font...)
     Image Image;
-    Texture Texture;
     Texture2D Texture2D;
-    TextureCubemap TextureCubemap;
-    RenderTexture RenderTexture;
-    RenderTexture2D RenderTexture2D;
-    NPatchInfo NPatchInfo;
-    GlyphInfo GlyphInfo;
     Font Font;
 
     // Audio related data
     Wave Wave;
-    AudioStream AudioStream;
     Sound Sound;
     Music Music;
 } __Resource_u;
@@ -75,7 +54,7 @@ struct __Resource_t
     char name[100];
     ResourceType type;
     char path[100];
-    __Resource_u resource;
+    __Resource_u data;
     UT_hash_handle hh;
 };
 
@@ -102,8 +81,8 @@ typedef struct
 #pragma region private_resource_manager_cls_and_methods
 
 char *__ResourceManagerGetResourceName(ResourceType type, const char *name);
-int __ResourceManagerExists(ResourceType type, const char *name);
-void *__ResourceManagerGetResourcePointer(struct __Resource_t *resource);
+struct __Resource_t *__ResourceManagerGetResourcePointer(char *fullName);
+void *__ResourceManagerGetResourceDataPointer(struct __Resource_t *resource);
 
 #pragma endregion private_resource_manager_cls_and_methods
 /* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */

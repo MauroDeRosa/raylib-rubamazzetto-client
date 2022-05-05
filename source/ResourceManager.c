@@ -16,13 +16,10 @@ int __ResourceManagerInit()
     return RESOURCE_MANAGER_SUCCESS;
 }
 
-
 int __ResourceManagerAddResource(ResourceType type, const char *name, const char *path)
 {
-    struct __Resource_t *res = NULL;
     char *fullName = __ResourceManagerGetResourceName(type, name);
-
-    HASH_FIND_STR(__ResourceManagerMap, fullName, res);
+    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName);
 
     if (res == NULL)
     {
@@ -44,11 +41,10 @@ int __ResourceManagerAddResource(ResourceType type, const char *name, const char
 
 int __ResourceManagerRemoveResource(ResourceType type, const char *name)
 {
-    struct __Resource_t *res = NULL;
-    char* fullName = __ResourceManagerGetResourceName(type, name);
-    HASH_FIND_STR(__ResourceManagerMap, fullName , res);
+    char *fullName = __ResourceManagerGetResourceName(type, name);
+    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName);
 
-    if(res != NULL)
+    if (res != NULL)
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Removing %s resource \"%s\" path: \"%s\"", __ResourceTypeString[type], name, res->path);
         HASH_DEL(__ResourceManagerMap, res);
@@ -66,23 +62,52 @@ int __ResourceManagerRemoveResource(ResourceType type, const char *name)
 
 int __ResourceManagerLoad()
 {
-    
+    struct __Resource_t *res, *tmp;
+    Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Loading resources...");
+
+    HASH_ITER(hh, __ResourceManagerMap, res, tmp)
+    {
+        Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Loading %s resource \"%s\"", __ResourceTypeString[res->type], res->name);
+
+        switch (res->type)
+        {
+            case RESOURCE_IMAGE:
+                res->data.Image = LoadImage(res->path);
+                break;
+            case RESOURCE_TEXTURE2D:
+                res->data.Texture2D = LoadTexture(res->path);
+                break;
+            case RESOURCE_FONT:
+                res->data.Font = LoadFont(res->path);
+                break;
+            case RESOURCE_WAVE:
+                res->data.Wave = LoadWave(res->path);
+                break;
+            case RESOURCE_SOUND:
+                res->data.Sound = LoadSound(res->path);
+                break;
+            case RESOURCE_MUSIC:
+                res->data.Music = LoadMusicStream(res->path);
+                break;
+        }
+    }
+
+    return RESOURCE_MANAGER_SUCCESS;
 }
 
 void *__ResourceManagerGet(ResourceType type, const char *name)
 {
-    struct __Resource_t *res = NULL;
-    char* fullName = __ResourceManagerGetResourceName(type, name);
-    HASH_FIND_STR(__ResourceManagerMap, fullName , res);
+    char *fullName = __ResourceManagerGetResourceName(type, name);
+    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName);
 
-    if(res != NULL)
+    if (res != NULL)
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Getting %s resource \"%s\"", __ResourceTypeString[type], name);
-        return &res->resource;
+        return __ResourceManagerGetResourceDataPointer(res);
     }
     else
     {
-        Log(LOG_WARNING, RESOURCE_MANAGER_PREFIX "Can't remove %s resurce named \"%s\", resource doesn't exist", __ResourceTypeString[type], name);
+        Log(LOG_WARNING, RESOURCE_MANAGER_PREFIX "Can't get %s resurce named \"%s\", resource doesn't exist", __ResourceTypeString[type], name);
         return NULL;
     }
 
@@ -91,6 +116,37 @@ void *__ResourceManagerGet(ResourceType type, const char *name)
 
 int __ResourceManagerUnload()
 {
+    struct __Resource_t *res, *tmp;
+    Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Unloading resources...");
+
+    HASH_ITER(hh, __ResourceManagerMap, res, tmp)
+    {
+        Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Unloading %s resource \"%s\"", __ResourceTypeString[res->type], res->name);
+
+        switch (res->type)
+        {
+            case RESOURCE_IMAGE:
+                UnloadImage(res->data.Image);
+                break;
+            case RESOURCE_TEXTURE2D:
+                UnloadTexture(res->data.Texture2D);
+                break;
+            case RESOURCE_FONT:
+                UnloadFont(res->data.Font);
+                break;
+            case RESOURCE_WAVE:
+                UnloadWave(res->data.Wave);
+                break;
+            case RESOURCE_SOUND:
+                UnloadSound(res->data.Sound);
+                break;
+            case RESOURCE_MUSIC:
+                UnloadMusicStream(res->data.Music);
+                break;
+        }
+    }
+
+    return RESOURCE_MANAGER_SUCCESS;
 }
 
 int __ResourceManagerDestroy()
@@ -109,19 +165,43 @@ int __ResourceManagerDestroy()
 
 char *__ResourceManagerGetResourceName(ResourceType type, const char *name)
 {
-    char* out = calloc(100, sizeof(char));
+    char *out = calloc(100, sizeof(char));
     strcat(out, __ResourceTypeString[type]);
     strcat(out, "_");
     strcat(out, name);
     return out;
 }
 
-int __ResourceManagerExists(ResourceType type, const char *name)
+struct __Resource_t *__ResourceManagerGetResourcePointer(char* fullName)
 {
-
+    struct __Resource_t *res = NULL;
+    HASH_FIND_STR(__ResourceManagerMap, fullName, res);
+    return res;
 }
 
-void *__ResourceManagerGetResourcePointer(struct __Resource_t *resource)
+void *__ResourceManagerGetResourceDataPointer(struct __Resource_t *resource)
 {
-    
+    if(resource == NULL) return NULL;
+
+    switch (resource->type)
+    {
+    case RESOURCE_IMAGE:
+        return &(resource->data.Image);
+        break;
+    case RESOURCE_TEXTURE2D:
+        return &(resource->data.Texture2D);
+        break;
+    case RESOURCE_FONT:
+        return &(resource->data.Font);
+        break;
+    case RESOURCE_WAVE:
+        return &(resource->data.Wave);
+        break;
+    case RESOURCE_SOUND:
+        return &(resource->data.Sound);
+        break;
+    case RESOURCE_MUSIC:
+        return &(resource->data.Music);
+        break;
+    }
 }
