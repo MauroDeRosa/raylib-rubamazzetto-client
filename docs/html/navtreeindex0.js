@@ -110,6 +110,8 @@ var NAVTREEINDEX0 =
 "index.html#autotoc_md3":[1],
 "index.html#autotoc_md5":[2],
 "index.html#autotoc_md6":[3],
+"index.html#autotoc_md7":[3,0],
+"index.html#autotoc_md8":[3,1],
 "logger_8c.html":[5,0,1,1],
 "logger_8c.html#a10b19bd4d5d95ce6133e146d4054f307":[5,0,1,1,1],
 "logger_8c.html#a50efecd539e8c683deefc7d586316c99":[5,0,1,1,10],

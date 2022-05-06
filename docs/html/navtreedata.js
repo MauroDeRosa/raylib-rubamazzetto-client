@@ -28,7 +28,10 @@ var NAVTREE =
     [ "Traccia", "index.html#autotoc_md1", null ],
     [ "Documentazione", "index.html#autotoc_md3", null ],
     [ "License", "index.html#autotoc_md5", null ],
-    [ "Dependencies", "index.html#autotoc_md6", null ],
+    [ "Dependencies and references", "index.html#autotoc_md6", [
+      [ "Libraries", "index.html#autotoc_md7", null ],
+      [ "Other", "index.html#autotoc_md8", null ]
+    ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
