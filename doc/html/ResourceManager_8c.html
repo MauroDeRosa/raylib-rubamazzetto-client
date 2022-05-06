@@ -1,3 +1,4 @@
+<!-- HTML header for doxygen 1.9.3-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -17,6 +18,19 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+</script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+</script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeParagraphLink.init()
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -100,20 +114,28 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a4da23682811e7e6ed85e1b17dbba96de"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ResourceManager_8c.html#a4da23682811e7e6ed85e1b17dbba96de">__ResourceManagerInit</a> ()</td></tr>
+<tr class="memdesc:a4da23682811e7e6ed85e1b17dbba96de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the ResourceManager HashMap.  <a href="ResourceManager_8c.html#a4da23682811e7e6ed85e1b17dbba96de">More...</a><br /></td></tr>
 <tr class="separator:a4da23682811e7e6ed85e1b17dbba96de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5cce0fca1d5e90fe829a7c40713ea395"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ResourceManager_8c.html#a5cce0fca1d5e90fe829a7c40713ea395">__ResourceManagerAddResource</a> (<a class="el" href="ResourceManager_8h.html#a8571efa4409be32e28abf3ea74a0dbb1">ResourceType</a> type, const char *name, const char *path)</td></tr>
+<tr class="memdesc:a5cce0fca1d5e90fe829a7c40713ea395"><td class="mdescLeft">&#160;</td><td class="mdescRight">adds a resource of the specified name, type and path to the __ResourceManagerMap HashMap  <a href="ResourceManager_8c.html#a5cce0fca1d5e90fe829a7c40713ea395">More...</a><br /></td></tr>
 <tr class="separator:a5cce0fca1d5e90fe829a7c40713ea395"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0811d8277d927e65d21c57bf62e90d0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ResourceManager_8c.html#aa0811d8277d927e65d21c57bf62e90d0">__ResourceManagerRemoveResource</a> (<a class="el" href="ResourceManager_8h.html#a8571efa4409be32e28abf3ea74a0dbb1">ResourceType</a> type, const char *name)</td></tr>
+<tr class="memdesc:aa0811d8277d927e65d21c57bf62e90d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">removes a resource of the specified name and type from the __ResourceManagerMap HashMap  <a href="ResourceManager_8c.html#aa0811d8277d927e65d21c57bf62e90d0">More...</a><br /></td></tr>
 <tr class="separator:aa0811d8277d927e65d21c57bf62e90d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a680f21c0b2648ed77b7b60d4d94f3fa9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ResourceManager_8c.html#a680f21c0b2648ed77b7b60d4d94f3fa9">__ResourceManagerLoad</a> ()</td></tr>
+<tr class="memdesc:a680f21c0b2648ed77b7b60d4d94f3fa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">iterates through Resource HashMap and call the exact Raylib Load function for each Resource Type  <a href="ResourceManager_8c.html#a680f21c0b2648ed77b7b60d4d94f3fa9">More...</a><br /></td></tr>
 <tr class="separator:a680f21c0b2648ed77b7b60d4d94f3fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71fa23e458ac312d128a94b29677775e"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ResourceManager_8c.html#a71fa23e458ac312d128a94b29677775e">__ResourceManagerGet</a> (<a class="el" href="ResourceManager_8h.html#a8571efa4409be32e28abf3ea74a0dbb1">ResourceType</a> type, const char *name)</td></tr>
+<tr class="memdesc:a71fa23e458ac312d128a94b29677775e"><td class="mdescLeft">&#160;</td><td class="mdescRight">gets a pointer to the resource data of the specified ResourceType after being loaded through <a class="el" href="ResourceManager_8h.html#a680f21c0b2648ed77b7b60d4d94f3fa9" title="iterates through Resource HashMap and call the exact Raylib Load function for each Resource Type">__ResourceManagerLoad()</a>  <a href="ResourceManager_8c.html#a71fa23e458ac312d128a94b29677775e">More...</a><br /></td></tr>
 <tr class="separator:a71fa23e458ac312d128a94b29677775e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac20c5d409bf5ab698542476b602524e8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ResourceManager_8c.html#ac20c5d409bf5ab698542476b602524e8">__ResourceManagerUnload</a> ()</td></tr>
+<tr class="memdesc:ac20c5d409bf5ab698542476b602524e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">iterates through Resource HashMap and call the exact Raylib Unload function for each Resource Type  <a href="ResourceManager_8c.html#ac20c5d409bf5ab698542476b602524e8">More...</a><br /></td></tr>
 <tr class="separator:ac20c5d409bf5ab698542476b602524e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b16ceb0f89e4379a98e1bda156d0d41"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ResourceManager_8c.html#a9b16ceb0f89e4379a98e1bda156d0d41">__ResourceManagerDestroy</a> ()</td></tr>
+<tr class="memdesc:a9b16ceb0f89e4379a98e1bda156d0d41"><td class="mdescLeft">&#160;</td><td class="mdescRight">iterates through Resource HashMap, dereference HashMap elements and frees memory  <a href="ResourceManager_8c.html#a9b16ceb0f89e4379a98e1bda156d0d41">More...</a><br /></td></tr>
 <tr class="separator:a9b16ceb0f89e4379a98e1bda156d0d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5e511c2281cf68f7ee43fdd3252f6d7"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ResourceManager_8c.html#ac5e511c2281cf68f7ee43fdd3252f6d7">__ResourceManagerGetResourceName</a> (<a class="el" href="ResourceManager_8h.html#a8571efa4409be32e28abf3ea74a0dbb1">ResourceType</a> type, const char *name)</td></tr>
+<tr class="memdesc:ac5e511c2281cf68f7ee43fdd3252f6d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string in the form "ResourceType_name".  <a href="ResourceManager_8c.html#ac5e511c2281cf68f7ee43fdd3252f6d7">More...</a><br /></td></tr>
 <tr class="separator:ac5e511c2281cf68f7ee43fdd3252f6d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a1364d9d26bc33fac6541fb4ada4995"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct____Resource__t.html">__Resource_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ResourceManager_8c.html#a7a1364d9d26bc33fac6541fb4ada4995">__ResourceManagerGetResourcePointer</a> (char *fullName)</td></tr>
 <tr class="separator:a7a1364d9d26bc33fac6541fb4ada4995"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,11 +189,25 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>adds a resource of the specified name, type and path to the __ResourceManagerMap HashMap </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">type</td><td></td></tr>
-    <tr><td class="paramname">name</td><td></td></tr>
-    <tr><td class="paramname">path</td><td></td></tr>
+    <tr><td class="paramname">type</td><td>the type of the Resource to get </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="ResourceManager_8h.html#a8571efa4409be32e28abf3ea74a0dbb1" title="The resource Type: Image, Texture, Font, Wave, Sound, Music.">ResourceType</a> </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>the name of the resource to get (key value of the Resource HashMap element) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="struct____Resource__t.html" title="The Resource Data Structure:">__Resource_t</a> </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>the relative path to the Resource file, from the executable location </td></tr>
   </table>
   </dd>
 </dl>
@@ -193,6 +229,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>iterates through Resource HashMap, dereference HashMap elements and frees memory </p>
 <dl class="section return"><dt>Returns</dt><dd>int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS </dd></dl>
 
 </div>
@@ -222,13 +260,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>gets a pointer to the resource data of the specified ResourceType after being loaded through <a class="el" href="ResourceManager_8h.html#a680f21c0b2648ed77b7b60d4d94f3fa9" title="iterates through Resource HashMap and call the exact Raylib Load function for each Resource Type">__ResourceManagerLoad()</a> </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">type</td><td></td></tr>
-    <tr><td class="paramname">name</td><td></td></tr>
+    <tr><td class="paramname">type</td><td>the type of the Resource to get </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="ResourceManager_8h.html#a8571efa4409be32e28abf3ea74a0dbb1" title="The resource Type: Image, Texture, Font, Wave, Sound, Music.">ResourceType</a> </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>the name of the resource to get (key value of the Resource HashMap element) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="struct____Resource__t.html" title="The Resource Data Structure:">__Resource_t</a> </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>void* </dd></dl>
 
 </div>
@@ -248,6 +295,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">resource</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void* </dd></dl>
 
 </div>
 </div>
@@ -277,6 +331,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Get a string in the form "ResourceType_name". </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>the type of the Resource to get </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="ResourceManager_8h.html#a8571efa4409be32e28abf3ea74a0dbb1" title="The resource Type: Image, Texture, Font, Wave, Sound, Music.">ResourceType</a> </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>the name of the resource to get (key value of the Resource HashMap element) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="struct____Resource__t.html" title="The Resource Data Structure:">__Resource_t</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>char* a string containing "ResourceType_name" (must be freed) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="ResourceManager_8h.html#a8571efa4409be32e28abf3ea74a0dbb1" title="The resource Type: Image, Texture, Font, Wave, Sound, Music.">ResourceType</a> </dd>
+<dd>
+<a class="el" href="struct____Resource__t.html" title="The Resource Data Structure:">__Resource_t</a> </dd></dl>
+
 </div>
 </div>
 <a id="a7a1364d9d26bc33fac6541fb4ada4995" name="a7a1364d9d26bc33fac6541fb4ada4995"></a>
@@ -294,6 +368,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fullName</td><td>A string in the form "ResourceType_name" used as key value in the __ResourceManagerMap HashMap </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>struct __Resource_t* The pointer to the Resource element found in Hasmap. NULL if nothing was found </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="struct____Resource__t.html" title="The Resource Data Structure:">__Resource_t</a> </dd></dl>
 
 </div>
 </div>
@@ -311,6 +393,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Initialize the ResourceManager HashMap. </p>
+<dl class="section see"><dt>See also</dt><dd>__ResourceManagerMap</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS </dd></dl>
 
 </div>
@@ -329,6 +414,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>iterates through Resource HashMap and call the exact Raylib Load function for each Resource Type </p>
 <dl class="section return"><dt>Returns</dt><dd>int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS </dd></dl>
 
 </div>
@@ -358,13 +445,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>removes a resource of the specified name and type from the __ResourceManagerMap HashMap </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">type</td><td></td></tr>
-    <tr><td class="paramname">name</td><td></td></tr>
+    <tr><td class="paramname">type</td><td>the type of the Resource to get </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="ResourceManager_8h.html#a8571efa4409be32e28abf3ea74a0dbb1" title="The resource Type: Image, Texture, Font, Wave, Sound, Music.">ResourceType</a> </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>the name of the resource to get (key value of the Resource HashMap element) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="struct____Resource__t.html" title="The Resource Data Structure:">__Resource_t</a> </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS </dd></dl>
 
 </div>
@@ -383,6 +479,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>iterates through Resource HashMap and call the exact Raylib Unload function for each Resource Type </p>
 <dl class="section return"><dt>Returns</dt><dd>int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS </dd></dl>
 
 </div>

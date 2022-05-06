@@ -8,7 +8,6 @@
 #define RESOURCE_MANAGER_WARNING 1
 #define RESOURCE_MANAGER_ERROR 2
 
-/* -----------PUBLIC RESOURCE MANAGER RESOURCE TYPES----------- */
 #pragma region resource_types_and_resource_type_strings
 
 /**
@@ -37,10 +36,7 @@ static const char *__ResourceTypeString[] = {
     "Music"};       ///< @see Music
 
 #pragma endregion resource_types_and_resource_type_strings
-/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
-/* //////////////////////////////////////////////////////////// */
 
-/* -----------PRIVATE RESOURCE MANAGER DATA TYPES-------------- */
 #pragma region private_resource_manager_data_types
 
 /**
@@ -85,27 +81,23 @@ typedef struct
 } __ResourceManager_t;
 
 #pragma endregion private_resource_manager_data_types
-/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
-/* //////////////////////////////////////////////////////////// */
 
-
-/* ---------PRIVATE RESOURCE MANAGER CLASS AND METHODS--------- */
 #pragma region private_resource_manager_cls_and_methods
 
 /**
- * @brief 
+ * @brief Get a string in the form "ResourceType_name"
  * 
- * @param type 
- * @param name 
- * @return char* 
+ * @param type the type of the Resource to get @see ResourceType
+ * @param name the name of the resource to get (key value of the Resource HashMap element) @see __Resource_t
+ * @return char* a string containing "ResourceType_name" (must be freed) @see ResourceType @see __Resource_t
  */
 char *__ResourceManagerGetResourceName(ResourceType type, const char *name);
 
 /**
  * @brief 
  * 
- * @param fullName 
- * @return struct __Resource_t* 
+ * @param fullName A string in the form "ResourceType_name" used as key value in the __ResourceManagerMap HashMap
+ * @return struct __Resource_t* The pointer to the Resource element found in Hasmap. NULL if nothing was found @see __Resource_t
  */
 struct __Resource_t *__ResourceManagerGetResourcePointer(char *fullName);
 
@@ -118,63 +110,59 @@ struct __Resource_t *__ResourceManagerGetResourcePointer(char *fullName);
 void *__ResourceManagerGetResourceDataPointer(struct __Resource_t *resource);
 
 #pragma endregion private_resource_manager_cls_and_methods
-/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
-/* //////////////////////////////////////////////////////////// */
 
-/* ---------PUBLIC RESOURCE MANAGER OBJECT AND METHODS--------- */
 #pragma region public_resource_manager_obj_and_methods
 
 /**
- * @brief 
+ * @brief Initialize the ResourceManager HashMap @see __ResourceManagerMap
  * 
  * @return int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS
  */
 int __ResourceManagerInit();
 
 /**
- * @brief 
+ * @brief adds a resource of the specified name, type and path to the __ResourceManagerMap HashMap
  * 
- * @param type 
- * @param name 
- * @param path 
+ * @param type the type of the Resource to get @see ResourceType
+ * @param name the name of the resource to get (key value of the Resource HashMap element) @see __Resource_t
+ * @param path the relative path to the Resource file, from the executable location
  * @return int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS
  */
 int __ResourceManagerAddResource(ResourceType type, const char *name, const char *path);
 
 /**
- * @brief 
+ * @brief removes a resource of the specified name and type from the __ResourceManagerMap HashMap
  * 
- * @param type 
- * @param name 
+ * @param type the type of the Resource to get @see ResourceType
+ * @param name the name of the resource to get (key value of the Resource HashMap element) @see __Resource_t
  * @return int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS
  */
 int __ResourceManagerRemoveResource(ResourceType type, const char *name);
 
 /**
- * @brief 
+ * @brief iterates through Resource HashMap and call the exact Raylib Load function for each Resource Type
  * 
  * @return int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS
  */
 int __ResourceManagerLoad();
 
 /**
- * @brief 
- * 
- * @param type 
- * @param name 
+ * @brief gets a pointer to the resource data of the specified ResourceType after being loaded through __ResourceManagerLoad()
+ * @param type the type of the Resource to get @see ResourceType
+ * @param name the name of the resource to get (key value of the Resource HashMap element) @see __Resource_t
  * @return void* 
  */
 void *__ResourceManagerGet(ResourceType type, const char *name);
 
 /**
- * @brief 
+ * @brief iterates through Resource HashMap and call the exact Raylib Unload function for each Resource Type
  * 
  * @return int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS
  */
 int __ResourceManagerUnload();
 
 /**
- * @brief 
+ * @brief iterates through Resource HashMap, dereference HashMap elements and frees memory
  * 
  * @return int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS
  */
@@ -190,7 +178,5 @@ static __ResourceManager_t ResourceManager = {
     __ResourceManagerDestroy}; ///< @brief ResourceManager static global variable to access his public callbacks
 
 #pragma endregion public_resource_manager_obj_and_methods
-/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
-/* //////////////////////////////////////////////////////////// */
 
 #endif /* __RESOURCEMANAGER_H__ */

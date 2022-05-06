@@ -27,7 +27,7 @@ risultati di ogni giocatore e relative statistiche.
 
 ## Documentazione
 
-[Doxygen](doc/html/index.html)
+[Doxygen](https://htmlpreview.github.io/MauroDeRosa/raylib-rubamazzetto-client/doc/html/index.html)
 
 ----------
 
