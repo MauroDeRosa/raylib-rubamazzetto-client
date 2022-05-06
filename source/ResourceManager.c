@@ -120,11 +120,11 @@ int __ResourceManagerUnload()
     struct __Resource_t *res, *tmp;
     Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Unloading resources...");
 
-    HASH_ITER(hh, __ResourceManagerMap, res, tmp)
+    HASH_ITER(hh, __ResourceManagerMap, res, tmp) // iterates the full Resource HashMap
     {
         Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Unloading %s resource \"%s\"", __ResourceTypeString[res->type], res->name);
 
-        switch (res->type)
+        switch (res->type) // based on the resource type calls the right RayLib Unload function
         {
             case RESOURCE_IMAGE:
                 UnloadImage(res->data.Image);
