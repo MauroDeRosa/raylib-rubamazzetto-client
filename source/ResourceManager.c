@@ -178,7 +178,7 @@ char *__ResourceManagerGetResourceName(ResourceType type, const char *name)
 struct __Resource_t *__ResourceManagerGetResourcePointer(char* fullName)
 {
     struct __Resource_t *res = NULL;
-    HASH_FIND_STR(__ResourceManagerMap, fullName, res);
+    HASH_FIND_STR(__ResourceManagerMap, fullName, res); // returns *__Resource_t if 'ResourceType_name' exists, NULL otherwise
     return res;
 }
 
