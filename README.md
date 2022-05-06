@@ -35,7 +35,10 @@ risultati di ogni giocatore e relative statistiche.
 
 **TO - DO**
 
-## Dependencies
+## Dependencies and references
+### Libraries
 - [Raylib](https://www.raylib.com/) (Game Engine)
 - [Raygui](https://github.com/raysan5/raygui) (GUI library for Raylib)
 - [uthash](https://troydhanson.github.io/uthash/) (C HashMap library)
+### Other
+- [Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/) (Doxygen modern theme)
