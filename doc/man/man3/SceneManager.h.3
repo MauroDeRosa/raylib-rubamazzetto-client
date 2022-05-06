@@ -1,0 +1,119 @@
+.TH "include/SceneManager.h" 3 "Fri May 6 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/SceneManager.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdbool\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBScene\fP"
+.br
+.ti -1c
+.RI "struct \fBSceneManager_t\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSCENE_MANAGER_FIXEDUPDATE_STEP\fP   0\&.25f"
+.br
+.ti -1c
+.RI "#define \fBDefineScene\fP(name,  nameString,  onInit,  onStart,  onUpdate,  onFixedUpdate,  onRender,  onExit)   static \fBScene\fP name = (\fBScene\fP) { nameString, onInit, onStart, onUpdate, onFixedUpdate, onRender, onExit };"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef void(* \fBSceneCallback\fP) (void **data)"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBSceneManagerState\fP { \fBSCENEMGR_FALIURE\fP, \fBSCENEMGR_SUCCESS\fP, \fBSCENEMGR_NEXT\fP, \fBSCENEMGR_CLOSE\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBSceneManagerInit\fP (\fBScene\fP *startScene)"
+.br
+.ti -1c
+.RI "void \fBSceneManagerLoop\fP ()"
+.br
+.ti -1c
+.RI "void \fBSceneManagerSetState\fP (\fBSceneManagerState\fP)"
+.br
+.ti -1c
+.RI "void \fBSceneManagerSetNext\fP (\fBScene\fP *nextScene)"
+.br
+.ti -1c
+.RI "double \fBSceneManagerGetTime\fP ()"
+.br
+.ti -1c
+.RI "void \fB_SceneManagerSceneInit\fP ()"
+.br
+.ti -1c
+.RI "void \fB_SceneManagerNext\fP ()"
+.br
+.ti -1c
+.RI "void \fB_SceneManagerClose\fP ()"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DefineScene(name, nameString, onInit, onStart, onUpdate, onFixedUpdate, onRender, onExit)   static \fBScene\fP name = (\fBScene\fP) { nameString, onInit, onStart, onUpdate, onFixedUpdate, onRender, onExit };"
+
+.SS "#define SCENE_MANAGER_FIXEDUPDATE_STEP   0\&.25f"
+
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef void(* SceneCallback) (void **data)"
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBSceneManagerState\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fISCENEMGR_FALIURE \fP\fP
+.TP
+\fB\fISCENEMGR_SUCCESS \fP\fP
+.TP
+\fB\fISCENEMGR_NEXT \fP\fP
+.TP
+\fB\fISCENEMGR_CLOSE \fP\fP
+.SH "Function Documentation"
+.PP 
+.SS "void _SceneManagerClose ()"
+
+.SS "void _SceneManagerNext ()"
+
+.SS "void _SceneManagerSceneInit ()"
+
+.SS "double SceneManagerGetTime ()"
+
+.SS "bool SceneManagerInit (\fBScene\fP * startScene)"
+
+.SS "void SceneManagerLoop ()"
+
+.SS "void SceneManagerSetNext (\fBScene\fP * nextScene)"
+
+.SS "void SceneManagerSetState (\fBSceneManagerState\fP status)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

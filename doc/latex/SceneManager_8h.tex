@@ -1,0 +1,152 @@
+\hypertarget{SceneManager_8h}{}\doxysection{include/\+Scene\+Manager.h File Reference}
+\label{SceneManager_8h}\index{include/SceneManager.h@{include/SceneManager.h}}
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structScene}{Scene}}
+\item 
+struct \mbox{\hyperlink{structSceneManager__t}{Scene\+Manager\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{SceneManager_8h_aa382018c1751e3be48373c5f45f42b3c}{SCENE\+\_\+\+MANAGER\+\_\+\+FIXEDUPDATE\+\_\+\+STEP}}~0.\+25f
+\item 
+\#define \mbox{\hyperlink{SceneManager_8h_a63d2bb7bfc31b40db4920f6526d9c999}{Define\+Scene}}(name,  name\+String,  on\+Init,  on\+Start,  on\+Update,  on\+Fixed\+Update,  on\+Render,  on\+Exit)~static \mbox{\hyperlink{structScene}{Scene}} name = (\mbox{\hyperlink{structScene}{Scene}}) \{ name\+String, on\+Init, on\+Start, on\+Update, on\+Fixed\+Update, on\+Render, on\+Exit \};
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \mbox{\hyperlink{SceneManager_8h_a0de5811fb00a092d19946f648e217822}{Scene\+Callback}}) (void $\ast$$\ast$data)
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}{Scene\+Manager\+State}} \{ \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4faa8642d1b930faba01ae01ae720c46ff9}{SCENEMGR\+\_\+\+FALIURE}}
+, \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4fa5483cbd2de5b8263a1a96750f238de9e}{SCENEMGR\+\_\+\+SUCCESS}}
+, \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4fae3728c021b892ade2f7556e863ce6617}{SCENEMGR\+\_\+\+NEXT}}
+, \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4facd966088a915ab4665885567273eb5c7}{SCENEMGR\+\_\+\+CLOSE}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{SceneManager_8h_a2bd418f8cf0cfd846187aa425508e13a}{Scene\+Manager\+Init}} (\mbox{\hyperlink{structScene}{Scene}} $\ast$start\+Scene)
+\item 
+void \mbox{\hyperlink{SceneManager_8h_a34fc76d9c8bf3347eab2047506e8589e}{Scene\+Manager\+Loop}} ()
+\item 
+void \mbox{\hyperlink{SceneManager_8h_ab525959780f82ddf181fe082d3742c42}{Scene\+Manager\+Set\+State}} (\mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}{Scene\+Manager\+State}})
+\item 
+void \mbox{\hyperlink{SceneManager_8h_aef9251f159268f62c7f95bd9eefb2304}{Scene\+Manager\+Set\+Next}} (\mbox{\hyperlink{structScene}{Scene}} $\ast$next\+Scene)
+\item 
+double \mbox{\hyperlink{SceneManager_8h_aa6e253ed235350ed22aeff0b3d1891ea}{Scene\+Manager\+Get\+Time}} ()
+\item 
+void \mbox{\hyperlink{SceneManager_8h_a31c9496f24e3abe2523b68ffa3174bf7}{\+\_\+\+Scene\+Manager\+Scene\+Init}} ()
+\item 
+void \mbox{\hyperlink{SceneManager_8h_a8c7a28658b1fc5fd7a6d2ef2a7bccad9}{\+\_\+\+Scene\+Manager\+Next}} ()
+\item 
+void \mbox{\hyperlink{SceneManager_8h_a3a4995ee13b0d209315586f7be484117}{\+\_\+\+Scene\+Manager\+Close}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{SceneManager_8h_a63d2bb7bfc31b40db4920f6526d9c999}\label{SceneManager_8h_a63d2bb7bfc31b40db4920f6526d9c999}} 
+\index{SceneManager.h@{SceneManager.h}!DefineScene@{DefineScene}}
+\index{DefineScene@{DefineScene}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{DefineScene}{DefineScene}}
+{\footnotesize\ttfamily \#define Define\+Scene(\begin{DoxyParamCaption}\item[{}]{name,  }\item[{}]{name\+String,  }\item[{}]{on\+Init,  }\item[{}]{on\+Start,  }\item[{}]{on\+Update,  }\item[{}]{on\+Fixed\+Update,  }\item[{}]{on\+Render,  }\item[{}]{on\+Exit }\end{DoxyParamCaption})~static \mbox{\hyperlink{structScene}{Scene}} name = (\mbox{\hyperlink{structScene}{Scene}}) \{ name\+String, on\+Init, on\+Start, on\+Update, on\+Fixed\+Update, on\+Render, on\+Exit \};}
+
+\mbox{\Hypertarget{SceneManager_8h_aa382018c1751e3be48373c5f45f42b3c}\label{SceneManager_8h_aa382018c1751e3be48373c5f45f42b3c}} 
+\index{SceneManager.h@{SceneManager.h}!SCENE\_MANAGER\_FIXEDUPDATE\_STEP@{SCENE\_MANAGER\_FIXEDUPDATE\_STEP}}
+\index{SCENE\_MANAGER\_FIXEDUPDATE\_STEP@{SCENE\_MANAGER\_FIXEDUPDATE\_STEP}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{SCENE\_MANAGER\_FIXEDUPDATE\_STEP}{SCENE\_MANAGER\_FIXEDUPDATE\_STEP}}
+{\footnotesize\ttfamily \#define SCENE\+\_\+\+MANAGER\+\_\+\+FIXEDUPDATE\+\_\+\+STEP~0.\+25f}
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{SceneManager_8h_a0de5811fb00a092d19946f648e217822}\label{SceneManager_8h_a0de5811fb00a092d19946f648e217822}} 
+\index{SceneManager.h@{SceneManager.h}!SceneCallback@{SceneCallback}}
+\index{SceneCallback@{SceneCallback}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{SceneCallback}{SceneCallback}}
+{\footnotesize\ttfamily typedef void($\ast$ Scene\+Callback) (void $\ast$$\ast$data)}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}\label{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}} 
+\index{SceneManager.h@{SceneManager.h}!SceneManagerState@{SceneManagerState}}
+\index{SceneManagerState@{SceneManagerState}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{SceneManagerState}{SceneManagerState}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}{Scene\+Manager\+State}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SCENEMGR\_FALIURE@{SCENEMGR\_FALIURE}!SceneManager.h@{SceneManager.h}}\index{SceneManager.h@{SceneManager.h}!SCENEMGR\_FALIURE@{SCENEMGR\_FALIURE}}}\mbox{\Hypertarget{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4faa8642d1b930faba01ae01ae720c46ff9}\label{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4faa8642d1b930faba01ae01ae720c46ff9}} 
+SCENEMGR\+\_\+\+FALIURE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SCENEMGR\_SUCCESS@{SCENEMGR\_SUCCESS}!SceneManager.h@{SceneManager.h}}\index{SceneManager.h@{SceneManager.h}!SCENEMGR\_SUCCESS@{SCENEMGR\_SUCCESS}}}\mbox{\Hypertarget{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4fa5483cbd2de5b8263a1a96750f238de9e}\label{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4fa5483cbd2de5b8263a1a96750f238de9e}} 
+SCENEMGR\+\_\+\+SUCCESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SCENEMGR\_NEXT@{SCENEMGR\_NEXT}!SceneManager.h@{SceneManager.h}}\index{SceneManager.h@{SceneManager.h}!SCENEMGR\_NEXT@{SCENEMGR\_NEXT}}}\mbox{\Hypertarget{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4fae3728c021b892ade2f7556e863ce6617}\label{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4fae3728c021b892ade2f7556e863ce6617}} 
+SCENEMGR\+\_\+\+NEXT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SCENEMGR\_CLOSE@{SCENEMGR\_CLOSE}!SceneManager.h@{SceneManager.h}}\index{SceneManager.h@{SceneManager.h}!SCENEMGR\_CLOSE@{SCENEMGR\_CLOSE}}}\mbox{\Hypertarget{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4facd966088a915ab4665885567273eb5c7}\label{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4facd966088a915ab4665885567273eb5c7}} 
+SCENEMGR\+\_\+\+CLOSE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{SceneManager_8h_a3a4995ee13b0d209315586f7be484117}\label{SceneManager_8h_a3a4995ee13b0d209315586f7be484117}} 
+\index{SceneManager.h@{SceneManager.h}!\_SceneManagerClose@{\_SceneManagerClose}}
+\index{\_SceneManagerClose@{\_SceneManagerClose}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{\_SceneManagerClose()}{\_SceneManagerClose()}}
+{\footnotesize\ttfamily void \+\_\+\+Scene\+Manager\+Close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{SceneManager_8h_a8c7a28658b1fc5fd7a6d2ef2a7bccad9}\label{SceneManager_8h_a8c7a28658b1fc5fd7a6d2ef2a7bccad9}} 
+\index{SceneManager.h@{SceneManager.h}!\_SceneManagerNext@{\_SceneManagerNext}}
+\index{\_SceneManagerNext@{\_SceneManagerNext}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{\_SceneManagerNext()}{\_SceneManagerNext()}}
+{\footnotesize\ttfamily void \+\_\+\+Scene\+Manager\+Next (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{SceneManager_8h_a31c9496f24e3abe2523b68ffa3174bf7}\label{SceneManager_8h_a31c9496f24e3abe2523b68ffa3174bf7}} 
+\index{SceneManager.h@{SceneManager.h}!\_SceneManagerSceneInit@{\_SceneManagerSceneInit}}
+\index{\_SceneManagerSceneInit@{\_SceneManagerSceneInit}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{\_SceneManagerSceneInit()}{\_SceneManagerSceneInit()}}
+{\footnotesize\ttfamily void \+\_\+\+Scene\+Manager\+Scene\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{SceneManager_8h_aa6e253ed235350ed22aeff0b3d1891ea}\label{SceneManager_8h_aa6e253ed235350ed22aeff0b3d1891ea}} 
+\index{SceneManager.h@{SceneManager.h}!SceneManagerGetTime@{SceneManagerGetTime}}
+\index{SceneManagerGetTime@{SceneManagerGetTime}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{SceneManagerGetTime()}{SceneManagerGetTime()}}
+{\footnotesize\ttfamily double Scene\+Manager\+Get\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{SceneManager_8h_a2bd418f8cf0cfd846187aa425508e13a}\label{SceneManager_8h_a2bd418f8cf0cfd846187aa425508e13a}} 
+\index{SceneManager.h@{SceneManager.h}!SceneManagerInit@{SceneManagerInit}}
+\index{SceneManagerInit@{SceneManagerInit}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{SceneManagerInit()}{SceneManagerInit()}}
+{\footnotesize\ttfamily bool Scene\+Manager\+Init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structScene}{Scene}} $\ast$}]{start\+Scene }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{SceneManager_8h_a34fc76d9c8bf3347eab2047506e8589e}\label{SceneManager_8h_a34fc76d9c8bf3347eab2047506e8589e}} 
+\index{SceneManager.h@{SceneManager.h}!SceneManagerLoop@{SceneManagerLoop}}
+\index{SceneManagerLoop@{SceneManagerLoop}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{SceneManagerLoop()}{SceneManagerLoop()}}
+{\footnotesize\ttfamily void Scene\+Manager\+Loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{SceneManager_8h_aef9251f159268f62c7f95bd9eefb2304}\label{SceneManager_8h_aef9251f159268f62c7f95bd9eefb2304}} 
+\index{SceneManager.h@{SceneManager.h}!SceneManagerSetNext@{SceneManagerSetNext}}
+\index{SceneManagerSetNext@{SceneManagerSetNext}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{SceneManagerSetNext()}{SceneManagerSetNext()}}
+{\footnotesize\ttfamily void Scene\+Manager\+Set\+Next (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structScene}{Scene}} $\ast$}]{next\+Scene }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{SceneManager_8h_ab525959780f82ddf181fe082d3742c42}\label{SceneManager_8h_ab525959780f82ddf181fe082d3742c42}} 
+\index{SceneManager.h@{SceneManager.h}!SceneManagerSetState@{SceneManagerSetState}}
+\index{SceneManagerSetState@{SceneManagerSetState}!SceneManager.h@{SceneManager.h}}
+\doxysubsubsection{\texorpdfstring{SceneManagerSetState()}{SceneManagerSetState()}}
+{\footnotesize\ttfamily void Scene\+Manager\+Set\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}{Scene\+Manager\+State}}}]{status }\end{DoxyParamCaption})}
+

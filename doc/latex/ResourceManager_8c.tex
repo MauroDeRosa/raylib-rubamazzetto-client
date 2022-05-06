@@ -1,0 +1,149 @@
+\hypertarget{ResourceManager_8c}{}\doxysection{source/\+Resource\+Manager.c File Reference}
+\label{ResourceManager_8c}\index{source/ResourceManager.c@{source/ResourceManager.c}}
+{\ttfamily \#include \char`\"{}Resource\+Manager.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}logger.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{ResourceManager_8c_a3a4b5247b4e620170ff86847f96c4db0}{RESOURCE\+\_\+\+MANAGER\+\_\+\+PREFIX}}~\char`\"{}\mbox{[}Resource\+Manager\mbox{]} \char`\"{}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{ResourceManager_8c_a4da23682811e7e6ed85e1b17dbba96de}{\+\_\+\+\_\+\+Resource\+Manager\+Init}} ()
+\item 
+int \mbox{\hyperlink{ResourceManager_8c_a5cce0fca1d5e90fe829a7c40713ea395}{\+\_\+\+\_\+\+Resource\+Manager\+Add\+Resource}} (\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}} type, const char $\ast$name, const char $\ast$path)
+\item 
+int \mbox{\hyperlink{ResourceManager_8c_aa0811d8277d927e65d21c57bf62e90d0}{\+\_\+\+\_\+\+Resource\+Manager\+Remove\+Resource}} (\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}} type, const char $\ast$name)
+\item 
+int \mbox{\hyperlink{ResourceManager_8c_a680f21c0b2648ed77b7b60d4d94f3fa9}{\+\_\+\+\_\+\+Resource\+Manager\+Load}} ()
+\item 
+void $\ast$ \mbox{\hyperlink{ResourceManager_8c_a71fa23e458ac312d128a94b29677775e}{\+\_\+\+\_\+\+Resource\+Manager\+Get}} (\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}} type, const char $\ast$name)
+\item 
+int \mbox{\hyperlink{ResourceManager_8c_ac20c5d409bf5ab698542476b602524e8}{\+\_\+\+\_\+\+Resource\+Manager\+Unload}} ()
+\item 
+int \mbox{\hyperlink{ResourceManager_8c_a9b16ceb0f89e4379a98e1bda156d0d41}{\+\_\+\+\_\+\+Resource\+Manager\+Destroy}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{ResourceManager_8c_ac5e511c2281cf68f7ee43fdd3252f6d7}{\+\_\+\+\_\+\+Resource\+Manager\+Get\+Resource\+Name}} (\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}} type, const char $\ast$name)
+\item 
+struct \mbox{\hyperlink{struct____Resource__t}{\+\_\+\+\_\+\+Resource\+\_\+t}} $\ast$ \mbox{\hyperlink{ResourceManager_8c_a7a1364d9d26bc33fac6541fb4ada4995}{\+\_\+\+\_\+\+Resource\+Manager\+Get\+Resource\+Pointer}} (char $\ast$full\+Name)
+\item 
+void $\ast$ \mbox{\hyperlink{ResourceManager_8c_a30629577bea6b847932e0e749269c2fa}{\+\_\+\+\_\+\+Resource\+Manager\+Get\+Resource\+Data\+Pointer}} (struct \mbox{\hyperlink{struct____Resource__t}{\+\_\+\+\_\+\+Resource\+\_\+t}} $\ast$resource)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{ResourceManager_8c_a3a4b5247b4e620170ff86847f96c4db0}\label{ResourceManager_8c_a3a4b5247b4e620170ff86847f96c4db0}} 
+\index{ResourceManager.c@{ResourceManager.c}!RESOURCE\_MANAGER\_PREFIX@{RESOURCE\_MANAGER\_PREFIX}}
+\index{RESOURCE\_MANAGER\_PREFIX@{RESOURCE\_MANAGER\_PREFIX}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{RESOURCE\_MANAGER\_PREFIX}{RESOURCE\_MANAGER\_PREFIX}}
+{\footnotesize\ttfamily \#define RESOURCE\+\_\+\+MANAGER\+\_\+\+PREFIX~\char`\"{}\mbox{[}Resource\+Manager\mbox{]} \char`\"{}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{ResourceManager_8c_a5cce0fca1d5e90fe829a7c40713ea395}\label{ResourceManager_8c_a5cce0fca1d5e90fe829a7c40713ea395}} 
+\index{ResourceManager.c@{ResourceManager.c}!\_\_ResourceManagerAddResource@{\_\_ResourceManagerAddResource}}
+\index{\_\_ResourceManagerAddResource@{\_\_ResourceManagerAddResource}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{\_\_ResourceManagerAddResource()}{\_\_ResourceManagerAddResource()}}
+{\footnotesize\ttfamily int \+\_\+\+\_\+\+Resource\+Manager\+Add\+Resource (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}}}]{type,  }\item[{const char $\ast$}]{name,  }\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \\
+\hline
+{\em name} & \\
+\hline
+{\em path} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int RESOURCE\+\_\+\+MANAGER\+\_\+\+ERROR or RESOURCE\+\_\+\+MANAGER\+\_\+\+WARNING or RESOURCE\+\_\+\+MANAGER\+\_\+\+SUCCESS 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ResourceManager_8c_a9b16ceb0f89e4379a98e1bda156d0d41}\label{ResourceManager_8c_a9b16ceb0f89e4379a98e1bda156d0d41}} 
+\index{ResourceManager.c@{ResourceManager.c}!\_\_ResourceManagerDestroy@{\_\_ResourceManagerDestroy}}
+\index{\_\_ResourceManagerDestroy@{\_\_ResourceManagerDestroy}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{\_\_ResourceManagerDestroy()}{\_\_ResourceManagerDestroy()}}
+{\footnotesize\ttfamily int \+\_\+\+\_\+\+Resource\+Manager\+Destroy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+int RESOURCE\+\_\+\+MANAGER\+\_\+\+ERROR or RESOURCE\+\_\+\+MANAGER\+\_\+\+WARNING or RESOURCE\+\_\+\+MANAGER\+\_\+\+SUCCESS 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ResourceManager_8c_a71fa23e458ac312d128a94b29677775e}\label{ResourceManager_8c_a71fa23e458ac312d128a94b29677775e}} 
+\index{ResourceManager.c@{ResourceManager.c}!\_\_ResourceManagerGet@{\_\_ResourceManagerGet}}
+\index{\_\_ResourceManagerGet@{\_\_ResourceManagerGet}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{\_\_ResourceManagerGet()}{\_\_ResourceManagerGet()}}
+{\footnotesize\ttfamily void $\ast$ \+\_\+\+\_\+\+Resource\+Manager\+Get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}}}]{type,  }\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \\
+\hline
+{\em name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void$\ast$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ResourceManager_8c_a30629577bea6b847932e0e749269c2fa}\label{ResourceManager_8c_a30629577bea6b847932e0e749269c2fa}} 
+\index{ResourceManager.c@{ResourceManager.c}!\_\_ResourceManagerGetResourceDataPointer@{\_\_ResourceManagerGetResourceDataPointer}}
+\index{\_\_ResourceManagerGetResourceDataPointer@{\_\_ResourceManagerGetResourceDataPointer}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{\_\_ResourceManagerGetResourceDataPointer()}{\_\_ResourceManagerGetResourceDataPointer()}}
+{\footnotesize\ttfamily void $\ast$ \+\_\+\+\_\+\+Resource\+Manager\+Get\+Resource\+Data\+Pointer (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct____Resource__t}{\+\_\+\+\_\+\+Resource\+\_\+t}} $\ast$}]{resource }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ResourceManager_8c_ac5e511c2281cf68f7ee43fdd3252f6d7}\label{ResourceManager_8c_ac5e511c2281cf68f7ee43fdd3252f6d7}} 
+\index{ResourceManager.c@{ResourceManager.c}!\_\_ResourceManagerGetResourceName@{\_\_ResourceManagerGetResourceName}}
+\index{\_\_ResourceManagerGetResourceName@{\_\_ResourceManagerGetResourceName}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{\_\_ResourceManagerGetResourceName()}{\_\_ResourceManagerGetResourceName()}}
+{\footnotesize\ttfamily char $\ast$ \+\_\+\+\_\+\+Resource\+Manager\+Get\+Resource\+Name (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}}}]{type,  }\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ResourceManager_8c_a7a1364d9d26bc33fac6541fb4ada4995}\label{ResourceManager_8c_a7a1364d9d26bc33fac6541fb4ada4995}} 
+\index{ResourceManager.c@{ResourceManager.c}!\_\_ResourceManagerGetResourcePointer@{\_\_ResourceManagerGetResourcePointer}}
+\index{\_\_ResourceManagerGetResourcePointer@{\_\_ResourceManagerGetResourcePointer}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{\_\_ResourceManagerGetResourcePointer()}{\_\_ResourceManagerGetResourcePointer()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct____Resource__t}{\+\_\+\+\_\+\+Resource\+\_\+t}} $\ast$ \+\_\+\+\_\+\+Resource\+Manager\+Get\+Resource\+Pointer (\begin{DoxyParamCaption}\item[{char $\ast$}]{full\+Name }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ResourceManager_8c_a4da23682811e7e6ed85e1b17dbba96de}\label{ResourceManager_8c_a4da23682811e7e6ed85e1b17dbba96de}} 
+\index{ResourceManager.c@{ResourceManager.c}!\_\_ResourceManagerInit@{\_\_ResourceManagerInit}}
+\index{\_\_ResourceManagerInit@{\_\_ResourceManagerInit}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{\_\_ResourceManagerInit()}{\_\_ResourceManagerInit()}}
+{\footnotesize\ttfamily int \+\_\+\+\_\+\+Resource\+Manager\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+int RESOURCE\+\_\+\+MANAGER\+\_\+\+ERROR or RESOURCE\+\_\+\+MANAGER\+\_\+\+WARNING or RESOURCE\+\_\+\+MANAGER\+\_\+\+SUCCESS 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ResourceManager_8c_a680f21c0b2648ed77b7b60d4d94f3fa9}\label{ResourceManager_8c_a680f21c0b2648ed77b7b60d4d94f3fa9}} 
+\index{ResourceManager.c@{ResourceManager.c}!\_\_ResourceManagerLoad@{\_\_ResourceManagerLoad}}
+\index{\_\_ResourceManagerLoad@{\_\_ResourceManagerLoad}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{\_\_ResourceManagerLoad()}{\_\_ResourceManagerLoad()}}
+{\footnotesize\ttfamily int \+\_\+\+\_\+\+Resource\+Manager\+Load (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+int RESOURCE\+\_\+\+MANAGER\+\_\+\+ERROR or RESOURCE\+\_\+\+MANAGER\+\_\+\+WARNING or RESOURCE\+\_\+\+MANAGER\+\_\+\+SUCCESS 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ResourceManager_8c_aa0811d8277d927e65d21c57bf62e90d0}\label{ResourceManager_8c_aa0811d8277d927e65d21c57bf62e90d0}} 
+\index{ResourceManager.c@{ResourceManager.c}!\_\_ResourceManagerRemoveResource@{\_\_ResourceManagerRemoveResource}}
+\index{\_\_ResourceManagerRemoveResource@{\_\_ResourceManagerRemoveResource}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{\_\_ResourceManagerRemoveResource()}{\_\_ResourceManagerRemoveResource()}}
+{\footnotesize\ttfamily int \+\_\+\+\_\+\+Resource\+Manager\+Remove\+Resource (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}}}]{type,  }\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \\
+\hline
+{\em name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int RESOURCE\+\_\+\+MANAGER\+\_\+\+ERROR or RESOURCE\+\_\+\+MANAGER\+\_\+\+WARNING or RESOURCE\+\_\+\+MANAGER\+\_\+\+SUCCESS 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ResourceManager_8c_ac20c5d409bf5ab698542476b602524e8}\label{ResourceManager_8c_ac20c5d409bf5ab698542476b602524e8}} 
+\index{ResourceManager.c@{ResourceManager.c}!\_\_ResourceManagerUnload@{\_\_ResourceManagerUnload}}
+\index{\_\_ResourceManagerUnload@{\_\_ResourceManagerUnload}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{\_\_ResourceManagerUnload()}{\_\_ResourceManagerUnload()}}
+{\footnotesize\ttfamily int \+\_\+\+\_\+\+Resource\+Manager\+Unload (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+int RESOURCE\+\_\+\+MANAGER\+\_\+\+ERROR or RESOURCE\+\_\+\+MANAGER\+\_\+\+WARNING or RESOURCE\+\_\+\+MANAGER\+\_\+\+SUCCESS 
+\end{DoxyReturn}

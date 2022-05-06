@@ -1,0 +1,53 @@
+.TH "include/logger.h" 3 "Fri May 6 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/logger.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <raylib\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBLOG_STYLE_INDENTED\fP   0"
+.br
+.ti -1c
+.RI "#define \fBLOG_STYLE_BLANK_LINE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBLOG_STYLE_USE_COLOR\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBLogVaList\fP (int msgType, const char *text, va_list args)"
+.br
+.ti -1c
+.RI "void \fBLog\fP (int msgType, const char *text,\&.\&.\&.)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define LOG_STYLE_BLANK_LINE   1"
+
+.SS "#define LOG_STYLE_INDENTED   0"
+
+.SS "#define LOG_STYLE_USE_COLOR"
+
+.SH "Function Documentation"
+.PP 
+.SS "void Log (int msgType, const char * text,  \&.\&.\&.)"
+
+.SS "void LogVaList (int msgType, const char * text, va_list args)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.
