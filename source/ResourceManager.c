@@ -171,7 +171,8 @@ char *__ResourceManagerGetResourceName(ResourceType type, const char *name)
     strcat(out, __ResourceTypeString[type]);
     strcat(out, "_");
     strcat(out, name);
-    return out;
+    out[100-1] = '\0';
+    return out; // returns "ResourceType_name"
 }
 
 struct __Resource_t *__ResourceManagerGetResourcePointer(char* fullName)
