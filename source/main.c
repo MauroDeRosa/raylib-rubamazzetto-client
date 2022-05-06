@@ -1,25 +1,31 @@
 #include <raylib.h>
-#include "logger.h"
-#include "SceneManager.h"
-#include "Scene/SceneSplashScreen.h"
-
 #define RAYGUI_IMPLEMENTATION
 #include "raylib-extra/raygui.h"
 #undef RAYGUI_IMPLEMENTATION
 
+#include "logger.h"
+#include "ResourceManager.h"
+#include "Scene/Scenes.h"
+#include "Config.h"
+
+
+
 int main(void)
 {
-    const int screenWidth = 1280;
-    const int screenHeight = 720;
-
     SetTraceLogCallback(LogVaList);
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic screen manager");
-
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
 
-    SceneManagerInit(&SceneSplashScreen);
-    SceneManagerLoop();
+    ResourceManager.Init();
+    RegisterScenes();
+    
+
+    ResourceManager.Unload();
+    ResourceManager.Destroy();
+    
+    // SceneManagerInit(&SceneSplashScreen);
+    // SceneManagerLoop();
 
   
     CloseWindow();
