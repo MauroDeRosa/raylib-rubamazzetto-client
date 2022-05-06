@@ -12,7 +12,7 @@
 int __ResourceManagerInit()
 {
     Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Initializing Resource Manager...");
-    __ResourceManagerMap = NULL;
+    __ResourceManagerMap = NULL; // sets Resource HashMap to NULL (required by uthash as initial HashMap pointer value)
     return RESOURCE_MANAGER_SUCCESS;
 }
 
