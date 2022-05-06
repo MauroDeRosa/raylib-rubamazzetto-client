@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['definescene_0',['DefineScene',['../SceneLoadScreen_8h.html#a4eeb7c0644e3bc20cf8bebf6de320bdb',1,'DefineScene(SceneLoadScreen, &quot;SceneLoadScreen&quot;, SceneLoadScreenOnInit, SceneLoadScreenOnStart, SceneLoadScreenOnUpdate, SceneLoadScreenOnFixedUpdate, SceneLoadScreenOnRender, SceneLoadScreenOnExit):&#160;SceneLoadScreen.h'],['../SceneSplashScreen_8h.html#a651d409f2b22f5931cf3e5f59be6e980',1,'DefineScene(SceneSplashScreen, &quot;SceneSplashScreen&quot;, SceneSplashScreenOnInit, SceneSplashScreenOnStart, SceneSplashScreenOnUpdate, SceneSplashScreenOnFixedUpdate, SceneSplashScreenOnRender, SceneSplashScreenOnExit):&#160;SceneSplashScreen.h'],['../SceneManager_8c.html#a0b9ac42b55bcbe022698ac4028974a0b',1,'DefineScene(SceneManagerInitialization, &quot;SceneManagerInitialization&quot;, NULL, NULL, NULL, NULL, NULL, NULL):&#160;SceneManager.c']]]
+];

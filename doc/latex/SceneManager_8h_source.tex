@@ -1,0 +1,61 @@
+\hypertarget{SceneManager_8h_source}{}\doxysection{Scene\+Manager.\+h}
+\label{SceneManager_8h_source}\index{include/SceneManager.h@{include/SceneManager.h}}
+\mbox{\hyperlink{SceneManager_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_SCENEMANAGER\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_SCENEMANAGER\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <stdbool.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define SCENE\_MANAGER\_FIXEDUPDATE\_STEP 0.25f}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{typedef} \textcolor{keyword}{enum}}
+\DoxyCodeLine{9 \{}
+\DoxyCodeLine{10     \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4faa8642d1b930faba01ae01ae720c46ff9}{SCENEMGR\_FALIURE}},}
+\DoxyCodeLine{11     \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4fa5483cbd2de5b8263a1a96750f238de9e}{SCENEMGR\_SUCCESS}},}
+\DoxyCodeLine{12     \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4fae3728c021b892ade2f7556e863ce6617}{SCENEMGR\_NEXT}},}
+\DoxyCodeLine{13     \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4facd966088a915ab4665885567273eb5c7}{SCENEMGR\_CLOSE}}}
+\DoxyCodeLine{14 \} \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}{SceneManagerState}};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{typedef} void (*\mbox{\hyperlink{SceneManager_8h_a0de5811fb00a092d19946f648e217822}{SceneCallback}})(\textcolor{keywordtype}{void}** data);}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{typedef} \textcolor{keyword}{struct}}
+\DoxyCodeLine{19 \{}
+\DoxyCodeLine{20     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{structScene_a1c062129e5bf296ca1518318d9ba0223}{name}};}
+\DoxyCodeLine{21     \mbox{\hyperlink{SceneManager_8h_a0de5811fb00a092d19946f648e217822}{SceneCallback}} \mbox{\hyperlink{structScene_ac52c1860eea640c4c34ebf71c7701bb2}{onInit}};}
+\DoxyCodeLine{22     \mbox{\hyperlink{SceneManager_8h_a0de5811fb00a092d19946f648e217822}{SceneCallback}} \mbox{\hyperlink{structScene_ab61fcd172bc61247891db67778c30c2d}{onStart}};}
+\DoxyCodeLine{23     \mbox{\hyperlink{SceneManager_8h_a0de5811fb00a092d19946f648e217822}{SceneCallback}} \mbox{\hyperlink{structScene_a7aba78950ff1fa3bca690af530101ded}{onUpdate}};}
+\DoxyCodeLine{24     \mbox{\hyperlink{SceneManager_8h_a0de5811fb00a092d19946f648e217822}{SceneCallback}} \mbox{\hyperlink{structScene_a8be8a292c3bc2cfe74390b8075712175}{onFixedUpdate}};}
+\DoxyCodeLine{25     \mbox{\hyperlink{SceneManager_8h_a0de5811fb00a092d19946f648e217822}{SceneCallback}} \mbox{\hyperlink{structScene_ae67e854e49fc4747a30a9bbc35366814}{onRender}};}
+\DoxyCodeLine{26     \mbox{\hyperlink{SceneManager_8h_a0de5811fb00a092d19946f648e217822}{SceneCallback}} \mbox{\hyperlink{structScene_aa1a7dbb9640b9cd9a5cb2490eb471671}{onExit}};}
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} *\mbox{\hyperlink{structScene_afc797b5b46f5c39a3326803c65fa3ffa}{data}};}
+\DoxyCodeLine{28 \} \mbox{\hyperlink{structScene}{Scene}};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#define DefineScene(name, nameString, onInit, onStart, onUpdate, onFixedUpdate, onRender, onExit) static Scene name = (Scene) \{ nameString, onInit, onStart, onUpdate, onFixedUpdate, onRender, onExit \};}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{typedef} \textcolor{keyword}{struct}}
+\DoxyCodeLine{33 \{}
+\DoxyCodeLine{34     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structSceneManager__t_ae9283eb4e10a3190c983291fee5bb038}{running}};}
+\DoxyCodeLine{35     \mbox{\hyperlink{structScene}{Scene}} *\mbox{\hyperlink{structSceneManager__t_a992dc6ef9db9f6352f620e1572df81ea}{current}};}
+\DoxyCodeLine{36     \mbox{\hyperlink{structScene}{Scene}} *\mbox{\hyperlink{structSceneManager__t_a805e7b49b97971baf8e0ed976e3a72bc}{next}};}
+\DoxyCodeLine{37     \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}{SceneManagerState}} \mbox{\hyperlink{structSceneManager__t_ae5d3a540d09fd9792cd308b9b915c02d}{status}};}
+\DoxyCodeLine{38     \textcolor{keywordtype}{float} \mbox{\hyperlink{structSceneManager__t_a514098f10086810199f9071a28364275}{fixedUpdateTimer}};}
+\DoxyCodeLine{39     \textcolor{keywordtype}{double} \mbox{\hyperlink{structSceneManager__t_aae323ac1be06e4eec6eec43d39ea1ba4}{sceneInitTime}};}
+\DoxyCodeLine{40 \}\mbox{\hyperlink{structSceneManager__t}{SceneManager\_t}};}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 \textcolor{keyword}{static} \mbox{\hyperlink{structSceneManager__t}{SceneManager\_t}} SceneManager;}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{keywordtype}{bool} \mbox{\hyperlink{SceneManager_8h_a2bd418f8cf0cfd846187aa425508e13a}{SceneManagerInit}}(\mbox{\hyperlink{structScene}{Scene}} *startScene);}
+\DoxyCodeLine{45 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneManager_8h_a34fc76d9c8bf3347eab2047506e8589e}{SceneManagerLoop}}();}
+\DoxyCodeLine{46 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneManager_8h_ab525959780f82ddf181fe082d3742c42}{SceneManagerSetState}}(\mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}{SceneManagerState}});}
+\DoxyCodeLine{47 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneManager_8h_aef9251f159268f62c7f95bd9eefb2304}{SceneManagerSetNext}}(\mbox{\hyperlink{structScene}{Scene}} *nextScene);}
+\DoxyCodeLine{48 \textcolor{keywordtype}{double} \mbox{\hyperlink{SceneManager_8h_aa6e253ed235350ed22aeff0b3d1891ea}{SceneManagerGetTime}}();}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneManager_8h_a31c9496f24e3abe2523b68ffa3174bf7}{\_SceneManagerSceneInit}}();}
+\DoxyCodeLine{51 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneManager_8h_a8c7a28658b1fc5fd7a6d2ef2a7bccad9}{\_SceneManagerNext}}();}
+\DoxyCodeLine{52 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneManager_8h_a3a4995ee13b0d209315586f7be484117}{\_SceneManagerClose}}();}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_\_SCENEMANAGER\_H\_\_ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

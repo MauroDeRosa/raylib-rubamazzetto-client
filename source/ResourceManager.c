@@ -12,52 +12,53 @@
 int __ResourceManagerInit()
 {
     Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Initializing Resource Manager...");
-    __ResourceManagerMap = NULL;
+    __ResourceManagerMap = NULL; // sets Resource HashMap to NULL (required by uthash as initial HashMap pointer value)
     return RESOURCE_MANAGER_SUCCESS;
 }
 
 int __ResourceManagerAddResource(ResourceType type, const char *name, const char *path)
 {
-    char *fullName = __ResourceManagerGetResourceName(type, name);
-    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName);
+    char *fullName = __ResourceManagerGetResourceName(type, name); // creates temporary variable containing "ResourceType_name"
+    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
 
-    if (res == NULL)
+    if (res == NULL) // if resource named ResourceType_name is not in the Resource HashMap
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Adding %s resource \"%s\" path: \"%s\"", __ResourceTypeString[type], name, path);
-        res = malloc(sizeof(*res));
-        strcpy(res->name, fullName);
-        res->type = type;
-        HASH_ADD_STR(__ResourceManagerMap, name, res);
+        res = malloc(sizeof(*res)); // allocates memory for the given resource (__Resource_t)
+        strcpy(res->name, fullName); // sets Resource HashMap item key to ResourceType_name
+        res->type = type; //sets ResourceType to the given type
+        HASH_ADD_STR(__ResourceManagerMap, name, res); // adds the Resource to the Resource HashMap
     }
-    else
+    else // if resource named ResourceType_name is yet in the Resource HashMap
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Updating %s resource \"%s\" path: \"%s\"", __ResourceTypeString[type], name, path);
     }
 
-    strcpy(res->path, path);
-    free(fullName);
+    // TODO: check if the path is correct
+    strcpy(res->path, path); // sets Resource path or updates it
+    free(fullName); // free temporary variable containing "ResourceType_name"
     return RESOURCE_MANAGER_SUCCESS;
 }
 
 int __ResourceManagerRemoveResource(ResourceType type, const char *name)
 {
-    char *fullName = __ResourceManagerGetResourceName(type, name);
-    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName);
+    char *fullName = __ResourceManagerGetResourceName(type, name); // creates temporary variable containing "ResourceType_name"
+    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
 
-    if (res != NULL)
+    if (res != NULL) // if resource named ResourceType_name is in the Resource HashMap
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Removing %s resource \"%s\" path: \"%s\"", __ResourceTypeString[type], name, res->path);
-        HASH_DEL(__ResourceManagerMap, res);
-        free(res);
+        HASH_DEL(__ResourceManagerMap, res); // removes 'ResourceType_name' from the Resource HashMap
+        free(res); // free memory of the resource removed from the Resource HashMap (__Resource_t)
         return RESOURCE_MANAGER_SUCCESS;
     }
-    else
+    else // if resource named ResourceType_name is not in the Resource HashMap
     {
         Log(LOG_WARNING, RESOURCE_MANAGER_PREFIX "Can't remove %s resurce named \"%s\", resource doesn't exist", __ResourceTypeString[type], name);
         return RESOURCE_MANAGER_WARNING;
     }
 
-    free(fullName);
+    free(fullName); // free temporary variable containing "ResourceType_name"
 }
 
 int __ResourceManagerLoad()
@@ -65,11 +66,11 @@ int __ResourceManagerLoad()
     struct __Resource_t *res, *tmp;
     Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Loading resources...");
 
-    HASH_ITER(hh, __ResourceManagerMap, res, tmp)
+    HASH_ITER(hh, __ResourceManagerMap, res, tmp) // iterates the full Resource HashMap
     {
         Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Loading %s resource \"%s\"", __ResourceTypeString[res->type], res->name);
 
-        switch (res->type)
+        switch (res->type) // based on the resource type calls the right RayLib Load function and sets data.ResourceType with it
         {
             case RESOURCE_IMAGE:
                 res->data.Image = LoadImage(res->path);
@@ -97,18 +98,18 @@ int __ResourceManagerLoad()
 
 void *__ResourceManagerGet(ResourceType type, const char *name)
 {
-    char *fullName = __ResourceManagerGetResourceName(type, name);
-    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName);
+    char *fullName = __ResourceManagerGetResourceName(type, name); // creates temporary variable containing "ResourceType_name"
+    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
 
-    if (res != NULL)
+    if (res != NULL) // if resource named ResourceType_name is in the Resource HashMap
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Getting %s resource \"%s\"", __ResourceTypeString[type], name);
-        return __ResourceManagerGetResourceDataPointer(res);
+        return __ResourceManagerGetResourceDataPointer(res); // returns a void* pointer to the resource data.ResourceType
     }
-    else
+    else // if resource named ResourceType_name is not in the Resource HashMap
     {
         Log(LOG_WARNING, RESOURCE_MANAGER_PREFIX "Can't get %s resurce named \"%s\", resource doesn't exist", __ResourceTypeString[type], name);
-        return NULL;
+        return NULL; // returns NULL to indicate that the Resource doesn't exists
     }
 
     free(fullName);
@@ -119,11 +120,11 @@ int __ResourceManagerUnload()
     struct __Resource_t *res, *tmp;
     Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Unloading resources...");
 
-    HASH_ITER(hh, __ResourceManagerMap, res, tmp)
+    HASH_ITER(hh, __ResourceManagerMap, res, tmp) // iterates the full Resource HashMap
     {
         Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Unloading %s resource \"%s\"", __ResourceTypeString[res->type], res->name);
 
-        switch (res->type)
+        switch (res->type) // based on the resource type calls the right RayLib Unload function
         {
             case RESOURCE_IMAGE:
                 UnloadImage(res->data.Image);
@@ -154,10 +155,11 @@ int __ResourceManagerDestroy()
     struct __Resource_t *res, *tmp;
     Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Cleaning resource table...");
 
-    HASH_ITER(hh, __ResourceManagerMap, res, tmp)
+    HASH_ITER(hh, __ResourceManagerMap, res, tmp) // iterates the full Resource HashMap
     {
         Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Removing %s resource \"%s\"", __ResourceTypeString[res->type], res->name);
-        free(res);
+        HASH_DEL(__ResourceManagerMap, res); // removes 'ResourceType_name' from the Resource HashMap
+        free(res); // free memory of the resource removed from the Resource HashMap (__Resource_t)
     }
 
     return RESOURCE_MANAGER_SUCCESS;
@@ -169,13 +171,14 @@ char *__ResourceManagerGetResourceName(ResourceType type, const char *name)
     strcat(out, __ResourceTypeString[type]);
     strcat(out, "_");
     strcat(out, name);
-    return out;
+    out[100-1] = '\0';
+    return out; // returns "ResourceType_name"
 }
 
 struct __Resource_t *__ResourceManagerGetResourcePointer(char* fullName)
 {
     struct __Resource_t *res = NULL;
-    HASH_FIND_STR(__ResourceManagerMap, fullName, res);
+    HASH_FIND_STR(__ResourceManagerMap, fullName, res); // returns *__Resource_t if 'ResourceType_name' exists, NULL otherwise
     return res;
 }
 
@@ -183,7 +186,7 @@ void *__ResourceManagerGetResourceDataPointer(struct __Resource_t *resource)
 {
     if(resource == NULL) return NULL;
 
-    switch (resource->type)
+    switch (resource->type) // based on ResourceType returns pointer to resource's data.DataType
     {
     case RESOURCE_IMAGE:
         return &(resource->data.Image);

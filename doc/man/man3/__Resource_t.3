@@ -1,0 +1,64 @@
+.TH "__Resource_t" 3 "Fri May 6 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+__Resource_t \- The Resource Data Structure:  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ResourceManager\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "char \fBname\fP [100]"
+.br
+.RI "Key value for the HashMap\&. "
+.ti -1c
+.RI "\fBResourceType\fP \fBtype\fP"
+.br
+.RI "The Resource Type\&. "
+.ti -1c
+.RI "char \fBpath\fP [100]"
+.br
+.RI "The Resource file path\&. "
+.ti -1c
+.RI "\fB__Resource_u\fP \fBdata\fP"
+.br
+.RI "The Resource data union\&. "
+.ti -1c
+.RI "UT_hash_handle \fBhh\fP"
+.br
+.RI "Hash handler for the uthash library\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+The Resource Data Structure: 
+.SH "Field Documentation"
+.PP 
+.SS "\fB__Resource_u\fP __Resource_t::data"
+
+.PP
+The Resource data union\&. 
+.SS "UT_hash_handle __Resource_t::hh"
+
+.PP
+Hash handler for the uthash library\&. 
+.SS "char __Resource_t::name[100]"
+
+.PP
+Key value for the HashMap\&. 
+.SS "char __Resource_t::path[100]"
+
+.PP
+The Resource file path\&. 
+.SS "\fBResourceType\fP __Resource_t::type"
+
+.PP
+The Resource Type\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

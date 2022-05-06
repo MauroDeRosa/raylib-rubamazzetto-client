@@ -1,0 +1,392 @@
+.TH "include/ResourceManager.h" 3 "Fri May 6 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/ResourceManager.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <raylib\&.h>\fP
+.br
+\fC#include 'uthash/uthash\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "union \fB__Resource_u\fP"
+.br
+.RI "The Resource data union (all the possible resource data types) "
+.ti -1c
+.RI "struct \fB__Resource_t\fP"
+.br
+.RI "The Resource Data Structure: "
+.ti -1c
+.RI "struct \fB__ResourceManager_t\fP"
+.br
+.RI "The resource object structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBRESOURCE_MANAGER_SUCCESS\fP   0"
+.br
+.ti -1c
+.RI "#define \fBRESOURCE_MANAGER_WARNING\fP   1"
+.br
+.ti -1c
+.RI "#define \fBRESOURCE_MANAGER_ERROR\fP   2"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBResourceType\fP { \fBRESOURCE_IMAGE\fP, \fBRESOURCE_TEXTURE2D\fP, \fBRESOURCE_FONT\fP, \fBRESOURCE_WAVE\fP, \fBRESOURCE_SOUND\fP, \fBRESOURCE_MUSIC\fP }"
+.br
+.RI "The resource Type: Image, Texture, Font, Wave, Sound, Music\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "char * \fB__ResourceManagerGetResourceName\fP (\fBResourceType\fP type, const char *name)"
+.br
+.RI "Get a string in the form 'ResourceType_name'\&. "
+.ti -1c
+.RI "struct \fB__Resource_t\fP * \fB__ResourceManagerGetResourcePointer\fP (char *fullName)"
+.br
+.ti -1c
+.RI "void * \fB__ResourceManagerGetResourceDataPointer\fP (struct \fB__Resource_t\fP *resource)"
+.br
+.ti -1c
+.RI "int \fB__ResourceManagerInit\fP ()"
+.br
+.RI "Initialize the ResourceManager HashMap\&. "
+.ti -1c
+.RI "int \fB__ResourceManagerAddResource\fP (\fBResourceType\fP type, const char *name, const char *path)"
+.br
+.RI "adds a resource of the specified name, type and path to the __ResourceManagerMap HashMap "
+.ti -1c
+.RI "int \fB__ResourceManagerRemoveResource\fP (\fBResourceType\fP type, const char *name)"
+.br
+.RI "removes a resource of the specified name and type from the __ResourceManagerMap HashMap "
+.ti -1c
+.RI "int \fB__ResourceManagerLoad\fP ()"
+.br
+.RI "iterates through Resource HashMap and call the exact Raylib Load function for each Resource Type "
+.ti -1c
+.RI "void * \fB__ResourceManagerGet\fP (\fBResourceType\fP type, const char *name)"
+.br
+.RI "gets a pointer to the resource data of the specified ResourceType after being loaded through \fB__ResourceManagerLoad()\fP "
+.ti -1c
+.RI "int \fB__ResourceManagerUnload\fP ()"
+.br
+.RI "iterates through Resource HashMap and call the exact Raylib Unload function for each Resource Type "
+.ti -1c
+.RI "int \fB__ResourceManagerDestroy\fP ()"
+.br
+.RI "iterates through Resource HashMap, dereference HashMap elements and frees memory "
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define RESOURCE_MANAGER_ERROR   2"
+
+.SS "#define RESOURCE_MANAGER_SUCCESS   0"
+
+.SS "#define RESOURCE_MANAGER_WARNING   1"
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBResourceType\fP"
+
+.PP
+The resource Type: Image, Texture, Font, Wave, Sound, Music\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIRESOURCE_IMAGE \fP\fP
+
+.PP
+\fBSee also\fP
+.RS 4
+Image 
+.RE
+.PP
+
+.TP
+\fB\fIRESOURCE_TEXTURE2D \fP\fP
+
+.PP
+\fBSee also\fP
+.RS 4
+Texture2D 
+.RE
+.PP
+
+.TP
+\fB\fIRESOURCE_FONT \fP\fP
+
+.PP
+\fBSee also\fP
+.RS 4
+Font 
+.RE
+.PP
+
+.TP
+\fB\fIRESOURCE_WAVE \fP\fP
+
+.PP
+\fBSee also\fP
+.RS 4
+Wave 
+.RE
+.PP
+
+.TP
+\fB\fIRESOURCE_SOUND \fP\fP
+
+.PP
+\fBSee also\fP
+.RS 4
+Sound 
+.RE
+.PP
+
+.TP
+\fB\fIRESOURCE_MUSIC \fP\fP
+
+.PP
+\fBSee also\fP
+.RS 4
+Music 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "int __ResourceManagerAddResource (\fBResourceType\fP type, const char * name, const char * path)"
+
+.PP
+adds a resource of the specified name, type and path to the __ResourceManagerMap HashMap 
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP the type of the Resource to get 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBResourceType\fP 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP the name of the resource to get (key value of the Resource HashMap element) 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fB__Resource_t\fP 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIpath\fP the relative path to the Resource file, from the executable location 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+.RE
+.PP
+
+.SS "int __ResourceManagerDestroy ()"
+
+.PP
+iterates through Resource HashMap, dereference HashMap elements and frees memory 
+.PP
+\fBReturns\fP
+.RS 4
+int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+.RE
+.PP
+
+.SS "void * __ResourceManagerGet (\fBResourceType\fP type, const char * name)"
+
+.PP
+gets a pointer to the resource data of the specified ResourceType after being loaded through \fB__ResourceManagerLoad()\fP 
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP the type of the Resource to get 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBResourceType\fP 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP the name of the resource to get (key value of the Resource HashMap element) 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fB__Resource_t\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void* 
+.RE
+.PP
+
+.SS "void * __ResourceManagerGetResourceDataPointer (struct \fB__Resource_t\fP * resource)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fIresource\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void* 
+.RE
+.PP
+
+.SS "char * __ResourceManagerGetResourceName (\fBResourceType\fP type, const char * name)"
+
+.PP
+Get a string in the form 'ResourceType_name'\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP the type of the Resource to get 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBResourceType\fP 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP the name of the resource to get (key value of the Resource HashMap element) 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fB__Resource_t\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* a string containing 'ResourceType_name' (must be freed) 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBResourceType\fP 
+.PP
+\fB__Resource_t\fP 
+.RE
+.PP
+
+.SS "struct \fB__Resource_t\fP * __ResourceManagerGetResourcePointer (char * fullName)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fIfullName\fP A string in the form 'ResourceType_name' used as key value in the __ResourceManagerMap HashMap 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+struct __Resource_t* The pointer to the Resource element found in Hasmap\&. NULL if nothing was found 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fB__Resource_t\fP 
+.RE
+.PP
+
+.SS "int __ResourceManagerInit ()"
+
+.PP
+Initialize the ResourceManager HashMap\&. 
+.PP
+\fBSee also\fP
+.RS 4
+__ResourceManagerMap
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+.RE
+.PP
+
+.SS "int __ResourceManagerLoad ()"
+
+.PP
+iterates through Resource HashMap and call the exact Raylib Load function for each Resource Type 
+.PP
+\fBReturns\fP
+.RS 4
+int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+.RE
+.PP
+
+.SS "int __ResourceManagerRemoveResource (\fBResourceType\fP type, const char * name)"
+
+.PP
+removes a resource of the specified name and type from the __ResourceManagerMap HashMap 
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP the type of the Resource to get 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBResourceType\fP 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP the name of the resource to get (key value of the Resource HashMap element) 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fB__Resource_t\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+.RE
+.PP
+
+.SS "int __ResourceManagerUnload ()"
+
+.PP
+iterates through Resource HashMap and call the exact Raylib Unload function for each Resource Type 
+.PP
+\fBReturns\fP
+.RS 4
+int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

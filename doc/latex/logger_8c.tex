@@ -1,0 +1,113 @@
+\hypertarget{logger_8c}{}\doxysection{source/logger.c File Reference}
+\label{logger_8c}\index{source/logger.c@{source/logger.c}}
+{\ttfamily \#include \char`\"{}logger.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$raylib.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{logger_8c_a8878b128231510acd20620de417738e9}{LOG\+\_\+\+COLOR\+\_\+\+RESET}}~\char`\"{}\textbackslash{}033\mbox{[}0m\char`\"{}
+\item 
+\#define \mbox{\hyperlink{logger_8c_af6467cd567c0679c15e09913f77b9555}{LOG\+\_\+\+COLOR\+\_\+\+RED}}~\char`\"{}\textbackslash{}033\mbox{[}31m\char`\"{}
+\item 
+\#define \mbox{\hyperlink{logger_8c_ab3f1028e542649d3ad064ca8b9b123c0}{LOG\+\_\+\+COLOR\+\_\+\+GREEN}}~\char`\"{}\textbackslash{}033\mbox{[}32m\char`\"{}
+\item 
+\#define \mbox{\hyperlink{logger_8c_a74416ee2437694c75a11e27a158eeb5c}{LOG\+\_\+\+COLOR\+\_\+\+YELLOW}}~\char`\"{}\textbackslash{}033\mbox{[}33m\char`\"{}
+\item 
+\#define \mbox{\hyperlink{logger_8c_a10b19bd4d5d95ce6133e146d4054f307}{LOG\+\_\+\+COLOR\+\_\+\+BLUE}}~\char`\"{}\textbackslash{}033\mbox{[}34m\char`\"{}
+\item 
+\#define \mbox{\hyperlink{logger_8c_a60dbdafd43ffcb6fd7eec8319326d98b}{LOG\+\_\+\+COLOR\+\_\+\+MAGENTA}}~\char`\"{}\textbackslash{}033\mbox{[}35m\char`\"{}
+\item 
+\#define \mbox{\hyperlink{logger_8c_ac55e82ec5cb5e2dd18681cba15335f7a}{LOG\+\_\+\+COLOR\+\_\+\+CYAN}}~\char`\"{}\textbackslash{}033\mbox{[}36m\char`\"{}
+\item 
+\#define \mbox{\hyperlink{logger_8c_a627f154a92c4677c933e2f3e37e5a219}{LOG\+\_\+\+COLOR\+\_\+\+BLACK}}~\char`\"{}\textbackslash{}033\mbox{[}37m\char`\"{}
+\item 
+\#define \mbox{\hyperlink{logger_8c_ae3f3712508ba0255140a606aa1f42a39}{LOG\+\_\+\+COLOR\+\_\+\+WHITE}}~\char`\"{}\textbackslash{}033\mbox{[}38m\char`\"{}
+\item 
+\#define \mbox{\hyperlink{logger_8c_aad01554a11b2450d1c5d70f6eb92deea}{LOG\+\_\+\+COLOR\+\_\+\+DEFAULT}}~\char`\"{}\textbackslash{}033\mbox{[}39m\char`\"{}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{logger_8c_a50efecd539e8c683deefc7d586316c99}{Log}} (int msg\+Type, const char $\ast$text,...)
+\item 
+void \mbox{\hyperlink{logger_8c_a6f4e5ee19a361485f5fa51721deea0ad}{Log\+Va\+List}} (int msg\+Type, const char $\ast$text, va\+\_\+list args)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{logger_8c_a627f154a92c4677c933e2f3e37e5a219}\label{logger_8c_a627f154a92c4677c933e2f3e37e5a219}} 
+\index{logger.c@{logger.c}!LOG\_COLOR\_BLACK@{LOG\_COLOR\_BLACK}}
+\index{LOG\_COLOR\_BLACK@{LOG\_COLOR\_BLACK}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LOG\_COLOR\_BLACK}{LOG\_COLOR\_BLACK}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+COLOR\+\_\+\+BLACK~\char`\"{}\textbackslash{}033\mbox{[}37m\char`\"{}}
+
+\mbox{\Hypertarget{logger_8c_a10b19bd4d5d95ce6133e146d4054f307}\label{logger_8c_a10b19bd4d5d95ce6133e146d4054f307}} 
+\index{logger.c@{logger.c}!LOG\_COLOR\_BLUE@{LOG\_COLOR\_BLUE}}
+\index{LOG\_COLOR\_BLUE@{LOG\_COLOR\_BLUE}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LOG\_COLOR\_BLUE}{LOG\_COLOR\_BLUE}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+COLOR\+\_\+\+BLUE~\char`\"{}\textbackslash{}033\mbox{[}34m\char`\"{}}
+
+\mbox{\Hypertarget{logger_8c_ac55e82ec5cb5e2dd18681cba15335f7a}\label{logger_8c_ac55e82ec5cb5e2dd18681cba15335f7a}} 
+\index{logger.c@{logger.c}!LOG\_COLOR\_CYAN@{LOG\_COLOR\_CYAN}}
+\index{LOG\_COLOR\_CYAN@{LOG\_COLOR\_CYAN}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LOG\_COLOR\_CYAN}{LOG\_COLOR\_CYAN}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+COLOR\+\_\+\+CYAN~\char`\"{}\textbackslash{}033\mbox{[}36m\char`\"{}}
+
+\mbox{\Hypertarget{logger_8c_aad01554a11b2450d1c5d70f6eb92deea}\label{logger_8c_aad01554a11b2450d1c5d70f6eb92deea}} 
+\index{logger.c@{logger.c}!LOG\_COLOR\_DEFAULT@{LOG\_COLOR\_DEFAULT}}
+\index{LOG\_COLOR\_DEFAULT@{LOG\_COLOR\_DEFAULT}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LOG\_COLOR\_DEFAULT}{LOG\_COLOR\_DEFAULT}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+COLOR\+\_\+\+DEFAULT~\char`\"{}\textbackslash{}033\mbox{[}39m\char`\"{}}
+
+\mbox{\Hypertarget{logger_8c_ab3f1028e542649d3ad064ca8b9b123c0}\label{logger_8c_ab3f1028e542649d3ad064ca8b9b123c0}} 
+\index{logger.c@{logger.c}!LOG\_COLOR\_GREEN@{LOG\_COLOR\_GREEN}}
+\index{LOG\_COLOR\_GREEN@{LOG\_COLOR\_GREEN}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LOG\_COLOR\_GREEN}{LOG\_COLOR\_GREEN}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+COLOR\+\_\+\+GREEN~\char`\"{}\textbackslash{}033\mbox{[}32m\char`\"{}}
+
+\mbox{\Hypertarget{logger_8c_a60dbdafd43ffcb6fd7eec8319326d98b}\label{logger_8c_a60dbdafd43ffcb6fd7eec8319326d98b}} 
+\index{logger.c@{logger.c}!LOG\_COLOR\_MAGENTA@{LOG\_COLOR\_MAGENTA}}
+\index{LOG\_COLOR\_MAGENTA@{LOG\_COLOR\_MAGENTA}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LOG\_COLOR\_MAGENTA}{LOG\_COLOR\_MAGENTA}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+COLOR\+\_\+\+MAGENTA~\char`\"{}\textbackslash{}033\mbox{[}35m\char`\"{}}
+
+\mbox{\Hypertarget{logger_8c_af6467cd567c0679c15e09913f77b9555}\label{logger_8c_af6467cd567c0679c15e09913f77b9555}} 
+\index{logger.c@{logger.c}!LOG\_COLOR\_RED@{LOG\_COLOR\_RED}}
+\index{LOG\_COLOR\_RED@{LOG\_COLOR\_RED}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LOG\_COLOR\_RED}{LOG\_COLOR\_RED}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+COLOR\+\_\+\+RED~\char`\"{}\textbackslash{}033\mbox{[}31m\char`\"{}}
+
+\mbox{\Hypertarget{logger_8c_a8878b128231510acd20620de417738e9}\label{logger_8c_a8878b128231510acd20620de417738e9}} 
+\index{logger.c@{logger.c}!LOG\_COLOR\_RESET@{LOG\_COLOR\_RESET}}
+\index{LOG\_COLOR\_RESET@{LOG\_COLOR\_RESET}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LOG\_COLOR\_RESET}{LOG\_COLOR\_RESET}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+COLOR\+\_\+\+RESET~\char`\"{}\textbackslash{}033\mbox{[}0m\char`\"{}}
+
+\mbox{\Hypertarget{logger_8c_ae3f3712508ba0255140a606aa1f42a39}\label{logger_8c_ae3f3712508ba0255140a606aa1f42a39}} 
+\index{logger.c@{logger.c}!LOG\_COLOR\_WHITE@{LOG\_COLOR\_WHITE}}
+\index{LOG\_COLOR\_WHITE@{LOG\_COLOR\_WHITE}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LOG\_COLOR\_WHITE}{LOG\_COLOR\_WHITE}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+COLOR\+\_\+\+WHITE~\char`\"{}\textbackslash{}033\mbox{[}38m\char`\"{}}
+
+\mbox{\Hypertarget{logger_8c_a74416ee2437694c75a11e27a158eeb5c}\label{logger_8c_a74416ee2437694c75a11e27a158eeb5c}} 
+\index{logger.c@{logger.c}!LOG\_COLOR\_YELLOW@{LOG\_COLOR\_YELLOW}}
+\index{LOG\_COLOR\_YELLOW@{LOG\_COLOR\_YELLOW}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LOG\_COLOR\_YELLOW}{LOG\_COLOR\_YELLOW}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+COLOR\+\_\+\+YELLOW~\char`\"{}\textbackslash{}033\mbox{[}33m\char`\"{}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{logger_8c_a50efecd539e8c683deefc7d586316c99}\label{logger_8c_a50efecd539e8c683deefc7d586316c99}} 
+\index{logger.c@{logger.c}!Log@{Log}}
+\index{Log@{Log}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{Log()}{Log()}}
+{\footnotesize\ttfamily void Log (\begin{DoxyParamCaption}\item[{int}]{msg\+Type,  }\item[{const char $\ast$}]{text,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{logger_8c_a6f4e5ee19a361485f5fa51721deea0ad}\label{logger_8c_a6f4e5ee19a361485f5fa51721deea0ad}} 
+\index{logger.c@{logger.c}!LogVaList@{LogVaList}}
+\index{LogVaList@{LogVaList}!logger.c@{logger.c}}
+\doxysubsubsection{\texorpdfstring{LogVaList()}{LogVaList()}}
+{\footnotesize\ttfamily void Log\+Va\+List (\begin{DoxyParamCaption}\item[{int}]{msg\+Type,  }\item[{const char $\ast$}]{text,  }\item[{va\+\_\+list}]{args }\end{DoxyParamCaption})}
+

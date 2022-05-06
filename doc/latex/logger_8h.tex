@@ -1,0 +1,56 @@
+\hypertarget{logger_8h}{}\doxysection{include/logger.h File Reference}
+\label{logger_8h}\index{include/logger.h@{include/logger.h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$raylib.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{logger_8h_a0a33f398af42961c8d801ecf39eed674}{LOG\+\_\+\+STYLE\+\_\+\+INDENTED}}~0
+\item 
+\#define \mbox{\hyperlink{logger_8h_a0c48d9b40323b6d6446d0aa80dda384a}{LOG\+\_\+\+STYLE\+\_\+\+BLANK\+\_\+\+LINE}}~1
+\item 
+\#define \mbox{\hyperlink{logger_8h_a23573b62db433e2ae4c8324b2fabc484}{LOG\+\_\+\+STYLE\+\_\+\+USE\+\_\+\+COLOR}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{logger_8h_a6f4e5ee19a361485f5fa51721deea0ad}{Log\+Va\+List}} (int msg\+Type, const char $\ast$text, va\+\_\+list args)
+\item 
+void \mbox{\hyperlink{logger_8h_a50efecd539e8c683deefc7d586316c99}{Log}} (int msg\+Type, const char $\ast$text,...)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{logger_8h_a0c48d9b40323b6d6446d0aa80dda384a}\label{logger_8h_a0c48d9b40323b6d6446d0aa80dda384a}} 
+\index{logger.h@{logger.h}!LOG\_STYLE\_BLANK\_LINE@{LOG\_STYLE\_BLANK\_LINE}}
+\index{LOG\_STYLE\_BLANK\_LINE@{LOG\_STYLE\_BLANK\_LINE}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{LOG\_STYLE\_BLANK\_LINE}{LOG\_STYLE\_BLANK\_LINE}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+STYLE\+\_\+\+BLANK\+\_\+\+LINE~1}
+
+\mbox{\Hypertarget{logger_8h_a0a33f398af42961c8d801ecf39eed674}\label{logger_8h_a0a33f398af42961c8d801ecf39eed674}} 
+\index{logger.h@{logger.h}!LOG\_STYLE\_INDENTED@{LOG\_STYLE\_INDENTED}}
+\index{LOG\_STYLE\_INDENTED@{LOG\_STYLE\_INDENTED}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{LOG\_STYLE\_INDENTED}{LOG\_STYLE\_INDENTED}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+STYLE\+\_\+\+INDENTED~0}
+
+\mbox{\Hypertarget{logger_8h_a23573b62db433e2ae4c8324b2fabc484}\label{logger_8h_a23573b62db433e2ae4c8324b2fabc484}} 
+\index{logger.h@{logger.h}!LOG\_STYLE\_USE\_COLOR@{LOG\_STYLE\_USE\_COLOR}}
+\index{LOG\_STYLE\_USE\_COLOR@{LOG\_STYLE\_USE\_COLOR}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{LOG\_STYLE\_USE\_COLOR}{LOG\_STYLE\_USE\_COLOR}}
+{\footnotesize\ttfamily \#define LOG\+\_\+\+STYLE\+\_\+\+USE\+\_\+\+COLOR}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{logger_8h_a50efecd539e8c683deefc7d586316c99}\label{logger_8h_a50efecd539e8c683deefc7d586316c99}} 
+\index{logger.h@{logger.h}!Log@{Log}}
+\index{Log@{Log}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{Log()}{Log()}}
+{\footnotesize\ttfamily void Log (\begin{DoxyParamCaption}\item[{int}]{msg\+Type,  }\item[{const char $\ast$}]{text,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{logger_8h_a6f4e5ee19a361485f5fa51721deea0ad}\label{logger_8h_a6f4e5ee19a361485f5fa51721deea0ad}} 
+\index{logger.h@{logger.h}!LogVaList@{LogVaList}}
+\index{LogVaList@{LogVaList}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{LogVaList()}{LogVaList()}}
+{\footnotesize\ttfamily void Log\+Va\+List (\begin{DoxyParamCaption}\item[{int}]{msg\+Type,  }\item[{const char $\ast$}]{text,  }\item[{va\+\_\+list}]{args }\end{DoxyParamCaption})}
+

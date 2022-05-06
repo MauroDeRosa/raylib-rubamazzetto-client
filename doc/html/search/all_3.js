@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['data_0',['data',['../struct____Resource__t.html#a104305c1900fa35c9856ac2eceb3f35c',1,'__Resource_t::data()'],['../structScene.html#afc797b5b46f5c39a3326803c65fa3ffa',1,'Scene::data()']]],
+  ['definescene_1',['DefineScene',['../SceneManager_8h.html#a63d2bb7bfc31b40db4920f6526d9c999',1,'DefineScene():&#160;SceneManager.h'],['../SceneLoadScreen_8h.html#a4eeb7c0644e3bc20cf8bebf6de320bdb',1,'DefineScene(SceneLoadScreen, &quot;SceneLoadScreen&quot;, SceneLoadScreenOnInit, SceneLoadScreenOnStart, SceneLoadScreenOnUpdate, SceneLoadScreenOnFixedUpdate, SceneLoadScreenOnRender, SceneLoadScreenOnExit):&#160;SceneLoadScreen.h'],['../SceneSplashScreen_8h.html#a651d409f2b22f5931cf3e5f59be6e980',1,'DefineScene(SceneSplashScreen, &quot;SceneSplashScreen&quot;, SceneSplashScreenOnInit, SceneSplashScreenOnStart, SceneSplashScreenOnUpdate, SceneSplashScreenOnFixedUpdate, SceneSplashScreenOnRender, SceneSplashScreenOnExit):&#160;SceneSplashScreen.h'],['../SceneManager_8c.html#a0b9ac42b55bcbe022698ac4028974a0b',1,'DefineScene(SceneManagerInitialization, &quot;SceneManagerInitialization&quot;, NULL, NULL, NULL, NULL, NULL, NULL):&#160;SceneManager.c']]],
+  ['destroy_2',['Destroy',['../struct____ResourceManager__t.html#aab459a4c2f5d561253ea061eac9c0b8a',1,'__ResourceManager_t']]]
+];
