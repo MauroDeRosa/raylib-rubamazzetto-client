@@ -49,7 +49,7 @@ int __ResourceManagerRemoveResource(ResourceType type, const char *name)
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Removing %s resource \"%s\" path: \"%s\"", __ResourceTypeString[type], name, res->path);
         HASH_DEL(__ResourceManagerMap, res); // removes 'ResourceType_name' from the Resource HashMap
-        free(res); // free memory of the resource remove from the Resource HashMap (__Resource_t)
+        free(res); // free memory of the resource removed from the Resource HashMap (__Resource_t)
         return RESOURCE_MANAGER_SUCCESS;
     }
     else // if resource named ResourceType_name is not in the Resource HashMap
@@ -155,10 +155,11 @@ int __ResourceManagerDestroy()
     struct __Resource_t *res, *tmp;
     Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Cleaning resource table...");
 
-    HASH_ITER(hh, __ResourceManagerMap, res, tmp)
+    HASH_ITER(hh, __ResourceManagerMap, res, tmp) // iterates the full Resource HashMap
     {
         Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Removing %s resource \"%s\"", __ResourceTypeString[res->type], res->name);
-        free(res);
+        HASH_DEL(__ResourceManagerMap, res); // removes 'ResourceType_name' from the Resource HashMap
+        free(res); // free memory of the resource removed from the Resource HashMap (__Resource_t)
     }
 
     return RESOURCE_MANAGER_SUCCESS;
