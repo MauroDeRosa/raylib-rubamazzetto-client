@@ -45,14 +45,14 @@ int __ResourceManagerRemoveResource(ResourceType type, const char *name)
     char *fullName = __ResourceManagerGetResourceName(type, name); // creates temporary variable containing "ResourceType_name"
     struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
 
-    if (res != NULL) // if resource named ResourceType_name is not in the Resource HashMap
+    if (res != NULL) // if resource named ResourceType_name is in the Resource HashMap
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Removing %s resource \"%s\" path: \"%s\"", __ResourceTypeString[type], name, res->path);
         HASH_DEL(__ResourceManagerMap, res); // removes 'ResourceType_name' from the Resource HashMap
         free(res); // free memory of the resource remove from the Resource HashMap (__Resource_t)
         return RESOURCE_MANAGER_SUCCESS;
     }
-    else // if resource named ResourceType_name is yet in the Resource HashMap
+    else // if resource named ResourceType_name is not in the Resource HashMap
     {
         Log(LOG_WARNING, RESOURCE_MANAGER_PREFIX "Can't remove %s resurce named \"%s\", resource doesn't exist", __ResourceTypeString[type], name);
         return RESOURCE_MANAGER_WARNING;
@@ -98,18 +98,18 @@ int __ResourceManagerLoad()
 
 void *__ResourceManagerGet(ResourceType type, const char *name)
 {
-    char *fullName = __ResourceManagerGetResourceName(type, name);
-    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName);
+    char *fullName = __ResourceManagerGetResourceName(type, name); // creates temporary variable containing "ResourceType_name"
+    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
 
-    if (res != NULL)
+    if (res != NULL) // if resource named ResourceType_name is in the Resource HashMap
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Getting %s resource \"%s\"", __ResourceTypeString[type], name);
-        return __ResourceManagerGetResourceDataPointer(res);
+        return __ResourceManagerGetResourceDataPointer(res); // returns a void* pointer to the resource data.ResourceType
     }
-    else
+    else // if resource named ResourceType_name is not in the Resource HashMap
     {
         Log(LOG_WARNING, RESOURCE_MANAGER_PREFIX "Can't get %s resurce named \"%s\", resource doesn't exist", __ResourceTypeString[type], name);
-        return NULL;
+        return NULL; // returns NULL to indicate that the Resource doesn't exists
     }
 
     free(fullName);
