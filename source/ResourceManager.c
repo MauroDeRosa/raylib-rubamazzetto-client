@@ -18,24 +18,25 @@ int __ResourceManagerInit()
 
 int __ResourceManagerAddResource(ResourceType type, const char *name, const char *path)
 {
-    char *fullName = __ResourceManagerGetResourceName(type, name);
-    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName);
+    char *fullName = __ResourceManagerGetResourceName(type, name); // creates temporary variable containing "ResourceType_name"
+    struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
 
-    if (res == NULL)
+    if (res == NULL) // if resource named ResourceType_name is not in the Resource HashMap
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Adding %s resource \"%s\" path: \"%s\"", __ResourceTypeString[type], name, path);
-        res = malloc(sizeof(*res));
-        strcpy(res->name, fullName);
-        res->type = type;
-        HASH_ADD_STR(__ResourceManagerMap, name, res);
+        res = malloc(sizeof(*res)); // allocates memory for the given resource (__Resource_t)
+        strcpy(res->name, fullName); // sets Resource HashMap item key to ResourceType_name
+        res->type = type; //sets ResourceType to the given type
+        HASH_ADD_STR(__ResourceManagerMap, name, res); // adds the Resource to the Resource HashMap
     }
-    else
+    else // if resource named ResourceType_name is yet in the Resource HashMap
     {
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Updating %s resource \"%s\" path: \"%s\"", __ResourceTypeString[type], name, path);
     }
 
-    strcpy(res->path, path);
-    free(fullName);
+    // TODO: check if the path is correct
+    strcpy(res->path, path); // sets Resource path or updates it
+    free(fullName); // free temporary variable containing "ResourceType_name"
     return RESOURCE_MANAGER_SUCCESS;
 }
 
