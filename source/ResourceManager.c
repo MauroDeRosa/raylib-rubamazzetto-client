@@ -70,7 +70,7 @@ int __ResourceManagerLoad()
     {
         Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Loading %s resource \"%s\"", __ResourceTypeString[res->type], res->name);
 
-        switch (res->type)
+        switch (res->type) // based on the resource type calls the right RayLib Load function and sets data.ResourceType with it
         {
             case RESOURCE_IMAGE:
                 res->data.Image = LoadImage(res->path);
