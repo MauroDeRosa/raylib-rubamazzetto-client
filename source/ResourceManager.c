@@ -66,7 +66,7 @@ int __ResourceManagerLoad()
     struct __Resource_t *res, *tmp;
     Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Loading resources...");
 
-    HASH_ITER(hh, __ResourceManagerMap, res, tmp)
+    HASH_ITER(hh, __ResourceManagerMap, res, tmp) // iterates the full Resource HashMap
     {
         Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Loading %s resource \"%s\"", __ResourceTypeString[res->type], res->name);
 
