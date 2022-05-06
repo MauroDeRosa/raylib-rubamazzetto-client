@@ -186,7 +186,7 @@ void *__ResourceManagerGetResourceDataPointer(struct __Resource_t *resource)
 {
     if(resource == NULL) return NULL;
 
-    switch (resource->type)
+    switch (resource->type) // based on ResourceType returns pointer to resource's data.DataType
     {
     case RESOURCE_IMAGE:
         return &(resource->data.Image);
