@@ -68,8 +68,9 @@ source/ResourceManager/ResourceManager.c
 
 .in +1c
 .ti -1c
-.RI "static const char * \fBResourceTypeString\fP []"
+.RI "const char * \fBResourceTypeString\fP []"
 .br
+.RI "The string representation of the Resource Type\&. "
 .ti -1c
 .RI "struct \fBResource_t\fP * \fBResourceManagerMap\fP = NULL"
 .br
@@ -325,7 +326,7 @@ ResourceManager global variable to access Resource Manager's callbacks\&.
 
 .PP
 The Resource HashMap pointer\&. 
-.SS "const char* ResourceTypeString[]\fC [static]\fP"
+.SS "const char* ResourceTypeString[]"
 \fBInitial value:\fP
 .PP
 .nf
@@ -338,6 +339,8 @@ The Resource HashMap pointer\&.
     "Music"      
 }
 .fi
+.PP
+The string representation of the Resource Type\&. 
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.
