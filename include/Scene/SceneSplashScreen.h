@@ -3,12 +3,12 @@
 
 #include "Scene.h"
 
-void SplashScreenStart();
-void SplashScreenUpdate();
-void SplashScreenFixedUpdate();
-void SplashScreenRender();
-void SplashScreenExit();
+void SceneSplashScreenStart();
+void SceneSplashScreenUpdate();
+void SceneSplashScreenFixedUpdate();
+void SceneSplashScreenRender();
+void SceneSplashScreenExit();
 
-DefineScene(SplashScreen, "SplashScreen",  SplashScreenStart, SplashScreenUpdate, SplashScreenFixedUpdate, SplashScreenRender, SplashScreenExit);
+DefineScene(SceneSplashScreen, "SceneSplashScreen",  SceneSplashScreenStart, SceneSplashScreenUpdate, SceneSplashScreenFixedUpdate, SceneSplashScreenRender, SceneSplashScreenExit);
 
 #endif /* __SCENESPLASHSCREEN_H__ */

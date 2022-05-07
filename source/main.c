@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 
     SceneManager.Init();
     RegisterScenes();
-    SceneManager.Start("SplashScreen");
+    SceneManager.Start("SceneSplashScreen");
 
     ResourceManager.Unload();
     ResourceManager.Destroy();

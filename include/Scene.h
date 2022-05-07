@@ -33,7 +33,5 @@ static struct Scene_t name = { \
     Exit \
 };
 
-#define SCENE_DATA_BEGIN typedef struct {
-#define SCENE_DATA_END } __data_t; __data_t $;
 
 #endif /* __SCENE_H__ */

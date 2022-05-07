@@ -19,15 +19,16 @@
 		"scope": "c",
 		"body": [
 			"#include \"Scene/${TM_FILENAME_BASE:default}.h\" \n",
-			"SCENE_DATA_BEGIN \n",
-			"// insert your scene variables here",
-			"int example;",
-			"SCENE_DATA_END \n",
-			"void ${TM_FILENAME_BASE:default}Start()\n{\n\t\n}\n",
-			"void ${TM_FILENAME_BASE:default}Update()\n{\n\t\n}\n",
-			"void ${TM_FILENAME_BASE:default}FixedUpdate()\n{\n\t\n}\n",
-			"void ${TM_FILENAME_BASE:default}Render()\n{\n\t\n}\n",
-			"void ${TM_FILENAME_BASE:default}Exit()\n{\n\t\n}\n",
+			
+			"struct ${TM_FILENAME_BASE:default}Data\n{",
+			"\t// insert your scene variables here",
+			"\tint example;",
+			"}; struct ${TM_FILENAME_BASE:default}Data _${TM_FILENAME_BASE:default}Data;",
+			"void ${TM_FILENAME_BASE:default}Start()\n{\n\tstruct ${TM_FILENAME_BASE:default}Data* $ = &_${TM_FILENAME_BASE:default}Data;\n\t\n}\n",
+			"void ${TM_FILENAME_BASE:default}Update()\n{\n\tstruct ${TM_FILENAME_BASE:default}Data* $ = &_${TM_FILENAME_BASE:default}Data;\n\t\n}\n",
+			"void ${TM_FILENAME_BASE:default}FixedUpdate()\n{\n\tstruct ${TM_FILENAME_BASE:default}Data* $ = &_${TM_FILENAME_BASE:default}Data;\n\t\n}\n",
+			"void ${TM_FILENAME_BASE:default}Render()\n{\n\tstruct ${TM_FILENAME_BASE:default}Data* $ = &_${TM_FILENAME_BASE:default}Data;\n\t\n}\n",
+			"void ${TM_FILENAME_BASE:default}Exit()\n{\n\tstruct ${TM_FILENAME_BASE:default}Data* $ = &_${TM_FILENAME_BASE:default}Data;\n\t\n}\n",
 		],
 		"description": "A Scene Source for my SceneManager"
 	}

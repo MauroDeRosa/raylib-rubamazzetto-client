@@ -118,12 +118,14 @@ int SceneManagerLoop()
 
             if(SceneManager.attr.fixedStepTimer > SCENE_MANAGER_FIXED_TIME_STEP)
             {
-                //Log(LOG_DEBUG, "time passed before last fixedUpdate %f", )
                 SceneManager.attr.currentScene->FixedUpdate();
                 SceneManager.attr.fixedStepTimer = 0;
             }
             
+            BeginDrawing();
+            ClearBackground(BLACK);
             SceneManager.attr.currentScene->Render();
+            EndDrawing();
 
             if (WindowShouldClose())
             {

@@ -1,40 +1,38 @@
-#include "Scene/SceneSplashScreen.h"
+#include "Scene/SceneSplashScreen.h" 
 
-SCENE_DATA_BEGIN
-
-double lastFixedUpdate;
-Texture2D *hisoka;
-
-SCENE_DATA_END
-
-void SplashScreenStart()
+struct SceneSplashScreenData
 {
-    ResourceManager.AddResource(RESOURCE_TEXTURE2D, "hisoka", "./resources/Texture/hisoka.png");
-    ResourceManager.Load();
-    $.lastFixedUpdate = 0;
-    $.hisoka = ResourceManager.Get(RESOURCE_TEXTURE2D, "hisoka");
+    // insert your scene variables here
+    int example;
+}; struct SceneSplashScreenData _SceneSplashScreenData;
+void SceneSplashScreenStart()
+{
+    struct SceneSplashScreenData* $ = &_SceneSplashScreenData;
+    
 }
 
-void SplashScreenUpdate()
+void SceneSplashScreenUpdate()
 {
-    if(SceneManager.Time() > 5.0f)
-        SceneManager.Next("END");
+    struct SceneSplashScreenData* $ = &_SceneSplashScreenData;
+    
 }
 
-void SplashScreenFixedUpdate()
+void SceneSplashScreenFixedUpdate()
 {
-    $.lastFixedUpdate = SceneManager.Time();
+    struct SceneSplashScreenData* $ = &_SceneSplashScreenData;
+    if(SceneManager.Time() >= 2.0f)
+        SceneManager.Next("NewScene");
 }
 
-void SplashScreenRender()
+void SceneSplashScreenRender()
 {
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-    DrawTexture(*$.hisoka, 0, 0, WHITE);
-    EndDrawing();
+    struct SceneSplashScreenData* $ = &_SceneSplashScreenData;
+
+    DrawText("diocane", 100, 100, 20, RED);    
 }
 
-void SplashScreenExit()
+void SceneSplashScreenExit()
 {
-
+    struct SceneSplashScreenData* $ = &_SceneSplashScreenData;
+    
 }
