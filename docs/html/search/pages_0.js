@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ruba_20mazzetto_0',['Ruba Mazzetto',['../index.html',1,'']]]
+  ['traccia_0',['Traccia',['../index.html',1,'']]]
 ];

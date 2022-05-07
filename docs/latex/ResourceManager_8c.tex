@@ -15,9 +15,9 @@
 int \mbox{\hyperlink{ResourceManager_8c_ab072b5bc386167d2ac82da8cd7a9dcb0}{Resource\+Manager\+Init}} ()
 \begin{DoxyCompactList}\small\item\em Initialize the Resource\+Manager Hash\+Map. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{ResourceManager_8c_ad6dde22ce22d60b32e0b310b80aa33da}{Resource\+Manager\+Add\+Resource}} (\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}} type, const char $\ast$name, const char $\ast$path)
-\begin{DoxyCompactList}\small\item\em adds a resource of the specified name, type and path to the \+\_\+\+\_\+\+Resource\+Manager\+Map Hash\+Map \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em adds a resource of the specified name, type and path to the Resource\+Manager\+Map Hash\+Map \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{ResourceManager_8c_a9528ce63838878069a5d865321c26c76}{Resource\+Manager\+Remove\+Resource}} (\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}} type, const char $\ast$name)
-\begin{DoxyCompactList}\small\item\em removes a resource of the specified name and type from the \+\_\+\+\_\+\+Resource\+Manager\+Map Hash\+Map \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em removes a resource of the specified name and type from the Resource\+Manager\+Map Hash\+Map \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{ResourceManager_8c_ab76da0fa0f4f42a575b54ce194ed5265}{Resource\+Manager\+Load}} ()
 \begin{DoxyCompactList}\small\item\em iterates through Resource Hash\+Map and call the exact Raylib Load function for each Resource Type \end{DoxyCompactList}\item 
 void $\ast$ \mbox{\hyperlink{ResourceManager_8c_aee002a092b52cbebf3cc20f78b29948e}{Resource\+Manager\+Get}} (\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{Resource\+Type}} type, const char $\ast$name)
@@ -32,6 +32,15 @@ struct \mbox{\hyperlink{structResource__t}{Resource\+\_\+t}} $\ast$ \mbox{\hyper
 \item 
 void $\ast$ \mbox{\hyperlink{ResourceManager_8c_ad1c90bf9d60af7f42eb2d16ac2469632}{Resource\+Manager\+Get\+Resource\+Data\+Pointer}} (struct \mbox{\hyperlink{structResource__t}{Resource\+\_\+t}} $\ast$resource)
 \end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static const char $\ast$ \mbox{\hyperlink{ResourceManager_8c_a78a6320fae4963480cbd4303dcfd08a2}{Resource\+Type\+String}} \mbox{[}$\,$\mbox{]}
+\item 
+struct \mbox{\hyperlink{structResource__t}{Resource\+\_\+t}} $\ast$ \mbox{\hyperlink{ResourceManager_8c_ac6b8a7b4856975b29faab063eafd116f}{Resource\+Manager\+Map}} = NULL
+\begin{DoxyCompactList}\small\item\em The Resource Hash\+Map pointer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structResourceManager__t}{Resource\+Manager\+\_\+t}} \mbox{\hyperlink{ResourceManager_8c_a812f87e969e6ed96741ab63a86adfaa2}{Resource\+Manager}}
+\begin{DoxyCompactList}\small\item\em Resource\+Manager global variable to access Resource Manager\textquotesingle{}s callbacks. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Macro Definition Documentation}
@@ -52,7 +61,7 @@ void $\ast$ \mbox{\hyperlink{ResourceManager_8c_ad1c90bf9d60af7f42eb2d16ac246963
 
 
 
-adds a resource of the specified name, type and path to the \+\_\+\+\_\+\+Resource\+Manager\+Map Hash\+Map 
+adds a resource of the specified name, type and path to the Resource\+Manager\+Map Hash\+Map 
 
 
 \begin{DoxyParams}{Parameters}
@@ -176,7 +185,7 @@ char$\ast$ a string containing \char`\"{}\+Resource\+Type\+\_\+name\char`\"{} (m
 
 
 \begin{DoxyParams}{Parameters}
-{\em full\+Name} & A string in the form \char`\"{}\+Resource\+Type\+\_\+name\char`\"{} used as key value in the \+\_\+\+\_\+\+Resource\+Manager\+Map Hash\+Map \\
+{\em full\+Name} & A string in the form \char`\"{}\+Resource\+Type\+\_\+name\char`\"{} used as key value in the Resource\+Manager\+Map Hash\+Map \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -196,7 +205,7 @@ struct Resource\+\_\+t$\ast$ The pointer to the Resource element found in Hasmap
 Initialize the Resource\+Manager Hash\+Map. 
 
 \begin{DoxySeeAlso}{See also}
-\+\_\+\+\_\+\+Resource\+Manager\+Map
+\mbox{\hyperlink{ResourceManager_8h_ac6b8a7b4856975b29faab063eafd116f}{Resource\+Manager\+Map}}
 \end{DoxySeeAlso}
 \begin{DoxyReturn}{Returns}
 int APP\+\_\+\+ERROR or APP\+\_\+\+WARNING or APP\+\_\+\+SUCCESS 
@@ -222,7 +231,7 @@ int APP\+\_\+\+ERROR or APP\+\_\+\+WARNING or APP\+\_\+\+SUCCESS
 
 
 
-removes a resource of the specified name and type from the \+\_\+\+\_\+\+Resource\+Manager\+Map Hash\+Map 
+removes a resource of the specified name and type from the Resource\+Manager\+Map Hash\+Map 
 
 
 \begin{DoxyParams}{Parameters}
@@ -256,3 +265,57 @@ iterates through Resource Hash\+Map and call the exact Raylib Unload function fo
 \begin{DoxyReturn}{Returns}
 int APP\+\_\+\+ERROR or APP\+\_\+\+WARNING or APP\+\_\+\+SUCCESS 
 \end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{ResourceManager_8c_a812f87e969e6ed96741ab63a86adfaa2}\label{ResourceManager_8c_a812f87e969e6ed96741ab63a86adfaa2}} 
+\index{ResourceManager.c@{ResourceManager.c}!ResourceManager@{ResourceManager}}
+\index{ResourceManager@{ResourceManager}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{ResourceManager}{ResourceManager}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structResourceManager__t}{Resource\+Manager\+\_\+t}} Resource\+Manager}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    \mbox{\hyperlink{ResourceManager_8c_ab072b5bc386167d2ac82da8cd7a9dcb0}{ResourceManagerInit}},            }
+\DoxyCodeLine{    \mbox{\hyperlink{ResourceManager_8c_ad6dde22ce22d60b32e0b310b80aa33da}{ResourceManagerAddResource}},     }
+\DoxyCodeLine{    \mbox{\hyperlink{ResourceManager_8c_a9528ce63838878069a5d865321c26c76}{ResourceManagerRemoveResource}},  }
+\DoxyCodeLine{    \mbox{\hyperlink{ResourceManager_8c_ab76da0fa0f4f42a575b54ce194ed5265}{ResourceManagerLoad}},            }
+\DoxyCodeLine{    \mbox{\hyperlink{ResourceManager_8c_aee002a092b52cbebf3cc20f78b29948e}{ResourceManagerGet}},             }
+\DoxyCodeLine{    \mbox{\hyperlink{ResourceManager_8c_a1276df3db22db0e74c06323210297193}{ResourceManagerUnload}},          }
+\DoxyCodeLine{    \mbox{\hyperlink{ResourceManager_8c_af5aa7308b357784697c1cb201c7310b1}{ResourceManagerDestroy}},         }
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Resource\+Manager global variable to access Resource Manager\textquotesingle{}s callbacks. 
+
+\mbox{\Hypertarget{ResourceManager_8c_ac6b8a7b4856975b29faab063eafd116f}\label{ResourceManager_8c_ac6b8a7b4856975b29faab063eafd116f}} 
+\index{ResourceManager.c@{ResourceManager.c}!ResourceManagerMap@{ResourceManagerMap}}
+\index{ResourceManagerMap@{ResourceManagerMap}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{ResourceManagerMap}{ResourceManagerMap}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structResource__t}{Resource\+\_\+t}}$\ast$ Resource\+Manager\+Map = NULL}
+
+
+
+The Resource Hash\+Map pointer. 
+
+\mbox{\Hypertarget{ResourceManager_8c_a78a6320fae4963480cbd4303dcfd08a2}\label{ResourceManager_8c_a78a6320fae4963480cbd4303dcfd08a2}} 
+\index{ResourceManager.c@{ResourceManager.c}!ResourceTypeString@{ResourceTypeString}}
+\index{ResourceTypeString@{ResourceTypeString}!ResourceManager.c@{ResourceManager.c}}
+\doxysubsubsection{\texorpdfstring{ResourceTypeString}{ResourceTypeString}}
+{\footnotesize\ttfamily const char$\ast$ Resource\+Type\+String\mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    \textcolor{stringliteral}{"{}Image"{}},     }
+\DoxyCodeLine{    \textcolor{stringliteral}{"{}Texture2D"{}}, }
+\DoxyCodeLine{    \textcolor{stringliteral}{"{}Font"{}},      }
+\DoxyCodeLine{    \textcolor{stringliteral}{"{}Wave"{}},      }
+\DoxyCodeLine{    \textcolor{stringliteral}{"{}Sound"{}},     }
+\DoxyCodeLine{    \textcolor{stringliteral}{"{}Music"{}}      }
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}

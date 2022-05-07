@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['_5fnewscenedata_0',['_NewSceneData',['../NewScene_8c.html#abf33f62c183b229b8cad0e5b29488e60',1,'NewScene.c']]],
-  ['_5fscenesplashscreendata_1',['_SceneSplashScreenData',['../SceneSplashScreen_8c.html#a131df29bb366fb886ae1991c313626a0',1,'SceneSplashScreen.c']]]
+  ['addresource_0',['AddResource',['../structResourceManager__t.html#a3286efd59f9d7bc5b660428f922ca372',1,'ResourceManager_t']]],
+  ['attr_1',['attr',['../structSceneManager__t.html#a54cd5f7c337b5e16a9eaa7941407f297',1,'SceneManager_t']]]
 ];

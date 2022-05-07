@@ -35,12 +35,6 @@ int SceneManagerNext(const char *name);
 int SceneManagerLoop();
 int SceneManagerEnd();
 
-static SceneManager_t SceneManager = {
-    (SceneManagerAttribute_t){ NULL, NULL, NULL, false, 0},
-    SceneManagerInit,
-    SceneManagerRegister,
-    SceneManagerStart,
-    SceneManagerTime,
-    SceneManagerNext};
+extern SceneManager_t SceneManager;
 
 #endif /* __SCENEMANAGER_H__ */

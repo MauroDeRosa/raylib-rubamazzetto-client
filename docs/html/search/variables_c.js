@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['map_0',['map',['../structSceneManagerAttribute__t.html#a2de9ff38cdede6790f078834b0e00ec3',1,'SceneManagerAttribute_t']]],
-  ['maxdstsize_1',['maxDstSize',['../lz4_8h.html#a6c2299958529e6037c34f9b36f25f4d0',1,'lz4.h']]],
-  ['maxoutputsize_2',['maxOutputSize',['../lz4_8h.html#ab258c6d1e889ad8640854042a5898eb4',1,'lz4.h']]],
-  ['music_3',['Music',['../unionResource__u.html#a714c3048eaa1eb02f43027c739162fca',1,'Resource_u']]]
+  ['register_0',['Register',['../structSceneManager__t.html#a24a137cffd72068fa390727e325ed2fc',1,'SceneManager_t']]],
+  ['removeresource_1',['RemoveResource',['../structResourceManager__t.html#a181c009aca0edb849b182882473ad27a',1,'ResourceManager_t']]],
+  ['render_2',['Render',['../structScene__t.html#a4516ec6494a2248f05fdcf09edda54c4',1,'Scene_t']]],
+  ['resourcemanager_3',['ResourceManager',['../ResourceManager_8h.html#a812f87e969e6ed96741ab63a86adfaa2',1,'ResourceManager():&#160;ResourceManager.c'],['../ResourceManager_8c.html#a812f87e969e6ed96741ab63a86adfaa2',1,'ResourceManager():&#160;ResourceManager.c']]],
+  ['resourcemanagermap_4',['ResourceManagerMap',['../ResourceManager_8h.html#ac6b8a7b4856975b29faab063eafd116f',1,'ResourceManagerMap():&#160;ResourceManager.c'],['../ResourceManager_8c.html#ac6b8a7b4856975b29faab063eafd116f',1,'ResourceManagerMap():&#160;ResourceManager.c']]],
+  ['resourcetypestring_5',['ResourceTypeString',['../ResourceManager_8h.html#a78a6320fae4963480cbd4303dcfd08a2',1,'ResourceTypeString():&#160;ResourceManager.h'],['../ResourceManager_8c.html#a78a6320fae4963480cbd4303dcfd08a2',1,'ResourceTypeString():&#160;ResourceManager.c']]]
 ];

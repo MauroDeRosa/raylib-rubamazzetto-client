@@ -7,6 +7,15 @@
 
 #define SCENE_MANAGER_FIXED_TIME_STEP (1.0f / 2.0f)
 
+SceneManager_t SceneManager = {
+    (SceneManagerAttribute_t){ NULL, NULL, NULL, false, 0},     ///< @see SceneManagerAttribute_t
+    SceneManagerInit,                                           ///< @see SceneManagerInit
+    SceneManagerRegister,                                       ///< @see SceneManagerRegister
+    SceneManagerStart,                                          ///< @see SceneManagerStart
+    SceneManagerTime,                                           ///< @see SceneManagerTime
+    SceneManagerNext                                            ///< @see SceneManagerNext
+};
+
 int SceneManagerInit()
 {
     Log(LOG_INFO, SCENE_MANAGER_PREFIX "Initializing Scene Manager...");

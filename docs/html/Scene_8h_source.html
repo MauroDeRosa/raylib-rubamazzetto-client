@@ -104,12 +104,12 @@ $(document).ready(function(){initNavTree('Scene_8h_source.html',''); initResizab
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="SceneManager_8h.html">SceneManager/SceneManager.h</a>&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="ResourceManager_8h.html">ResourceManager/ResourceManager.h</a>&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="uthash_8h.html">external/uthash/uthash.h</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;external/uthash/uthash.h&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="logger_8h.html">utils/logger.h</a>&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;raylib.h&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="raygui_8h.html">external/raygui.h</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;external/raygui.h&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="structScene__t.html">   13</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structScene__t.html">Scene_t</a></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('Scene_8h_source.html',''); initResizab
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="structScene__t.html#ab531ed78ded9d73b9425cea08035c328">   20</a></span>    void (*<a class="code hl_variable" href="structScene__t.html#ab531ed78ded9d73b9425cea08035c328">FixedUpdate</a>)();</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structScene__t.html#a4516ec6494a2248f05fdcf09edda54c4">   21</a></span>    void (*<a class="code hl_variable" href="structScene__t.html#a4516ec6494a2248f05fdcf09edda54c4">Render</a>)();</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="structScene__t.html#a652d4d507376fb58f1ddafa655dd53b8">   22</a></span>    void (*<a class="code hl_variable" href="structScene__t.html#a652d4d507376fb58f1ddafa655dd53b8">Exit</a>)();</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="structScene__t.html#ad5b711bacdde67452f52354eb0dd7718">   23</a></span>    <a class="code hl_struct" href="structUT__hash__handle.html">UT_hash_handle</a> <a class="code hl_variable" href="structScene__t.html#ad5b711bacdde67452f52354eb0dd7718">hh</a>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="structScene__t.html#ad5b711bacdde67452f52354eb0dd7718">   23</a></span>    UT_hash_handle <a class="code hl_variable" href="structScene__t.html#ad5b711bacdde67452f52354eb0dd7718">hh</a>;</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>};</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="Scene_8h.html#ac1f60aa25a1194159f8016de322b43b3">   26</a></span><span class="preprocessor">#define DefineScene(name, nameString, Start, Update, FixedUpdate, Render, Exit) \</span></div>
@@ -140,7 +140,6 @@ $(document).ready(function(){initNavTree('Scene_8h_source.html',''); initResizab
 <div class="ttc" id="aResourceManager_8h_html"><div class="ttname"><a href="ResourceManager_8h.html">ResourceManager.h</a></div></div>
 <div class="ttc" id="aSceneManager_8h_html"><div class="ttname"><a href="SceneManager_8h.html">SceneManager.h</a></div></div>
 <div class="ttc" id="alogger_8h_html"><div class="ttname"><a href="logger_8h.html">logger.h</a></div></div>
-<div class="ttc" id="araygui_8h_html"><div class="ttname"><a href="raygui_8h.html">raygui.h</a></div></div>
 <div class="ttc" id="astructScene__t_html"><div class="ttname"><a href="structScene__t.html">Scene_t</a></div><div class="ttdef"><b>Definition:</b> Scene.h:14</div></div>
 <div class="ttc" id="astructScene__t_html_a3cca5e7f5e39527d319ba4a9db747919"><div class="ttname"><a href="structScene__t.html#a3cca5e7f5e39527d319ba4a9db747919">Scene_t::startTime</a></div><div class="ttdeci">double startTime</div><div class="ttdef"><b>Definition:</b> Scene.h:16</div></div>
 <div class="ttc" id="astructScene__t_html_a4516ec6494a2248f05fdcf09edda54c4"><div class="ttname"><a href="structScene__t.html#a4516ec6494a2248f05fdcf09edda54c4">Scene_t::Render</a></div><div class="ttdeci">void(* Render)()</div><div class="ttdef"><b>Definition:</b> Scene.h:21</div></div>
@@ -150,8 +149,6 @@ $(document).ready(function(){initNavTree('Scene_8h_source.html',''); initResizab
 <div class="ttc" id="astructScene__t_html_abe190aad531d292437ec94b43ead26b3"><div class="ttname"><a href="structScene__t.html#abe190aad531d292437ec94b43ead26b3">Scene_t::Update</a></div><div class="ttdeci">void(* Update)()</div><div class="ttdef"><b>Definition:</b> Scene.h:19</div></div>
 <div class="ttc" id="astructScene__t_html_ad5b711bacdde67452f52354eb0dd7718"><div class="ttname"><a href="structScene__t.html#ad5b711bacdde67452f52354eb0dd7718">Scene_t::hh</a></div><div class="ttdeci">UT_hash_handle hh</div><div class="ttdef"><b>Definition:</b> Scene.h:23</div></div>
 <div class="ttc" id="astructScene__t_html_aff1f6aadfaa367d820dc523687c8955b"><div class="ttname"><a href="structScene__t.html#aff1f6aadfaa367d820dc523687c8955b">Scene_t::Start</a></div><div class="ttdeci">void(* Start)()</div><div class="ttdef"><b>Definition:</b> Scene.h:18</div></div>
-<div class="ttc" id="astructUT__hash__handle_html"><div class="ttname"><a href="structUT__hash__handle.html">UT_hash_handle</a></div><div class="ttdef"><b>Definition:</b> uthash.h:1127</div></div>
-<div class="ttc" id="authash_8h_html"><div class="ttname"><a href="uthash_8h.html">uthash.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

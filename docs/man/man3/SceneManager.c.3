@@ -48,6 +48,13 @@ source/SceneManager/SceneManager.c
 .RI "int \fBSceneManagerEnd\fP ()"
 .br
 .in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBSceneManager_t\fP \fBSceneManager\fP"
+.br
+.in -1c
 .SH "Macro Definition Documentation"
 .PP 
 .SS "#define SCENE_MANAGER_FIXED_TIME_STEP   (1\&.0f / 2\&.0f)"
@@ -70,6 +77,21 @@ source/SceneManager/SceneManager.c
 
 .SS "double SceneManagerTime ()"
 
+.SH "Variable Documentation"
+.PP 
+.SS "\fBSceneManager_t\fP SceneManager"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    (SceneManagerAttribute_t){ NULL, NULL, NULL, false, 0},     
+    SceneManagerInit,                                           
+    SceneManagerRegister,                                       
+    SceneManagerStart,                                          
+    SceneManagerTime,                                           
+    SceneManagerNext                                            
+}
+.fi
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

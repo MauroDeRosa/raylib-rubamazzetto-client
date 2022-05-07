@@ -57,11 +57,11 @@ include/ResourceManager/ResourceManager.h
 .ti -1c
 .RI "int \fBResourceManagerAddResource\fP (\fBResourceType\fP type, const char *name, const char *path)"
 .br
-.RI "adds a resource of the specified name, type and path to the __ResourceManagerMap HashMap "
+.RI "adds a resource of the specified name, type and path to the ResourceManagerMap HashMap "
 .ti -1c
 .RI "int \fBResourceManagerRemoveResource\fP (\fBResourceType\fP type, const char *name)"
 .br
-.RI "removes a resource of the specified name and type from the __ResourceManagerMap HashMap "
+.RI "removes a resource of the specified name and type from the ResourceManagerMap HashMap "
 .ti -1c
 .RI "int \fBResourceManagerLoad\fP ()"
 .br
@@ -78,6 +78,22 @@ include/ResourceManager/ResourceManager.h
 .RI "int \fBResourceManagerDestroy\fP ()"
 .br
 .RI "iterates through Resource HashMap, dereference HashMap elements and frees memory "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBResourceTypeString\fP []"
+.br
+.RI "The string representation of the Resource Type\&. "
+.ti -1c
+.RI "struct \fBResource_t\fP * \fBResourceManagerMap\fP"
+.br
+.RI "The Resource HashMap pointer\&. "
+.ti -1c
+.RI "\fBResourceManager_t\fP \fBResourceManager\fP"
+.br
+.RI "ResourceManager global variable to access Resource Manager's callbacks\&. "
 .in -1c
 .SH "Enumeration Type Documentation"
 .PP 
@@ -153,7 +169,7 @@ Music
 .SS "int ResourceManagerAddResource (\fBResourceType\fP type, const char * name, const char * path)"
 
 .PP
-adds a resource of the specified name, type and path to the __ResourceManagerMap HashMap 
+adds a resource of the specified name, type and path to the ResourceManagerMap HashMap 
 .PP
 \fBParameters\fP
 .RS 4
@@ -285,7 +301,7 @@ char* a string containing 'ResourceType_name' (must be freed)
 .PP
 \fBParameters\fP
 .RS 4
-\fIfullName\fP A string in the form 'ResourceType_name' used as key value in the __ResourceManagerMap HashMap 
+\fIfullName\fP A string in the form 'ResourceType_name' used as key value in the ResourceManagerMap HashMap 
 .RE
 .PP
 \fBReturns\fP
@@ -306,7 +322,7 @@ Initialize the ResourceManager HashMap\&.
 .PP
 \fBSee also\fP
 .RS 4
-__ResourceManagerMap
+\fBResourceManagerMap\fP
 .RE
 .PP
 \fBReturns\fP
@@ -329,7 +345,7 @@ int APP_ERROR or APP_WARNING or APP_SUCCESS
 .SS "int ResourceManagerRemoveResource (\fBResourceType\fP type, const char * name)"
 
 .PP
-removes a resource of the specified name and type from the __ResourceManagerMap HashMap 
+removes a resource of the specified name and type from the ResourceManagerMap HashMap 
 .PP
 \fBParameters\fP
 .RS 4
@@ -368,6 +384,20 @@ int APP_ERROR or APP_WARNING or APP_SUCCESS
 .RE
 .PP
 
+.SH "Variable Documentation"
+.PP 
+.SS "\fBResourceManager_t\fP ResourceManager\fC [extern]\fP"
+
+.PP
+ResourceManager global variable to access Resource Manager's callbacks\&. 
+.SS "struct \fBResource_t\fP* ResourceManagerMap\fC [extern]\fP"
+
+.PP
+The Resource HashMap pointer\&. 
+.SS "const char* ResourceTypeString[]\fC [extern]\fP"
+
+.PP
+The string representation of the Resource Type\&. 
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

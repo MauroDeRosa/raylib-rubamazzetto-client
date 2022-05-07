@@ -1,9 +1,4 @@
-# Ruba Mazzetto
-Progetto per il corso di Laboratorio di Programmazione tenuto dal [Dr. Gennaro Vessio](https://www.uniba.it/portal_memberdata/gennaro.vessio).
-
-*UniBA - Laurea Triennale in Informatica e Comunicazione Digitale)*
-
-## Traccia
+# Traccia
 
 II "rubamazzetto" è un gioco di carte, variante semplificata della "scopa", molto diffuso in 
 Italia. Si gioca con ie carte da gioco italiane da 40 carte suddivise in 4 semi da 10 carte 
@@ -25,20 +20,14 @@ risultati di ogni giocatore e relative statistiche.
 
 ----------
 
-## Documentazione
-
-[Doxygen](https://mauroderosa.github.io/raylib-rubamazzetto-client/docs/html/index.html)
-
-----------
-
-## License
-
-**TO - DO**
-
-## Dependencies and references
-### Libraries
+# Dependencies and references
+## Libraries
 - [Raylib](https://www.raylib.com/) (Game Engine)
 - [Raygui](https://github.com/raysan5/raygui) (GUI library for Raylib)
 - [uthash](https://troydhanson.github.io/uthash/) (C HashMap library)
-### Other
+## Other
 - [Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/) (Doxygen modern theme)
+
+----------
+
+[**GitHub Repository**](https://github.com/MauroDeRosa/raylib-rubamazzetto-client/)

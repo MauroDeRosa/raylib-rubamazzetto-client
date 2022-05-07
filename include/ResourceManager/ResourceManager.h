@@ -20,17 +20,10 @@ typedef enum
     RESOURCE_MUSIC,         ///< @see Music
 } ResourceType;
 
-
 /**
  * @brief The string representation of the Resource Type
  */
-static const char *ResourceTypeString[] = {
-    "Image",        ///< @see Image
-    "Texture2D",    ///< @see Texture2D
-    "Font",         ///< @see Font
-    "Wave",         ///< @see Wave
-    "Sound",        ///< @see Sound
-    "Music"};       ///< @see Music
+extern const char *ResourceTypeString[];
 
 #pragma endregion resource_types_and_resource_type_strings
 
@@ -61,7 +54,7 @@ struct Resource_t
     UT_hash_handle hh;  ///< Hash handler for the uthash library
 };
 
-static struct Resource_t *__ResourceManagerMap = NULL;    ///< @brief The Resource HashMap pointer
+extern struct Resource_t *ResourceManagerMap;    ///< @brief The Resource HashMap pointer
 
 /**
  * @brief The resource object structure
@@ -93,7 +86,7 @@ char *ResourceManagerGetResourceName(ResourceType type, const char *name);
 /**
  * @brief 
  * 
- * @param fullName A string in the form "ResourceType_name" used as key value in the __ResourceManagerMap HashMap
+ * @param fullName A string in the form "ResourceType_name" used as key value in the ResourceManagerMap HashMap
  * @return struct Resource_t* The pointer to the Resource element found in Hasmap. NULL if nothing was found @see Resource_t
  */
 struct Resource_t *ResourceManagerGetResourcePointer(char *fullName);
@@ -111,14 +104,14 @@ void *ResourceManagerGetResourceDataPointer(struct Resource_t *resource);
 #pragma region public_resource_manager_obj_and_methods
 
 /**
- * @brief Initialize the ResourceManager HashMap @see __ResourceManagerMap
+ * @brief Initialize the ResourceManager HashMap @see ResourceManagerMap
  * 
  * @return int APP_ERROR or APP_WARNING or APP_SUCCESS
  */
 int ResourceManagerInit();
 
 /**
- * @brief adds a resource of the specified name, type and path to the __ResourceManagerMap HashMap
+ * @brief adds a resource of the specified name, type and path to the ResourceManagerMap HashMap
  * 
  * @param type the type of the Resource to get @see ResourceType
  * @param name the name of the resource to get (key value of the Resource HashMap element) @see Resource_t
@@ -128,7 +121,7 @@ int ResourceManagerInit();
 int ResourceManagerAddResource(ResourceType type, const char *name, const char *path);
 
 /**
- * @brief removes a resource of the specified name and type from the __ResourceManagerMap HashMap
+ * @brief removes a resource of the specified name and type from the ResourceManagerMap HashMap
  * 
  * @param type the type of the Resource to get @see ResourceType
  * @param name the name of the resource to get (key value of the Resource HashMap element) @see Resource_t
@@ -165,14 +158,7 @@ int ResourceManagerUnload();
  */
 int ResourceManagerDestroy();
 
-static ResourceManager_t ResourceManager = {
-    ResourceManagerInit,
-    ResourceManagerAddResource,
-    ResourceManagerRemoveResource,
-    ResourceManagerLoad,
-    ResourceManagerGet,
-    ResourceManagerUnload,
-    ResourceManagerDestroy}; ///< @brief ResourceManager static global variable to access his public callbacks
+extern ResourceManager_t ResourceManager; ///< @brief ResourceManager global variable to access Resource Manager's callbacks
 
 #pragma endregion public_resource_manager_obj_and_methods
 

@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['_5fnewscenedata_0',['_NewSceneData',['../NewScene_8c.html#abf33f62c183b229b8cad0e5b29488e60',1,'NewScene.c']]],
-  ['_5fscenesplashscreendata_1',['_SceneSplashScreenData',['../SceneSplashScreen_8c.html#a131df29bb366fb886ae1991c313626a0',1,'SceneSplashScreen.c']]],
-  ['_5futarray_5feltptr_2',['_utarray_eltptr',['../utarray_8h.html#ab51376440f7face8aa2640db39347da8',1,'utarray.h']]],
-  ['_5futringbuffer_5ffake_5fidx_3',['_utringbuffer_fake_idx',['../utringbuffer_8h.html#a900a2e998a526a14b0280752781ee3ee',1,'utringbuffer.h']]],
-  ['_5futringbuffer_5finternalidx_4',['_utringbuffer_internalidx',['../utringbuffer_8h.html#a0a3a60aafa04f4965c439042bf5ceb8c',1,'utringbuffer.h']]],
-  ['_5futringbuffer_5finternalptr_5',['_utringbuffer_internalptr',['../utringbuffer_8h.html#af247e0eb5d18b2bb49dda490d1d4963d',1,'utringbuffer.h']]],
-  ['_5futringbuffer_5freal_5fidx_6',['_utringbuffer_real_idx',['../utringbuffer_8h.html#aefdc96ff4b38fc688ffc3f518e3ea0b5',1,'utringbuffer.h']]]
+  ['addresource_0',['AddResource',['../structResourceManager__t.html#a3286efd59f9d7bc5b660428f922ca372',1,'ResourceManager_t']]],
+  ['app_5ferror_1',['APP_ERROR',['../Config_8h.html#a0e2e4a8db1580e6a554c9105d1a421d9',1,'Config.h']]],
+  ['app_5fsuccess_2',['APP_SUCCESS',['../Config_8h.html#a32ccd130e05cdd06d702776652bc39e5',1,'Config.h']]],
+  ['app_5fwarning_3',['APP_WARNING',['../Config_8h.html#a8f9075e4d1e4a2fd69366d9b5d66422e',1,'Config.h']]],
+  ['application_5fversion_4',['APPLICATION_VERSION',['../Config_8h.html#a6efa9917d91d75dcb9036443bc2483cd',1,'Config.h']]],
+  ['attr_5',['attr',['../structSceneManager__t.html#a54cd5f7c337b5e16a9eaa7941407f297',1,'SceneManager_t']]]
 ];

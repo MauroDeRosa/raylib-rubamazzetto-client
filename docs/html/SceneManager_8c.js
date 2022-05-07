@@ -8,5 +8,6 @@ var SceneManager_8c =
     [ "SceneManagerNext", "SceneManager_8c.html#a246608ea9a91fa28c99b9ba087e18132", null ],
     [ "SceneManagerRegister", "SceneManager_8c.html#a7fd82ab80a5c0b2153e45da109ab4744", null ],
     [ "SceneManagerStart", "SceneManager_8c.html#a2c56496d76cf003bc892fb176d06caed", null ],
-    [ "SceneManagerTime", "SceneManager_8c.html#ad510fb497ec0f663cae2df0a48019279", null ]
+    [ "SceneManagerTime", "SceneManager_8c.html#ad510fb497ec0f663cae2df0a48019279", null ],
+    [ "SceneManager", "SceneManager_8c.html#a644944f01d5874e469d4a215849477b4", null ]
 ];

@@ -1,25 +1,7 @@
 var searchData=
 [
-  ['b_0',['b',['../structgidx__ctx.html#a1230fd4454ec1d71e5fc32bf09977b98',1,'gidx_ctx']]],
-  ['b_5fw_5fwidth_1',['B_W_WIDTH',['../monocypher_8c.html#adfe69d4414b8d82a5eb4f562a50d109a',1,'monocypher.c']]],
-  ['background_5fcolor_2',['BACKGROUND_COLOR',['../raygui_8h.html#a17de833ff993431f4ac6cc8ba08add90a117d47299801a6d56fb15bce568b37f8',1,'raygui.h']]],
-  ['base_5fcolor_5fdisabled_3',['BASE_COLOR_DISABLED',['../raygui_8h.html#a7abcc01cad807efc9b469dffcb5986f1a1136d41e9a220b3fb3498adcc2315d3c',1,'raygui.h']]],
-  ['base_5fcolor_5ffocused_4',['BASE_COLOR_FOCUSED',['../raygui_8h.html#a7abcc01cad807efc9b469dffcb5986f1a5e6188ee005ba73e435fa3e9fd8165a5',1,'raygui.h']]],
-  ['base_5fcolor_5fnormal_5',['BASE_COLOR_NORMAL',['../raygui_8h.html#a7abcc01cad807efc9b469dffcb5986f1ad650c04c2ee2d379e128d1beba9df688',1,'raygui.h']]],
-  ['base_5fcolor_5fpressed_6',['BASE_COLOR_PRESSED',['../raygui_8h.html#a7abcc01cad807efc9b469dffcb5986f1a57d46b93cf2b36d7cea65efcbbf15d82',1,'raygui.h']]],
-  ['blake2_5fg_7',['BLAKE2_G',['../monocypher_8c.html#aa1fe4df24a975f435e50cdfd59db7269',1,'monocypher.c']]],
-  ['blake2_5fround_8',['BLAKE2_ROUND',['../monocypher_8c.html#a2d7e7c6b0d84cd071c0a521d47f04f49',1,'monocypher.c']]],
-  ['block_9',['block',['../structblock.html',1,'']]],
-  ['border_5fcolor_5fdisabled_10',['BORDER_COLOR_DISABLED',['../raygui_8h.html#a7abcc01cad807efc9b469dffcb5986f1a0bb15fcf82564cb1a531767a725bfbe5',1,'raygui.h']]],
-  ['border_5fcolor_5ffocused_11',['BORDER_COLOR_FOCUSED',['../raygui_8h.html#a7abcc01cad807efc9b469dffcb5986f1a009acca4a7d3c62231231dceec57f49b',1,'raygui.h']]],
-  ['border_5fcolor_5fnormal_12',['BORDER_COLOR_NORMAL',['../raygui_8h.html#a7abcc01cad807efc9b469dffcb5986f1af8634308b067b8b79178e0a63da7efe0',1,'raygui.h']]],
-  ['border_5fcolor_5fpressed_13',['BORDER_COLOR_PRESSED',['../raygui_8h.html#a7abcc01cad807efc9b469dffcb5986f1aa9f1d6bc84377fbcb833a611f692e27a',1,'raygui.h']]],
-  ['border_5fwidth_14',['BORDER_WIDTH',['../raygui_8h.html#a7abcc01cad807efc9b469dffcb5986f1aded5381912f056601d1176623676616e',1,'raygui.h']]],
-  ['buckets_15',['buckets',['../structUT__hash__table.html#a04556bbef9c9a1c40b1bc0d17a2a6e0b',1,'UT_hash_table']]],
-  ['buf_16',['buf',['../structcrypto__sign__ctx__abstract.html#a605ccc64f2895a76188a45c21d540891',1,'crypto_sign_ctx_abstract']]],
-  ['button_17',['BUTTON',['../raygui_8h.html#ab3e903e89895c462efc254a942de7d67a7d67f007544f534278ecca3cdca12565',1,'raygui.h']]],
-  ['byptr_18',['byPtr',['../lz4_8c.html#ae86e1d8a28953326b685d6ebb243a699a5c952c05e312cfc0589ef1d283397560',1,'lz4.c']]],
-  ['byte_19',['BYTE',['../lz4_8c.html#a4ae1dab0fb4b072a66584546209e7d58',1,'lz4.c']]],
-  ['byu16_20',['byU16',['../lz4_8c.html#ae86e1d8a28953326b685d6ebb243a699a48aff40d7237850c996a1f6c266a598f',1,'lz4.c']]],
-  ['byu32_21',['byU32',['../lz4_8c.html#ae86e1d8a28953326b685d6ebb243a699ae7520fe8d6957f5029ddeb0652c65471',1,'lz4.c']]]
+  ['data_0',['data',['../structResource__t.html#a6b30ce75c0f9a646c15bc2184f0d8392',1,'Resource_t']]],
+  ['definescene_1',['DefineScene',['../Scene_8h.html#ac1f60aa25a1194159f8016de322b43b3',1,'Scene.h']]],
+  ['destroy_2',['Destroy',['../structResourceManager__t.html#a3f571ef4f56fef6e17ef017a4c5c968c',1,'ResourceManager_t']]],
+  ['doxyhome_2emd_3',['DoxyHome.md',['../DoxyHome_8md.html',1,'']]]
 ];

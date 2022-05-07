@@ -98,7 +98,8 @@ $(document).ready(function(){initNavTree('SceneManager_8c.html',''); initResizab
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">SceneManager.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -129,6 +130,11 @@ Functions</h2></td></tr>
 <tr class="separator:ac0dbdaa597832eddec9a82b0bc99b1bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace6637952d3b25e6c190f5bff979a21b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#ace6637952d3b25e6c190f5bff979a21b">SceneManagerEnd</a> ()</td></tr>
 <tr class="separator:ace6637952d3b25e6c190f5bff979a21b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a644944f01d5874e469d4a215849477b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSceneManager__t.html">SceneManager_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a644944f01d5874e469d4a215849477b4">SceneManager</a></td></tr>
+<tr class="separator:a644944f01d5874e469d4a215849477b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a75cf48c52ad9df45af3ddc024563f5e4" name="a75cf48c52ad9df45af3ddc024563f5e4"></a>
@@ -290,6 +296,35 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a644944f01d5874e469d4a215849477b4" name="a644944f01d5874e469d4a215849477b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a644944f01d5874e469d4a215849477b4">&#9670;&nbsp;</a></span>SceneManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structSceneManager__t.html">SceneManager_t</a> SceneManager</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    (<a class="code hl_struct" href="structSceneManagerAttribute__t.html">SceneManagerAttribute_t</a>){ NULL, NULL, NULL, <span class="keyword">false</span>, 0},     </div>
+<div class="line">    <a class="code hl_function" href="SceneManager_8c.html#a201825c571f765bf2927cdb4e27a13db">SceneManagerInit</a>,                                           </div>
+<div class="line">    <a class="code hl_function" href="SceneManager_8c.html#a7fd82ab80a5c0b2153e45da109ab4744">SceneManagerRegister</a>,                                       </div>
+<div class="line">    <a class="code hl_function" href="SceneManager_8c.html#a2c56496d76cf003bc892fb176d06caed">SceneManagerStart</a>,                                          </div>
+<div class="line">    <a class="code hl_function" href="SceneManager_8c.html#ad510fb497ec0f663cae2df0a48019279">SceneManagerTime</a>,                                           </div>
+<div class="line">    <a class="code hl_function" href="SceneManager_8c.html#a246608ea9a91fa28c99b9ba087e18132">SceneManagerNext</a>                                            </div>
+<div class="line">}</div>
+<div class="ttc" id="aSceneManager_8c_html_a201825c571f765bf2927cdb4e27a13db"><div class="ttname"><a href="SceneManager_8c.html#a201825c571f765bf2927cdb4e27a13db">SceneManagerInit</a></div><div class="ttdeci">int SceneManagerInit()</div><div class="ttdef"><b>Definition:</b> SceneManager.c:19</div></div>
+<div class="ttc" id="aSceneManager_8c_html_a246608ea9a91fa28c99b9ba087e18132"><div class="ttname"><a href="SceneManager_8c.html#a246608ea9a91fa28c99b9ba087e18132">SceneManagerNext</a></div><div class="ttdeci">int SceneManagerNext(const char *name)</div><div class="ttdef"><b>Definition:</b> SceneManager.c:86</div></div>
+<div class="ttc" id="aSceneManager_8c_html_a2c56496d76cf003bc892fb176d06caed"><div class="ttname"><a href="SceneManager_8c.html#a2c56496d76cf003bc892fb176d06caed">SceneManagerStart</a></div><div class="ttdeci">int SceneManagerStart(const char *firstSceneName)</div><div class="ttdef"><b>Definition:</b> SceneManager.c:53</div></div>
+<div class="ttc" id="aSceneManager_8c_html_a7fd82ab80a5c0b2153e45da109ab4744"><div class="ttname"><a href="SceneManager_8c.html#a7fd82ab80a5c0b2153e45da109ab4744">SceneManagerRegister</a></div><div class="ttdeci">int SceneManagerRegister(const char *name, struct Scene_t *scene)</div><div class="ttdef"><b>Definition:</b> SceneManager.c:32</div></div>
+<div class="ttc" id="aSceneManager_8c_html_ad510fb497ec0f663cae2df0a48019279"><div class="ttname"><a href="SceneManager_8c.html#ad510fb497ec0f663cae2df0a48019279">SceneManagerTime</a></div><div class="ttdeci">double SceneManagerTime()</div><div class="ttdef"><b>Definition:</b> SceneManager.c:72</div></div>
+<div class="ttc" id="astructSceneManagerAttribute__t_html"><div class="ttname"><a href="structSceneManagerAttribute__t.html">SceneManagerAttribute_t</a></div><div class="ttdef"><b>Definition:</b> SceneManager.h:11</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

@@ -20,5 +20,8 @@ var ResourceManager_8h =
     [ "ResourceManagerInit", "ResourceManager_8h.html#ab072b5bc386167d2ac82da8cd7a9dcb0", null ],
     [ "ResourceManagerLoad", "ResourceManager_8h.html#ab76da0fa0f4f42a575b54ce194ed5265", null ],
     [ "ResourceManagerRemoveResource", "ResourceManager_8h.html#a9528ce63838878069a5d865321c26c76", null ],
-    [ "ResourceManagerUnload", "ResourceManager_8h.html#a1276df3db22db0e74c06323210297193", null ]
+    [ "ResourceManagerUnload", "ResourceManager_8h.html#a1276df3db22db0e74c06323210297193", null ],
+    [ "ResourceManager", "ResourceManager_8h.html#a812f87e969e6ed96741ab63a86adfaa2", null ],
+    [ "ResourceManagerMap", "ResourceManager_8h.html#ac6b8a7b4856975b29faab063eafd116f", null ],
+    [ "ResourceTypeString", "ResourceManager_8h.html#a78a6320fae4963480cbd4303dcfd08a2", null ]
 ];
