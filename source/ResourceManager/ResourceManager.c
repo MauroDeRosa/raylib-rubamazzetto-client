@@ -8,7 +8,7 @@
 
 #pragma region externs_definition
 
-static const char *ResourceTypeString[] = {
+const char *ResourceTypeString[] = {
     "Image",     ///< @see Image
     "Texture2D", ///< @see Texture2D
     "Font",      ///< @see Font
