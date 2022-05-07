@@ -2,6 +2,7 @@
 #include "logger.h"
 
 #include <string.h>
+#include "Config.h"
 
 #ifdef LOG_STYLE_USE_COLOR
 #define RESOURCE_MANAGER_PREFIX "\033[33m[ResourceManager]\033[0m "
@@ -19,6 +20,7 @@ int __ResourceManagerInit()
 int __ResourceManagerAddResource(ResourceType type, const char *name, const char *path)
 {
     char *fullName = __ResourceManagerGetResourceName(type, name); // creates temporary variable containing "ResourceType_name"
+    
     struct __Resource_t *res = __ResourceManagerGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
 
     if (res == NULL) // if resource named ResourceType_name is not in the Resource HashMap
@@ -34,7 +36,6 @@ int __ResourceManagerAddResource(ResourceType type, const char *name, const char
         Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Updating %s resource \"%s\" path: \"%s\"", __ResourceTypeString[type], name, path);
     }
 
-    // TODO: check if the path is correct
     strcpy(res->path, path); // sets Resource path or updates it
     free(fullName); // free temporary variable containing "ResourceType_name"
     return RESOURCE_MANAGER_SUCCESS;

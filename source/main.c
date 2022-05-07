@@ -5,12 +5,14 @@
 
 #include "logger.h"
 #include "ResourceManager.h"
+#include "SceneManager.h"
 #include "Scene/Scenes.h"
 #include "Config.h"
 
+#include <libgen.h>
+#include <string.h>
 
-
-int main(void)
+int main(int argc, char** argv)
 {
     SetTraceLogCallback(LogVaList);
 
@@ -18,16 +20,14 @@ int main(void)
     SetTargetFPS(60);
 
     ResourceManager.Init();
+
+    SceneManager.Init();
     RegisterScenes();
-    
+    SceneManager.Start("SplashScreen");
 
     ResourceManager.Unload();
     ResourceManager.Destroy();
-    
-    // SceneManagerInit(&SceneSplashScreen);
-    // SceneManagerLoop();
 
-  
     CloseWindow();
 
     return 0;

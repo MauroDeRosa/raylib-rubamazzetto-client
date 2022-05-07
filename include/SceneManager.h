@@ -9,9 +9,11 @@
 
 typedef struct
 {
+    struct Scene_t *map;
     struct Scene_t *currentScene;
     struct Scene_t *nextScene;
     bool isSceneEnded;
+    float fixedStepTimer;
 } SceneManagerAttribute_t;
 
 typedef struct
@@ -19,12 +21,10 @@ typedef struct
     SceneManagerAttribute_t attr;
     int (*Init)();
     int (*Register)(const char *name, struct Scene_t *scene);
-    int (*Start)();
+    int (*Start)(const char *firstSceneName);
     double (*Time)();
     int (*Next)(const char *name);
 } SceneManager_t;
-
-struct Scene_t *SceneManagerSceneMap;
 
 int SceneManagerInit();
 int SceneManagerRegister(const char *name, struct Scene_t *scene);
@@ -35,8 +35,8 @@ int SceneManagerNext(const char *name);
 int SceneManagerLoop();
 int SceneManagerEnd();
 
-SceneManager_t SceneManager = {
-    (SceneManagerAttribute_t){ NULL, NULL, false },
+static SceneManager_t SceneManager = {
+    (SceneManagerAttribute_t){ NULL, NULL, NULL, false, 0},
     SceneManagerInit,
     SceneManagerRegister,
     SceneManagerStart,

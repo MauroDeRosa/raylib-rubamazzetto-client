@@ -3,15 +3,17 @@
 
 #include <stdlib.h>
 #include "SceneManager.h"
+#include "ResourceManager.h"
 #include "uthash/uthash.h"
+#include <raylib.h>
+#include "raylib-extra/raygui.h"
+#include "logger.h"
 
 struct Scene_t
 {
     const char *name;
-    double setupTime;
-    void *context;
+    double startTime;
 
-    void (*Setup)();
     void (*Start)();
     void (*Update)();
     void (*FixedUpdate)();
@@ -20,11 +22,10 @@ struct Scene_t
     UT_hash_handle hh;
 };
 
-#define DefineScene(name, nameString, dataPtr, Setup, Start, Update, FixedUpdate, Render, Exit) \
-Scene_t name = { \
-    nameString, \
-    { nameString , 0, dataPtr } , \
-    Setup , \
+#define DefineScene(name, nameString, Start, Update, FixedUpdate, Render, Exit) \
+static struct Scene_t name = { \
+    nameString , \
+    0.0 , \
     Start , \
     Update , \
     FixedUpdate , \
@@ -32,7 +33,7 @@ Scene_t name = { \
     Exit \
 };
 
-// TODO: define context operator
-//#define $(var) 
+#define SCENE_DATA_BEGIN typedef struct {
+#define SCENE_DATA_END } __data_t; __data_t $;
 
 #endif /* __SCENE_H__ */
