@@ -2,54 +2,45 @@
 #define __SCENEMANAGER_H__
 
 #include <stdbool.h>
+#include <stdlib.h>
 
-#define SCENE_MANAGER_FIXEDUPDATE_STEP 0.25f
-
-typedef enum
-{
-    SCENEMGR_FALIURE,
-    SCENEMGR_SUCCESS,
-    SCENEMGR_NEXT,
-    SCENEMGR_CLOSE
-} SceneManagerState;
-
-typedef void (*SceneCallback)(void** data);
+#include "Config.h"
+#include "Scene.h"
 
 typedef struct
 {
-    const char* name;
-    SceneCallback onInit;
-    SceneCallback onStart;
-    SceneCallback onUpdate;
-    SceneCallback onFixedUpdate;
-    SceneCallback onRender;
-    SceneCallback onExit;
-    void *data;
-} Scene;
-
-#define DefineScene(name, nameString, onInit, onStart, onUpdate, onFixedUpdate, onRender, onExit) static Scene name = (Scene) { nameString, onInit, onStart, onUpdate, onFixedUpdate, onRender, onExit };
+    struct Scene_t *map;
+    struct Scene_t *currentScene;
+    struct Scene_t *nextScene;
+    bool isSceneEnded;
+    float fixedStepTimer;
+} SceneManagerAttribute_t;
 
 typedef struct
 {
-    bool running;
-    Scene *current;
-    Scene *next;
-    SceneManagerState status;
-    float fixedUpdateTimer;
-    double sceneInitTime;
-}SceneManager_t;
+    SceneManagerAttribute_t attr;
+    int (*Init)();
+    int (*Register)(const char *name, struct Scene_t *scene);
+    int (*Start)(const char *firstSceneName);
+    double (*Time)();
+    int (*Next)(const char *name);
+} SceneManager_t;
 
-static SceneManager_t SceneManager;
+int SceneManagerInit();
+int SceneManagerRegister(const char *name, struct Scene_t *scene);
+int SceneManagerStart(const char *firstSceneName);
+double SceneManagerTime();
+int SceneManagerNext(const char *name);
 
-bool SceneManagerInit(Scene *startScene);
-void SceneManagerLoop();
-void SceneManagerSetState(SceneManagerState);
-void SceneManagerSetNext(Scene *nextScene);
-double SceneManagerGetTime();
+int SceneManagerLoop();
+int SceneManagerEnd();
 
-void _SceneManagerSceneInit();
-void _SceneManagerNext();
-void _SceneManagerClose();
-
+static SceneManager_t SceneManager = {
+    (SceneManagerAttribute_t){ NULL, NULL, NULL, false, 0},
+    SceneManagerInit,
+    SceneManagerRegister,
+    SceneManagerStart,
+    SceneManagerTime,
+    SceneManagerNext};
 
 #endif /* __SCENEMANAGER_H__ */

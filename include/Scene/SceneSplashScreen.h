@@ -1,15 +1,14 @@
 #ifndef __SCENESPLASHSCREEN_H__
 #define __SCENESPLASHSCREEN_H__
 
-#include "SceneManager.h"
+#include "Scene.h"
 
-void SceneSplashScreenOnInit (void** _$);
-void SceneSplashScreenOnStart  (void** _$);
-void SceneSplashScreenOnUpdate (void** _$);
-void SceneSplashScreenOnFixedUpdate (void** _$);
-void SceneSplashScreenOnRender (void** _$);
-void SceneSplashScreenOnExit (void** _$);
+void SplashScreenStart();
+void SplashScreenUpdate();
+void SplashScreenFixedUpdate();
+void SplashScreenRender();
+void SplashScreenExit();
 
-DefineScene(SceneSplashScreen, "SceneSplashScreen", SceneSplashScreenOnInit, SceneSplashScreenOnStart, SceneSplashScreenOnUpdate, SceneSplashScreenOnFixedUpdate, SceneSplashScreenOnRender, SceneSplashScreenOnExit);
+DefineScene(SplashScreen, "SplashScreen",  SplashScreenStart, SplashScreenUpdate, SplashScreenFixedUpdate, SplashScreenRender, SplashScreenExit);
 
 #endif /* __SCENESPLASHSCREEN_H__ */

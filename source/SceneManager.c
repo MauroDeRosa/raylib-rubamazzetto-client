@@ -1,148 +1,156 @@
 #include "SceneManager.h"
 #include "logger.h"
 
+#include <string.h>
+
 #ifdef LOG_STYLE_USE_COLOR
 #define SCENE_MANAGER_PREFIX "\033[33m[SceneManager]\033[0m "
 #else
 #define SCENE_MANAGER_PREFIX "[SceneManager] "
 #endif // LOG_STYLE_USE_COLOR
 
-const char *_SceneManagerStateString[] = {"FALIURE\0", "SUCCESS\0", "NEXT\0", "CLOSE\0"};
-DefineScene(SceneManagerInitialization, "SceneManagerInitialization", NULL, NULL, NULL, NULL, NULL, NULL);
+#define SCENE_MANAGER_FIXED_TIME_STEP (1.0f / 2.0f)
 
-bool SceneManagerInit(Scene *startScene)
+int SceneManagerInit()
 {
-    Log(LOG_INFO, SCENE_MANAGER_PREFIX "Initializing Scene Manager...", NULL);
-    SceneManager.fixedUpdateTimer = 0;
-    SceneManager.sceneInitTime = 0;
+    Log(LOG_INFO, SCENE_MANAGER_PREFIX "Initializing Scene Manager...");
 
-    if (startScene == NULL)
+    SceneManager.attr.currentScene = NULL;
+    SceneManager.attr.nextScene = NULL;
+    SceneManager.attr.isSceneEnded = false;
+    SceneManager.attr.fixedStepTimer = 0.0f;
+    
+    // sets scene manager map to NULL, it's required by uthash lib
+	SceneManager.attr.map = NULL;
+}
+
+int SceneManagerRegister(const char *name, struct Scene_t *scene)
+{
+    struct Scene_t *s = NULL;
+    HASH_FIND_STR(SceneManager.attr.map, name, s);
+
+    if(s == NULL)
     {
-        Log(LOG_ERROR, SCENE_MANAGER_PREFIX "startScene can't be NULL");
-        SceneManager.current = NULL;
-        SceneManager.next = NULL;
-        SceneManager.status = SCENEMGR_FALIURE;
-        SceneManager.running = false;
-        return false;
+        //if the scene was not registered yet adds the scene to the scene map
+        Log(LOG_INFO, SCENE_MANAGER_PREFIX "Adding scene %s to Scene Manager...", scene->name);
+        HASH_ADD_STR(SceneManager.attr.map, name, scene);
     }
     else
     {
-        SceneManager.current = &SceneManagerInitialization;
-        SceneManager.running = true;
-        SceneManagerSetNext(startScene);
-        _SceneManagerNext();
-        SceneManager.fixedUpdateTimer = 0;
-        return true;
+        //if the scene was not registered yet adds the scene to the scene map
+        Log(LOG_ERROR, SCENE_MANAGER_PREFIX "Scene %s yet exists in Scene Manager!", scene->name);
+        return APP_ERROR;
+    }
+
+    return APP_SUCCESS;
+}
+
+int SceneManagerStart(const char *firstSceneName)
+{
+    struct Scene_t *s;
+    HASH_FIND_STR(SceneManager.attr.map, firstSceneName, s);
+
+    // if scene is not registered print error and return error code
+    if(s == NULL)
+    {
+        Log(LOG_ERROR, SCENE_MANAGER_PREFIX "Can't start Scene Manager, %s scene doesn't exist!", firstSceneName);
+        return APP_ERROR;
+    }
+
+    // sets the next scene to the given first scene and starts Scene Manager's loop
+    SceneManager.Next(firstSceneName);
+    SceneManagerLoop();
+
+	return APP_SUCCESS;
+}
+
+double SceneManagerTime()
+{
+    if (SceneManager.attr.currentScene != NULL)
+    {
+        // if there's a scene running returns the current time minus the time the scene was setted
+        return GetTime() - SceneManager.attr.currentScene->startTime;
+    }
+    else
+    {
+        // if there's no scene running prints error
+        Log(LOG_ERROR, SCENE_MANAGER_PREFIX "Can't get Scene time, there's no scene currently running!");
     }
 }
 
-void _SceneManagerSceneInit()
+int SceneManagerNext(const char *name)
 {
-    SceneManager.sceneInitTime = GetTime();
-    SceneManagerSetState(SCENEMGR_SUCCESS);
-    Log(LOG_INFO, SCENE_MANAGER_PREFIX "Initializing %s...", SceneManager.current->name);
-    SceneManager.current->onInit(&SceneManager.current->data);
-    Log(LOG_INFO, SCENE_MANAGER_PREFIX "Starting %s...", SceneManager.current->name);
-    SceneManager.current->onStart(&SceneManager.current->data);
+    struct Scene_t *s;
+    HASH_FIND_STR(SceneManager.attr.map, name, s);
+
+    // if can't find scene in the hasmap and name is not "END" ("END" is used to stop SceneManager)
+    if(s == NULL && strcmp(name, "END") != 0)
+    {
+        Log(LOG_ERROR, SCENE_MANAGER_PREFIX "Unable to set next scene to %s, scene doesn't exists", name);
+        return APP_ERROR;
+    }
+
+    //set next scene to the given one or NULL in case name == "END" (this will make the SceneManager close after last cycle)
+    SceneManager.attr.nextScene = s;
+    SceneManager.attr.isSceneEnded = true;
+
+	return APP_SUCCESS;
 }
 
-void SceneManagerLoop()
-{
 
-    while (!WindowShouldClose() && SceneManager.running)
+int SceneManagerLoop()
+{
+    while (!SceneManager.attr.isSceneEnded || SceneManager.attr.nextScene != NULL)
     {
-        if (SceneManager.status == SCENEMGR_FALIURE || SceneManager.status == SCENEMGR_CLOSE)
+        // set next scene as current
+        SceneManager.attr.currentScene = SceneManager.attr.nextScene;
+        SceneManager.attr.nextScene = NULL;
+        SceneManager.attr.isSceneEnded = false;
+        SceneManager.attr.fixedStepTimer = 0;
+
+        // setup and start current scene
+        SceneManager.attr.currentScene->startTime = GetTime();
+        SceneManager.attr.currentScene->Start();
+        while (!SceneManager.attr.isSceneEnded)
         {
-            if (SceneManager.status == SCENEMGR_FALIURE)
+            SceneManager.attr.fixedStepTimer += GetFrameTime();
+            SceneManager.attr.currentScene->Update();
+
+            if(SceneManager.attr.fixedStepTimer > SCENE_MANAGER_FIXED_TIME_STEP)
             {
-                Log(LOG_ERROR, SCENE_MANAGER_PREFIX "Scene %s returned a FALIURE state, starting close procedure...", SceneManager.current->name);
-                SceneManagerSetState(SCENEMGR_CLOSE);
+                //Log(LOG_DEBUG, "time passed before last fixedUpdate %f", )
+                SceneManager.attr.currentScene->FixedUpdate();
+                SceneManager.attr.fixedStepTimer = 0;
             }
-            break;
+            
+            SceneManager.attr.currentScene->Render();
+
+            if (WindowShouldClose())
+            {
+                SceneManager.Next("END");
+            }
+            
         }
-        else if (SceneManager.status == SCENEMGR_NEXT)
-        {
-            _SceneManagerNext();
-            continue;
-        }
-
-        SceneManager.current->onUpdate(&SceneManager.current->data);
-        
-        if (SceneManager.fixedUpdateTimer >= SCENE_MANAGER_FIXEDUPDATE_STEP)
-        {
-            SceneManager.fixedUpdateTimer = 0;
-            SceneManager.current->onFixedUpdate(&SceneManager.current->data);
-        }
-        
-        BeginDrawing();
-        SceneManager.current->onRender(&SceneManager.current->data);
-        EndDrawing();
-
-        SceneManager.fixedUpdateTimer += GetFrameTime();
+        SceneManager.attr.currentScene->Exit();
     }
 
-    _SceneManagerClose();
+    SceneManagerEnd();
+    return APP_SUCCESS;
 }
 
-void _SceneManagerNext()
+int SceneManagerEnd()
 {
-    if (SceneManager.next == NULL)
+    struct Scene_t *res, *tmp;
+    Log(LOG_INFO, SCENE_MANAGER_PREFIX "Cleaning scene table...");
+
+    HASH_ITER(hh, SceneManager.attr.map, res, tmp) // iterates the full scene HashMap
     {
-        Log(LOG_ERROR, SCENE_MANAGER_PREFIX "Next scene can't be NULL");
-        SceneManagerSetState(SCENEMGR_CLOSE);
+        Log(LOG_DEBUG, SCENE_MANAGER_PREFIX "Removing %s scene", res->name);
+        HASH_DEL(SceneManager.attr.map, res); // removes scene from the scene HashMap
     }
 
-    if (SceneManager.current == NULL | SceneManager.current == &SceneManagerInitialization)
-    {
-        SceneManager.current = SceneManager.next;
-        SceneManager.next = NULL;
-        _SceneManagerSceneInit();
-    }
-    else
-    {
-        SceneManager.current->onExit(&SceneManager.current->data);
-        SceneManager.current = SceneManager.next;
-        SceneManager.next = NULL;
-        _SceneManagerSceneInit();
-    }
-}
-
-void _SceneManagerClose()
-{
-    if (SceneManager.current != NULL)
-    {
-        Log(LOG_INFO, SCENE_MANAGER_PREFIX "Calling Exit function for %s...", SceneManager.current->name);
-        SceneManager.current->onExit(&SceneManager.current->data);
-    }
-    Log(LOG_INFO, SCENE_MANAGER_PREFIX "Closing Scene Manager...", NULL);
-    SceneManager.running = false;
-    SceneManager.current = NULL;
-    SceneManager.next = NULL;
-    SceneManager.status = SCENEMGR_CLOSE;
-}
-
-void SceneManagerSetState(SceneManagerState status)
-{
-    SceneManager.status = status;
-    Log(LOG_INFO, SCENE_MANAGER_PREFIX "Scene %s state set to %s", SceneManager.current != NULL ? SceneManager.current->name : "NULL", _SceneManagerStateString[status]);
-}
-
-void SceneManagerSetNext(Scene *nextScene)
-{
-    if (nextScene == NULL)
-    {
-        Log(LOG_ERROR, SCENE_MANAGER_PREFIX "Next scene can't be set to NULL");
-        SceneManagerSetState(SCENEMGR_FALIURE);
-    }
-    else
-    {
-        Log(LOG_INFO, SCENE_MANAGER_PREFIX "Setting next scene from %s to %s", SceneManager.current != NULL ? SceneManager.current->name : "NULL", nextScene->name);
-        SceneManager.next = nextScene;
-        SceneManagerSetState(SCENEMGR_NEXT);
-    }
-}
-
-double SceneManagerGetTime()
-{
-    return GetTime() - SceneManager.sceneInitTime;
+    SceneManager.attr.currentScene = NULL;
+    SceneManager.attr.nextScene = NULL;
+    SceneManager.attr.isSceneEnded = false;
+    return APP_SUCCESS;
 }

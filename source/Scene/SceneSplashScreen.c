@@ -1,69 +1,40 @@
-#include "SceneManager.h"
-#include "ResourceManager.h"
 #include "Scene/SceneSplashScreen.h"
-//#include "Scene/SceneLoadScreen.h"
 
-#include <raylib.h>
-#include <raymath.h>
-#include "raylib-extra/raygui.h"
+SCENE_DATA_BEGIN
 
-#include <stdlib.h>
-#include <math.h>
-#include <stdint.h>
-#include <stdbool.h>
+double lastFixedUpdate;
+Texture2D *hisoka;
 
-typedef struct
+SCENE_DATA_END
+
+void SplashScreenStart()
 {
-    Texture2D t;
-} SceneSplashScreenData;
-
-// dynamic allocation and modules initial configuration for the current scene here
-void SceneSplashScreenOnInit (void** _$)
-{
-    *_$ = malloc( sizeof(SceneSplashScreenData) );
-    ResourceManager.Init();
     ResourceManager.AddResource(RESOURCE_TEXTURE2D, "hisoka", "./resources/Texture/hisoka.png");
     ResourceManager.Load();
+    $.lastFixedUpdate = 0;
+    $.hisoka = ResourceManager.Get(RESOURCE_TEXTURE2D, "hisoka");
 }
 
-// variables setup and initial state configuration here
-void SceneSplashScreenOnStart (void** _$)
+void SplashScreenUpdate()
 {
-    SceneSplashScreenData *$ = *_$;
-    $->t = *(Texture2D*)(ResourceManager.Get(RESOURCE_TEXTURE2D, "hisoka"));
+    if(SceneManager.Time() > 5.0f)
+        SceneManager.Next("END");
 }
 
-// gets executed every frame, update scene state
-void SceneSplashScreenOnUpdate (void** _$)
+void SplashScreenFixedUpdate()
 {
-    SceneSplashScreenData *$ = *_$;
+    $.lastFixedUpdate = SceneManager.Time();
 }
 
-// gets executed every SCENE_MANAGER_FIXEDUPDATE_STEP, update scene state
-void SceneSplashScreenOnFixedUpdate (void** _$)
+void SplashScreenRender()
 {
-    SceneSplashScreenData *$ = *_$;
-    
-    if(SceneManagerGetTime() > 2.0f)
-    {
-        SceneManagerSetState(SCENEMGR_CLOSE);
-    }
-}
-
-// gets executed every frame, draw your privimitives, text and sprites
-void SceneSplashScreenOnRender (void** _$)
-{
-    SceneSplashScreenData *$ = *_$;
+    BeginDrawing();
     ClearBackground(RAYWHITE);
-    
-    DrawTexture($->t, GetScreenWidth()/2, GetScreenHeight()/2, WHITE);
+    DrawTexture(*$.hisoka, 0, 0, WHITE);
+    EndDrawing();
 }
 
-// free dynamically allocated memory and reset modules configuration to default here
-void SceneSplashScreenOnExit (void** _$)
+void SplashScreenExit()
 {
-    SceneSplashScreenData *$ = *_$;
-    ResourceManager.Unload();
-    ResourceManager.Destroy();
-    free($);
+
 }
