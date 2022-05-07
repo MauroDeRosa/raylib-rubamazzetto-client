@@ -8,7 +8,7 @@
 #define APPLICATION_VERSION "1.0.0"
 #define WINDOW_TITLE "Ruba Mazzetto " APPLICATION_VERSION
 
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
 
 #endif /* __CONFIG_H__ */

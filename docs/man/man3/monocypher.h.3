@@ -1,0 +1,347 @@
+.TH "include/external/external/monocypher.h" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/external/external/monocypher.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stddef\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcrypto_sign_vtable\fP"
+.br
+.RI "Type definitions ///\&. "
+.ti -1c
+.RI "struct \fBcrypto_poly1305_ctx\fP"
+.br
+.ti -1c
+.RI "struct \fBcrypto_blake2b_ctx\fP"
+.br
+.ti -1c
+.RI "struct \fBcrypto_sign_ctx_abstract\fP"
+.br
+.ti -1c
+.RI "struct \fBcrypto_sign_ctx\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBcrypto_key_exchange_public_key\fP   \fBcrypto_x25519_public_key\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBcrypto_sign_ctx_abstract\fP \fBcrypto_check_ctx_abstract\fP"
+.br
+.ti -1c
+.RI "typedef \fBcrypto_sign_ctx\fP \fBcrypto_check_ctx\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBcrypto_verify16\fP (const uint8_t a[16], const uint8_t b[16])"
+.br
+.RI "High level interface ///\&. "
+.ti -1c
+.RI "int \fBcrypto_verify32\fP (const uint8_t a[32], const uint8_t b[32])"
+.br
+.ti -1c
+.RI "int \fBcrypto_verify64\fP (const uint8_t a[64], const uint8_t b[64])"
+.br
+.ti -1c
+.RI "void \fBcrypto_wipe\fP (void *secret, size_t size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_lock\fP (uint8_t mac[16], uint8_t *cipher_text, const uint8_t key[32], const uint8_t nonce[24], const uint8_t *plain_text, size_t text_size)"
+.br
+.ti -1c
+.RI "int \fBcrypto_unlock\fP (uint8_t *plain_text, const uint8_t key[32], const uint8_t nonce[24], const uint8_t mac[16], const uint8_t *cipher_text, size_t text_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_lock_aead\fP (uint8_t mac[16], uint8_t *cipher_text, const uint8_t key[32], const uint8_t nonce[24], const uint8_t *ad, size_t ad_size, const uint8_t *plain_text, size_t text_size)"
+.br
+.ti -1c
+.RI "int \fBcrypto_unlock_aead\fP (uint8_t *plain_text, const uint8_t key[32], const uint8_t nonce[24], const uint8_t mac[16], const uint8_t *ad, size_t ad_size, const uint8_t *cipher_text, size_t text_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_blake2b\fP (uint8_t hash[64], const uint8_t *message, size_t message_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_blake2b_general\fP (uint8_t *hash, size_t hash_size, const uint8_t *key, size_t key_size, const uint8_t *message, size_t message_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_blake2b_init\fP (\fBcrypto_blake2b_ctx\fP *ctx)"
+.br
+.ti -1c
+.RI "void \fBcrypto_blake2b_update\fP (\fBcrypto_blake2b_ctx\fP *ctx, const uint8_t *message, size_t message_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_blake2b_final\fP (\fBcrypto_blake2b_ctx\fP *ctx, uint8_t *hash)"
+.br
+.ti -1c
+.RI "void \fBcrypto_blake2b_general_init\fP (\fBcrypto_blake2b_ctx\fP *ctx, size_t hash_size, const uint8_t *key, size_t key_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_argon2i\fP (uint8_t *hash, uint32_t hash_size, void *work_area, uint32_t nb_blocks, uint32_t nb_iterations, const uint8_t *password, uint32_t password_size, const uint8_t *salt, uint32_t salt_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_argon2i_general\fP (uint8_t *hash, uint32_t hash_size, void *work_area, uint32_t nb_blocks, uint32_t nb_iterations, const uint8_t *password, uint32_t password_size, const uint8_t *salt, uint32_t salt_size, const uint8_t *key, uint32_t key_size, const uint8_t *ad, uint32_t ad_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_key_exchange\fP (uint8_t shared_key[32], const uint8_t your_secret_key[32], const uint8_t their_public_key[32])"
+.br
+.RI "Key exchange ///\&. "
+.ti -1c
+.RI "void \fBcrypto_sign_public_key\fP (uint8_t public_key[32], const uint8_t secret_key[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_sign\fP (uint8_t signature[64], const uint8_t secret_key[32], const uint8_t public_key[32], const uint8_t *message, size_t message_size)"
+.br
+.ti -1c
+.RI "int \fBcrypto_check\fP (const uint8_t signature[64], const uint8_t public_key[32], const uint8_t *message, size_t message_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_hchacha20\fP (uint8_t out[32], const uint8_t key[32], const uint8_t in[16])"
+.br
+.RI "Low level primitives ///\&. "
+.ti -1c
+.RI "void \fBcrypto_chacha20\fP (uint8_t *cipher_text, const uint8_t *plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[8])"
+.br
+.ti -1c
+.RI "void \fBcrypto_xchacha20\fP (uint8_t *cipher_text, const uint8_t *plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[24])"
+.br
+.ti -1c
+.RI "void \fBcrypto_ietf_chacha20\fP (uint8_t *cipher_text, const uint8_t *plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[12])"
+.br
+.ti -1c
+.RI "uint64_t \fBcrypto_chacha20_ctr\fP (uint8_t *cipher_text, const uint8_t *plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[8], uint64_t ctr)"
+.br
+.ti -1c
+.RI "uint64_t \fBcrypto_xchacha20_ctr\fP (uint8_t *cipher_text, const uint8_t *plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[24], uint64_t ctr)"
+.br
+.ti -1c
+.RI "uint32_t \fBcrypto_ietf_chacha20_ctr\fP (uint8_t *cipher_text, const uint8_t *plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[12], uint32_t ctr)"
+.br
+.ti -1c
+.RI "void \fBcrypto_poly1305\fP (uint8_t mac[16], const uint8_t *message, size_t message_size, const uint8_t key[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_poly1305_init\fP (\fBcrypto_poly1305_ctx\fP *ctx, const uint8_t key[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_poly1305_update\fP (\fBcrypto_poly1305_ctx\fP *ctx, const uint8_t *message, size_t message_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_poly1305_final\fP (\fBcrypto_poly1305_ctx\fP *ctx, uint8_t mac[16])"
+.br
+.ti -1c
+.RI "void \fBcrypto_x25519_public_key\fP (uint8_t public_key[32], const uint8_t secret_key[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_x25519\fP (uint8_t raw_shared_secret[32], const uint8_t your_secret_key[32], const uint8_t their_public_key[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_x25519_dirty_small\fP (uint8_t pk[32], const uint8_t sk[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_x25519_dirty_fast\fP (uint8_t pk[32], const uint8_t sk[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_x25519_inverse\fP (uint8_t blind_salt[32], const uint8_t private_key[32], const uint8_t curve_point[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_from_eddsa_private\fP (uint8_t x25519[32], const uint8_t eddsa[32])"
+.br
+.RI "EdDSA to X25519 ///\&. "
+.ti -1c
+.RI "void \fBcrypto_from_eddsa_public\fP (uint8_t x25519[32], const uint8_t eddsa[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_sign_init_first_pass\fP (\fBcrypto_sign_ctx_abstract\fP *ctx, const uint8_t secret_key[32], const uint8_t public_key[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_sign_update\fP (\fBcrypto_sign_ctx_abstract\fP *ctx, const uint8_t *message, size_t message_size)"
+.br
+.ti -1c
+.RI "void \fBcrypto_sign_init_second_pass\fP (\fBcrypto_sign_ctx_abstract\fP *ctx)"
+.br
+.ti -1c
+.RI "void \fBcrypto_sign_final\fP (\fBcrypto_sign_ctx_abstract\fP *ctx, uint8_t signature[64])"
+.br
+.ti -1c
+.RI "void \fBcrypto_check_init\fP (\fBcrypto_check_ctx_abstract\fP *ctx, const uint8_t signature[64], const uint8_t public_key[32])"
+.br
+.ti -1c
+.RI "void \fBcrypto_check_update\fP (\fBcrypto_check_ctx_abstract\fP *ctx, const uint8_t *message, size_t message_size)"
+.br
+.ti -1c
+.RI "int \fBcrypto_check_final\fP (\fBcrypto_check_ctx_abstract\fP *ctx)"
+.br
+.ti -1c
+.RI "void \fBcrypto_sign_public_key_custom_hash\fP (uint8_t public_key[32], const uint8_t secret_key[32], const \fBcrypto_sign_vtable\fP *hash)"
+.br
+.ti -1c
+.RI "void \fBcrypto_sign_init_first_pass_custom_hash\fP (\fBcrypto_sign_ctx_abstract\fP *ctx, const uint8_t secret_key[32], const uint8_t public_key[32], const \fBcrypto_sign_vtable\fP *hash)"
+.br
+.ti -1c
+.RI "void \fBcrypto_check_init_custom_hash\fP (\fBcrypto_check_ctx_abstract\fP *ctx, const uint8_t signature[64], const uint8_t public_key[32], const \fBcrypto_sign_vtable\fP *hash)"
+.br
+.ti -1c
+.RI "void \fBcrypto_hidden_to_curve\fP (uint8_t curve[32], const uint8_t hidden[32])"
+.br
+.ti -1c
+.RI "int \fBcrypto_curve_to_hidden\fP (uint8_t hidden[32], const uint8_t curve[32], uint8_t tweak)"
+.br
+.ti -1c
+.RI "void \fBcrypto_hidden_key_pair\fP (uint8_t hidden[32], uint8_t secret_key[32], uint8_t seed[32])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const \fBcrypto_sign_vtable\fP \fBcrypto_blake2b_vtable\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define crypto_key_exchange_public_key   \fBcrypto_x25519_public_key\fP"
+
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef \fBcrypto_sign_ctx\fP \fBcrypto_check_ctx\fP"
+
+.SS "typedef \fBcrypto_sign_ctx_abstract\fP \fBcrypto_check_ctx_abstract\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "void crypto_argon2i (uint8_t * hash, uint32_t hash_size, void * work_area, uint32_t nb_blocks, uint32_t nb_iterations, const uint8_t * password, uint32_t password_size, const uint8_t * salt, uint32_t salt_size)"
+
+.SS "void crypto_argon2i_general (uint8_t * hash, uint32_t hash_size, void * work_area, uint32_t nb_blocks, uint32_t nb_iterations, const uint8_t * password, uint32_t password_size, const uint8_t * salt, uint32_t salt_size, const uint8_t * key, uint32_t key_size, const uint8_t * ad, uint32_t ad_size)"
+
+.SS "void crypto_blake2b (uint8_t hash[64], const uint8_t * message, size_t message_size)"
+
+.SS "void crypto_blake2b_final (\fBcrypto_blake2b_ctx\fP * ctx, uint8_t * hash)"
+
+.SS "void crypto_blake2b_general (uint8_t * hash, size_t hash_size, const uint8_t * key, size_t key_size, const uint8_t * message, size_t message_size)"
+
+.SS "void crypto_blake2b_general_init (\fBcrypto_blake2b_ctx\fP * ctx, size_t hash_size, const uint8_t * key, size_t key_size)"
+
+.SS "void crypto_blake2b_init (\fBcrypto_blake2b_ctx\fP * ctx)"
+
+.SS "void crypto_blake2b_update (\fBcrypto_blake2b_ctx\fP * ctx, const uint8_t * message, size_t message_size)"
+
+.SS "void crypto_chacha20 (uint8_t * cipher_text, const uint8_t * plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[8])"
+
+.SS "uint64_t crypto_chacha20_ctr (uint8_t * cipher_text, const uint8_t * plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[8], uint64_t ctr)"
+
+.SS "int crypto_check (const uint8_t signature[64], const uint8_t public_key[32], const uint8_t * message, size_t message_size)"
+
+.SS "int crypto_check_final (\fBcrypto_check_ctx_abstract\fP * ctx)"
+
+.SS "void crypto_check_init (\fBcrypto_check_ctx_abstract\fP * ctx, const uint8_t signature[64], const uint8_t public_key[32])"
+
+.SS "void crypto_check_init_custom_hash (\fBcrypto_check_ctx_abstract\fP * ctx, const uint8_t signature[64], const uint8_t public_key[32], const \fBcrypto_sign_vtable\fP * hash)"
+
+.SS "void crypto_check_update (\fBcrypto_check_ctx_abstract\fP * ctx, const uint8_t * message, size_t message_size)"
+
+.SS "int crypto_curve_to_hidden (uint8_t hidden[32], const uint8_t curve[32], uint8_t tweak)"
+
+.SS "void crypto_from_eddsa_private (uint8_t x25519[32], const uint8_t eddsa[32])"
+
+.PP
+EdDSA to X25519 ///\&. 
+.SS "void crypto_from_eddsa_public (uint8_t x25519[32], const uint8_t eddsa[32])"
+
+.SS "void crypto_hchacha20 (uint8_t out[32], const uint8_t key[32], const uint8_t in[16])"
+
+.PP
+Low level primitives ///\&. 
+.SS "void crypto_hidden_key_pair (uint8_t hidden[32], uint8_t secret_key[32], uint8_t seed[32])"
+
+.SS "void crypto_hidden_to_curve (uint8_t curve[32], const uint8_t hidden[32])"
+
+.SS "void crypto_ietf_chacha20 (uint8_t * cipher_text, const uint8_t * plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[12])"
+
+.SS "uint32_t crypto_ietf_chacha20_ctr (uint8_t * cipher_text, const uint8_t * plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[12], uint32_t ctr)"
+
+.SS "void crypto_key_exchange (uint8_t shared_key[32], const uint8_t your_secret_key[32], const uint8_t their_public_key[32])"
+
+.PP
+Key exchange ///\&. 
+.SS "void crypto_lock (uint8_t mac[16], uint8_t * cipher_text, const uint8_t key[32], const uint8_t nonce[24], const uint8_t * plain_text, size_t text_size)"
+
+.SS "void crypto_lock_aead (uint8_t mac[16], uint8_t * cipher_text, const uint8_t key[32], const uint8_t nonce[24], const uint8_t * ad, size_t ad_size, const uint8_t * plain_text, size_t text_size)"
+
+.SS "void crypto_poly1305 (uint8_t mac[16], const uint8_t * message, size_t message_size, const uint8_t key[32])"
+
+.SS "void crypto_poly1305_final (\fBcrypto_poly1305_ctx\fP * ctx, uint8_t mac[16])"
+
+.SS "void crypto_poly1305_init (\fBcrypto_poly1305_ctx\fP * ctx, const uint8_t key[32])"
+
+.SS "void crypto_poly1305_update (\fBcrypto_poly1305_ctx\fP * ctx, const uint8_t * message, size_t message_size)"
+
+.SS "void crypto_sign (uint8_t signature[64], const uint8_t secret_key[32], const uint8_t public_key[32], const uint8_t * message, size_t message_size)"
+
+.SS "void crypto_sign_final (\fBcrypto_sign_ctx_abstract\fP * ctx, uint8_t signature[64])"
+
+.SS "void crypto_sign_init_first_pass (\fBcrypto_sign_ctx_abstract\fP * ctx, const uint8_t secret_key[32], const uint8_t public_key[32])"
+
+.SS "void crypto_sign_init_first_pass_custom_hash (\fBcrypto_sign_ctx_abstract\fP * ctx, const uint8_t secret_key[32], const uint8_t public_key[32], const \fBcrypto_sign_vtable\fP * hash)"
+
+.SS "void crypto_sign_init_second_pass (\fBcrypto_sign_ctx_abstract\fP * ctx)"
+
+.SS "void crypto_sign_public_key (uint8_t public_key[32], const uint8_t secret_key[32])"
+
+.SS "void crypto_sign_public_key_custom_hash (uint8_t public_key[32], const uint8_t secret_key[32], const \fBcrypto_sign_vtable\fP * hash)"
+
+.SS "void crypto_sign_update (\fBcrypto_sign_ctx_abstract\fP * ctx, const uint8_t * message, size_t message_size)"
+
+.SS "int crypto_unlock (uint8_t * plain_text, const uint8_t key[32], const uint8_t nonce[24], const uint8_t mac[16], const uint8_t * cipher_text, size_t text_size)"
+
+.SS "int crypto_unlock_aead (uint8_t * plain_text, const uint8_t key[32], const uint8_t nonce[24], const uint8_t mac[16], const uint8_t * ad, size_t ad_size, const uint8_t * cipher_text, size_t text_size)"
+
+.SS "int crypto_verify16 (const uint8_t a[16], const uint8_t b[16])"
+
+.PP
+High level interface ///\&. 
+.SS "int crypto_verify32 (const uint8_t a[32], const uint8_t b[32])"
+
+.SS "int crypto_verify64 (const uint8_t a[64], const uint8_t b[64])"
+
+.SS "void crypto_wipe (void * secret, size_t size)"
+
+.SS "void crypto_x25519 (uint8_t raw_shared_secret[32], const uint8_t your_secret_key[32], const uint8_t their_public_key[32])"
+
+.SS "void crypto_x25519_dirty_fast (uint8_t pk[32], const uint8_t sk[32])"
+
+.SS "void crypto_x25519_dirty_small (uint8_t pk[32], const uint8_t sk[32])"
+
+.SS "void crypto_x25519_inverse (uint8_t blind_salt[32], const uint8_t private_key[32], const uint8_t curve_point[32])"
+
+.SS "void crypto_x25519_public_key (uint8_t public_key[32], const uint8_t secret_key[32])"
+
+.SS "void crypto_xchacha20 (uint8_t * cipher_text, const uint8_t * plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[24])"
+
+.SS "uint64_t crypto_xchacha20_ctr (uint8_t * cipher_text, const uint8_t * plain_text, size_t text_size, const uint8_t key[32], const uint8_t nonce[24], uint64_t ctr)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "const \fBcrypto_sign_vtable\fP crypto_blake2b_vtable\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

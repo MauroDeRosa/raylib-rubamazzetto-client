@@ -1,0 +1,981 @@
+.TH "include/external/uthash/utlist.h" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/external/uthash/utlist.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <assert\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUTLIST_VERSION\fP   2\&.3\&.0"
+.br
+.ti -1c
+.RI "#define \fBLDECLTYPE\fP(x)   __typeof(x)"
+.br
+.ti -1c
+.RI "#define \fBIF_NO_DECLTYPE\fP(x)"
+.br
+.ti -1c
+.RI "#define \fBUTLIST_SV\fP(elt,  list)"
+.br
+.ti -1c
+.RI "#define \fBUTLIST_NEXT\fP(elt,  list,  next)   ((elt)\->next)"
+.br
+.ti -1c
+.RI "#define \fBUTLIST_NEXTASGN\fP(elt,  list,  to,  next)   ((elt)\->next)=(to)"
+.br
+.ti -1c
+.RI "#define \fBUTLIST_PREVASGN\fP(elt,  list,  to,  prev)   ((elt)\->prev)=(to)"
+.br
+.ti -1c
+.RI "#define \fBUTLIST_RS\fP(list)"
+.br
+.ti -1c
+.RI "#define \fBUTLIST_CASTASGN\fP(a,  b)   (a)=(b)"
+.br
+.ti -1c
+.RI "#define \fBLL_SORT\fP(list,  cmp)       \fBLL_SORT2\fP(list, cmp, next)"
+.br
+.ti -1c
+.RI "#define \fBLL_SORT2\fP(list,  cmp,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_SORT\fP(list,  cmp)       \fBDL_SORT2\fP(list, cmp, prev, next)"
+.br
+.ti -1c
+.RI "#define \fBDL_SORT2\fP(list,  cmp,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_SORT\fP(list,  cmp)       \fBCDL_SORT2\fP(list, cmp, prev, next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_SORT2\fP(list,  cmp,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_PREPEND\fP(head,  add)       \fBLL_PREPEND2\fP(head,add,next)"
+.br
+.ti -1c
+.RI "#define \fBLL_PREPEND2\fP(head,  add,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_CONCAT\fP(head1,  head2)       \fBLL_CONCAT2\fP(head1,head2,next)"
+.br
+.ti -1c
+.RI "#define \fBLL_CONCAT2\fP(head1,  head2,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_APPEND\fP(head,  add)       \fBLL_APPEND2\fP(head,add,next)"
+.br
+.ti -1c
+.RI "#define \fBLL_APPEND2\fP(head,  add,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_INSERT_INORDER\fP(head,  add,  cmp)       \fBLL_INSERT_INORDER2\fP(head,add,cmp,next)"
+.br
+.ti -1c
+.RI "#define \fBLL_INSERT_INORDER2\fP(head,  add,  cmp,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_LOWER_BOUND\fP(head,  elt,  like,  cmp)       \fBLL_LOWER_BOUND2\fP(head,elt,like,cmp,next)"
+.br
+.ti -1c
+.RI "#define \fBLL_LOWER_BOUND2\fP(head,  elt,  like,  cmp,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_DELETE\fP(head,  del)       \fBLL_DELETE2\fP(head,del,next)"
+.br
+.ti -1c
+.RI "#define \fBLL_DELETE2\fP(head,  del,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_COUNT\fP(head,  el,  counter)       \fBLL_COUNT2\fP(head,el,counter,next)                                                            \\"
+.br
+.ti -1c
+.RI "#define \fBLL_COUNT2\fP(head,  el,  counter,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_FOREACH\fP(head,  el)       \fBLL_FOREACH2\fP(head,el,next)"
+.br
+.ti -1c
+.RI "#define \fBLL_FOREACH2\fP(head,  el,  next)       for ((el) = (head); el; (el) = (el)\->next)"
+.br
+.ti -1c
+.RI "#define \fBLL_FOREACH_SAFE\fP(head,  el,  tmp)       \fBLL_FOREACH_SAFE2\fP(head,el,tmp,next)"
+.br
+.ti -1c
+.RI "#define \fBLL_FOREACH_SAFE2\fP(head,  el,  tmp,  next)     for ((el) = (head); (el) && ((tmp) = (el)\->next, 1); (el) = (tmp))"
+.br
+.ti -1c
+.RI "#define \fBLL_SEARCH_SCALAR\fP(head,  out,  field,  val)       \fBLL_SEARCH_SCALAR2\fP(head,out,field,val,next)"
+.br
+.ti -1c
+.RI "#define \fBLL_SEARCH_SCALAR2\fP(head,  out,  field,  val,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_SEARCH\fP(head,  out,  elt,  cmp)       \fBLL_SEARCH2\fP(head,out,elt,cmp,next)"
+.br
+.ti -1c
+.RI "#define \fBLL_SEARCH2\fP(head,  out,  elt,  cmp,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_REPLACE_ELEM2\fP(head,  el,  add,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_REPLACE_ELEM\fP(head,  el,  add)       \fBLL_REPLACE_ELEM2\fP(head, el, add, next)"
+.br
+.ti -1c
+.RI "#define \fBLL_PREPEND_ELEM2\fP(head,  el,  add,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_PREPEND_ELEM\fP(head,  el,  add)       \fBLL_PREPEND_ELEM2\fP(head, el, add, next)"
+.br
+.ti -1c
+.RI "#define \fBLL_APPEND_ELEM2\fP(head,  el,  add,  next)"
+.br
+.ti -1c
+.RI "#define \fBLL_APPEND_ELEM\fP(head,  el,  add)       \fBLL_APPEND_ELEM2\fP(head, el, add, next)"
+.br
+.ti -1c
+.RI "#define \fBDL_PREPEND\fP(head,  add)       \fBDL_PREPEND2\fP(head,add,prev,next)"
+.br
+.ti -1c
+.RI "#define \fBDL_PREPEND2\fP(head,  add,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_APPEND\fP(head,  add)       \fBDL_APPEND2\fP(head,add,prev,next)"
+.br
+.ti -1c
+.RI "#define \fBDL_APPEND2\fP(head,  add,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_INSERT_INORDER\fP(head,  add,  cmp)       \fBDL_INSERT_INORDER2\fP(head,add,cmp,prev,next)"
+.br
+.ti -1c
+.RI "#define \fBDL_INSERT_INORDER2\fP(head,  add,  cmp,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_LOWER_BOUND\fP(head,  elt,  like,  cmp)       \fBDL_LOWER_BOUND2\fP(head,elt,like,cmp,next)"
+.br
+.ti -1c
+.RI "#define \fBDL_LOWER_BOUND2\fP(head,  elt,  like,  cmp,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_CONCAT\fP(head1,  head2)       \fBDL_CONCAT2\fP(head1,head2,prev,next)"
+.br
+.ti -1c
+.RI "#define \fBDL_CONCAT2\fP(head1,  head2,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_DELETE\fP(head,  del)       \fBDL_DELETE2\fP(head,del,prev,next)"
+.br
+.ti -1c
+.RI "#define \fBDL_DELETE2\fP(head,  del,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_COUNT\fP(head,  el,  counter)       \fBDL_COUNT2\fP(head,el,counter,next)                                                            \\"
+.br
+.ti -1c
+.RI "#define \fBDL_COUNT2\fP(head,  el,  counter,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_FOREACH\fP(head,  el)       \fBDL_FOREACH2\fP(head,el,next)"
+.br
+.ti -1c
+.RI "#define \fBDL_FOREACH2\fP(head,  el,  next)       for ((el) = (head); el; (el) = (el)\->next)"
+.br
+.ti -1c
+.RI "#define \fBDL_FOREACH_SAFE\fP(head,  el,  tmp)       \fBDL_FOREACH_SAFE2\fP(head,el,tmp,next)"
+.br
+.ti -1c
+.RI "#define \fBDL_FOREACH_SAFE2\fP(head,  el,  tmp,  next)     for ((el) = (head); (el) && ((tmp) = (el)\->next, 1); (el) = (tmp))"
+.br
+.ti -1c
+.RI "#define \fBDL_SEARCH_SCALAR\fP   \fBLL_SEARCH_SCALAR\fP"
+.br
+.ti -1c
+.RI "#define \fBDL_SEARCH\fP   \fBLL_SEARCH\fP"
+.br
+.ti -1c
+.RI "#define \fBDL_SEARCH_SCALAR2\fP   \fBLL_SEARCH_SCALAR2\fP"
+.br
+.ti -1c
+.RI "#define \fBDL_SEARCH2\fP   \fBLL_SEARCH2\fP"
+.br
+.ti -1c
+.RI "#define \fBDL_REPLACE_ELEM2\fP(head,  el,  add,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_REPLACE_ELEM\fP(head,  el,  add)       \fBDL_REPLACE_ELEM2\fP(head, el, add, prev, next)"
+.br
+.ti -1c
+.RI "#define \fBDL_PREPEND_ELEM2\fP(head,  el,  add,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_PREPEND_ELEM\fP(head,  el,  add)       \fBDL_PREPEND_ELEM2\fP(head, el, add, prev, next)"
+.br
+.ti -1c
+.RI "#define \fBDL_APPEND_ELEM2\fP(head,  el,  add,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBDL_APPEND_ELEM\fP(head,  el,  add)      \fBDL_APPEND_ELEM2\fP(head, el, add, prev, next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_APPEND\fP(head,  add)       \fBCDL_APPEND2\fP(head,add,prev,next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_APPEND2\fP(head,  add,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_PREPEND\fP(head,  add)       \fBCDL_PREPEND2\fP(head,add,prev,next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_PREPEND2\fP(head,  add,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_INSERT_INORDER\fP(head,  add,  cmp)       \fBCDL_INSERT_INORDER2\fP(head,add,cmp,prev,next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_INSERT_INORDER2\fP(head,  add,  cmp,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_LOWER_BOUND\fP(head,  elt,  like,  cmp)       \fBCDL_LOWER_BOUND2\fP(head,elt,like,cmp,next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_LOWER_BOUND2\fP(head,  elt,  like,  cmp,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_DELETE\fP(head,  del)       \fBCDL_DELETE2\fP(head,del,prev,next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_DELETE2\fP(head,  del,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_COUNT\fP(head,  el,  counter)       \fBCDL_COUNT2\fP(head,el,counter,next)                                                           \\"
+.br
+.ti -1c
+.RI "#define \fBCDL_COUNT2\fP(head,  el,  counter,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_FOREACH\fP(head,  el)       \fBCDL_FOREACH2\fP(head,el,next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_FOREACH2\fP(head,  el,  next)       for ((el)=(head);el;(el)=(((el)\->next==(head)) ? NULL : (el)\->next))"
+.br
+.ti -1c
+.RI "#define \fBCDL_FOREACH_SAFE\fP(head,  el,  tmp1,  tmp2)       \fBCDL_FOREACH_SAFE2\fP(head,el,tmp1,tmp2,prev,next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_FOREACH_SAFE2\fP(head,  el,  tmp1,  tmp2,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_SEARCH_SCALAR\fP(head,  out,  field,  val)       \fBCDL_SEARCH_SCALAR2\fP(head,out,field,val,next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_SEARCH_SCALAR2\fP(head,  out,  field,  val,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_SEARCH\fP(head,  out,  elt,  cmp)       \fBCDL_SEARCH2\fP(head,out,elt,cmp,next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_SEARCH2\fP(head,  out,  elt,  cmp,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_REPLACE_ELEM2\fP(head,  el,  add,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_REPLACE_ELEM\fP(head,  el,  add)       \fBCDL_REPLACE_ELEM2\fP(head, el, add, prev, next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_PREPEND_ELEM2\fP(head,  el,  add,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_PREPEND_ELEM\fP(head,  el,  add)       \fBCDL_PREPEND_ELEM2\fP(head, el, add, prev, next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_APPEND_ELEM2\fP(head,  el,  add,  prev,  next)"
+.br
+.ti -1c
+.RI "#define \fBCDL_APPEND_ELEM\fP(head,  el,  add)       \fBCDL_APPEND_ELEM2\fP(head, el, add, prev, next)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CDL_APPEND(head, add)       \fBCDL_APPEND2\fP(head,add,prev,next)"
+
+.SS "#define CDL_APPEND2(head, add, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ if (head) {                                                                                   \
+   (add)->prev = (head)->prev;                                                                 \
+   (add)->next = (head);                                                                       \
+   (head)->prev = (add);                                                                       \
+   (add)->prev->next = (add);                                                                  \
+ } else {                                                                                      \
+   (add)->prev = (add);                                                                        \
+   (add)->next = (add);                                                                        \
+   (head) = (add);                                                                             \
+ }                                                                                             \
+} while (0)
+.fi
+.SS "#define CDL_APPEND_ELEM(head, el, add)       \fBCDL_APPEND_ELEM2\fP(head, el, add, prev, next)"
+
+.SS "#define CDL_APPEND_ELEM2(head, el, add, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ if (el) {                                                                                     \
+  assert((head) != NULL);                                                                      \
+  assert((add) != NULL);                                                                       \
+  (add)->next = (el)->next;                                                                    \
+  (add)->prev = (el);                                                                          \
+  (el)->next = (add);                                                                          \
+  (add)->next->prev = (add);                                                                   \
+ } else {                                                                                      \
+  CDL_PREPEND2(head, add, prev, next);                                                         \
+ }                                                                                             \
+} while (0)
+.fi
+.SS "#define CDL_COUNT(head, el, counter)       \fBCDL_COUNT2\fP(head,el,counter,next)                                                           \\"
+
+.SS "#define CDL_COUNT2(head, el, counter, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  (counter) = 0;                                                                               \
+  CDL_FOREACH2(head,el,next) { ++(counter); }                                                  \
+} while (0)
+.fi
+.SS "#define CDL_DELETE(head, del)       \fBCDL_DELETE2\fP(head,del,prev,next)"
+
+.SS "#define CDL_DELETE2(head, del, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  if (((head)==(del)) && ((head)->next == (head))) {                                           \
+      (head) = NULL;                                                                           \
+  } else {                                                                                     \
+     (del)->next->prev = (del)->prev;                                                          \
+     (del)->prev->next = (del)->next;                                                          \
+     if ((del) == (head)) (head)=(del)->next;                                                  \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define CDL_FOREACH(head, el)       \fBCDL_FOREACH2\fP(head,el,next)"
+
+.SS "#define CDL_FOREACH2(head, el, next)       for ((el)=(head);el;(el)=(((el)\->next==(head)) ? NULL : (el)\->next))"
+
+.SS "#define CDL_FOREACH_SAFE(head, el, tmp1, tmp2)       \fBCDL_FOREACH_SAFE2\fP(head,el,tmp1,tmp2,prev,next)"
+
+.SS "#define CDL_FOREACH_SAFE2(head, el, tmp1, tmp2, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+  for ((el) = (head), (tmp1) = (head) ? (head)->prev : NULL;                                   \
+       (el) && ((tmp2) = (el)->next, 1);                                                       \
+       (el) = ((el) == (tmp1) ? NULL : (tmp2)))
+.fi
+.SS "#define CDL_INSERT_INORDER(head, add, cmp)       \fBCDL_INSERT_INORDER2\fP(head,add,cmp,prev,next)"
+
+.SS "#define CDL_INSERT_INORDER2(head, add, cmp, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  LDECLTYPE(head) _tmp;                                                                        \
+  if (head) {                                                                                  \
+    CDL_LOWER_BOUND2(head, _tmp, add, cmp, next);                                              \
+    CDL_APPEND_ELEM2(head, _tmp, add, prev, next);                                             \
+  } else {                                                                                     \
+    (head) = (add);                                                                            \
+    (head)->next = (head);                                                                     \
+    (head)->prev = (head);                                                                     \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define CDL_LOWER_BOUND(head, elt, like, cmp)       \fBCDL_LOWER_BOUND2\fP(head,elt,like,cmp,next)"
+
+.SS "#define CDL_LOWER_BOUND2(head, elt, like, cmp, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  if ((head) == NULL || (cmp(head, like)) >= 0) {                                              \
+    (elt) = NULL;                                                                              \
+  } else {                                                                                     \
+    for ((elt) = (head); (elt)->next != (head); (elt) = (elt)->next) {                         \
+      if ((cmp((elt)->next, like)) >= 0) {                                                     \
+        break;                                                                                 \
+      }                                                                                        \
+    }                                                                                          \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define CDL_PREPEND(head, add)       \fBCDL_PREPEND2\fP(head,add,prev,next)"
+
+.SS "#define CDL_PREPEND2(head, add, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ if (head) {                                                                                   \
+   (add)->prev = (head)->prev;                                                                 \
+   (add)->next = (head);                                                                       \
+   (head)->prev = (add);                                                                       \
+   (add)->prev->next = (add);                                                                  \
+ } else {                                                                                      \
+   (add)->prev = (add);                                                                        \
+   (add)->next = (add);                                                                        \
+ }                                                                                             \
+ (head) = (add);                                                                               \
+} while (0)
+.fi
+.SS "#define CDL_PREPEND_ELEM(head, el, add)       \fBCDL_PREPEND_ELEM2\fP(head, el, add, prev, next)"
+
+.SS "#define CDL_PREPEND_ELEM2(head, el, add, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  if (el) {                                                                                    \
+    assert((head) != NULL);                                                                    \
+    assert((add) != NULL);                                                                     \
+    (add)->next = (el);                                                                        \
+    (add)->prev = (el)->prev;                                                                  \
+    (el)->prev = (add);                                                                        \
+    (add)->prev->next = (add);                                                                 \
+    if ((head) == (el)) {                                                                      \
+      (head) = (add);                                                                          \
+    }                                                                                          \
+  } else {                                                                                     \
+    CDL_APPEND2(head, add, prev, next);                                                        \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define CDL_REPLACE_ELEM(head, el, add)       \fBCDL_REPLACE_ELEM2\fP(head, el, add, prev, next)"
+
+.SS "#define CDL_REPLACE_ELEM2(head, el, add, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ assert((head) != NULL);                                                                       \
+ assert((el) != NULL);                                                                         \
+ assert((add) != NULL);                                                                        \
+ if ((el)->next == (el)) {                                                                     \
+  (add)->next = (add);                                                                         \
+  (add)->prev = (add);                                                                         \
+  (head) = (add);                                                                              \
+ } else {                                                                                      \
+  (add)->next = (el)->next;                                                                    \
+  (add)->prev = (el)->prev;                                                                    \
+  (add)->next->prev = (add);                                                                   \
+  (add)->prev->next = (add);                                                                   \
+  if ((head) == (el)) {                                                                        \
+   (head) = (add);                                                                             \
+  }                                                                                            \
+ }                                                                                             \
+} while (0)
+.fi
+.SS "#define CDL_SEARCH(head, out, elt, cmp)       \fBCDL_SEARCH2\fP(head,out,elt,cmp,next)"
+
+.SS "#define CDL_SEARCH2(head, out, elt, cmp, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+    CDL_FOREACH2(head,out,next) {                                                              \
+      if ((cmp(out,elt))==0) break;                                                            \
+    }                                                                                          \
+} while (0)
+.fi
+.SS "#define CDL_SEARCH_SCALAR(head, out, field, val)       \fBCDL_SEARCH_SCALAR2\fP(head,out,field,val,next)"
+
+.SS "#define CDL_SEARCH_SCALAR2(head, out, field, val, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+    CDL_FOREACH2(head,out,next) {                                                              \
+      if ((out)->field == (val)) break;                                                        \
+    }                                                                                          \
+} while (0)
+.fi
+.SS "#define CDL_SORT(list, cmp)       \fBCDL_SORT2\fP(list, cmp, prev, next)"
+
+.SS "#define CDL_SORT2(list, cmp, prev, next)"
+
+.SS "#define DL_APPEND(head, add)       \fBDL_APPEND2\fP(head,add,prev,next)"
+
+.SS "#define DL_APPEND2(head, add, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  if (head) {                                                                                  \
+      (add)->prev = (head)->prev;                                                              \
+      (head)->prev->next = (add);                                                              \
+      (head)->prev = (add);                                                                    \
+      (add)->next = NULL;                                                                      \
+  } else {                                                                                     \
+      (head)=(add);                                                                            \
+      (head)->prev = (head);                                                                   \
+      (head)->next = NULL;                                                                     \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define DL_APPEND_ELEM(head, el, add)      \fBDL_APPEND_ELEM2\fP(head, el, add, prev, next)"
+
+.SS "#define DL_APPEND_ELEM2(head, el, add, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ if (el) {                                                                                     \
+  assert((head) != NULL);                                                                      \
+  assert((add) != NULL);                                                                       \
+  (add)->next = (el)->next;                                                                    \
+  (add)->prev = (el);                                                                          \
+  (el)->next = (add);                                                                          \
+  if ((add)->next) {                                                                           \
+   (add)->next->prev = (add);                                                                  \
+  } else {                                                                                     \
+   (head)->prev = (add);                                                                       \
+  }                                                                                            \
+ } else {                                                                                      \
+  DL_PREPEND2(head, add, prev, next);                                                          \
+ }                                                                                             \
+} while (0)                                                                                    \
+.fi
+.SS "#define DL_CONCAT(head1, head2)       \fBDL_CONCAT2\fP(head1,head2,prev,next)"
+
+.SS "#define DL_CONCAT2(head1, head2, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  LDECLTYPE(head1) _tmp;                                                                       \
+  if (head2) {                                                                                 \
+    if (head1) {                                                                               \
+        UTLIST_CASTASGN(_tmp, (head2)->prev);                                                  \
+        (head2)->prev = (head1)->prev;                                                         \
+        (head1)->prev->next = (head2);                                                         \
+        UTLIST_CASTASGN((head1)->prev, _tmp);                                                  \
+    } else {                                                                                   \
+        (head1)=(head2);                                                                       \
+    }                                                                                          \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define DL_COUNT(head, el, counter)       \fBDL_COUNT2\fP(head,el,counter,next)                                                            \\"
+
+.SS "#define DL_COUNT2(head, el, counter, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  (counter) = 0;                                                                               \
+  DL_FOREACH2(head,el,next) { ++(counter); }                                                   \
+} while (0)
+.fi
+.SS "#define DL_DELETE(head, del)       \fBDL_DELETE2\fP(head,del,prev,next)"
+
+.SS "#define DL_DELETE2(head, del, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  assert((head) != NULL);                                                                      \
+  assert((del)->prev != NULL);                                                                 \
+  if ((del)->prev == (del)) {                                                                  \
+      (head)=NULL;                                                                             \
+  } else if ((del)==(head)) {                                                                  \
+      (del)->next->prev = (del)->prev;                                                         \
+      (head) = (del)->next;                                                                    \
+  } else {                                                                                     \
+      (del)->prev->next = (del)->next;                                                         \
+      if ((del)->next) {                                                                       \
+          (del)->next->prev = (del)->prev;                                                     \
+      } else {                                                                                 \
+          (head)->prev = (del)->prev;                                                          \
+      }                                                                                        \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define DL_FOREACH(head, el)       \fBDL_FOREACH2\fP(head,el,next)"
+
+.SS "#define DL_FOREACH2(head, el, next)       for ((el) = (head); el; (el) = (el)\->next)"
+
+.SS "#define DL_FOREACH_SAFE(head, el, tmp)       \fBDL_FOREACH_SAFE2\fP(head,el,tmp,next)"
+
+.SS "#define DL_FOREACH_SAFE2(head, el, tmp, next)     for ((el) = (head); (el) && ((tmp) = (el)\->next, 1); (el) = (tmp))"
+
+.SS "#define DL_INSERT_INORDER(head, add, cmp)       \fBDL_INSERT_INORDER2\fP(head,add,cmp,prev,next)"
+
+.SS "#define DL_INSERT_INORDER2(head, add, cmp, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  LDECLTYPE(head) _tmp;                                                                        \
+  if (head) {                                                                                  \
+    DL_LOWER_BOUND2(head, _tmp, add, cmp, next);                                               \
+    DL_APPEND_ELEM2(head, _tmp, add, prev, next);                                              \
+  } else {                                                                                     \
+    (head) = (add);                                                                            \
+    (head)->prev = (head);                                                                     \
+    (head)->next = NULL;                                                                       \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define DL_LOWER_BOUND(head, elt, like, cmp)       \fBDL_LOWER_BOUND2\fP(head,elt,like,cmp,next)"
+
+.SS "#define DL_LOWER_BOUND2(head, elt, like, cmp, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  if ((head) == NULL || (cmp(head, like)) >= 0) {                                              \
+    (elt) = NULL;                                                                              \
+  } else {                                                                                     \
+    for ((elt) = (head); (elt)->next != NULL; (elt) = (elt)->next) {                           \
+      if ((cmp((elt)->next, like)) >= 0) {                                                     \
+        break;                                                                                 \
+      }                                                                                        \
+    }                                                                                          \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define DL_PREPEND(head, add)       \fBDL_PREPEND2\fP(head,add,prev,next)"
+
+.SS "#define DL_PREPEND2(head, add, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ (add)->next = (head);                                                                         \
+ if (head) {                                                                                   \
+   (add)->prev = (head)->prev;                                                                 \
+   (head)->prev = (add);                                                                       \
+ } else {                                                                                      \
+   (add)->prev = (add);                                                                        \
+ }                                                                                             \
+ (head) = (add);                                                                               \
+} while (0)
+.fi
+.SS "#define DL_PREPEND_ELEM(head, el, add)       \fBDL_PREPEND_ELEM2\fP(head, el, add, prev, next)"
+
+.SS "#define DL_PREPEND_ELEM2(head, el, add, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ if (el) {                                                                                     \
+  assert((head) != NULL);                                                                      \
+  assert((add) != NULL);                                                                       \
+  (add)->next = (el);                                                                          \
+  (add)->prev = (el)->prev;                                                                    \
+  (el)->prev = (add);                                                                          \
+  if ((head) == (el)) {                                                                        \
+   (head) = (add);                                                                             \
+  } else {                                                                                     \
+   (add)->prev->next = (add);                                                                  \
+  }                                                                                            \
+ } else {                                                                                      \
+  DL_APPEND2(head, add, prev, next);                                                           \
+ }                                                                                             \
+} while (0)                                                                                    \
+.fi
+.SS "#define DL_REPLACE_ELEM(head, el, add)       \fBDL_REPLACE_ELEM2\fP(head, el, add, prev, next)"
+
+.SS "#define DL_REPLACE_ELEM2(head, el, add, prev, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ assert((head) != NULL);                                                                       \
+ assert((el) != NULL);                                                                         \
+ assert((add) != NULL);                                                                        \
+ if ((head) == (el)) {                                                                         \
+  (head) = (add);                                                                              \
+  (add)->next = (el)->next;                                                                    \
+  if ((el)->next == NULL) {                                                                    \
+   (add)->prev = (add);                                                                        \
+  } else {                                                                                     \
+   (add)->prev = (el)->prev;                                                                   \
+   (add)->next->prev = (add);                                                                  \
+  }                                                                                            \
+ } else {                                                                                      \
+  (add)->next = (el)->next;                                                                    \
+  (add)->prev = (el)->prev;                                                                    \
+  (add)->prev->next = (add);                                                                   \
+  if ((el)->next == NULL) {                                                                    \
+   (head)->prev = (add);                                                                       \
+  } else {                                                                                     \
+   (add)->next->prev = (add);                                                                  \
+  }                                                                                            \
+ }                                                                                             \
+} while (0)
+.fi
+.SS "#define DL_SEARCH   \fBLL_SEARCH\fP"
+
+.SS "#define DL_SEARCH2   \fBLL_SEARCH2\fP"
+
+.SS "#define DL_SEARCH_SCALAR   \fBLL_SEARCH_SCALAR\fP"
+
+.SS "#define DL_SEARCH_SCALAR2   \fBLL_SEARCH_SCALAR2\fP"
+
+.SS "#define DL_SORT(list, cmp)       \fBDL_SORT2\fP(list, cmp, prev, next)"
+
+.SS "#define DL_SORT2(list, cmp, prev, next)"
+
+.SS "#define IF_NO_DECLTYPE(x)"
+
+.SS "#define LDECLTYPE(x)   __typeof(x)"
+
+.SS "#define LL_APPEND(head, add)       \fBLL_APPEND2\fP(head,add,next)"
+
+.SS "#define LL_APPEND2(head, add, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  LDECLTYPE(head) _tmp;                                                                        \
+  (add)->next=NULL;                                                                            \
+  if (head) {                                                                                  \
+    _tmp = (head);                                                                             \
+    while (_tmp->next) { _tmp = _tmp->next; }                                                  \
+    _tmp->next=(add);                                                                          \
+  } else {                                                                                     \
+    (head)=(add);                                                                              \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define LL_APPEND_ELEM(head, el, add)       \fBLL_APPEND_ELEM2\fP(head, el, add, next)"
+
+.SS "#define LL_APPEND_ELEM2(head, el, add, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ if (el) {                                                                                     \
+  assert((head) != NULL);                                                                      \
+  assert((add) != NULL);                                                                       \
+  (add)->next = (el)->next;                                                                    \
+  (el)->next = (add);                                                                          \
+ } else {                                                                                      \
+  LL_PREPEND2(head, add, next);                                                                \
+ }                                                                                             \
+} while (0)                                                                                    \
+.fi
+.SS "#define LL_CONCAT(head1, head2)       \fBLL_CONCAT2\fP(head1,head2,next)"
+
+.SS "#define LL_CONCAT2(head1, head2, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  LDECLTYPE(head1) _tmp;                                                                       \
+  if (head1) {                                                                                 \
+    _tmp = (head1);                                                                            \
+    while (_tmp->next) { _tmp = _tmp->next; }                                                  \
+    _tmp->next=(head2);                                                                        \
+  } else {                                                                                     \
+    (head1)=(head2);                                                                           \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define LL_COUNT(head, el, counter)       \fBLL_COUNT2\fP(head,el,counter,next)                                                            \\"
+
+.SS "#define LL_COUNT2(head, el, counter, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  (counter) = 0;                                                                               \
+  LL_FOREACH2(head,el,next) { ++(counter); }                                                   \
+} while (0)
+.fi
+.SS "#define LL_DELETE(head, del)       \fBLL_DELETE2\fP(head,del,next)"
+
+.SS "#define LL_DELETE2(head, del, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  LDECLTYPE(head) _tmp;                                                                        \
+  if ((head) == (del)) {                                                                       \
+    (head)=(head)->next;                                                                       \
+  } else {                                                                                     \
+    _tmp = (head);                                                                             \
+    while (_tmp->next && (_tmp->next != (del))) {                                              \
+      _tmp = _tmp->next;                                                                       \
+    }                                                                                          \
+    if (_tmp->next) {                                                                          \
+      _tmp->next = (del)->next;                                                                \
+    }                                                                                          \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define LL_FOREACH(head, el)       \fBLL_FOREACH2\fP(head,el,next)"
+
+.SS "#define LL_FOREACH2(head, el, next)       for ((el) = (head); el; (el) = (el)\->next)"
+
+.SS "#define LL_FOREACH_SAFE(head, el, tmp)       \fBLL_FOREACH_SAFE2\fP(head,el,tmp,next)"
+
+.SS "#define LL_FOREACH_SAFE2(head, el, tmp, next)     for ((el) = (head); (el) && ((tmp) = (el)\->next, 1); (el) = (tmp))"
+
+.SS "#define LL_INSERT_INORDER(head, add, cmp)       \fBLL_INSERT_INORDER2\fP(head,add,cmp,next)"
+
+.SS "#define LL_INSERT_INORDER2(head, add, cmp, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  LDECLTYPE(head) _tmp;                                                                        \
+  if (head) {                                                                                  \
+    LL_LOWER_BOUND2(head, _tmp, add, cmp, next);                                               \
+    LL_APPEND_ELEM2(head, _tmp, add, next);                                                    \
+  } else {                                                                                     \
+    (head) = (add);                                                                            \
+    (head)->next = NULL;                                                                       \
+  }                                                                                            \
+} while (0)
+.fi
+.SS "#define LL_LOWER_BOUND(head, elt, like, cmp)       \fBLL_LOWER_BOUND2\fP(head,elt,like,cmp,next)"
+
+.SS "#define LL_LOWER_BOUND2(head, elt, like, cmp, next)"
+\fBValue:\fP
+.PP
+.nf
+  do {                                                                                         \
+    if ((head) == NULL || (cmp(head, like)) >= 0) {                                            \
+      (elt) = NULL;                                                                            \
+    } else {                                                                                   \
+      for ((elt) = (head); (elt)->next != NULL; (elt) = (elt)->next) {                         \
+        if (cmp((elt)->next, like) >= 0) {                                                     \
+          break;                                                                               \
+        }                                                                                      \
+      }                                                                                        \
+    }                                                                                          \
+  } while (0)
+.fi
+.SS "#define LL_PREPEND(head, add)       \fBLL_PREPEND2\fP(head,add,next)"
+
+.SS "#define LL_PREPEND2(head, add, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+  (add)->next = (head);                                                                        \
+  (head) = (add);                                                                              \
+} while (0)
+.fi
+.SS "#define LL_PREPEND_ELEM(head, el, add)       \fBLL_PREPEND_ELEM2\fP(head, el, add, next)"
+
+.SS "#define LL_PREPEND_ELEM2(head, el, add, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ if (el) {                                                                                     \
+  LDECLTYPE(head) _tmp;                                                                        \
+  assert((head) != NULL);                                                                      \
+  assert((add) != NULL);                                                                       \
+  (add)->next = (el);                                                                          \
+  if ((head) == (el)) {                                                                        \
+   (head) = (add);                                                                             \
+  } else {                                                                                     \
+   _tmp = (head);                                                                              \
+   while (_tmp->next && (_tmp->next != (el))) {                                                \
+    _tmp = _tmp->next;                                                                         \
+   }                                                                                           \
+   if (_tmp->next) {                                                                           \
+     _tmp->next = (add);                                                                       \
+   }                                                                                           \
+  }                                                                                            \
+ } else {                                                                                      \
+  LL_APPEND2(head, add, next);                                                                 \
+ }                                                                                             \
+} while (0)                                                                                    \
+.fi
+.SS "#define LL_REPLACE_ELEM(head, el, add)       \fBLL_REPLACE_ELEM2\fP(head, el, add, next)"
+
+.SS "#define LL_REPLACE_ELEM2(head, el, add, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+ LDECLTYPE(head) _tmp;                                                                         \
+ assert((head) != NULL);                                                                       \
+ assert((el) != NULL);                                                                         \
+ assert((add) != NULL);                                                                        \
+ (add)->next = (el)->next;                                                                     \
+ if ((head) == (el)) {                                                                         \
+  (head) = (add);                                                                              \
+ } else {                                                                                      \
+  _tmp = (head);                                                                               \
+  while (_tmp->next && (_tmp->next != (el))) {                                                 \
+   _tmp = _tmp->next;                                                                          \
+  }                                                                                            \
+  if (_tmp->next) {                                                                            \
+    _tmp->next = (add);                                                                        \
+  }                                                                                            \
+ }                                                                                             \
+} while (0)
+.fi
+.SS "#define LL_SEARCH(head, out, elt, cmp)       \fBLL_SEARCH2\fP(head,out,elt,cmp,next)"
+
+.SS "#define LL_SEARCH2(head, out, elt, cmp, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+    LL_FOREACH2(head,out,next) {                                                               \
+      if ((cmp(out,elt))==0) break;                                                            \
+    }                                                                                          \
+} while (0)
+.fi
+.SS "#define LL_SEARCH_SCALAR(head, out, field, val)       \fBLL_SEARCH_SCALAR2\fP(head,out,field,val,next)"
+
+.SS "#define LL_SEARCH_SCALAR2(head, out, field, val, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                                           \
+    LL_FOREACH2(head,out,next) {                                                               \
+      if ((out)->field == (val)) break;                                                        \
+    }                                                                                          \
+} while (0)
+.fi
+.SS "#define LL_SORT(list, cmp)       \fBLL_SORT2\fP(list, cmp, next)"
+
+.SS "#define LL_SORT2(list, cmp, next)"
+
+.SS "#define UTLIST_CASTASGN(a, b)   (a)=(b)"
+
+.SS "#define UTLIST_NEXT(elt, list, next)   ((elt)\->next)"
+
+.SS "#define UTLIST_NEXTASGN(elt, list, to, next)   ((elt)\->next)=(to)"
+
+.SS "#define UTLIST_PREVASGN(elt, list, to, prev)   ((elt)\->prev)=(to)"
+
+.SS "#define UTLIST_RS(list)"
+
+.SS "#define UTLIST_SV(elt, list)"
+
+.SS "#define UTLIST_VERSION   2\&.3\&.0"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

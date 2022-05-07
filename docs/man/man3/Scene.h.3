@@ -1,0 +1,56 @@
+.TH "include/SceneManager/Scene.h" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/SceneManager/Scene.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'SceneManager/SceneManager\&.h'\fP
+.br
+\fC#include 'ResourceManager/ResourceManager\&.h'\fP
+.br
+\fC#include 'external/uthash/uthash\&.h'\fP
+.br
+\fC#include 'utils/logger\&.h'\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <raylib\&.h>\fP
+.br
+\fC#include 'external/raygui\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBScene_t\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDefineScene\fP(name,  nameString,  Start,  Update,  FixedUpdate,  Render,  Exit)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DefineScene(name, nameString, Start, Update, FixedUpdate, Render, Exit)"
+\fBValue:\fP
+.PP
+.nf
+static struct Scene_t name = { \
+    nameString , \
+    0\&.0 , \
+    Start , \
+    Update , \
+    FixedUpdate , \
+    Render , \
+    Exit \
+};
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

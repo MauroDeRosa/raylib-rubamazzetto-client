@@ -1,4 +1,4 @@
 var structSceneSplashScreenData =
 [
-    [ "t", "structSceneSplashScreenData.html#a1a42232d293877d2bf23d7403c22eb62", null ]
+    [ "example", "structSceneSplashScreenData.html#aaedbf424af47e72b41a7f1cb8cf47825", null ]
 ];

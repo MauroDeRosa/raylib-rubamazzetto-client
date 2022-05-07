@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Ruba Mazzetto: source/SceneManager.c File Reference</title>
+<title>Ruba Mazzetto: source/SceneManager/SceneManager.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,46 +98,53 @@ $(document).ready(function(){initNavTree('SceneManager_8c.html',''); initResizab
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">SceneManager.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="SceneManager_8h_source.html">SceneManager.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="logger_8h_source.html">logger.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="SceneManager_8h_source.html">SceneManager/SceneManager.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="logger_8h_source.html">utils/logger.h</a>&quot;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a7a1204ac1a69c49eda0ced86a50ebdb3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a7a1204ac1a69c49eda0ced86a50ebdb3">SCENE_MANAGER_PREFIX</a>&#160;&#160;&#160;&quot;[SceneManager] &quot;</td></tr>
+<tr class="memitem:a7a1204ac1a69c49eda0ced86a50ebdb3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a7a1204ac1a69c49eda0ced86a50ebdb3">SCENE_MANAGER_PREFIX</a>&#160;&#160;&#160;<a class="el" href="logger_8h.html#a74416ee2437694c75a11e27a158eeb5c">LOG_COLOR_YELLOW</a> &quot;[SceneManager] &quot; LOG_COLOR_RESET</td></tr>
 <tr class="separator:a7a1204ac1a69c49eda0ced86a50ebdb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75cf48c52ad9df45af3ddc024563f5e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a75cf48c52ad9df45af3ddc024563f5e4">SCENE_MANAGER_FIXED_TIME_STEP</a>&#160;&#160;&#160;(1.0f / 2.0f)</td></tr>
+<tr class="separator:a75cf48c52ad9df45af3ddc024563f5e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0b9ac42b55bcbe022698ac4028974a0b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a0b9ac42b55bcbe022698ac4028974a0b">DefineScene</a> (SceneManagerInitialization, &quot;SceneManagerInitialization&quot;, NULL, NULL, NULL, NULL, NULL, NULL)</td></tr>
-<tr class="separator:a0b9ac42b55bcbe022698ac4028974a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bd418f8cf0cfd846187aa425508e13a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a2bd418f8cf0cfd846187aa425508e13a">SceneManagerInit</a> (<a class="el" href="structScene.html">Scene</a> *startScene)</td></tr>
-<tr class="separator:a2bd418f8cf0cfd846187aa425508e13a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31c9496f24e3abe2523b68ffa3174bf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a31c9496f24e3abe2523b68ffa3174bf7">_SceneManagerSceneInit</a> ()</td></tr>
-<tr class="separator:a31c9496f24e3abe2523b68ffa3174bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34fc76d9c8bf3347eab2047506e8589e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a34fc76d9c8bf3347eab2047506e8589e">SceneManagerLoop</a> ()</td></tr>
-<tr class="separator:a34fc76d9c8bf3347eab2047506e8589e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c7a28658b1fc5fd7a6d2ef2a7bccad9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a8c7a28658b1fc5fd7a6d2ef2a7bccad9">_SceneManagerNext</a> ()</td></tr>
-<tr class="separator:a8c7a28658b1fc5fd7a6d2ef2a7bccad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a4995ee13b0d209315586f7be484117"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a3a4995ee13b0d209315586f7be484117">_SceneManagerClose</a> ()</td></tr>
-<tr class="separator:a3a4995ee13b0d209315586f7be484117"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2dd600fa41223b0fa22833dea4007f98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a2dd600fa41223b0fa22833dea4007f98">SceneManagerSetState</a> (<a class="el" href="SceneManager_8h.html#ade9922e71b050ff4b4e44b7f5e799e4f">SceneManagerState</a> status)</td></tr>
-<tr class="separator:a2dd600fa41223b0fa22833dea4007f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef9251f159268f62c7f95bd9eefb2304"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#aef9251f159268f62c7f95bd9eefb2304">SceneManagerSetNext</a> (<a class="el" href="structScene.html">Scene</a> *nextScene)</td></tr>
-<tr class="separator:aef9251f159268f62c7f95bd9eefb2304"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6e253ed235350ed22aeff0b3d1891ea"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#aa6e253ed235350ed22aeff0b3d1891ea">SceneManagerGetTime</a> ()</td></tr>
-<tr class="separator:aa6e253ed235350ed22aeff0b3d1891ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a3493b3416b217f771dd6935fe9303332"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a3493b3416b217f771dd6935fe9303332">_SceneManagerStateString</a> [] = {&quot;FALIURE\0&quot;, &quot;SUCCESS\0&quot;, &quot;NEXT\0&quot;, &quot;CLOSE\0&quot;}</td></tr>
-<tr class="separator:a3493b3416b217f771dd6935fe9303332"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a201825c571f765bf2927cdb4e27a13db"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a201825c571f765bf2927cdb4e27a13db">SceneManagerInit</a> ()</td></tr>
+<tr class="separator:a201825c571f765bf2927cdb4e27a13db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fd82ab80a5c0b2153e45da109ab4744"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a7fd82ab80a5c0b2153e45da109ab4744">SceneManagerRegister</a> (const char *name, struct <a class="el" href="structScene__t.html">Scene_t</a> *scene)</td></tr>
+<tr class="separator:a7fd82ab80a5c0b2153e45da109ab4744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c56496d76cf003bc892fb176d06caed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a2c56496d76cf003bc892fb176d06caed">SceneManagerStart</a> (const char *firstSceneName)</td></tr>
+<tr class="separator:a2c56496d76cf003bc892fb176d06caed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad510fb497ec0f663cae2df0a48019279"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#ad510fb497ec0f663cae2df0a48019279">SceneManagerTime</a> ()</td></tr>
+<tr class="separator:ad510fb497ec0f663cae2df0a48019279"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a246608ea9a91fa28c99b9ba087e18132"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#a246608ea9a91fa28c99b9ba087e18132">SceneManagerNext</a> (const char *name)</td></tr>
+<tr class="separator:a246608ea9a91fa28c99b9ba087e18132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0dbdaa597832eddec9a82b0bc99b1bb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#ac0dbdaa597832eddec9a82b0bc99b1bb">SceneManagerLoop</a> ()</td></tr>
+<tr class="separator:ac0dbdaa597832eddec9a82b0bc99b1bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace6637952d3b25e6c190f5bff979a21b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneManager_8c.html#ace6637952d3b25e6c190f5bff979a21b">SceneManagerEnd</a> ()</td></tr>
+<tr class="separator:ace6637952d3b25e6c190f5bff979a21b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a75cf48c52ad9df45af3ddc024563f5e4" name="a75cf48c52ad9df45af3ddc024563f5e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75cf48c52ad9df45af3ddc024563f5e4">&#9670;&nbsp;</a></span>SCENE_MANAGER_FIXED_TIME_STEP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SCENE_MANAGER_FIXED_TIME_STEP&#160;&#160;&#160;(1.0f / 2.0f)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a7a1204ac1a69c49eda0ced86a50ebdb3" name="a7a1204ac1a69c49eda0ced86a50ebdb3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7a1204ac1a69c49eda0ced86a50ebdb3">&#9670;&nbsp;</a></span>SCENE_MANAGER_PREFIX</h2>
 
@@ -145,7 +152,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SCENE_MANAGER_PREFIX&#160;&#160;&#160;&quot;[SceneManager] &quot;</td>
+          <td class="memname">#define SCENE_MANAGER_PREFIX&#160;&#160;&#160;<a class="el" href="logger_8h.html#a74416ee2437694c75a11e27a158eeb5c">LOG_COLOR_YELLOW</a> &quot;[SceneManager] &quot; LOG_COLOR_RESET</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -153,14 +160,14 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a3a4995ee13b0d209315586f7be484117" name="a3a4995ee13b0d209315586f7be484117"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a4995ee13b0d209315586f7be484117">&#9670;&nbsp;</a></span>_SceneManagerClose()</h2>
+<a id="ace6637952d3b25e6c190f5bff979a21b" name="ace6637952d3b25e6c190f5bff979a21b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace6637952d3b25e6c190f5bff979a21b">&#9670;&nbsp;</a></span>SceneManagerEnd()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void _SceneManagerClose </td>
+          <td class="memname">int SceneManagerEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -170,14 +177,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a8c7a28658b1fc5fd7a6d2ef2a7bccad9" name="a8c7a28658b1fc5fd7a6d2ef2a7bccad9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c7a28658b1fc5fd7a6d2ef2a7bccad9">&#9670;&nbsp;</a></span>_SceneManagerNext()</h2>
+<a id="a201825c571f765bf2927cdb4e27a13db" name="a201825c571f765bf2927cdb4e27a13db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a201825c571f765bf2927cdb4e27a13db">&#9670;&nbsp;</a></span>SceneManagerInit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void _SceneManagerNext </td>
+          <td class="memname">int SceneManagerInit </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -187,14 +194,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a31c9496f24e3abe2523b68ffa3174bf7" name="a31c9496f24e3abe2523b68ffa3174bf7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31c9496f24e3abe2523b68ffa3174bf7">&#9670;&nbsp;</a></span>_SceneManagerSceneInit()</h2>
+<a id="ac0dbdaa597832eddec9a82b0bc99b1bb" name="ac0dbdaa597832eddec9a82b0bc99b1bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0dbdaa597832eddec9a82b0bc99b1bb">&#9670;&nbsp;</a></span>SceneManagerLoop()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void _SceneManagerSceneInit </td>
+          <td class="memname">int SceneManagerLoop </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -204,59 +211,41 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0b9ac42b55bcbe022698ac4028974a0b" name="a0b9ac42b55bcbe022698ac4028974a0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b9ac42b55bcbe022698ac4028974a0b">&#9670;&nbsp;</a></span>DefineScene()</h2>
+<a id="a246608ea9a91fa28c99b9ba087e18132" name="a246608ea9a91fa28c99b9ba087e18132"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a246608ea9a91fa28c99b9ba087e18132">&#9670;&nbsp;</a></span>SceneManagerNext()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DefineScene </td>
+          <td class="memname">int SceneManagerNext </td>
           <td>(</td>
-          <td class="paramtype">SceneManagerInitialization&#160;</td>
-          <td class="paramname">, </td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7fd82ab80a5c0b2153e45da109ab4744" name="a7fd82ab80a5c0b2153e45da109ab4744"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fd82ab80a5c0b2153e45da109ab4744">&#9670;&nbsp;</a></span>SceneManagerRegister()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SceneManagerRegister </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&quot;SceneManagerInitialization&quot;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NULL&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NULL&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NULL&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NULL&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NULL&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NULL&#160;</td>
-          <td class="paramname">&#160;</td>
+          <td class="paramtype">struct <a class="el" href="structScene__t.html">Scene_t</a> *&#160;</td>
+          <td class="paramname"><em>scene</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -268,103 +257,35 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aa6e253ed235350ed22aeff0b3d1891ea" name="aa6e253ed235350ed22aeff0b3d1891ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6e253ed235350ed22aeff0b3d1891ea">&#9670;&nbsp;</a></span>SceneManagerGetTime()</h2>
+<a id="a2c56496d76cf003bc892fb176d06caed" name="a2c56496d76cf003bc892fb176d06caed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c56496d76cf003bc892fb176d06caed">&#9670;&nbsp;</a></span>SceneManagerStart()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double SceneManagerGetTime </td>
+          <td class="memname">int SceneManagerStart </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>firstSceneName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad510fb497ec0f663cae2df0a48019279" name="ad510fb497ec0f663cae2df0a48019279"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad510fb497ec0f663cae2df0a48019279">&#9670;&nbsp;</a></span>SceneManagerTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double SceneManagerTime </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2bd418f8cf0cfd846187aa425508e13a" name="a2bd418f8cf0cfd846187aa425508e13a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2bd418f8cf0cfd846187aa425508e13a">&#9670;&nbsp;</a></span>SceneManagerInit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool SceneManagerInit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structScene.html">Scene</a> *&#160;</td>
-          <td class="paramname"><em>startScene</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a34fc76d9c8bf3347eab2047506e8589e" name="a34fc76d9c8bf3347eab2047506e8589e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34fc76d9c8bf3347eab2047506e8589e">&#9670;&nbsp;</a></span>SceneManagerLoop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SceneManagerLoop </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aef9251f159268f62c7f95bd9eefb2304" name="aef9251f159268f62c7f95bd9eefb2304"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef9251f159268f62c7f95bd9eefb2304">&#9670;&nbsp;</a></span>SceneManagerSetNext()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SceneManagerSetNext </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structScene.html">Scene</a> *&#160;</td>
-          <td class="paramname"><em>nextScene</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2dd600fa41223b0fa22833dea4007f98" name="a2dd600fa41223b0fa22833dea4007f98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2dd600fa41223b0fa22833dea4007f98">&#9670;&nbsp;</a></span>SceneManagerSetState()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SceneManagerSetState </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="SceneManager_8h.html#ade9922e71b050ff4b4e44b7f5e799e4f">SceneManagerState</a>&#160;</td>
-          <td class="paramname"><em>status</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a3493b3416b217f771dd6935fe9303332" name="a3493b3416b217f771dd6935fe9303332"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3493b3416b217f771dd6935fe9303332">&#9670;&nbsp;</a></span>_SceneManagerStateString</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const char* _SceneManagerStateString[] = {&quot;FALIURE\0&quot;, &quot;SUCCESS\0&quot;, &quot;NEXT\0&quot;, &quot;CLOSE\0&quot;}</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -376,7 +297,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="SceneManager_8c.html">SceneManager.c</a></li>
+    <li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="dir_3baaaccb02e1f714e2086f8215f7315c.html">SceneManager</a></li><li class="navelem"><a class="el" href="SceneManager_8c.html">SceneManager.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>

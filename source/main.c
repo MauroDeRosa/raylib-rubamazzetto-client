@@ -1,12 +1,12 @@
 #include <raylib.h>
 #define RAYGUI_IMPLEMENTATION
-#include "raylib-extra/raygui.h"
+#include "external/raygui.h"
 #undef RAYGUI_IMPLEMENTATION
 
-#include "logger.h"
-#include "ResourceManager.h"
-#include "SceneManager.h"
-#include "Scene/Scenes.h"
+#include "utils/logger.h"
+#include "ResourceManager/ResourceManager.h"
+#include "SceneManager/SceneManager.h"
+#include "SceneManager/Scenes.h"
 #include "Config.h"
 
 #include <libgen.h>

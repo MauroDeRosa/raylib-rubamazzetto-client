@@ -7,59 +7,59 @@
 \doxysubsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
-bool \mbox{\hyperlink{structSceneManager__t_ae9283eb4e10a3190c983291fee5bb038}{running}}
+\mbox{\hyperlink{structSceneManagerAttribute__t}{Scene\+Manager\+Attribute\+\_\+t}} \mbox{\hyperlink{structSceneManager__t_a54cd5f7c337b5e16a9eaa7941407f297}{attr}}
 \item 
-\mbox{\hyperlink{structScene}{Scene}} $\ast$ \mbox{\hyperlink{structSceneManager__t_a992dc6ef9db9f6352f620e1572df81ea}{current}}
+int($\ast$ \mbox{\hyperlink{structSceneManager__t_a5c13feb6df897c5ff589569906220198}{Init}} )()
 \item 
-\mbox{\hyperlink{structScene}{Scene}} $\ast$ \mbox{\hyperlink{structSceneManager__t_a805e7b49b97971baf8e0ed976e3a72bc}{next}}
+int($\ast$ \mbox{\hyperlink{structSceneManager__t_a24a137cffd72068fa390727e325ed2fc}{Register}} )(const char $\ast$name, struct \mbox{\hyperlink{structScene__t}{Scene\+\_\+t}} $\ast$scene)
 \item 
-\mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}{Scene\+Manager\+State}} \mbox{\hyperlink{structSceneManager__t_ae5d3a540d09fd9792cd308b9b915c02d}{status}}
+int($\ast$ \mbox{\hyperlink{structSceneManager__t_a0ec7d564b6bac0ae8901c70fd9c651d2}{Start}} )(const char $\ast$first\+Scene\+Name)
 \item 
-float \mbox{\hyperlink{structSceneManager__t_a514098f10086810199f9071a28364275}{fixed\+Update\+Timer}}
+double($\ast$ \mbox{\hyperlink{structSceneManager__t_a81f79655765dae171f5bae233e08ca57}{Time}} )()
 \item 
-double \mbox{\hyperlink{structSceneManager__t_aae323ac1be06e4eec6eec43d39ea1ba4}{scene\+Init\+Time}}
+int($\ast$ \mbox{\hyperlink{structSceneManager__t_adb7bf238748af71048094ac6e0d0a432}{Next}} )(const char $\ast$name)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Field Documentation}
-\mbox{\Hypertarget{structSceneManager__t_a992dc6ef9db9f6352f620e1572df81ea}\label{structSceneManager__t_a992dc6ef9db9f6352f620e1572df81ea}} 
-\index{SceneManager\_t@{SceneManager\_t}!current@{current}}
-\index{current@{current}!SceneManager\_t@{SceneManager\_t}}
-\doxysubsubsection{\texorpdfstring{current}{current}}
-{\footnotesize\ttfamily \mbox{\hyperlink{structScene}{Scene}}$\ast$ Scene\+Manager\+\_\+t\+::current}
+\mbox{\Hypertarget{structSceneManager__t_a54cd5f7c337b5e16a9eaa7941407f297}\label{structSceneManager__t_a54cd5f7c337b5e16a9eaa7941407f297}} 
+\index{SceneManager\_t@{SceneManager\_t}!attr@{attr}}
+\index{attr@{attr}!SceneManager\_t@{SceneManager\_t}}
+\doxysubsubsection{\texorpdfstring{attr}{attr}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structSceneManagerAttribute__t}{Scene\+Manager\+Attribute\+\_\+t}} Scene\+Manager\+\_\+t\+::attr}
 
-\mbox{\Hypertarget{structSceneManager__t_a514098f10086810199f9071a28364275}\label{structSceneManager__t_a514098f10086810199f9071a28364275}} 
-\index{SceneManager\_t@{SceneManager\_t}!fixedUpdateTimer@{fixedUpdateTimer}}
-\index{fixedUpdateTimer@{fixedUpdateTimer}!SceneManager\_t@{SceneManager\_t}}
-\doxysubsubsection{\texorpdfstring{fixedUpdateTimer}{fixedUpdateTimer}}
-{\footnotesize\ttfamily float Scene\+Manager\+\_\+t\+::fixed\+Update\+Timer}
+\mbox{\Hypertarget{structSceneManager__t_a5c13feb6df897c5ff589569906220198}\label{structSceneManager__t_a5c13feb6df897c5ff589569906220198}} 
+\index{SceneManager\_t@{SceneManager\_t}!Init@{Init}}
+\index{Init@{Init}!SceneManager\_t@{SceneManager\_t}}
+\doxysubsubsection{\texorpdfstring{Init}{Init}}
+{\footnotesize\ttfamily int($\ast$ Scene\+Manager\+\_\+t\+::\+Init) ()}
 
-\mbox{\Hypertarget{structSceneManager__t_a805e7b49b97971baf8e0ed976e3a72bc}\label{structSceneManager__t_a805e7b49b97971baf8e0ed976e3a72bc}} 
-\index{SceneManager\_t@{SceneManager\_t}!next@{next}}
-\index{next@{next}!SceneManager\_t@{SceneManager\_t}}
-\doxysubsubsection{\texorpdfstring{next}{next}}
-{\footnotesize\ttfamily \mbox{\hyperlink{structScene}{Scene}}$\ast$ Scene\+Manager\+\_\+t\+::next}
+\mbox{\Hypertarget{structSceneManager__t_adb7bf238748af71048094ac6e0d0a432}\label{structSceneManager__t_adb7bf238748af71048094ac6e0d0a432}} 
+\index{SceneManager\_t@{SceneManager\_t}!Next@{Next}}
+\index{Next@{Next}!SceneManager\_t@{SceneManager\_t}}
+\doxysubsubsection{\texorpdfstring{Next}{Next}}
+{\footnotesize\ttfamily int($\ast$ Scene\+Manager\+\_\+t\+::\+Next) (const char $\ast$name)}
 
-\mbox{\Hypertarget{structSceneManager__t_ae9283eb4e10a3190c983291fee5bb038}\label{structSceneManager__t_ae9283eb4e10a3190c983291fee5bb038}} 
-\index{SceneManager\_t@{SceneManager\_t}!running@{running}}
-\index{running@{running}!SceneManager\_t@{SceneManager\_t}}
-\doxysubsubsection{\texorpdfstring{running}{running}}
-{\footnotesize\ttfamily bool Scene\+Manager\+\_\+t\+::running}
+\mbox{\Hypertarget{structSceneManager__t_a24a137cffd72068fa390727e325ed2fc}\label{structSceneManager__t_a24a137cffd72068fa390727e325ed2fc}} 
+\index{SceneManager\_t@{SceneManager\_t}!Register@{Register}}
+\index{Register@{Register}!SceneManager\_t@{SceneManager\_t}}
+\doxysubsubsection{\texorpdfstring{Register}{Register}}
+{\footnotesize\ttfamily int($\ast$ Scene\+Manager\+\_\+t\+::\+Register) (const char $\ast$name, struct \mbox{\hyperlink{structScene__t}{Scene\+\_\+t}} $\ast$scene)}
 
-\mbox{\Hypertarget{structSceneManager__t_aae323ac1be06e4eec6eec43d39ea1ba4}\label{structSceneManager__t_aae323ac1be06e4eec6eec43d39ea1ba4}} 
-\index{SceneManager\_t@{SceneManager\_t}!sceneInitTime@{sceneInitTime}}
-\index{sceneInitTime@{sceneInitTime}!SceneManager\_t@{SceneManager\_t}}
-\doxysubsubsection{\texorpdfstring{sceneInitTime}{sceneInitTime}}
-{\footnotesize\ttfamily double Scene\+Manager\+\_\+t\+::scene\+Init\+Time}
+\mbox{\Hypertarget{structSceneManager__t_a0ec7d564b6bac0ae8901c70fd9c651d2}\label{structSceneManager__t_a0ec7d564b6bac0ae8901c70fd9c651d2}} 
+\index{SceneManager\_t@{SceneManager\_t}!Start@{Start}}
+\index{Start@{Start}!SceneManager\_t@{SceneManager\_t}}
+\doxysubsubsection{\texorpdfstring{Start}{Start}}
+{\footnotesize\ttfamily int($\ast$ Scene\+Manager\+\_\+t\+::\+Start) (const char $\ast$first\+Scene\+Name)}
 
-\mbox{\Hypertarget{structSceneManager__t_ae5d3a540d09fd9792cd308b9b915c02d}\label{structSceneManager__t_ae5d3a540d09fd9792cd308b9b915c02d}} 
-\index{SceneManager\_t@{SceneManager\_t}!status@{status}}
-\index{status@{status}!SceneManager\_t@{SceneManager\_t}}
-\doxysubsubsection{\texorpdfstring{status}{status}}
-{\footnotesize\ttfamily \mbox{\hyperlink{SceneManager_8h_ade9922e71b050ff4b4e44b7f5e799e4f}{Scene\+Manager\+State}} Scene\+Manager\+\_\+t\+::status}
+\mbox{\Hypertarget{structSceneManager__t_a81f79655765dae171f5bae233e08ca57}\label{structSceneManager__t_a81f79655765dae171f5bae233e08ca57}} 
+\index{SceneManager\_t@{SceneManager\_t}!Time@{Time}}
+\index{Time@{Time}!SceneManager\_t@{SceneManager\_t}}
+\doxysubsubsection{\texorpdfstring{Time}{Time}}
+{\footnotesize\ttfamily double($\ast$ Scene\+Manager\+\_\+t\+::\+Time) ()}
 
 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-include/\mbox{\hyperlink{SceneManager_8h}{Scene\+Manager.\+h}}\end{DoxyCompactItemize}
+include/\+Scene\+Manager/\mbox{\hyperlink{SceneManager_8h}{Scene\+Manager.\+h}}\end{DoxyCompactItemize}

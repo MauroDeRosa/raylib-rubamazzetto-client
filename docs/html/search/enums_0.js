@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['resourcetype_0',['ResourceType',['../ResourceManager_8h.html#a8571efa4409be32e28abf3ea74a0dbb1',1,'ResourceManager.h']]]
+  ['dict_5fdirective_0',['dict_directive',['../lz4_8c.html#ab22d25a446ad3e8288401052deccda4c',1,'lz4.c']]],
+  ['dictissue_5fdirective_1',['dictIssue_directive',['../lz4_8c.html#a9f23ad1797bc66e6b6dff6cf3acfd351',1,'lz4.c']]]
 ];

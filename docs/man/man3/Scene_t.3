@@ -1,0 +1,60 @@
+.TH "Scene_t" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Scene_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Scene\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBname\fP"
+.br
+.ti -1c
+.RI "double \fBstartTime\fP"
+.br
+.ti -1c
+.RI "void(* \fBStart\fP )()"
+.br
+.ti -1c
+.RI "void(* \fBUpdate\fP )()"
+.br
+.ti -1c
+.RI "void(* \fBFixedUpdate\fP )()"
+.br
+.ti -1c
+.RI "void(* \fBRender\fP )()"
+.br
+.ti -1c
+.RI "void(* \fBExit\fP )()"
+.br
+.ti -1c
+.RI "\fBUT_hash_handle\fP \fBhh\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "void(* Scene_t::Exit) ()"
+
+.SS "void(* Scene_t::FixedUpdate) ()"
+
+.SS "\fBUT_hash_handle\fP Scene_t::hh"
+
+.SS "const char* Scene_t::name"
+
+.SS "void(* Scene_t::Render) ()"
+
+.SS "void(* Scene_t::Start) ()"
+
+.SS "double Scene_t::startTime"
+
+.SS "void(* Scene_t::Update) ()"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

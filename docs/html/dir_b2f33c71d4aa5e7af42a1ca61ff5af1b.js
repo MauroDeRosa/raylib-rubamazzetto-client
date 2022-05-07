@@ -1,8 +1,7 @@
 var dir_b2f33c71d4aa5e7af42a1ca61ff5af1b =
 [
-    [ "Scene", "dir_1d637129aa84760b9947f02930732156.html", "dir_1d637129aa84760b9947f02930732156" ],
-    [ "logger.c", "logger_8c.html", "logger_8c" ],
-    [ "main.c", "main_8c.html", "main_8c" ],
-    [ "ResourceManager.c", "ResourceManager_8c.html", "ResourceManager_8c" ],
-    [ "SceneManager.c", "SceneManager_8c.html", "SceneManager_8c" ]
+    [ "ResourceManager", "dir_056fe8c89467e71934d0a843e2bba13b.html", "dir_056fe8c89467e71934d0a843e2bba13b" ],
+    [ "SceneManager", "dir_3baaaccb02e1f714e2086f8215f7315c.html", "dir_3baaaccb02e1f714e2086f8215f7315c" ],
+    [ "utils", "dir_6a63ce49392b0e408893f7b3c5f1cad9.html", "dir_6a63ce49392b0e408893f7b3c5f1cad9" ],
+    [ "main.c", "main_8c.html", "main_8c" ]
 ];

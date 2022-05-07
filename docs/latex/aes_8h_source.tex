@@ -1,0 +1,97 @@
+\hypertarget{aes_8h_source}{}\doxysection{aes.\+h}
+\label{aes_8h_source}\index{include/external/external/aes.h@{include/external/external/aes.h}}
+\mbox{\hyperlink{aes_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_AES\_H\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_AES\_H\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <stddef.h>}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{comment}{// \#define the macros below to 1/0 to enable/disable the mode of operation.}}
+\DoxyCodeLine{8 \textcolor{comment}{//}}
+\DoxyCodeLine{9 \textcolor{comment}{// CBC enables AES encryption in CBC-\/mode of operation.}}
+\DoxyCodeLine{10 \textcolor{comment}{// CTR enables encryption in counter-\/mode.}}
+\DoxyCodeLine{11 \textcolor{comment}{// ECB enables the basic ECB 16-\/byte block algorithm. All can be enabled simultaneously.}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{comment}{// The \#ifndef-\/guard allows it to be configured before \#include'ing or at compile time.}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef CBC}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{  \#define CBC 1}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#ifndef ECB}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{  \#define ECB 1}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#ifndef CTR}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{  \#define CTR 1}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{comment}{//\#define AES128 1}}
+\DoxyCodeLine{28 \textcolor{comment}{//\#define AES192 1}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#define AES256 1}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#define AES\_BLOCKLEN 16 }\textcolor{comment}{// Block length in bytes -\/ AES is 128b block only}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#if defined(AES256) \&\& (AES256 == 1)}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{    \#define AES\_KEYLEN 32}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{    \#define AES\_keyExpSize 240}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#elif defined(AES192) \&\& (AES192 == 1)}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{    \#define AES\_KEYLEN 24}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{    \#define AES\_keyExpSize 208}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{    \#define AES\_KEYLEN 16   }\textcolor{comment}{// Key length in bytes}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{    \#define AES\_keyExpSize 176}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{keyword}{struct }\mbox{\hyperlink{structAES__ctx}{AES\_ctx}}}
+\DoxyCodeLine{45 \{}
+\DoxyCodeLine{46   uint8\_t \mbox{\hyperlink{structAES__ctx_aa475fe62fd5774891c7a42596f6d9c2e}{RoundKey}}[\mbox{\hyperlink{aes_8h_a9aaae67ad3ff3be7071bb6938c76fc1b}{AES\_keyExpSize}}];}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#if (defined(CBC) \&\& (CBC == 1)) || (defined(CTR) \&\& (CTR == 1))}}
+\DoxyCodeLine{48   uint8\_t \mbox{\hyperlink{structAES__ctx_a1fa4921f7eeaca82eb974899edcdef3a}{Iv}}[\mbox{\hyperlink{aes_8h_ada62b7b09dab0d7ef92c04364b16b5b5}{AES\_BLOCKLEN}}];}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{50 \};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 \textcolor{keywordtype}{void} \mbox{\hyperlink{aes_8h_af6103754d8f46cb642b0041973e4102e}{AES\_init\_ctx}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structAES__ctx}{AES\_ctx}}* ctx, \textcolor{keyword}{const} uint8\_t* key);}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#if (defined(CBC) \&\& (CBC == 1)) || (defined(CTR) \&\& (CTR == 1))}}
+\DoxyCodeLine{54 \textcolor{keywordtype}{void} \mbox{\hyperlink{aes_8h_a99d17d22ed909bd155007cdece29263a}{AES\_init\_ctx\_iv}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structAES__ctx}{AES\_ctx}}* ctx, \textcolor{keyword}{const} uint8\_t* key, \textcolor{keyword}{const} uint8\_t* iv);}
+\DoxyCodeLine{55 \textcolor{keywordtype}{void} \mbox{\hyperlink{aes_8h_afbdec54757622549b63838ea2fbc3cf6}{AES\_ctx\_set\_iv}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structAES__ctx}{AES\_ctx}}* ctx, \textcolor{keyword}{const} uint8\_t* iv);}
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#if defined(ECB) \&\& (ECB == 1)}}
+\DoxyCodeLine{59 \textcolor{comment}{// buffer size is exactly AES\_BLOCKLEN bytes; }}
+\DoxyCodeLine{60 \textcolor{comment}{// you need only AES\_init\_ctx as IV is not used in ECB }}
+\DoxyCodeLine{61 \textcolor{comment}{// NB: ECB is considered insecure for most uses}}
+\DoxyCodeLine{62 \textcolor{keywordtype}{void} \mbox{\hyperlink{aes_8h_a233447aeecf56715c358c518acb908ed}{AES\_ECB\_encrypt}}(\textcolor{keyword}{const} \textcolor{keyword}{struct} \mbox{\hyperlink{structAES__ctx}{AES\_ctx}}* ctx, uint8\_t* buf);}
+\DoxyCodeLine{63 \textcolor{keywordtype}{void} \mbox{\hyperlink{aes_8h_aa82deb7667cd7b19bbe783d2990642ad}{AES\_ECB\_decrypt}}(\textcolor{keyword}{const} \textcolor{keyword}{struct} \mbox{\hyperlink{structAES__ctx}{AES\_ctx}}* ctx, uint8\_t* buf);}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \#if defined(ECB) \&\& (ECB == !)}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#if defined(CBC) \&\& (CBC == 1)}}
+\DoxyCodeLine{69 \textcolor{comment}{// buffer size MUST be mutile of AES\_BLOCKLEN;}}
+\DoxyCodeLine{70 \textcolor{comment}{// Suggest https://en.wikipedia.org/wiki/Padding\_(cryptography)\#PKCS7 for padding scheme}}
+\DoxyCodeLine{71 \textcolor{comment}{// NOTES: you need to set IV in ctx via AES\_init\_ctx\_iv() or AES\_ctx\_set\_iv()}}
+\DoxyCodeLine{72 \textcolor{comment}{//        no IV should ever be reused with the same key }}
+\DoxyCodeLine{73 \textcolor{keywordtype}{void} \mbox{\hyperlink{aes_8h_a296bd30323044b07d69e0e3b5f676281}{AES\_CBC\_encrypt\_buffer}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structAES__ctx}{AES\_ctx}}* ctx, uint8\_t* buf, \textcolor{keywordtype}{size\_t} length);}
+\DoxyCodeLine{74 \textcolor{keywordtype}{void} \mbox{\hyperlink{aes_8h_a0672c442747b26b691202c493a08a104}{AES\_CBC\_decrypt\_buffer}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structAES__ctx}{AES\_ctx}}* ctx, uint8\_t* buf, \textcolor{keywordtype}{size\_t} length);}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \#if defined(CBC) \&\& (CBC == 1)}}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#if defined(CTR) \&\& (CTR == 1)}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 \textcolor{comment}{// Same function for encrypting as for decrypting. }}
+\DoxyCodeLine{82 \textcolor{comment}{// IV is incremented for every block, and used after encryption as XOR-\/compliment for output}}
+\DoxyCodeLine{83 \textcolor{comment}{// Suggesting https://en.wikipedia.org/wiki/Padding\_(cryptography)\#PKCS7 for padding scheme}}
+\DoxyCodeLine{84 \textcolor{comment}{// NOTES: you need to set IV in ctx with AES\_init\_ctx\_iv() or AES\_ctx\_set\_iv()}}
+\DoxyCodeLine{85 \textcolor{comment}{//        no IV should ever be reused with the same key }}
+\DoxyCodeLine{86 \textcolor{keywordtype}{void} \mbox{\hyperlink{aes_8h_aa585f26e880ce9a112dc4d945721ff19}{AES\_CTR\_xcrypt\_buffer}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structAES__ctx}{AES\_ctx}}* ctx, uint8\_t* buf, \textcolor{keywordtype}{size\_t} length);}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \#if defined(CTR) \&\& (CTR == 1)}}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \_AES\_H\_}}
+
+\end{DoxyCode}

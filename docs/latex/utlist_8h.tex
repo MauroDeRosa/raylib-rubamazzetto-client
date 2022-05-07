@@ -1,0 +1,1295 @@
+\hypertarget{utlist_8h}{}\doxysection{include/external/uthash/utlist.h File Reference}
+\label{utlist_8h}\index{include/external/uthash/utlist.h@{include/external/uthash/utlist.h}}
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a9f3779f3c49ddf609c97f1c3d1f29730}{UTLIST\+\_\+\+VERSION}}~2.\+3.\+0
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ae8c9864192170d02fd996abaa1589611}{LDECLTYPE}}(x)~\+\_\+\+\_\+typeof(x)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a076a9489ed67e9c266994d6b3835cebc}{IF\+\_\+\+NO\+\_\+\+DECLTYPE}}(x)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aa3cab84f4d370423c96ac66d9216c6aa}{UTLIST\+\_\+\+SV}}(elt,  list)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a2e79be9dd498dd194909bc2a2e9b62bc}{UTLIST\+\_\+\+NEXT}}(elt,  list,  next)~((elt)-\/$>$next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_af9272d99ba43c95b55c085b16f36bb57}{UTLIST\+\_\+\+NEXTASGN}}(elt,  list,  to,  next)~((elt)-\/$>$next)=(to)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ae52f3480c194493b6d8703a7d51eb66d}{UTLIST\+\_\+\+PREVASGN}}(elt,  list,  to,  prev)~((elt)-\/$>$prev)=(to)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aded44330ce4d18912ff83fe82cf26af7}{UTLIST\+\_\+\+RS}}(list)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aba90c456df269f7301e3b6fbbcb764fb}{UTLIST\+\_\+\+CASTASGN}}(a,  b)~(a)=(b)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a0b2137d4a0c157cb7a1a30d9340ece31}{LL\+\_\+\+SORT}}(list,  cmp)~    \mbox{\hyperlink{utlist_8h_ab073dee297f8614db97aa576832a3af1}{LL\+\_\+\+SORT2}}(list, cmp, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ab073dee297f8614db97aa576832a3af1}{LL\+\_\+\+SORT2}}(list,  cmp,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ad966f284f615a2ced4028258fa08f8f3}{DL\+\_\+\+SORT}}(list,  cmp)~    \mbox{\hyperlink{utlist_8h_a1a9781c3fa134c9d3c1d190291212e05}{DL\+\_\+\+SORT2}}(list, cmp, prev, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a1a9781c3fa134c9d3c1d190291212e05}{DL\+\_\+\+SORT2}}(list,  cmp,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a13add78e5524efe1ae6bfb1631b2dc17}{CDL\+\_\+\+SORT}}(list,  cmp)~    \mbox{\hyperlink{utlist_8h_ac4c600b3d7ca043e54692ff4bc143dee}{CDL\+\_\+\+SORT2}}(list, cmp, prev, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ac4c600b3d7ca043e54692ff4bc143dee}{CDL\+\_\+\+SORT2}}(list,  cmp,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a851fb4b583b0dc000097eeee6dd551d4}{LL\+\_\+\+PREPEND}}(head,  add)~    \mbox{\hyperlink{utlist_8h_ab2de55837ec70d7e467caee1ebe33b9a}{LL\+\_\+\+PREPEND2}}(head,add,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ab2de55837ec70d7e467caee1ebe33b9a}{LL\+\_\+\+PREPEND2}}(head,  add,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a404c4c80c250fc09c7a1a62b039efce7}{LL\+\_\+\+CONCAT}}(head1,  head2)~    \mbox{\hyperlink{utlist_8h_aee8b209eb2ba3131a09d3e28e873dbd7}{LL\+\_\+\+CONCAT2}}(head1,head2,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aee8b209eb2ba3131a09d3e28e873dbd7}{LL\+\_\+\+CONCAT2}}(head1,  head2,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ace33c571c3df78e721a99a4494983855}{LL\+\_\+\+APPEND}}(head,  add)~    \mbox{\hyperlink{utlist_8h_a7e96b16a0e2dd86c8529fd794bbdbbb4}{LL\+\_\+\+APPEND2}}(head,add,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a7e96b16a0e2dd86c8529fd794bbdbbb4}{LL\+\_\+\+APPEND2}}(head,  add,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ae0282aed46daaabf798f04aacd3787c0}{LL\+\_\+\+INSERT\+\_\+\+INORDER}}(head,  add,  cmp)~    \mbox{\hyperlink{utlist_8h_a65354af5f8151d8014fa7a97e254c104}{LL\+\_\+\+INSERT\+\_\+\+INORDER2}}(head,add,cmp,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a65354af5f8151d8014fa7a97e254c104}{LL\+\_\+\+INSERT\+\_\+\+INORDER2}}(head,  add,  cmp,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_acccd71aa6c0ee086fa474bd9133da7cb}{LL\+\_\+\+LOWER\+\_\+\+BOUND}}(head,  elt,  like,  cmp)~    \mbox{\hyperlink{utlist_8h_a46dd8f75c55742b10caceb3111fa3719}{LL\+\_\+\+LOWER\+\_\+\+BOUND2}}(head,elt,like,cmp,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a46dd8f75c55742b10caceb3111fa3719}{LL\+\_\+\+LOWER\+\_\+\+BOUND2}}(head,  elt,  like,  cmp,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a34a4e54d488753465f6e87bb63b93c0e}{LL\+\_\+\+DELETE}}(head,  del)~    \mbox{\hyperlink{utlist_8h_a2737a45962b8f6e79a7dda26f7ef50d8}{LL\+\_\+\+DELETE2}}(head,del,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a2737a45962b8f6e79a7dda26f7ef50d8}{LL\+\_\+\+DELETE2}}(head,  del,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a48eab425b28abd2eef58a1e96ef2a145}{LL\+\_\+\+COUNT}}(head,  el,  counter)~    \mbox{\hyperlink{utlist_8h_aa26d31f3f3884088b0af0352b415844b}{LL\+\_\+\+COUNT2}}(head,el,counter,next)                                                            \textbackslash{}
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aa26d31f3f3884088b0af0352b415844b}{LL\+\_\+\+COUNT2}}(head,  el,  counter,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a487c0ce49f397e1743caae16a797e4bb}{LL\+\_\+\+FOREACH}}(head,  el)~    \mbox{\hyperlink{utlist_8h_a02e4d427da9697e0c8200850972f9a17}{LL\+\_\+\+FOREACH2}}(head,el,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a02e4d427da9697e0c8200850972f9a17}{LL\+\_\+\+FOREACH2}}(head,  el,  next)~    for ((el) = (head); el; (el) = (el)-\/$>$next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ad0a695664d31f0b929fd50b39ebcf0ef}{LL\+\_\+\+FOREACH\+\_\+\+SAFE}}(head,  el,  tmp)~    \mbox{\hyperlink{utlist_8h_adeb880a3409df5b041f6a9d4ef084dc1}{LL\+\_\+\+FOREACH\+\_\+\+SAFE2}}(head,el,tmp,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_adeb880a3409df5b041f6a9d4ef084dc1}{LL\+\_\+\+FOREACH\+\_\+\+SAFE2}}(head,  el,  tmp,  next)~  for ((el) = (head); (el) \&\& ((tmp) = (el)-\/$>$next, 1); (el) = (tmp))
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a8c5c97079c5b259e4c0ff7c563b0f8ed}{LL\+\_\+\+SEARCH\+\_\+\+SCALAR}}(head,  out,  field,  val)~    \mbox{\hyperlink{utlist_8h_a845ca1c4ffd9aa5511a7de108685cf41}{LL\+\_\+\+SEARCH\+\_\+\+SCALAR2}}(head,out,field,val,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a845ca1c4ffd9aa5511a7de108685cf41}{LL\+\_\+\+SEARCH\+\_\+\+SCALAR2}}(head,  out,  field,  val,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_af7a5ae66c9386c4b89403d9ca038adcb}{LL\+\_\+\+SEARCH}}(head,  out,  elt,  cmp)~    \mbox{\hyperlink{utlist_8h_ac32e87bb9e7e7ee5c50ddd765fec2202}{LL\+\_\+\+SEARCH2}}(head,out,elt,cmp,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ac32e87bb9e7e7ee5c50ddd765fec2202}{LL\+\_\+\+SEARCH2}}(head,  out,  elt,  cmp,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a5bcbb9a204d535d6d19487288ea30b09}{LL\+\_\+\+REPLACE\+\_\+\+ELEM2}}(head,  el,  add,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a13dd262d32d5c66a5cf044e03b849b95}{LL\+\_\+\+REPLACE\+\_\+\+ELEM}}(head,  el,  add)~    \mbox{\hyperlink{utlist_8h_a5bcbb9a204d535d6d19487288ea30b09}{LL\+\_\+\+REPLACE\+\_\+\+ELEM2}}(head, el, add, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a7a765038a2d590644520f8a3ec789335}{LL\+\_\+\+PREPEND\+\_\+\+ELEM2}}(head,  el,  add,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a77713cebaee4dc6bec6405e092854c60}{LL\+\_\+\+PREPEND\+\_\+\+ELEM}}(head,  el,  add)~    \mbox{\hyperlink{utlist_8h_a7a765038a2d590644520f8a3ec789335}{LL\+\_\+\+PREPEND\+\_\+\+ELEM2}}(head, el, add, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a7a04734a684eabd0281ac9f8d6211edc}{LL\+\_\+\+APPEND\+\_\+\+ELEM2}}(head,  el,  add,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a969bd9a1b8f57b022f5dac4f6a2e9751}{LL\+\_\+\+APPEND\+\_\+\+ELEM}}(head,  el,  add)~    \mbox{\hyperlink{utlist_8h_a7a04734a684eabd0281ac9f8d6211edc}{LL\+\_\+\+APPEND\+\_\+\+ELEM2}}(head, el, add, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a78be4dea3344ba1b1c7fe1b893c0fdfa}{DL\+\_\+\+PREPEND}}(head,  add)~    \mbox{\hyperlink{utlist_8h_afefdf797fe1e3e3a48a8ff9b4afc8b50}{DL\+\_\+\+PREPEND2}}(head,add,prev,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_afefdf797fe1e3e3a48a8ff9b4afc8b50}{DL\+\_\+\+PREPEND2}}(head,  add,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a17d40c945e1dc55490feb2fe160670c8}{DL\+\_\+\+APPEND}}(head,  add)~    \mbox{\hyperlink{utlist_8h_af1aa0473f0cf2a976eb9c2ef18f29531}{DL\+\_\+\+APPEND2}}(head,add,prev,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_af1aa0473f0cf2a976eb9c2ef18f29531}{DL\+\_\+\+APPEND2}}(head,  add,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aeb2c3564fe626e93e5c8cfaa00cb0722}{DL\+\_\+\+INSERT\+\_\+\+INORDER}}(head,  add,  cmp)~    \mbox{\hyperlink{utlist_8h_ab9e9043834b3b790ac6cf198136527e9}{DL\+\_\+\+INSERT\+\_\+\+INORDER2}}(head,add,cmp,prev,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ab9e9043834b3b790ac6cf198136527e9}{DL\+\_\+\+INSERT\+\_\+\+INORDER2}}(head,  add,  cmp,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aaac22334b0aa31f2297dd4ebd156f06d}{DL\+\_\+\+LOWER\+\_\+\+BOUND}}(head,  elt,  like,  cmp)~    \mbox{\hyperlink{utlist_8h_aa61e44222f4ce731345ab3b4e98d0215}{DL\+\_\+\+LOWER\+\_\+\+BOUND2}}(head,elt,like,cmp,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aa61e44222f4ce731345ab3b4e98d0215}{DL\+\_\+\+LOWER\+\_\+\+BOUND2}}(head,  elt,  like,  cmp,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ae46c0b5fd5a59cd5f889db7a0e6989bb}{DL\+\_\+\+CONCAT}}(head1,  head2)~    \mbox{\hyperlink{utlist_8h_aa910e66e69c6d7a0738682c6d6d22764}{DL\+\_\+\+CONCAT2}}(head1,head2,prev,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aa910e66e69c6d7a0738682c6d6d22764}{DL\+\_\+\+CONCAT2}}(head1,  head2,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aad429903354ffe8cdf4ca2e9d0ae89cc}{DL\+\_\+\+DELETE}}(head,  del)~    \mbox{\hyperlink{utlist_8h_aba01e54c48a65b3774121fdd0029a6bc}{DL\+\_\+\+DELETE2}}(head,del,prev,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aba01e54c48a65b3774121fdd0029a6bc}{DL\+\_\+\+DELETE2}}(head,  del,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a42b6fe6a8a8857d10ccccbade4c08a57}{DL\+\_\+\+COUNT}}(head,  el,  counter)~    \mbox{\hyperlink{utlist_8h_a695860c5f7a56893d91e30979de513b1}{DL\+\_\+\+COUNT2}}(head,el,counter,next)                                                            \textbackslash{}
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a695860c5f7a56893d91e30979de513b1}{DL\+\_\+\+COUNT2}}(head,  el,  counter,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_abb0c2851c5f0567be7b8827ce5168ef7}{DL\+\_\+\+FOREACH}}(head,  el)~    \mbox{\hyperlink{utlist_8h_afa552d80a0e24c462756e5c7d714b590}{DL\+\_\+\+FOREACH2}}(head,el,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_afa552d80a0e24c462756e5c7d714b590}{DL\+\_\+\+FOREACH2}}(head,  el,  next)~    for ((el) = (head); el; (el) = (el)-\/$>$next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a3bb0c84a69846d2f019a97ea0b4709aa}{DL\+\_\+\+FOREACH\+\_\+\+SAFE}}(head,  el,  tmp)~    \mbox{\hyperlink{utlist_8h_acd1252a17e56e7d158488456ed541993}{DL\+\_\+\+FOREACH\+\_\+\+SAFE2}}(head,el,tmp,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_acd1252a17e56e7d158488456ed541993}{DL\+\_\+\+FOREACH\+\_\+\+SAFE2}}(head,  el,  tmp,  next)~  for ((el) = (head); (el) \&\& ((tmp) = (el)-\/$>$next, 1); (el) = (tmp))
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a172fce2d647fdedadf0f8080e0441c5b}{DL\+\_\+\+SEARCH\+\_\+\+SCALAR}}~\mbox{\hyperlink{utlist_8h_a8c5c97079c5b259e4c0ff7c563b0f8ed}{LL\+\_\+\+SEARCH\+\_\+\+SCALAR}}
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a819373d14278b52c313b743acc292ba0}{DL\+\_\+\+SEARCH}}~\mbox{\hyperlink{utlist_8h_af7a5ae66c9386c4b89403d9ca038adcb}{LL\+\_\+\+SEARCH}}
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a3d5f0ce5f79edb05478271dc9e20e6c5}{DL\+\_\+\+SEARCH\+\_\+\+SCALAR2}}~\mbox{\hyperlink{utlist_8h_a845ca1c4ffd9aa5511a7de108685cf41}{LL\+\_\+\+SEARCH\+\_\+\+SCALAR2}}
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ae2197cbf3fb6d1f63eeb6992a137895a}{DL\+\_\+\+SEARCH2}}~\mbox{\hyperlink{utlist_8h_ac32e87bb9e7e7ee5c50ddd765fec2202}{LL\+\_\+\+SEARCH2}}
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a9ef7160d0f314e7c3a245d54a3bf6b14}{DL\+\_\+\+REPLACE\+\_\+\+ELEM2}}(head,  el,  add,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_add9446d548ad3917bdaaf5615c592e19}{DL\+\_\+\+REPLACE\+\_\+\+ELEM}}(head,  el,  add)~    \mbox{\hyperlink{utlist_8h_a9ef7160d0f314e7c3a245d54a3bf6b14}{DL\+\_\+\+REPLACE\+\_\+\+ELEM2}}(head, el, add, prev, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a0be75b1f6a5602ffeba319a6881b6518}{DL\+\_\+\+PREPEND\+\_\+\+ELEM2}}(head,  el,  add,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a4287408f7b0e04773245b8cb462db259}{DL\+\_\+\+PREPEND\+\_\+\+ELEM}}(head,  el,  add)~    \mbox{\hyperlink{utlist_8h_a0be75b1f6a5602ffeba319a6881b6518}{DL\+\_\+\+PREPEND\+\_\+\+ELEM2}}(head, el, add, prev, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ac13f2d398f8381ef711859b56a44aaa1}{DL\+\_\+\+APPEND\+\_\+\+ELEM2}}(head,  el,  add,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a833505e02dd360dd831cb89b4772d340}{DL\+\_\+\+APPEND\+\_\+\+ELEM}}(head,  el,  add)~   \mbox{\hyperlink{utlist_8h_ac13f2d398f8381ef711859b56a44aaa1}{DL\+\_\+\+APPEND\+\_\+\+ELEM2}}(head, el, add, prev, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_accdaa1a2854add161af9525eb458cf23}{CDL\+\_\+\+APPEND}}(head,  add)~    \mbox{\hyperlink{utlist_8h_a5966ec17beb64f9fb5153307fbb6017d}{CDL\+\_\+\+APPEND2}}(head,add,prev,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a5966ec17beb64f9fb5153307fbb6017d}{CDL\+\_\+\+APPEND2}}(head,  add,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a6c6a7232d281eab4b18563b92e5653bd}{CDL\+\_\+\+PREPEND}}(head,  add)~    \mbox{\hyperlink{utlist_8h_aeb32a87bf2738eb64394e8d2eebfacab}{CDL\+\_\+\+PREPEND2}}(head,add,prev,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aeb32a87bf2738eb64394e8d2eebfacab}{CDL\+\_\+\+PREPEND2}}(head,  add,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_abc6dcb926029b956e9ce94d8b290fa83}{CDL\+\_\+\+INSERT\+\_\+\+INORDER}}(head,  add,  cmp)~    \mbox{\hyperlink{utlist_8h_a2e6bc7157a05af29abc322668637a0a8}{CDL\+\_\+\+INSERT\+\_\+\+INORDER2}}(head,add,cmp,prev,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a2e6bc7157a05af29abc322668637a0a8}{CDL\+\_\+\+INSERT\+\_\+\+INORDER2}}(head,  add,  cmp,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a89728a3b887cb2494e643a0f66225148}{CDL\+\_\+\+LOWER\+\_\+\+BOUND}}(head,  elt,  like,  cmp)~    \mbox{\hyperlink{utlist_8h_a9ece61df58580514e81d48d18b3a109d}{CDL\+\_\+\+LOWER\+\_\+\+BOUND2}}(head,elt,like,cmp,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a9ece61df58580514e81d48d18b3a109d}{CDL\+\_\+\+LOWER\+\_\+\+BOUND2}}(head,  elt,  like,  cmp,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a60fd7696c4d0865f53a07579a7b08235}{CDL\+\_\+\+DELETE}}(head,  del)~    \mbox{\hyperlink{utlist_8h_a3c74342dfb410c3b8847a0752609ab3a}{CDL\+\_\+\+DELETE2}}(head,del,prev,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a3c74342dfb410c3b8847a0752609ab3a}{CDL\+\_\+\+DELETE2}}(head,  del,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a62aadb45076ea124d2ed269d6cbf39cb}{CDL\+\_\+\+COUNT}}(head,  el,  counter)~    \mbox{\hyperlink{utlist_8h_a49b193f300aacde49996035292a1933a}{CDL\+\_\+\+COUNT2}}(head,el,counter,next)                                                           \textbackslash{}
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a49b193f300aacde49996035292a1933a}{CDL\+\_\+\+COUNT2}}(head,  el,  counter,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a795df7857792d7e811709a060c911a36}{CDL\+\_\+\+FOREACH}}(head,  el)~    \mbox{\hyperlink{utlist_8h_a1cb1a7ba8af85112bd9080f2e5bc3989}{CDL\+\_\+\+FOREACH2}}(head,el,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a1cb1a7ba8af85112bd9080f2e5bc3989}{CDL\+\_\+\+FOREACH2}}(head,  el,  next)~    for ((el)=(head);el;(el)=(((el)-\/$>$next==(head)) ? NULL \+: (el)-\/$>$next))
+\item 
+\#define \mbox{\hyperlink{utlist_8h_abdb80106f7733e37fbe4f62e9d97ccfd}{CDL\+\_\+\+FOREACH\+\_\+\+SAFE}}(head,  el,  tmp1,  tmp2)~    \mbox{\hyperlink{utlist_8h_aaf70ec71fcb399dcef00f7b5a117e76b}{CDL\+\_\+\+FOREACH\+\_\+\+SAFE2}}(head,el,tmp1,tmp2,prev,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_aaf70ec71fcb399dcef00f7b5a117e76b}{CDL\+\_\+\+FOREACH\+\_\+\+SAFE2}}(head,  el,  tmp1,  tmp2,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ad064cddb894b478b3c3cd23719f58651}{CDL\+\_\+\+SEARCH\+\_\+\+SCALAR}}(head,  out,  field,  val)~    \mbox{\hyperlink{utlist_8h_a1e2a56abf454af235395317c6444f49f}{CDL\+\_\+\+SEARCH\+\_\+\+SCALAR2}}(head,out,field,val,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a1e2a56abf454af235395317c6444f49f}{CDL\+\_\+\+SEARCH\+\_\+\+SCALAR2}}(head,  out,  field,  val,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_afb329a0bdf1fa0b644317e9d84082e1e}{CDL\+\_\+\+SEARCH}}(head,  out,  elt,  cmp)~    \mbox{\hyperlink{utlist_8h_ae5716446b8f83a5cefd4d49f65fb30d1}{CDL\+\_\+\+SEARCH2}}(head,out,elt,cmp,next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ae5716446b8f83a5cefd4d49f65fb30d1}{CDL\+\_\+\+SEARCH2}}(head,  out,  elt,  cmp,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a83b6d37b4e99e4421965d818d26862a2}{CDL\+\_\+\+REPLACE\+\_\+\+ELEM2}}(head,  el,  add,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a5481f46b63414b5da0d49d0545b80476}{CDL\+\_\+\+REPLACE\+\_\+\+ELEM}}(head,  el,  add)~    \mbox{\hyperlink{utlist_8h_a83b6d37b4e99e4421965d818d26862a2}{CDL\+\_\+\+REPLACE\+\_\+\+ELEM2}}(head, el, add, prev, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a68c1c57055841a06573a6a64d62ee014}{CDL\+\_\+\+PREPEND\+\_\+\+ELEM2}}(head,  el,  add,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_a01cda67c0b827f7fafad4fb1253300f9}{CDL\+\_\+\+PREPEND\+\_\+\+ELEM}}(head,  el,  add)~    \mbox{\hyperlink{utlist_8h_a68c1c57055841a06573a6a64d62ee014}{CDL\+\_\+\+PREPEND\+\_\+\+ELEM2}}(head, el, add, prev, next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_afdad80181602d8675e742f34a4f7361c}{CDL\+\_\+\+APPEND\+\_\+\+ELEM2}}(head,  el,  add,  prev,  next)
+\item 
+\#define \mbox{\hyperlink{utlist_8h_ad1829a3f5ce373894f5b02bfa8acd752}{CDL\+\_\+\+APPEND\+\_\+\+ELEM}}(head,  el,  add)~    \mbox{\hyperlink{utlist_8h_afdad80181602d8675e742f34a4f7361c}{CDL\+\_\+\+APPEND\+\_\+\+ELEM2}}(head, el, add, prev, next)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{utlist_8h_accdaa1a2854add161af9525eb458cf23}\label{utlist_8h_accdaa1a2854add161af9525eb458cf23}} 
+\index{utlist.h@{utlist.h}!CDL\_APPEND@{CDL\_APPEND}}
+\index{CDL\_APPEND@{CDL\_APPEND}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_APPEND}{CDL\_APPEND}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+APPEND(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a5966ec17beb64f9fb5153307fbb6017d}{CDL\+\_\+\+APPEND2}}(head,add,prev,next)}
+
+\mbox{\Hypertarget{utlist_8h_a5966ec17beb64f9fb5153307fbb6017d}\label{utlist_8h_a5966ec17beb64f9fb5153307fbb6017d}} 
+\index{utlist.h@{utlist.h}!CDL\_APPEND2@{CDL\_APPEND2}}
+\index{CDL\_APPEND2@{CDL\_APPEND2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_APPEND2}{CDL\_APPEND2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+APPEND2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ if (head) \{                                                                                   \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev = (head)-\/>prev;                                                                 \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>next = (head);                                                                       \(\backslash\)}
+\DoxyCodeLine{   (head)-\/>prev = (add);                                                                       \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev-\/>next = (add);                                                                  \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev = (add);                                                                        \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>next = (add);                                                                        \(\backslash\)}
+\DoxyCodeLine{   (head) = (add);                                                                             \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_ad1829a3f5ce373894f5b02bfa8acd752}\label{utlist_8h_ad1829a3f5ce373894f5b02bfa8acd752}} 
+\index{utlist.h@{utlist.h}!CDL\_APPEND\_ELEM@{CDL\_APPEND\_ELEM}}
+\index{CDL\_APPEND\_ELEM@{CDL\_APPEND\_ELEM}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_APPEND\_ELEM}{CDL\_APPEND\_ELEM}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+APPEND\+\_\+\+ELEM(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_afdad80181602d8675e742f34a4f7361c}{CDL\+\_\+\+APPEND\+\_\+\+ELEM2}}(head, el, add, prev, next)}
+
+\mbox{\Hypertarget{utlist_8h_afdad80181602d8675e742f34a4f7361c}\label{utlist_8h_afdad80181602d8675e742f34a4f7361c}} 
+\index{utlist.h@{utlist.h}!CDL\_APPEND\_ELEM2@{CDL\_APPEND\_ELEM2}}
+\index{CDL\_APPEND\_ELEM2@{CDL\_APPEND\_ELEM2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_APPEND\_ELEM2}{CDL\_APPEND\_ELEM2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+APPEND\+\_\+\+ELEM2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ if (el) \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{  assert((head) != NULL);                                                                      \(\backslash\)}
+\DoxyCodeLine{  assert((add) != NULL);                                                                       \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>prev = (el);                                                                          \(\backslash\)}
+\DoxyCodeLine{  (el)-\/>next = (add);                                                                          \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next-\/>prev = (add);                                                                   \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{  CDL\_PREPEND2(head, add, prev, next);                                                         \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a62aadb45076ea124d2ed269d6cbf39cb}\label{utlist_8h_a62aadb45076ea124d2ed269d6cbf39cb}} 
+\index{utlist.h@{utlist.h}!CDL\_COUNT@{CDL\_COUNT}}
+\index{CDL\_COUNT@{CDL\_COUNT}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_COUNT}{CDL\_COUNT}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+COUNT(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{counter }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a49b193f300aacde49996035292a1933a}{CDL\+\_\+\+COUNT2}}(head,el,counter,next)                                                           \textbackslash{}}
+
+\mbox{\Hypertarget{utlist_8h_a49b193f300aacde49996035292a1933a}\label{utlist_8h_a49b193f300aacde49996035292a1933a}} 
+\index{utlist.h@{utlist.h}!CDL\_COUNT2@{CDL\_COUNT2}}
+\index{CDL\_COUNT2@{CDL\_COUNT2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_COUNT2}{CDL\_COUNT2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+COUNT2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{counter,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  (counter) = 0;                                                                               \(\backslash\)}
+\DoxyCodeLine{  CDL\_FOREACH2(head,el,next) \{ ++(counter); \}                                                  \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a60fd7696c4d0865f53a07579a7b08235}\label{utlist_8h_a60fd7696c4d0865f53a07579a7b08235}} 
+\index{utlist.h@{utlist.h}!CDL\_DELETE@{CDL\_DELETE}}
+\index{CDL\_DELETE@{CDL\_DELETE}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_DELETE}{CDL\_DELETE}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+DELETE(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{del }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a3c74342dfb410c3b8847a0752609ab3a}{CDL\+\_\+\+DELETE2}}(head,del,prev,next)}
+
+\mbox{\Hypertarget{utlist_8h_a3c74342dfb410c3b8847a0752609ab3a}\label{utlist_8h_a3c74342dfb410c3b8847a0752609ab3a}} 
+\index{utlist.h@{utlist.h}!CDL\_DELETE2@{CDL\_DELETE2}}
+\index{CDL\_DELETE2@{CDL\_DELETE2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_DELETE2}{CDL\_DELETE2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+DELETE2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{del,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  if (((head)==(del)) \&\& ((head)-\/>next == (head))) \{                                           \(\backslash\)}
+\DoxyCodeLine{      (head) = NULL;                                                                           \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{     (del)-\/>next-\/>prev = (del)-\/>prev;                                                          \(\backslash\)}
+\DoxyCodeLine{     (del)-\/>prev-\/>next = (del)-\/>next;                                                          \(\backslash\)}
+\DoxyCodeLine{     if ((del) == (head)) (head)=(del)-\/>next;                                                  \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a795df7857792d7e811709a060c911a36}\label{utlist_8h_a795df7857792d7e811709a060c911a36}} 
+\index{utlist.h@{utlist.h}!CDL\_FOREACH@{CDL\_FOREACH}}
+\index{CDL\_FOREACH@{CDL\_FOREACH}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_FOREACH}{CDL\_FOREACH}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+FOREACH(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a1cb1a7ba8af85112bd9080f2e5bc3989}{CDL\+\_\+\+FOREACH2}}(head,el,next)}
+
+\mbox{\Hypertarget{utlist_8h_a1cb1a7ba8af85112bd9080f2e5bc3989}\label{utlist_8h_a1cb1a7ba8af85112bd9080f2e5bc3989}} 
+\index{utlist.h@{utlist.h}!CDL\_FOREACH2@{CDL\_FOREACH2}}
+\index{CDL\_FOREACH2@{CDL\_FOREACH2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_FOREACH2}{CDL\_FOREACH2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+FOREACH2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{next }\end{DoxyParamCaption})~    for ((el)=(head);el;(el)=(((el)-\/$>$next==(head)) ? NULL \+: (el)-\/$>$next))}
+
+\mbox{\Hypertarget{utlist_8h_abdb80106f7733e37fbe4f62e9d97ccfd}\label{utlist_8h_abdb80106f7733e37fbe4f62e9d97ccfd}} 
+\index{utlist.h@{utlist.h}!CDL\_FOREACH\_SAFE@{CDL\_FOREACH\_SAFE}}
+\index{CDL\_FOREACH\_SAFE@{CDL\_FOREACH\_SAFE}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_FOREACH\_SAFE}{CDL\_FOREACH\_SAFE}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+FOREACH\+\_\+\+SAFE(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{tmp1,  }\item[{}]{tmp2 }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_aaf70ec71fcb399dcef00f7b5a117e76b}{CDL\+\_\+\+FOREACH\+\_\+\+SAFE2}}(head,el,tmp1,tmp2,prev,next)}
+
+\mbox{\Hypertarget{utlist_8h_aaf70ec71fcb399dcef00f7b5a117e76b}\label{utlist_8h_aaf70ec71fcb399dcef00f7b5a117e76b}} 
+\index{utlist.h@{utlist.h}!CDL\_FOREACH\_SAFE2@{CDL\_FOREACH\_SAFE2}}
+\index{CDL\_FOREACH\_SAFE2@{CDL\_FOREACH\_SAFE2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_FOREACH\_SAFE2}{CDL\_FOREACH\_SAFE2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+FOREACH\+\_\+\+SAFE2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{tmp1,  }\item[{}]{tmp2,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keywordflow}{for} ((el) = (head), (tmp1) = (head) ? (head)-\/>prev : NULL;                                   \(\backslash\)}
+\DoxyCodeLine{       (el) \&\& ((tmp2) = (el)-\/>next, 1);                                                       \(\backslash\)}
+\DoxyCodeLine{       (el) = ((el) == (tmp1) ? NULL : (tmp2)))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_abc6dcb926029b956e9ce94d8b290fa83}\label{utlist_8h_abc6dcb926029b956e9ce94d8b290fa83}} 
+\index{utlist.h@{utlist.h}!CDL\_INSERT\_INORDER@{CDL\_INSERT\_INORDER}}
+\index{CDL\_INSERT\_INORDER@{CDL\_INSERT\_INORDER}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_INSERT\_INORDER}{CDL\_INSERT\_INORDER}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+INSERT\+\_\+\+INORDER(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a2e6bc7157a05af29abc322668637a0a8}{CDL\+\_\+\+INSERT\+\_\+\+INORDER2}}(head,add,cmp,prev,next)}
+
+\mbox{\Hypertarget{utlist_8h_a2e6bc7157a05af29abc322668637a0a8}\label{utlist_8h_a2e6bc7157a05af29abc322668637a0a8}} 
+\index{utlist.h@{utlist.h}!CDL\_INSERT\_INORDER2@{CDL\_INSERT\_INORDER2}}
+\index{CDL\_INSERT\_INORDER2@{CDL\_INSERT\_INORDER2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_INSERT\_INORDER2}{CDL\_INSERT\_INORDER2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+INSERT\+\_\+\+INORDER2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{cmp,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}
+\DoxyCodeLine{  if (head) \{                                                                                  \(\backslash\)}
+\DoxyCodeLine{    CDL\_LOWER\_BOUND2(head, \_tmp, add, cmp, next);                                              \(\backslash\)}
+\DoxyCodeLine{    CDL\_APPEND\_ELEM2(head, \_tmp, add, prev, next);                                             \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{    (head) = (add);                                                                            \(\backslash\)}
+\DoxyCodeLine{    (head)-\/>next = (head);                                                                     \(\backslash\)}
+\DoxyCodeLine{    (head)-\/>prev = (head);                                                                     \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a89728a3b887cb2494e643a0f66225148}\label{utlist_8h_a89728a3b887cb2494e643a0f66225148}} 
+\index{utlist.h@{utlist.h}!CDL\_LOWER\_BOUND@{CDL\_LOWER\_BOUND}}
+\index{CDL\_LOWER\_BOUND@{CDL\_LOWER\_BOUND}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_LOWER\_BOUND}{CDL\_LOWER\_BOUND}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+LOWER\+\_\+\+BOUND(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{elt,  }\item[{}]{like,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a9ece61df58580514e81d48d18b3a109d}{CDL\+\_\+\+LOWER\+\_\+\+BOUND2}}(head,elt,like,cmp,next)}
+
+\mbox{\Hypertarget{utlist_8h_a9ece61df58580514e81d48d18b3a109d}\label{utlist_8h_a9ece61df58580514e81d48d18b3a109d}} 
+\index{utlist.h@{utlist.h}!CDL\_LOWER\_BOUND2@{CDL\_LOWER\_BOUND2}}
+\index{CDL\_LOWER\_BOUND2@{CDL\_LOWER\_BOUND2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_LOWER\_BOUND2}{CDL\_LOWER\_BOUND2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+LOWER\+\_\+\+BOUND2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{elt,  }\item[{}]{like,  }\item[{}]{cmp,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  if ((head) == NULL || (cmp(head, like)) >= 0) \{                                              \(\backslash\)}
+\DoxyCodeLine{    (elt) = NULL;                                                                              \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{    for ((elt) = (head); (elt)-\/>next != (head); (elt) = (elt)-\/>next) \{                         \(\backslash\)}
+\DoxyCodeLine{      if ((cmp((elt)-\/>next, like)) >= 0) \{                                                     \(\backslash\)}
+\DoxyCodeLine{        break;                                                                                 \(\backslash\)}
+\DoxyCodeLine{      \}                                                                                        \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a6c6a7232d281eab4b18563b92e5653bd}\label{utlist_8h_a6c6a7232d281eab4b18563b92e5653bd}} 
+\index{utlist.h@{utlist.h}!CDL\_PREPEND@{CDL\_PREPEND}}
+\index{CDL\_PREPEND@{CDL\_PREPEND}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_PREPEND}{CDL\_PREPEND}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+PREPEND(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_aeb32a87bf2738eb64394e8d2eebfacab}{CDL\+\_\+\+PREPEND2}}(head,add,prev,next)}
+
+\mbox{\Hypertarget{utlist_8h_aeb32a87bf2738eb64394e8d2eebfacab}\label{utlist_8h_aeb32a87bf2738eb64394e8d2eebfacab}} 
+\index{utlist.h@{utlist.h}!CDL\_PREPEND2@{CDL\_PREPEND2}}
+\index{CDL\_PREPEND2@{CDL\_PREPEND2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_PREPEND2}{CDL\_PREPEND2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+PREPEND2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ if (head) \{                                                                                   \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev = (head)-\/>prev;                                                                 \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>next = (head);                                                                       \(\backslash\)}
+\DoxyCodeLine{   (head)-\/>prev = (add);                                                                       \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev-\/>next = (add);                                                                  \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev = (add);                                                                        \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>next = (add);                                                                        \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{ (head) = (add);                                                                               \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a01cda67c0b827f7fafad4fb1253300f9}\label{utlist_8h_a01cda67c0b827f7fafad4fb1253300f9}} 
+\index{utlist.h@{utlist.h}!CDL\_PREPEND\_ELEM@{CDL\_PREPEND\_ELEM}}
+\index{CDL\_PREPEND\_ELEM@{CDL\_PREPEND\_ELEM}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_PREPEND\_ELEM}{CDL\_PREPEND\_ELEM}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+PREPEND\+\_\+\+ELEM(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a68c1c57055841a06573a6a64d62ee014}{CDL\+\_\+\+PREPEND\+\_\+\+ELEM2}}(head, el, add, prev, next)}
+
+\mbox{\Hypertarget{utlist_8h_a68c1c57055841a06573a6a64d62ee014}\label{utlist_8h_a68c1c57055841a06573a6a64d62ee014}} 
+\index{utlist.h@{utlist.h}!CDL\_PREPEND\_ELEM2@{CDL\_PREPEND\_ELEM2}}
+\index{CDL\_PREPEND\_ELEM2@{CDL\_PREPEND\_ELEM2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_PREPEND\_ELEM2}{CDL\_PREPEND\_ELEM2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+PREPEND\+\_\+\+ELEM2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  if (el) \{                                                                                    \(\backslash\)}
+\DoxyCodeLine{    assert((head) != NULL);                                                                    \(\backslash\)}
+\DoxyCodeLine{    assert((add) != NULL);                                                                     \(\backslash\)}
+\DoxyCodeLine{    (add)-\/>next = (el);                                                                        \(\backslash\)}
+\DoxyCodeLine{    (add)-\/>prev = (el)-\/>prev;                                                                  \(\backslash\)}
+\DoxyCodeLine{    (el)-\/>prev = (add);                                                                        \(\backslash\)}
+\DoxyCodeLine{    (add)-\/>prev-\/>next = (add);                                                                 \(\backslash\)}
+\DoxyCodeLine{    if ((head) == (el)) \{                                                                      \(\backslash\)}
+\DoxyCodeLine{      (head) = (add);                                                                          \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{    CDL\_APPEND2(head, add, prev, next);                                                        \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a5481f46b63414b5da0d49d0545b80476}\label{utlist_8h_a5481f46b63414b5da0d49d0545b80476}} 
+\index{utlist.h@{utlist.h}!CDL\_REPLACE\_ELEM@{CDL\_REPLACE\_ELEM}}
+\index{CDL\_REPLACE\_ELEM@{CDL\_REPLACE\_ELEM}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_REPLACE\_ELEM}{CDL\_REPLACE\_ELEM}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+REPLACE\+\_\+\+ELEM(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a83b6d37b4e99e4421965d818d26862a2}{CDL\+\_\+\+REPLACE\+\_\+\+ELEM2}}(head, el, add, prev, next)}
+
+\mbox{\Hypertarget{utlist_8h_a83b6d37b4e99e4421965d818d26862a2}\label{utlist_8h_a83b6d37b4e99e4421965d818d26862a2}} 
+\index{utlist.h@{utlist.h}!CDL\_REPLACE\_ELEM2@{CDL\_REPLACE\_ELEM2}}
+\index{CDL\_REPLACE\_ELEM2@{CDL\_REPLACE\_ELEM2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_REPLACE\_ELEM2}{CDL\_REPLACE\_ELEM2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+REPLACE\+\_\+\+ELEM2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ assert((head) != NULL);                                                                       \(\backslash\)}
+\DoxyCodeLine{ assert((el) != NULL);                                                                         \(\backslash\)}
+\DoxyCodeLine{ assert((add) != NULL);                                                                        \(\backslash\)}
+\DoxyCodeLine{ if ((el)-\/>next == (el)) \{                                                                     \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next = (add);                                                                         \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>prev = (add);                                                                         \(\backslash\)}
+\DoxyCodeLine{  (head) = (add);                                                                              \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>prev = (el)-\/>prev;                                                                    \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next-\/>prev = (add);                                                                   \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>prev-\/>next = (add);                                                                   \(\backslash\)}
+\DoxyCodeLine{  if ((head) == (el)) \{                                                                        \(\backslash\)}
+\DoxyCodeLine{   (head) = (add);                                                                             \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_afb329a0bdf1fa0b644317e9d84082e1e}\label{utlist_8h_afb329a0bdf1fa0b644317e9d84082e1e}} 
+\index{utlist.h@{utlist.h}!CDL\_SEARCH@{CDL\_SEARCH}}
+\index{CDL\_SEARCH@{CDL\_SEARCH}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_SEARCH}{CDL\_SEARCH}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+SEARCH(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{out,  }\item[{}]{elt,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_ae5716446b8f83a5cefd4d49f65fb30d1}{CDL\+\_\+\+SEARCH2}}(head,out,elt,cmp,next)}
+
+\mbox{\Hypertarget{utlist_8h_ae5716446b8f83a5cefd4d49f65fb30d1}\label{utlist_8h_ae5716446b8f83a5cefd4d49f65fb30d1}} 
+\index{utlist.h@{utlist.h}!CDL\_SEARCH2@{CDL\_SEARCH2}}
+\index{CDL\_SEARCH2@{CDL\_SEARCH2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_SEARCH2}{CDL\_SEARCH2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+SEARCH2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{out,  }\item[{}]{elt,  }\item[{}]{cmp,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{    CDL\_FOREACH2(head,out,next) \{                                                              \(\backslash\)}
+\DoxyCodeLine{      if ((cmp(out,elt))==0) break;                                                            \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{\} while (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_ad064cddb894b478b3c3cd23719f58651}\label{utlist_8h_ad064cddb894b478b3c3cd23719f58651}} 
+\index{utlist.h@{utlist.h}!CDL\_SEARCH\_SCALAR@{CDL\_SEARCH\_SCALAR}}
+\index{CDL\_SEARCH\_SCALAR@{CDL\_SEARCH\_SCALAR}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_SEARCH\_SCALAR}{CDL\_SEARCH\_SCALAR}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+SEARCH\+\_\+\+SCALAR(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{out,  }\item[{}]{field,  }\item[{}]{val }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a1e2a56abf454af235395317c6444f49f}{CDL\+\_\+\+SEARCH\+\_\+\+SCALAR2}}(head,out,field,val,next)}
+
+\mbox{\Hypertarget{utlist_8h_a1e2a56abf454af235395317c6444f49f}\label{utlist_8h_a1e2a56abf454af235395317c6444f49f}} 
+\index{utlist.h@{utlist.h}!CDL\_SEARCH\_SCALAR2@{CDL\_SEARCH\_SCALAR2}}
+\index{CDL\_SEARCH\_SCALAR2@{CDL\_SEARCH\_SCALAR2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_SEARCH\_SCALAR2}{CDL\_SEARCH\_SCALAR2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+SEARCH\+\_\+\+SCALAR2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{out,  }\item[{}]{field,  }\item[{}]{val,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{    CDL\_FOREACH2(head,out,next) \{                                                              \(\backslash\)}
+\DoxyCodeLine{      if ((out)-\/>field == (val)) \textcolor{keywordflow}{break};                                                        \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a13add78e5524efe1ae6bfb1631b2dc17}\label{utlist_8h_a13add78e5524efe1ae6bfb1631b2dc17}} 
+\index{utlist.h@{utlist.h}!CDL\_SORT@{CDL\_SORT}}
+\index{CDL\_SORT@{CDL\_SORT}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_SORT}{CDL\_SORT}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+SORT(\begin{DoxyParamCaption}\item[{}]{list,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_ac4c600b3d7ca043e54692ff4bc143dee}{CDL\+\_\+\+SORT2}}(list, cmp, prev, next)}
+
+\mbox{\Hypertarget{utlist_8h_ac4c600b3d7ca043e54692ff4bc143dee}\label{utlist_8h_ac4c600b3d7ca043e54692ff4bc143dee}} 
+\index{utlist.h@{utlist.h}!CDL\_SORT2@{CDL\_SORT2}}
+\index{CDL\_SORT2@{CDL\_SORT2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{CDL\_SORT2}{CDL\_SORT2}}
+{\footnotesize\ttfamily \#define CDL\+\_\+\+SORT2(\begin{DoxyParamCaption}\item[{}]{list,  }\item[{}]{cmp,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{utlist_8h_a17d40c945e1dc55490feb2fe160670c8}\label{utlist_8h_a17d40c945e1dc55490feb2fe160670c8}} 
+\index{utlist.h@{utlist.h}!DL\_APPEND@{DL\_APPEND}}
+\index{DL\_APPEND@{DL\_APPEND}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_APPEND}{DL\_APPEND}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+APPEND(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_af1aa0473f0cf2a976eb9c2ef18f29531}{DL\+\_\+\+APPEND2}}(head,add,prev,next)}
+
+\mbox{\Hypertarget{utlist_8h_af1aa0473f0cf2a976eb9c2ef18f29531}\label{utlist_8h_af1aa0473f0cf2a976eb9c2ef18f29531}} 
+\index{utlist.h@{utlist.h}!DL\_APPEND2@{DL\_APPEND2}}
+\index{DL\_APPEND2@{DL\_APPEND2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_APPEND2}{DL\_APPEND2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+APPEND2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  if (head) \{                                                                                  \(\backslash\)}
+\DoxyCodeLine{      (add)-\/>prev = (head)-\/>prev;                                                              \(\backslash\)}
+\DoxyCodeLine{      (head)-\/>prev-\/>next = (add);                                                              \(\backslash\)}
+\DoxyCodeLine{      (head)-\/>prev = (add);                                                                    \(\backslash\)}
+\DoxyCodeLine{      (add)-\/>next = NULL;                                                                      \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{      (head)=(add);                                                                            \(\backslash\)}
+\DoxyCodeLine{      (head)-\/>prev = (head);                                                                   \(\backslash\)}
+\DoxyCodeLine{      (head)-\/>next = NULL;                                                                     \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a833505e02dd360dd831cb89b4772d340}\label{utlist_8h_a833505e02dd360dd831cb89b4772d340}} 
+\index{utlist.h@{utlist.h}!DL\_APPEND\_ELEM@{DL\_APPEND\_ELEM}}
+\index{DL\_APPEND\_ELEM@{DL\_APPEND\_ELEM}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_APPEND\_ELEM}{DL\_APPEND\_ELEM}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+APPEND\+\_\+\+ELEM(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add }\end{DoxyParamCaption})~   \mbox{\hyperlink{utlist_8h_ac13f2d398f8381ef711859b56a44aaa1}{DL\+\_\+\+APPEND\+\_\+\+ELEM2}}(head, el, add, prev, next)}
+
+\mbox{\Hypertarget{utlist_8h_ac13f2d398f8381ef711859b56a44aaa1}\label{utlist_8h_ac13f2d398f8381ef711859b56a44aaa1}} 
+\index{utlist.h@{utlist.h}!DL\_APPEND\_ELEM2@{DL\_APPEND\_ELEM2}}
+\index{DL\_APPEND\_ELEM2@{DL\_APPEND\_ELEM2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_APPEND\_ELEM2}{DL\_APPEND\_ELEM2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+APPEND\+\_\+\+ELEM2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ if (el) \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{  assert((head) != NULL);                                                                      \(\backslash\)}
+\DoxyCodeLine{  assert((add) != NULL);                                                                       \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>prev = (el);                                                                          \(\backslash\)}
+\DoxyCodeLine{  (el)-\/>next = (add);                                                                          \(\backslash\)}
+\DoxyCodeLine{  if ((add)-\/>next) \{                                                                           \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>next-\/>prev = (add);                                                                  \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{   (head)-\/>prev = (add);                                                                       \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{  DL\_PREPEND2(head, add, prev, next);                                                          \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)                                                                                    \(\backslash\)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_ae46c0b5fd5a59cd5f889db7a0e6989bb}\label{utlist_8h_ae46c0b5fd5a59cd5f889db7a0e6989bb}} 
+\index{utlist.h@{utlist.h}!DL\_CONCAT@{DL\_CONCAT}}
+\index{DL\_CONCAT@{DL\_CONCAT}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_CONCAT}{DL\_CONCAT}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+CONCAT(\begin{DoxyParamCaption}\item[{}]{head1,  }\item[{}]{head2 }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_aa910e66e69c6d7a0738682c6d6d22764}{DL\+\_\+\+CONCAT2}}(head1,head2,prev,next)}
+
+\mbox{\Hypertarget{utlist_8h_aa910e66e69c6d7a0738682c6d6d22764}\label{utlist_8h_aa910e66e69c6d7a0738682c6d6d22764}} 
+\index{utlist.h@{utlist.h}!DL\_CONCAT2@{DL\_CONCAT2}}
+\index{DL\_CONCAT2@{DL\_CONCAT2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_CONCAT2}{DL\_CONCAT2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+CONCAT2(\begin{DoxyParamCaption}\item[{}]{head1,  }\item[{}]{head2,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  LDECLTYPE(head1) \_tmp;                                                                       \(\backslash\)}
+\DoxyCodeLine{  if (head2) \{                                                                                 \(\backslash\)}
+\DoxyCodeLine{    if (head1) \{                                                                               \(\backslash\)}
+\DoxyCodeLine{        UTLIST\_CASTASGN(\_tmp, (head2)-\/>prev);                                                  \(\backslash\)}
+\DoxyCodeLine{        (head2)-\/>prev = (head1)-\/>prev;                                                         \(\backslash\)}
+\DoxyCodeLine{        (head1)-\/>prev-\/>next = (head2);                                                         \(\backslash\)}
+\DoxyCodeLine{        UTLIST\_CASTASGN((head1)-\/>prev, \_tmp);                                                  \(\backslash\)}
+\DoxyCodeLine{    \} \textcolor{keywordflow}{else} \{                                                                                   \(\backslash\)}
+\DoxyCodeLine{        (head1)=(head2);                                                                       \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a42b6fe6a8a8857d10ccccbade4c08a57}\label{utlist_8h_a42b6fe6a8a8857d10ccccbade4c08a57}} 
+\index{utlist.h@{utlist.h}!DL\_COUNT@{DL\_COUNT}}
+\index{DL\_COUNT@{DL\_COUNT}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_COUNT}{DL\_COUNT}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+COUNT(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{counter }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a695860c5f7a56893d91e30979de513b1}{DL\+\_\+\+COUNT2}}(head,el,counter,next)                                                            \textbackslash{}}
+
+\mbox{\Hypertarget{utlist_8h_a695860c5f7a56893d91e30979de513b1}\label{utlist_8h_a695860c5f7a56893d91e30979de513b1}} 
+\index{utlist.h@{utlist.h}!DL\_COUNT2@{DL\_COUNT2}}
+\index{DL\_COUNT2@{DL\_COUNT2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_COUNT2}{DL\_COUNT2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+COUNT2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{counter,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  (counter) = 0;                                                                               \(\backslash\)}
+\DoxyCodeLine{  DL\_FOREACH2(head,el,next) \{ ++(counter); \}                                                   \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_aad429903354ffe8cdf4ca2e9d0ae89cc}\label{utlist_8h_aad429903354ffe8cdf4ca2e9d0ae89cc}} 
+\index{utlist.h@{utlist.h}!DL\_DELETE@{DL\_DELETE}}
+\index{DL\_DELETE@{DL\_DELETE}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_DELETE}{DL\_DELETE}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+DELETE(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{del }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_aba01e54c48a65b3774121fdd0029a6bc}{DL\+\_\+\+DELETE2}}(head,del,prev,next)}
+
+\mbox{\Hypertarget{utlist_8h_aba01e54c48a65b3774121fdd0029a6bc}\label{utlist_8h_aba01e54c48a65b3774121fdd0029a6bc}} 
+\index{utlist.h@{utlist.h}!DL\_DELETE2@{DL\_DELETE2}}
+\index{DL\_DELETE2@{DL\_DELETE2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_DELETE2}{DL\_DELETE2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+DELETE2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{del,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  assert((head) != NULL);                                                                      \(\backslash\)}
+\DoxyCodeLine{  assert((del)-\/>prev != NULL);                                                                 \(\backslash\)}
+\DoxyCodeLine{  if ((del)-\/>prev == (del)) \{                                                                  \(\backslash\)}
+\DoxyCodeLine{      (head)=NULL;                                                                             \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((del)==(head)) \{                                                                  \(\backslash\)}
+\DoxyCodeLine{      (del)-\/>next-\/>prev = (del)-\/>prev;                                                         \(\backslash\)}
+\DoxyCodeLine{      (head) = (del)-\/>next;                                                                    \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{      (del)-\/>prev-\/>next = (del)-\/>next;                                                         \(\backslash\)}
+\DoxyCodeLine{      if ((del)-\/>next) \{                                                                       \(\backslash\)}
+\DoxyCodeLine{          (del)-\/>next-\/>prev = (del)-\/>prev;                                                     \(\backslash\)}
+\DoxyCodeLine{      \} \textcolor{keywordflow}{else} \{                                                                                 \(\backslash\)}
+\DoxyCodeLine{          (head)-\/>prev = (del)-\/>prev;                                                          \(\backslash\)}
+\DoxyCodeLine{      \}                                                                                        \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_abb0c2851c5f0567be7b8827ce5168ef7}\label{utlist_8h_abb0c2851c5f0567be7b8827ce5168ef7}} 
+\index{utlist.h@{utlist.h}!DL\_FOREACH@{DL\_FOREACH}}
+\index{DL\_FOREACH@{DL\_FOREACH}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_FOREACH}{DL\_FOREACH}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+FOREACH(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_afa552d80a0e24c462756e5c7d714b590}{DL\+\_\+\+FOREACH2}}(head,el,next)}
+
+\mbox{\Hypertarget{utlist_8h_afa552d80a0e24c462756e5c7d714b590}\label{utlist_8h_afa552d80a0e24c462756e5c7d714b590}} 
+\index{utlist.h@{utlist.h}!DL\_FOREACH2@{DL\_FOREACH2}}
+\index{DL\_FOREACH2@{DL\_FOREACH2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_FOREACH2}{DL\_FOREACH2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+FOREACH2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{next }\end{DoxyParamCaption})~    for ((el) = (head); el; (el) = (el)-\/$>$next)}
+
+\mbox{\Hypertarget{utlist_8h_a3bb0c84a69846d2f019a97ea0b4709aa}\label{utlist_8h_a3bb0c84a69846d2f019a97ea0b4709aa}} 
+\index{utlist.h@{utlist.h}!DL\_FOREACH\_SAFE@{DL\_FOREACH\_SAFE}}
+\index{DL\_FOREACH\_SAFE@{DL\_FOREACH\_SAFE}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_FOREACH\_SAFE}{DL\_FOREACH\_SAFE}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+FOREACH\+\_\+\+SAFE(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{tmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_acd1252a17e56e7d158488456ed541993}{DL\+\_\+\+FOREACH\+\_\+\+SAFE2}}(head,el,tmp,next)}
+
+\mbox{\Hypertarget{utlist_8h_acd1252a17e56e7d158488456ed541993}\label{utlist_8h_acd1252a17e56e7d158488456ed541993}} 
+\index{utlist.h@{utlist.h}!DL\_FOREACH\_SAFE2@{DL\_FOREACH\_SAFE2}}
+\index{DL\_FOREACH\_SAFE2@{DL\_FOREACH\_SAFE2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_FOREACH\_SAFE2}{DL\_FOREACH\_SAFE2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+FOREACH\+\_\+\+SAFE2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{tmp,  }\item[{}]{next }\end{DoxyParamCaption})~  for ((el) = (head); (el) \&\& ((tmp) = (el)-\/$>$next, 1); (el) = (tmp))}
+
+\mbox{\Hypertarget{utlist_8h_aeb2c3564fe626e93e5c8cfaa00cb0722}\label{utlist_8h_aeb2c3564fe626e93e5c8cfaa00cb0722}} 
+\index{utlist.h@{utlist.h}!DL\_INSERT\_INORDER@{DL\_INSERT\_INORDER}}
+\index{DL\_INSERT\_INORDER@{DL\_INSERT\_INORDER}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_INSERT\_INORDER}{DL\_INSERT\_INORDER}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+INSERT\+\_\+\+INORDER(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_ab9e9043834b3b790ac6cf198136527e9}{DL\+\_\+\+INSERT\+\_\+\+INORDER2}}(head,add,cmp,prev,next)}
+
+\mbox{\Hypertarget{utlist_8h_ab9e9043834b3b790ac6cf198136527e9}\label{utlist_8h_ab9e9043834b3b790ac6cf198136527e9}} 
+\index{utlist.h@{utlist.h}!DL\_INSERT\_INORDER2@{DL\_INSERT\_INORDER2}}
+\index{DL\_INSERT\_INORDER2@{DL\_INSERT\_INORDER2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_INSERT\_INORDER2}{DL\_INSERT\_INORDER2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+INSERT\+\_\+\+INORDER2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{cmp,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}
+\DoxyCodeLine{  if (head) \{                                                                                  \(\backslash\)}
+\DoxyCodeLine{    DL\_LOWER\_BOUND2(head, \_tmp, add, cmp, next);                                               \(\backslash\)}
+\DoxyCodeLine{    DL\_APPEND\_ELEM2(head, \_tmp, add, prev, next);                                              \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{    (head) = (add);                                                                            \(\backslash\)}
+\DoxyCodeLine{    (head)-\/>prev = (head);                                                                     \(\backslash\)}
+\DoxyCodeLine{    (head)-\/>next = NULL;                                                                       \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_aaac22334b0aa31f2297dd4ebd156f06d}\label{utlist_8h_aaac22334b0aa31f2297dd4ebd156f06d}} 
+\index{utlist.h@{utlist.h}!DL\_LOWER\_BOUND@{DL\_LOWER\_BOUND}}
+\index{DL\_LOWER\_BOUND@{DL\_LOWER\_BOUND}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_LOWER\_BOUND}{DL\_LOWER\_BOUND}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+LOWER\+\_\+\+BOUND(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{elt,  }\item[{}]{like,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_aa61e44222f4ce731345ab3b4e98d0215}{DL\+\_\+\+LOWER\+\_\+\+BOUND2}}(head,elt,like,cmp,next)}
+
+\mbox{\Hypertarget{utlist_8h_aa61e44222f4ce731345ab3b4e98d0215}\label{utlist_8h_aa61e44222f4ce731345ab3b4e98d0215}} 
+\index{utlist.h@{utlist.h}!DL\_LOWER\_BOUND2@{DL\_LOWER\_BOUND2}}
+\index{DL\_LOWER\_BOUND2@{DL\_LOWER\_BOUND2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_LOWER\_BOUND2}{DL\_LOWER\_BOUND2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+LOWER\+\_\+\+BOUND2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{elt,  }\item[{}]{like,  }\item[{}]{cmp,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  if ((head) == NULL || (cmp(head, like)) >= 0) \{                                              \(\backslash\)}
+\DoxyCodeLine{    (elt) = NULL;                                                                              \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{    for ((elt) = (head); (elt)-\/>next != NULL; (elt) = (elt)-\/>next) \{                           \(\backslash\)}
+\DoxyCodeLine{      if ((cmp((elt)-\/>next, like)) >= 0) \{                                                     \(\backslash\)}
+\DoxyCodeLine{        break;                                                                                 \(\backslash\)}
+\DoxyCodeLine{      \}                                                                                        \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a78be4dea3344ba1b1c7fe1b893c0fdfa}\label{utlist_8h_a78be4dea3344ba1b1c7fe1b893c0fdfa}} 
+\index{utlist.h@{utlist.h}!DL\_PREPEND@{DL\_PREPEND}}
+\index{DL\_PREPEND@{DL\_PREPEND}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_PREPEND}{DL\_PREPEND}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+PREPEND(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_afefdf797fe1e3e3a48a8ff9b4afc8b50}{DL\+\_\+\+PREPEND2}}(head,add,prev,next)}
+
+\mbox{\Hypertarget{utlist_8h_afefdf797fe1e3e3a48a8ff9b4afc8b50}\label{utlist_8h_afefdf797fe1e3e3a48a8ff9b4afc8b50}} 
+\index{utlist.h@{utlist.h}!DL\_PREPEND2@{DL\_PREPEND2}}
+\index{DL\_PREPEND2@{DL\_PREPEND2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_PREPEND2}{DL\_PREPEND2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+PREPEND2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ (add)-\/>next = (head);                                                                         \(\backslash\)}
+\DoxyCodeLine{ if (head) \{                                                                                   \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev = (head)-\/>prev;                                                                 \(\backslash\)}
+\DoxyCodeLine{   (head)-\/>prev = (add);                                                                       \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev = (add);                                                                        \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{ (head) = (add);                                                                               \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a4287408f7b0e04773245b8cb462db259}\label{utlist_8h_a4287408f7b0e04773245b8cb462db259}} 
+\index{utlist.h@{utlist.h}!DL\_PREPEND\_ELEM@{DL\_PREPEND\_ELEM}}
+\index{DL\_PREPEND\_ELEM@{DL\_PREPEND\_ELEM}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_PREPEND\_ELEM}{DL\_PREPEND\_ELEM}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+PREPEND\+\_\+\+ELEM(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a0be75b1f6a5602ffeba319a6881b6518}{DL\+\_\+\+PREPEND\+\_\+\+ELEM2}}(head, el, add, prev, next)}
+
+\mbox{\Hypertarget{utlist_8h_a0be75b1f6a5602ffeba319a6881b6518}\label{utlist_8h_a0be75b1f6a5602ffeba319a6881b6518}} 
+\index{utlist.h@{utlist.h}!DL\_PREPEND\_ELEM2@{DL\_PREPEND\_ELEM2}}
+\index{DL\_PREPEND\_ELEM2@{DL\_PREPEND\_ELEM2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_PREPEND\_ELEM2}{DL\_PREPEND\_ELEM2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+PREPEND\+\_\+\+ELEM2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ if (el) \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{  assert((head) != NULL);                                                                      \(\backslash\)}
+\DoxyCodeLine{  assert((add) != NULL);                                                                       \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next = (el);                                                                          \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>prev = (el)-\/>prev;                                                                    \(\backslash\)}
+\DoxyCodeLine{  (el)-\/>prev = (add);                                                                          \(\backslash\)}
+\DoxyCodeLine{  if ((head) == (el)) \{                                                                        \(\backslash\)}
+\DoxyCodeLine{   (head) = (add);                                                                             \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev-\/>next = (add);                                                                  \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{  DL\_APPEND2(head, add, prev, next);                                                           \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)                                                                                    \(\backslash\)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_add9446d548ad3917bdaaf5615c592e19}\label{utlist_8h_add9446d548ad3917bdaaf5615c592e19}} 
+\index{utlist.h@{utlist.h}!DL\_REPLACE\_ELEM@{DL\_REPLACE\_ELEM}}
+\index{DL\_REPLACE\_ELEM@{DL\_REPLACE\_ELEM}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_REPLACE\_ELEM}{DL\_REPLACE\_ELEM}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+REPLACE\+\_\+\+ELEM(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a9ef7160d0f314e7c3a245d54a3bf6b14}{DL\+\_\+\+REPLACE\+\_\+\+ELEM2}}(head, el, add, prev, next)}
+
+\mbox{\Hypertarget{utlist_8h_a9ef7160d0f314e7c3a245d54a3bf6b14}\label{utlist_8h_a9ef7160d0f314e7c3a245d54a3bf6b14}} 
+\index{utlist.h@{utlist.h}!DL\_REPLACE\_ELEM2@{DL\_REPLACE\_ELEM2}}
+\index{DL\_REPLACE\_ELEM2@{DL\_REPLACE\_ELEM2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_REPLACE\_ELEM2}{DL\_REPLACE\_ELEM2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+REPLACE\+\_\+\+ELEM2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ assert((head) != NULL);                                                                       \(\backslash\)}
+\DoxyCodeLine{ assert((el) != NULL);                                                                         \(\backslash\)}
+\DoxyCodeLine{ assert((add) != NULL);                                                                        \(\backslash\)}
+\DoxyCodeLine{ if ((head) == (el)) \{                                                                         \(\backslash\)}
+\DoxyCodeLine{  (head) = (add);                                                                              \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}
+\DoxyCodeLine{  if ((el)-\/>next == NULL) \{                                                                    \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev = (add);                                                                        \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>prev = (el)-\/>prev;                                                                   \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>next-\/>prev = (add);                                                                  \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>prev = (el)-\/>prev;                                                                    \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>prev-\/>next = (add);                                                                   \(\backslash\)}
+\DoxyCodeLine{  if ((el)-\/>next == NULL) \{                                                                    \(\backslash\)}
+\DoxyCodeLine{   (head)-\/>prev = (add);                                                                       \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{   (add)-\/>next-\/>prev = (add);                                                                  \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a819373d14278b52c313b743acc292ba0}\label{utlist_8h_a819373d14278b52c313b743acc292ba0}} 
+\index{utlist.h@{utlist.h}!DL\_SEARCH@{DL\_SEARCH}}
+\index{DL\_SEARCH@{DL\_SEARCH}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_SEARCH}{DL\_SEARCH}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+SEARCH~\mbox{\hyperlink{utlist_8h_af7a5ae66c9386c4b89403d9ca038adcb}{LL\+\_\+\+SEARCH}}}
+
+\mbox{\Hypertarget{utlist_8h_ae2197cbf3fb6d1f63eeb6992a137895a}\label{utlist_8h_ae2197cbf3fb6d1f63eeb6992a137895a}} 
+\index{utlist.h@{utlist.h}!DL\_SEARCH2@{DL\_SEARCH2}}
+\index{DL\_SEARCH2@{DL\_SEARCH2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_SEARCH2}{DL\_SEARCH2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+SEARCH2~\mbox{\hyperlink{utlist_8h_ac32e87bb9e7e7ee5c50ddd765fec2202}{LL\+\_\+\+SEARCH2}}}
+
+\mbox{\Hypertarget{utlist_8h_a172fce2d647fdedadf0f8080e0441c5b}\label{utlist_8h_a172fce2d647fdedadf0f8080e0441c5b}} 
+\index{utlist.h@{utlist.h}!DL\_SEARCH\_SCALAR@{DL\_SEARCH\_SCALAR}}
+\index{DL\_SEARCH\_SCALAR@{DL\_SEARCH\_SCALAR}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_SEARCH\_SCALAR}{DL\_SEARCH\_SCALAR}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+SEARCH\+\_\+\+SCALAR~\mbox{\hyperlink{utlist_8h_a8c5c97079c5b259e4c0ff7c563b0f8ed}{LL\+\_\+\+SEARCH\+\_\+\+SCALAR}}}
+
+\mbox{\Hypertarget{utlist_8h_a3d5f0ce5f79edb05478271dc9e20e6c5}\label{utlist_8h_a3d5f0ce5f79edb05478271dc9e20e6c5}} 
+\index{utlist.h@{utlist.h}!DL\_SEARCH\_SCALAR2@{DL\_SEARCH\_SCALAR2}}
+\index{DL\_SEARCH\_SCALAR2@{DL\_SEARCH\_SCALAR2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_SEARCH\_SCALAR2}{DL\_SEARCH\_SCALAR2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+SEARCH\+\_\+\+SCALAR2~\mbox{\hyperlink{utlist_8h_a845ca1c4ffd9aa5511a7de108685cf41}{LL\+\_\+\+SEARCH\+\_\+\+SCALAR2}}}
+
+\mbox{\Hypertarget{utlist_8h_ad966f284f615a2ced4028258fa08f8f3}\label{utlist_8h_ad966f284f615a2ced4028258fa08f8f3}} 
+\index{utlist.h@{utlist.h}!DL\_SORT@{DL\_SORT}}
+\index{DL\_SORT@{DL\_SORT}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_SORT}{DL\_SORT}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+SORT(\begin{DoxyParamCaption}\item[{}]{list,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a1a9781c3fa134c9d3c1d190291212e05}{DL\+\_\+\+SORT2}}(list, cmp, prev, next)}
+
+\mbox{\Hypertarget{utlist_8h_a1a9781c3fa134c9d3c1d190291212e05}\label{utlist_8h_a1a9781c3fa134c9d3c1d190291212e05}} 
+\index{utlist.h@{utlist.h}!DL\_SORT2@{DL\_SORT2}}
+\index{DL\_SORT2@{DL\_SORT2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{DL\_SORT2}{DL\_SORT2}}
+{\footnotesize\ttfamily \#define DL\+\_\+\+SORT2(\begin{DoxyParamCaption}\item[{}]{list,  }\item[{}]{cmp,  }\item[{}]{prev,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{utlist_8h_a076a9489ed67e9c266994d6b3835cebc}\label{utlist_8h_a076a9489ed67e9c266994d6b3835cebc}} 
+\index{utlist.h@{utlist.h}!IF\_NO\_DECLTYPE@{IF\_NO\_DECLTYPE}}
+\index{IF\_NO\_DECLTYPE@{IF\_NO\_DECLTYPE}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{IF\_NO\_DECLTYPE}{IF\_NO\_DECLTYPE}}
+{\footnotesize\ttfamily \#define IF\+\_\+\+NO\+\_\+\+DECLTYPE(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{utlist_8h_ae8c9864192170d02fd996abaa1589611}\label{utlist_8h_ae8c9864192170d02fd996abaa1589611}} 
+\index{utlist.h@{utlist.h}!LDECLTYPE@{LDECLTYPE}}
+\index{LDECLTYPE@{LDECLTYPE}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LDECLTYPE}{LDECLTYPE}}
+{\footnotesize\ttfamily \#define LDECLTYPE(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~\+\_\+\+\_\+typeof(x)}
+
+\mbox{\Hypertarget{utlist_8h_ace33c571c3df78e721a99a4494983855}\label{utlist_8h_ace33c571c3df78e721a99a4494983855}} 
+\index{utlist.h@{utlist.h}!LL\_APPEND@{LL\_APPEND}}
+\index{LL\_APPEND@{LL\_APPEND}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_APPEND}{LL\_APPEND}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+APPEND(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a7e96b16a0e2dd86c8529fd794bbdbbb4}{LL\+\_\+\+APPEND2}}(head,add,next)}
+
+\mbox{\Hypertarget{utlist_8h_a7e96b16a0e2dd86c8529fd794bbdbbb4}\label{utlist_8h_a7e96b16a0e2dd86c8529fd794bbdbbb4}} 
+\index{utlist.h@{utlist.h}!LL\_APPEND2@{LL\_APPEND2}}
+\index{LL\_APPEND2@{LL\_APPEND2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_APPEND2}{LL\_APPEND2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+APPEND2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next=NULL;                                                                            \(\backslash\)}
+\DoxyCodeLine{  if (head) \{                                                                                  \(\backslash\)}
+\DoxyCodeLine{    \_tmp = (head);                                                                             \(\backslash\)}
+\DoxyCodeLine{    while (\_tmp-\/>next) \{ \_tmp = \_tmp-\/>next; \}                                                  \(\backslash\)}
+\DoxyCodeLine{    \_tmp-\/>next=(add);                                                                          \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{    (head)=(add);                                                                              \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a969bd9a1b8f57b022f5dac4f6a2e9751}\label{utlist_8h_a969bd9a1b8f57b022f5dac4f6a2e9751}} 
+\index{utlist.h@{utlist.h}!LL\_APPEND\_ELEM@{LL\_APPEND\_ELEM}}
+\index{LL\_APPEND\_ELEM@{LL\_APPEND\_ELEM}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_APPEND\_ELEM}{LL\_APPEND\_ELEM}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+APPEND\+\_\+\+ELEM(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a7a04734a684eabd0281ac9f8d6211edc}{LL\+\_\+\+APPEND\+\_\+\+ELEM2}}(head, el, add, next)}
+
+\mbox{\Hypertarget{utlist_8h_a7a04734a684eabd0281ac9f8d6211edc}\label{utlist_8h_a7a04734a684eabd0281ac9f8d6211edc}} 
+\index{utlist.h@{utlist.h}!LL\_APPEND\_ELEM2@{LL\_APPEND\_ELEM2}}
+\index{LL\_APPEND\_ELEM2@{LL\_APPEND\_ELEM2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_APPEND\_ELEM2}{LL\_APPEND\_ELEM2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+APPEND\+\_\+\+ELEM2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ if (el) \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{  assert((head) != NULL);                                                                      \(\backslash\)}
+\DoxyCodeLine{  assert((add) != NULL);                                                                       \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}
+\DoxyCodeLine{  (el)-\/>next = (add);                                                                          \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{  LL\_PREPEND2(head, add, next);                                                                \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)                                                                                    \(\backslash\)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a404c4c80c250fc09c7a1a62b039efce7}\label{utlist_8h_a404c4c80c250fc09c7a1a62b039efce7}} 
+\index{utlist.h@{utlist.h}!LL\_CONCAT@{LL\_CONCAT}}
+\index{LL\_CONCAT@{LL\_CONCAT}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_CONCAT}{LL\_CONCAT}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+CONCAT(\begin{DoxyParamCaption}\item[{}]{head1,  }\item[{}]{head2 }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_aee8b209eb2ba3131a09d3e28e873dbd7}{LL\+\_\+\+CONCAT2}}(head1,head2,next)}
+
+\mbox{\Hypertarget{utlist_8h_aee8b209eb2ba3131a09d3e28e873dbd7}\label{utlist_8h_aee8b209eb2ba3131a09d3e28e873dbd7}} 
+\index{utlist.h@{utlist.h}!LL\_CONCAT2@{LL\_CONCAT2}}
+\index{LL\_CONCAT2@{LL\_CONCAT2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_CONCAT2}{LL\_CONCAT2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+CONCAT2(\begin{DoxyParamCaption}\item[{}]{head1,  }\item[{}]{head2,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  LDECLTYPE(head1) \_tmp;                                                                       \(\backslash\)}
+\DoxyCodeLine{  if (head1) \{                                                                                 \(\backslash\)}
+\DoxyCodeLine{    \_tmp = (head1);                                                                            \(\backslash\)}
+\DoxyCodeLine{    while (\_tmp-\/>next) \{ \_tmp = \_tmp-\/>next; \}                                                  \(\backslash\)}
+\DoxyCodeLine{    \_tmp-\/>next=(head2);                                                                        \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{    (head1)=(head2);                                                                           \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a48eab425b28abd2eef58a1e96ef2a145}\label{utlist_8h_a48eab425b28abd2eef58a1e96ef2a145}} 
+\index{utlist.h@{utlist.h}!LL\_COUNT@{LL\_COUNT}}
+\index{LL\_COUNT@{LL\_COUNT}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_COUNT}{LL\_COUNT}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+COUNT(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{counter }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_aa26d31f3f3884088b0af0352b415844b}{LL\+\_\+\+COUNT2}}(head,el,counter,next)                                                            \textbackslash{}}
+
+\mbox{\Hypertarget{utlist_8h_aa26d31f3f3884088b0af0352b415844b}\label{utlist_8h_aa26d31f3f3884088b0af0352b415844b}} 
+\index{utlist.h@{utlist.h}!LL\_COUNT2@{LL\_COUNT2}}
+\index{LL\_COUNT2@{LL\_COUNT2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_COUNT2}{LL\_COUNT2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+COUNT2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{counter,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  (counter) = 0;                                                                               \(\backslash\)}
+\DoxyCodeLine{  LL\_FOREACH2(head,el,next) \{ ++(counter); \}                                                   \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a34a4e54d488753465f6e87bb63b93c0e}\label{utlist_8h_a34a4e54d488753465f6e87bb63b93c0e}} 
+\index{utlist.h@{utlist.h}!LL\_DELETE@{LL\_DELETE}}
+\index{LL\_DELETE@{LL\_DELETE}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_DELETE}{LL\_DELETE}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+DELETE(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{del }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a2737a45962b8f6e79a7dda26f7ef50d8}{LL\+\_\+\+DELETE2}}(head,del,next)}
+
+\mbox{\Hypertarget{utlist_8h_a2737a45962b8f6e79a7dda26f7ef50d8}\label{utlist_8h_a2737a45962b8f6e79a7dda26f7ef50d8}} 
+\index{utlist.h@{utlist.h}!LL\_DELETE2@{LL\_DELETE2}}
+\index{LL\_DELETE2@{LL\_DELETE2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_DELETE2}{LL\_DELETE2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+DELETE2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{del,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}
+\DoxyCodeLine{  if ((head) == (del)) \{                                                                       \(\backslash\)}
+\DoxyCodeLine{    (head)=(head)-\/>next;                                                                       \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{    \_tmp = (head);                                                                             \(\backslash\)}
+\DoxyCodeLine{    while (\_tmp-\/>next \&\& (\_tmp-\/>next != (del))) \{                                              \(\backslash\)}
+\DoxyCodeLine{      \_tmp = \_tmp-\/>next;                                                                       \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{    if (\_tmp-\/>next) \{                                                                          \(\backslash\)}
+\DoxyCodeLine{      \_tmp-\/>next = (del)-\/>next;                                                                \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a487c0ce49f397e1743caae16a797e4bb}\label{utlist_8h_a487c0ce49f397e1743caae16a797e4bb}} 
+\index{utlist.h@{utlist.h}!LL\_FOREACH@{LL\_FOREACH}}
+\index{LL\_FOREACH@{LL\_FOREACH}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_FOREACH}{LL\_FOREACH}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+FOREACH(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a02e4d427da9697e0c8200850972f9a17}{LL\+\_\+\+FOREACH2}}(head,el,next)}
+
+\mbox{\Hypertarget{utlist_8h_a02e4d427da9697e0c8200850972f9a17}\label{utlist_8h_a02e4d427da9697e0c8200850972f9a17}} 
+\index{utlist.h@{utlist.h}!LL\_FOREACH2@{LL\_FOREACH2}}
+\index{LL\_FOREACH2@{LL\_FOREACH2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_FOREACH2}{LL\_FOREACH2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+FOREACH2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{next }\end{DoxyParamCaption})~    for ((el) = (head); el; (el) = (el)-\/$>$next)}
+
+\mbox{\Hypertarget{utlist_8h_ad0a695664d31f0b929fd50b39ebcf0ef}\label{utlist_8h_ad0a695664d31f0b929fd50b39ebcf0ef}} 
+\index{utlist.h@{utlist.h}!LL\_FOREACH\_SAFE@{LL\_FOREACH\_SAFE}}
+\index{LL\_FOREACH\_SAFE@{LL\_FOREACH\_SAFE}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_FOREACH\_SAFE}{LL\_FOREACH\_SAFE}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+FOREACH\+\_\+\+SAFE(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{tmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_adeb880a3409df5b041f6a9d4ef084dc1}{LL\+\_\+\+FOREACH\+\_\+\+SAFE2}}(head,el,tmp,next)}
+
+\mbox{\Hypertarget{utlist_8h_adeb880a3409df5b041f6a9d4ef084dc1}\label{utlist_8h_adeb880a3409df5b041f6a9d4ef084dc1}} 
+\index{utlist.h@{utlist.h}!LL\_FOREACH\_SAFE2@{LL\_FOREACH\_SAFE2}}
+\index{LL\_FOREACH\_SAFE2@{LL\_FOREACH\_SAFE2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_FOREACH\_SAFE2}{LL\_FOREACH\_SAFE2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+FOREACH\+\_\+\+SAFE2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{tmp,  }\item[{}]{next }\end{DoxyParamCaption})~  for ((el) = (head); (el) \&\& ((tmp) = (el)-\/$>$next, 1); (el) = (tmp))}
+
+\mbox{\Hypertarget{utlist_8h_ae0282aed46daaabf798f04aacd3787c0}\label{utlist_8h_ae0282aed46daaabf798f04aacd3787c0}} 
+\index{utlist.h@{utlist.h}!LL\_INSERT\_INORDER@{LL\_INSERT\_INORDER}}
+\index{LL\_INSERT\_INORDER@{LL\_INSERT\_INORDER}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_INSERT\_INORDER}{LL\_INSERT\_INORDER}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+INSERT\+\_\+\+INORDER(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a65354af5f8151d8014fa7a97e254c104}{LL\+\_\+\+INSERT\+\_\+\+INORDER2}}(head,add,cmp,next)}
+
+\mbox{\Hypertarget{utlist_8h_a65354af5f8151d8014fa7a97e254c104}\label{utlist_8h_a65354af5f8151d8014fa7a97e254c104}} 
+\index{utlist.h@{utlist.h}!LL\_INSERT\_INORDER2@{LL\_INSERT\_INORDER2}}
+\index{LL\_INSERT\_INORDER2@{LL\_INSERT\_INORDER2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_INSERT\_INORDER2}{LL\_INSERT\_INORDER2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+INSERT\+\_\+\+INORDER2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{cmp,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}
+\DoxyCodeLine{  if (head) \{                                                                                  \(\backslash\)}
+\DoxyCodeLine{    LL\_LOWER\_BOUND2(head, \_tmp, add, cmp, next);                                               \(\backslash\)}
+\DoxyCodeLine{    LL\_APPEND\_ELEM2(head, \_tmp, add, next);                                                    \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{    (head) = (add);                                                                            \(\backslash\)}
+\DoxyCodeLine{    (head)-\/>next = NULL;                                                                       \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_acccd71aa6c0ee086fa474bd9133da7cb}\label{utlist_8h_acccd71aa6c0ee086fa474bd9133da7cb}} 
+\index{utlist.h@{utlist.h}!LL\_LOWER\_BOUND@{LL\_LOWER\_BOUND}}
+\index{LL\_LOWER\_BOUND@{LL\_LOWER\_BOUND}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_LOWER\_BOUND}{LL\_LOWER\_BOUND}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+LOWER\+\_\+\+BOUND(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{elt,  }\item[{}]{like,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a46dd8f75c55742b10caceb3111fa3719}{LL\+\_\+\+LOWER\+\_\+\+BOUND2}}(head,elt,like,cmp,next)}
+
+\mbox{\Hypertarget{utlist_8h_a46dd8f75c55742b10caceb3111fa3719}\label{utlist_8h_a46dd8f75c55742b10caceb3111fa3719}} 
+\index{utlist.h@{utlist.h}!LL\_LOWER\_BOUND2@{LL\_LOWER\_BOUND2}}
+\index{LL\_LOWER\_BOUND2@{LL\_LOWER\_BOUND2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_LOWER\_BOUND2}{LL\_LOWER\_BOUND2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+LOWER\+\_\+\+BOUND2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{elt,  }\item[{}]{like,  }\item[{}]{cmp,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keywordflow}{do} \{                                                                                         \(\backslash\)}
+\DoxyCodeLine{    if ((head) == NULL || (cmp(head, like)) >= 0) \{                                            \(\backslash\)}
+\DoxyCodeLine{      (elt) = NULL;                                                                            \(\backslash\)}
+\DoxyCodeLine{    \} \textcolor{keywordflow}{else} \{                                                                                   \(\backslash\)}
+\DoxyCodeLine{      for ((elt) = (head); (elt)-\/>next != NULL; (elt) = (elt)-\/>next) \{                         \(\backslash\)}
+\DoxyCodeLine{        if (cmp((elt)-\/>next, like) >= 0) \{                                                     \(\backslash\)}
+\DoxyCodeLine{          break;                                                                               \(\backslash\)}
+\DoxyCodeLine{        \}                                                                                      \(\backslash\)}
+\DoxyCodeLine{      \}                                                                                        \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a851fb4b583b0dc000097eeee6dd551d4}\label{utlist_8h_a851fb4b583b0dc000097eeee6dd551d4}} 
+\index{utlist.h@{utlist.h}!LL\_PREPEND@{LL\_PREPEND}}
+\index{LL\_PREPEND@{LL\_PREPEND}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_PREPEND}{LL\_PREPEND}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+PREPEND(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_ab2de55837ec70d7e467caee1ebe33b9a}{LL\+\_\+\+PREPEND2}}(head,add,next)}
+
+\mbox{\Hypertarget{utlist_8h_ab2de55837ec70d7e467caee1ebe33b9a}\label{utlist_8h_ab2de55837ec70d7e467caee1ebe33b9a}} 
+\index{utlist.h@{utlist.h}!LL\_PREPEND2@{LL\_PREPEND2}}
+\index{LL\_PREPEND2@{LL\_PREPEND2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_PREPEND2}{LL\_PREPEND2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+PREPEND2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{add,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next = (head);                                                                        \(\backslash\)}
+\DoxyCodeLine{  (head) = (add);                                                                              \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a77713cebaee4dc6bec6405e092854c60}\label{utlist_8h_a77713cebaee4dc6bec6405e092854c60}} 
+\index{utlist.h@{utlist.h}!LL\_PREPEND\_ELEM@{LL\_PREPEND\_ELEM}}
+\index{LL\_PREPEND\_ELEM@{LL\_PREPEND\_ELEM}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_PREPEND\_ELEM}{LL\_PREPEND\_ELEM}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+PREPEND\+\_\+\+ELEM(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a7a765038a2d590644520f8a3ec789335}{LL\+\_\+\+PREPEND\+\_\+\+ELEM2}}(head, el, add, next)}
+
+\mbox{\Hypertarget{utlist_8h_a7a765038a2d590644520f8a3ec789335}\label{utlist_8h_a7a765038a2d590644520f8a3ec789335}} 
+\index{utlist.h@{utlist.h}!LL\_PREPEND\_ELEM2@{LL\_PREPEND\_ELEM2}}
+\index{LL\_PREPEND\_ELEM2@{LL\_PREPEND\_ELEM2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_PREPEND\_ELEM2}{LL\_PREPEND\_ELEM2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+PREPEND\+\_\+\+ELEM2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ if (el) \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}
+\DoxyCodeLine{  assert((head) != NULL);                                                                      \(\backslash\)}
+\DoxyCodeLine{  assert((add) != NULL);                                                                       \(\backslash\)}
+\DoxyCodeLine{  (add)-\/>next = (el);                                                                          \(\backslash\)}
+\DoxyCodeLine{  if ((head) == (el)) \{                                                                        \(\backslash\)}
+\DoxyCodeLine{   (head) = (add);                                                                             \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} \{                                                                                     \(\backslash\)}
+\DoxyCodeLine{   \_tmp = (head);                                                                              \(\backslash\)}
+\DoxyCodeLine{   while (\_tmp-\/>next \&\& (\_tmp-\/>next != (el))) \{                                                \(\backslash\)}
+\DoxyCodeLine{    \_tmp = \_tmp-\/>next;                                                                         \(\backslash\)}
+\DoxyCodeLine{   \}                                                                                           \(\backslash\)}
+\DoxyCodeLine{   if (\_tmp-\/>next) \{                                                                           \(\backslash\)}
+\DoxyCodeLine{     \_tmp-\/>next = (add);                                                                       \(\backslash\)}
+\DoxyCodeLine{   \}                                                                                           \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{  LL\_APPEND2(head, add, next);                                                                 \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)                                                                                    \(\backslash\)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a13dd262d32d5c66a5cf044e03b849b95}\label{utlist_8h_a13dd262d32d5c66a5cf044e03b849b95}} 
+\index{utlist.h@{utlist.h}!LL\_REPLACE\_ELEM@{LL\_REPLACE\_ELEM}}
+\index{LL\_REPLACE\_ELEM@{LL\_REPLACE\_ELEM}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_REPLACE\_ELEM}{LL\_REPLACE\_ELEM}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+REPLACE\+\_\+\+ELEM(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a5bcbb9a204d535d6d19487288ea30b09}{LL\+\_\+\+REPLACE\+\_\+\+ELEM2}}(head, el, add, next)}
+
+\mbox{\Hypertarget{utlist_8h_a5bcbb9a204d535d6d19487288ea30b09}\label{utlist_8h_a5bcbb9a204d535d6d19487288ea30b09}} 
+\index{utlist.h@{utlist.h}!LL\_REPLACE\_ELEM2@{LL\_REPLACE\_ELEM2}}
+\index{LL\_REPLACE\_ELEM2@{LL\_REPLACE\_ELEM2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_REPLACE\_ELEM2}{LL\_REPLACE\_ELEM2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+REPLACE\+\_\+\+ELEM2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{el,  }\item[{}]{add,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{ LDECLTYPE(head) \_tmp;                                                                         \(\backslash\)}
+\DoxyCodeLine{ assert((head) != NULL);                                                                       \(\backslash\)}
+\DoxyCodeLine{ assert((el) != NULL);                                                                         \(\backslash\)}
+\DoxyCodeLine{ assert((add) != NULL);                                                                        \(\backslash\)}
+\DoxyCodeLine{ (add)-\/>next = (el)-\/>next;                                                                     \(\backslash\)}
+\DoxyCodeLine{ if ((head) == (el)) \{                                                                         \(\backslash\)}
+\DoxyCodeLine{  (head) = (add);                                                                              \(\backslash\)}
+\DoxyCodeLine{ \} \textcolor{keywordflow}{else} \{                                                                                      \(\backslash\)}
+\DoxyCodeLine{  \_tmp = (head);                                                                               \(\backslash\)}
+\DoxyCodeLine{  while (\_tmp-\/>next \&\& (\_tmp-\/>next != (el))) \{                                                 \(\backslash\)}
+\DoxyCodeLine{   \_tmp = \_tmp-\/>next;                                                                          \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{  if (\_tmp-\/>next) \{                                                                            \(\backslash\)}
+\DoxyCodeLine{    \_tmp-\/>next = (add);                                                                        \(\backslash\)}
+\DoxyCodeLine{  \}                                                                                            \(\backslash\)}
+\DoxyCodeLine{ \}                                                                                             \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_af7a5ae66c9386c4b89403d9ca038adcb}\label{utlist_8h_af7a5ae66c9386c4b89403d9ca038adcb}} 
+\index{utlist.h@{utlist.h}!LL\_SEARCH@{LL\_SEARCH}}
+\index{LL\_SEARCH@{LL\_SEARCH}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_SEARCH}{LL\_SEARCH}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+SEARCH(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{out,  }\item[{}]{elt,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_ac32e87bb9e7e7ee5c50ddd765fec2202}{LL\+\_\+\+SEARCH2}}(head,out,elt,cmp,next)}
+
+\mbox{\Hypertarget{utlist_8h_ac32e87bb9e7e7ee5c50ddd765fec2202}\label{utlist_8h_ac32e87bb9e7e7ee5c50ddd765fec2202}} 
+\index{utlist.h@{utlist.h}!LL\_SEARCH2@{LL\_SEARCH2}}
+\index{LL\_SEARCH2@{LL\_SEARCH2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_SEARCH2}{LL\_SEARCH2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+SEARCH2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{out,  }\item[{}]{elt,  }\item[{}]{cmp,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{    LL\_FOREACH2(head,out,next) \{                                                               \(\backslash\)}
+\DoxyCodeLine{      if ((cmp(out,elt))==0) break;                                                            \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{\} while (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a8c5c97079c5b259e4c0ff7c563b0f8ed}\label{utlist_8h_a8c5c97079c5b259e4c0ff7c563b0f8ed}} 
+\index{utlist.h@{utlist.h}!LL\_SEARCH\_SCALAR@{LL\_SEARCH\_SCALAR}}
+\index{LL\_SEARCH\_SCALAR@{LL\_SEARCH\_SCALAR}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_SEARCH\_SCALAR}{LL\_SEARCH\_SCALAR}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+SEARCH\+\_\+\+SCALAR(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{out,  }\item[{}]{field,  }\item[{}]{val }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_a845ca1c4ffd9aa5511a7de108685cf41}{LL\+\_\+\+SEARCH\+\_\+\+SCALAR2}}(head,out,field,val,next)}
+
+\mbox{\Hypertarget{utlist_8h_a845ca1c4ffd9aa5511a7de108685cf41}\label{utlist_8h_a845ca1c4ffd9aa5511a7de108685cf41}} 
+\index{utlist.h@{utlist.h}!LL\_SEARCH\_SCALAR2@{LL\_SEARCH\_SCALAR2}}
+\index{LL\_SEARCH\_SCALAR2@{LL\_SEARCH\_SCALAR2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_SEARCH\_SCALAR2}{LL\_SEARCH\_SCALAR2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+SEARCH\+\_\+\+SCALAR2(\begin{DoxyParamCaption}\item[{}]{head,  }\item[{}]{out,  }\item[{}]{field,  }\item[{}]{val,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{                                                                                           \(\backslash\)}
+\DoxyCodeLine{    LL\_FOREACH2(head,out,next) \{                                                               \(\backslash\)}
+\DoxyCodeLine{      if ((out)-\/>field == (val)) \textcolor{keywordflow}{break};                                                        \(\backslash\)}
+\DoxyCodeLine{    \}                                                                                          \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{utlist_8h_a0b2137d4a0c157cb7a1a30d9340ece31}\label{utlist_8h_a0b2137d4a0c157cb7a1a30d9340ece31}} 
+\index{utlist.h@{utlist.h}!LL\_SORT@{LL\_SORT}}
+\index{LL\_SORT@{LL\_SORT}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_SORT}{LL\_SORT}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+SORT(\begin{DoxyParamCaption}\item[{}]{list,  }\item[{}]{cmp }\end{DoxyParamCaption})~    \mbox{\hyperlink{utlist_8h_ab073dee297f8614db97aa576832a3af1}{LL\+\_\+\+SORT2}}(list, cmp, next)}
+
+\mbox{\Hypertarget{utlist_8h_ab073dee297f8614db97aa576832a3af1}\label{utlist_8h_ab073dee297f8614db97aa576832a3af1}} 
+\index{utlist.h@{utlist.h}!LL\_SORT2@{LL\_SORT2}}
+\index{LL\_SORT2@{LL\_SORT2}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{LL\_SORT2}{LL\_SORT2}}
+{\footnotesize\ttfamily \#define LL\+\_\+\+SORT2(\begin{DoxyParamCaption}\item[{}]{list,  }\item[{}]{cmp,  }\item[{}]{next }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{utlist_8h_aba90c456df269f7301e3b6fbbcb764fb}\label{utlist_8h_aba90c456df269f7301e3b6fbbcb764fb}} 
+\index{utlist.h@{utlist.h}!UTLIST\_CASTASGN@{UTLIST\_CASTASGN}}
+\index{UTLIST\_CASTASGN@{UTLIST\_CASTASGN}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{UTLIST\_CASTASGN}{UTLIST\_CASTASGN}}
+{\footnotesize\ttfamily \#define UTLIST\+\_\+\+CASTASGN(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~(a)=(b)}
+
+\mbox{\Hypertarget{utlist_8h_a2e79be9dd498dd194909bc2a2e9b62bc}\label{utlist_8h_a2e79be9dd498dd194909bc2a2e9b62bc}} 
+\index{utlist.h@{utlist.h}!UTLIST\_NEXT@{UTLIST\_NEXT}}
+\index{UTLIST\_NEXT@{UTLIST\_NEXT}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{UTLIST\_NEXT}{UTLIST\_NEXT}}
+{\footnotesize\ttfamily \#define UTLIST\+\_\+\+NEXT(\begin{DoxyParamCaption}\item[{}]{elt,  }\item[{}]{list,  }\item[{}]{next }\end{DoxyParamCaption})~((elt)-\/$>$next)}
+
+\mbox{\Hypertarget{utlist_8h_af9272d99ba43c95b55c085b16f36bb57}\label{utlist_8h_af9272d99ba43c95b55c085b16f36bb57}} 
+\index{utlist.h@{utlist.h}!UTLIST\_NEXTASGN@{UTLIST\_NEXTASGN}}
+\index{UTLIST\_NEXTASGN@{UTLIST\_NEXTASGN}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{UTLIST\_NEXTASGN}{UTLIST\_NEXTASGN}}
+{\footnotesize\ttfamily \#define UTLIST\+\_\+\+NEXTASGN(\begin{DoxyParamCaption}\item[{}]{elt,  }\item[{}]{list,  }\item[{}]{to,  }\item[{}]{next }\end{DoxyParamCaption})~((elt)-\/$>$next)=(to)}
+
+\mbox{\Hypertarget{utlist_8h_ae52f3480c194493b6d8703a7d51eb66d}\label{utlist_8h_ae52f3480c194493b6d8703a7d51eb66d}} 
+\index{utlist.h@{utlist.h}!UTLIST\_PREVASGN@{UTLIST\_PREVASGN}}
+\index{UTLIST\_PREVASGN@{UTLIST\_PREVASGN}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{UTLIST\_PREVASGN}{UTLIST\_PREVASGN}}
+{\footnotesize\ttfamily \#define UTLIST\+\_\+\+PREVASGN(\begin{DoxyParamCaption}\item[{}]{elt,  }\item[{}]{list,  }\item[{}]{to,  }\item[{}]{prev }\end{DoxyParamCaption})~((elt)-\/$>$prev)=(to)}
+
+\mbox{\Hypertarget{utlist_8h_aded44330ce4d18912ff83fe82cf26af7}\label{utlist_8h_aded44330ce4d18912ff83fe82cf26af7}} 
+\index{utlist.h@{utlist.h}!UTLIST\_RS@{UTLIST\_RS}}
+\index{UTLIST\_RS@{UTLIST\_RS}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{UTLIST\_RS}{UTLIST\_RS}}
+{\footnotesize\ttfamily \#define UTLIST\+\_\+\+RS(\begin{DoxyParamCaption}\item[{}]{list }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{utlist_8h_aa3cab84f4d370423c96ac66d9216c6aa}\label{utlist_8h_aa3cab84f4d370423c96ac66d9216c6aa}} 
+\index{utlist.h@{utlist.h}!UTLIST\_SV@{UTLIST\_SV}}
+\index{UTLIST\_SV@{UTLIST\_SV}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{UTLIST\_SV}{UTLIST\_SV}}
+{\footnotesize\ttfamily \#define UTLIST\+\_\+\+SV(\begin{DoxyParamCaption}\item[{}]{elt,  }\item[{}]{list }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{utlist_8h_a9f3779f3c49ddf609c97f1c3d1f29730}\label{utlist_8h_a9f3779f3c49ddf609c97f1c3d1f29730}} 
+\index{utlist.h@{utlist.h}!UTLIST\_VERSION@{UTLIST\_VERSION}}
+\index{UTLIST\_VERSION@{UTLIST\_VERSION}!utlist.h@{utlist.h}}
+\doxysubsubsection{\texorpdfstring{UTLIST\_VERSION}{UTLIST\_VERSION}}
+{\footnotesize\ttfamily \#define UTLIST\+\_\+\+VERSION~2.\+3.\+0}
+

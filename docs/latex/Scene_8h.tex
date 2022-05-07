@@ -1,0 +1,41 @@
+\hypertarget{Scene_8h}{}\doxysection{include/\+Scene\+Manager/\+Scene.h File Reference}
+\label{Scene_8h}\index{include/SceneManager/Scene.h@{include/SceneManager/Scene.h}}
+{\ttfamily \#include \char`\"{}Scene\+Manager/\+Scene\+Manager.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Resource\+Manager/\+Resource\+Manager.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}external/uthash/uthash.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utils/logger.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$raylib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}external/raygui.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structScene__t}{Scene\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{Scene_8h_ac1f60aa25a1194159f8016de322b43b3}{Define\+Scene}}(name,  name\+String,  Start,  Update,  Fixed\+Update,  Render,  Exit)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{Scene_8h_ac1f60aa25a1194159f8016de322b43b3}\label{Scene_8h_ac1f60aa25a1194159f8016de322b43b3}} 
+\index{Scene.h@{Scene.h}!DefineScene@{DefineScene}}
+\index{DefineScene@{DefineScene}!Scene.h@{Scene.h}}
+\doxysubsubsection{\texorpdfstring{DefineScene}{DefineScene}}
+{\footnotesize\ttfamily \#define Define\+Scene(\begin{DoxyParamCaption}\item[{}]{name,  }\item[{}]{name\+String,  }\item[{}]{Start,  }\item[{}]{Update,  }\item[{}]{Fixed\+Update,  }\item[{}]{Render,  }\item[{}]{Exit }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structScene__t}{Scene\_t}} \mbox{\hyperlink{structScene__t_a5c0b7277f48940ebfc12e6b9f73fc2e2}{name}} = \{ \(\backslash\)}
+\DoxyCodeLine{    nameString , \(\backslash\)}
+\DoxyCodeLine{    0.0 , \(\backslash\)}
+\DoxyCodeLine{    Start , \(\backslash\)}
+\DoxyCodeLine{    Update , \(\backslash\)}
+\DoxyCodeLine{    FixedUpdate , \(\backslash\)}
+\DoxyCodeLine{    Render , \(\backslash\)}
+\DoxyCodeLine{    Exit \(\backslash\)}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}

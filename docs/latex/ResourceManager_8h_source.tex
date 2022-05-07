@@ -1,113 +1,110 @@
 \hypertarget{ResourceManager_8h_source}{}\doxysection{Resource\+Manager.\+h}
-\label{ResourceManager_8h_source}\index{include/ResourceManager.h@{include/ResourceManager.h}}
+\label{ResourceManager_8h_source}\index{include/ResourceManager/ResourceManager.h@{include/ResourceManager/ResourceManager.h}}
 \mbox{\hyperlink{ResourceManager_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_RESOURCEMANAGER\_H\_\_}}
 \DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_RESOURCEMANAGER\_H\_\_}}
 \DoxyCodeLine{3 }
 \DoxyCodeLine{4 \textcolor{preprocessor}{\#include <raylib.h>}}
-\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}uthash/uthash.h"{}}}
-\DoxyCodeLine{6 }
-\DoxyCodeLine{7 \textcolor{preprocessor}{\#define RESOURCE\_MANAGER\_SUCCESS 0}}
-\DoxyCodeLine{8 \textcolor{preprocessor}{\#define RESOURCE\_MANAGER\_WARNING 1}}
-\DoxyCodeLine{9 \textcolor{preprocessor}{\#define RESOURCE\_MANAGER\_ERROR 2}}
-\DoxyCodeLine{10 }
-\DoxyCodeLine{11 \textcolor{preprocessor}{\#pragma region resource\_types\_and\_resource\_type\_strings}}
-\DoxyCodeLine{12 }
-\DoxyCodeLine{16 \textcolor{keyword}{typedef} \textcolor{keyword}{enum}}
-\DoxyCodeLine{17 \{}
-\DoxyCodeLine{18     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1ad427e6c760f65da2f84eb954ef0e60a7}{RESOURCE\_IMAGE}},         }
-\DoxyCodeLine{19     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1a207d6664c0e1815e8f17f1e656762c3e}{RESOURCE\_TEXTURE2D}},     }
-\DoxyCodeLine{20     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1a2a956d13a9b68b59a9e5ba38a3c7b81e}{RESOURCE\_FONT}},          }
-\DoxyCodeLine{21     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1a135e66f8ea21e46c548aa6436db8e62d}{RESOURCE\_WAVE}},          }
-\DoxyCodeLine{22     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1ada2d1d43619ec2e7d80d17c18870f6dc}{RESOURCE\_SOUND}},         }
-\DoxyCodeLine{23     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1a0789a03f2af1d6db39cfbda7e69121b7}{RESOURCE\_MUSIC}},         }
-\DoxyCodeLine{24 \} \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}};}
-\DoxyCodeLine{25 }
-\DoxyCodeLine{26 }
-\DoxyCodeLine{30 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\_\_ResourceTypeString[] = \{}
-\DoxyCodeLine{31     \textcolor{stringliteral}{"{}Image"{}},        }
-\DoxyCodeLine{32     \textcolor{stringliteral}{"{}Texture2D"{}},    }
-\DoxyCodeLine{33     \textcolor{stringliteral}{"{}Font"{}},         }
-\DoxyCodeLine{34     \textcolor{stringliteral}{"{}Wave"{}},         }
-\DoxyCodeLine{35     \textcolor{stringliteral}{"{}Sound"{}},        }
-\DoxyCodeLine{36     \textcolor{stringliteral}{"{}Music"{}}\};       }
-\DoxyCodeLine{37 }
-\DoxyCodeLine{38 \textcolor{preprocessor}{\#pragma endregion resource\_types\_and\_resource\_type\_strings}}
-\DoxyCodeLine{39 }
-\DoxyCodeLine{40 \textcolor{preprocessor}{\#pragma region private\_resource\_manager\_data\_types}}
-\DoxyCodeLine{41 }
-\DoxyCodeLine{45 \textcolor{keyword}{typedef} \textcolor{keyword}{union}}
-\DoxyCodeLine{46 \{}
-\DoxyCodeLine{47     Image \mbox{\hyperlink{union____Resource__u_adca1756b7d37b3c298d397583304f8bf}{Image}};            }
-\DoxyCodeLine{48     Texture2D \mbox{\hyperlink{union____Resource__u_a369db31f191bd633f8fa63dbd28145dc}{Texture2D}};    }
-\DoxyCodeLine{49     Font \mbox{\hyperlink{union____Resource__u_abed7c2d1a6f722acfca48b8abf0ea4ed}{Font}};              }
-\DoxyCodeLine{50     Wave \mbox{\hyperlink{union____Resource__u_a0d7b23cb838efa2718e65bd32e356a1b}{Wave}};              }
-\DoxyCodeLine{51     Sound \mbox{\hyperlink{union____Resource__u_a745df5ffa5a76d2f258a4f6e106c7248}{Sound}};            }
-\DoxyCodeLine{52     Music \mbox{\hyperlink{union____Resource__u_a9c7a097cc23265d0574d4bdda11d8dc3}{Music}};            }
-\DoxyCodeLine{53 \} \mbox{\hyperlink{union____Resource__u}{\_\_Resource\_u}};}
-\DoxyCodeLine{54 }
-\DoxyCodeLine{58 \textcolor{keyword}{struct }\mbox{\hyperlink{struct____Resource__t}{\_\_Resource\_t}}}
-\DoxyCodeLine{59 \{}
-\DoxyCodeLine{60     \textcolor{keywordtype}{char} \mbox{\hyperlink{struct____Resource__t_a5dbfcd1f764e5abde7b577fcf2bac9df}{name}}[100];     }
-\DoxyCodeLine{61     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{struct____Resource__t_a69305337d6eb4e0cae70eca34ac10c1f}{type}};  }
-\DoxyCodeLine{62     \textcolor{keywordtype}{char} \mbox{\hyperlink{struct____Resource__t_a1b43a0c6b99e6aa177814df92a83e97f}{path}}[100];     }
-\DoxyCodeLine{63     \mbox{\hyperlink{union____Resource__u}{\_\_Resource\_u}} \mbox{\hyperlink{struct____Resource__t_a104305c1900fa35c9856ac2eceb3f35c}{data}};  }
-\DoxyCodeLine{64     UT\_hash\_handle \mbox{\hyperlink{struct____Resource__t_ac4985bb224631de5ae10687915d912f9}{hh}};  }
-\DoxyCodeLine{65 \};}
-\DoxyCodeLine{66 }
-\DoxyCodeLine{67 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{struct____Resource__t}{\_\_Resource\_t}} *\_\_ResourceManagerMap = NULL;    }
-\DoxyCodeLine{68 }
-\DoxyCodeLine{72 \textcolor{keyword}{typedef} \textcolor{keyword}{struct}}
-\DoxyCodeLine{73 \{}
-\DoxyCodeLine{74     int (*Init)();  }
-\DoxyCodeLine{75     int (*AddResource)(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{struct____Resource__t_a69305337d6eb4e0cae70eca34ac10c1f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{struct____Resource__t_a5dbfcd1f764e5abde7b577fcf2bac9df}{name}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{struct____Resource__t_a1b43a0c6b99e6aa177814df92a83e97f}{path}});  }
-\DoxyCodeLine{76     int (*RemoveResource)(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{struct____Resource__t_a69305337d6eb4e0cae70eca34ac10c1f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{struct____Resource__t_a5dbfcd1f764e5abde7b577fcf2bac9df}{name}}); }
-\DoxyCodeLine{77     int (*Load)();  }
-\DoxyCodeLine{78     \textcolor{keywordtype}{void} *(*Get)(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{struct____Resource__t_a69305337d6eb4e0cae70eca34ac10c1f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{struct____Resource__t_a5dbfcd1f764e5abde7b577fcf2bac9df}{name}});  }
-\DoxyCodeLine{79     int (*Unload)();    }
-\DoxyCodeLine{80     int (*Destroy)();   }
-\DoxyCodeLine{81 \} \mbox{\hyperlink{struct____ResourceManager__t}{\_\_ResourceManager\_t}};}
-\DoxyCodeLine{82 }
-\DoxyCodeLine{83 \textcolor{preprocessor}{\#pragma endregion private\_resource\_manager\_data\_types}}
-\DoxyCodeLine{84 }
-\DoxyCodeLine{85 \textcolor{preprocessor}{\#pragma region private\_resource\_manager\_cls\_and\_methods}}
-\DoxyCodeLine{86 }
-\DoxyCodeLine{94 \textcolor{keywordtype}{char} *\mbox{\hyperlink{ResourceManager_8h_ac5e511c2281cf68f7ee43fdd3252f6d7}{\_\_ResourceManagerGetResourceName}}(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{struct____Resource__t_a69305337d6eb4e0cae70eca34ac10c1f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{struct____Resource__t_a5dbfcd1f764e5abde7b577fcf2bac9df}{name}});}
-\DoxyCodeLine{95 }
-\DoxyCodeLine{102 \textcolor{keyword}{struct }\mbox{\hyperlink{struct____Resource__t}{\_\_Resource\_t}} *\mbox{\hyperlink{ResourceManager_8h_a7a1364d9d26bc33fac6541fb4ada4995}{\_\_ResourceManagerGetResourcePointer}}(\textcolor{keywordtype}{char} *fullName);}
-\DoxyCodeLine{103 }
-\DoxyCodeLine{110 \textcolor{keywordtype}{void} *\mbox{\hyperlink{ResourceManager_8h_a30629577bea6b847932e0e749269c2fa}{\_\_ResourceManagerGetResourceDataPointer}}(\textcolor{keyword}{struct} \mbox{\hyperlink{struct____Resource__t}{\_\_Resource\_t}} *resource);}
-\DoxyCodeLine{111 }
-\DoxyCodeLine{112 \textcolor{preprocessor}{\#pragma endregion private\_resource\_manager\_cls\_and\_methods}}
-\DoxyCodeLine{113 }
-\DoxyCodeLine{114 \textcolor{preprocessor}{\#pragma region public\_resource\_manager\_obj\_and\_methods}}
-\DoxyCodeLine{115 }
-\DoxyCodeLine{121 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_a4da23682811e7e6ed85e1b17dbba96de}{\_\_ResourceManagerInit}}();}
-\DoxyCodeLine{122 }
-\DoxyCodeLine{131 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_a5cce0fca1d5e90fe829a7c40713ea395}{\_\_ResourceManagerAddResource}}(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{struct____Resource__t_a69305337d6eb4e0cae70eca34ac10c1f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{struct____Resource__t_a5dbfcd1f764e5abde7b577fcf2bac9df}{name}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{struct____Resource__t_a1b43a0c6b99e6aa177814df92a83e97f}{path}});}
-\DoxyCodeLine{132 }
-\DoxyCodeLine{140 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_aa0811d8277d927e65d21c57bf62e90d0}{\_\_ResourceManagerRemoveResource}}(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{struct____Resource__t_a69305337d6eb4e0cae70eca34ac10c1f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{struct____Resource__t_a5dbfcd1f764e5abde7b577fcf2bac9df}{name}});}
-\DoxyCodeLine{141 }
-\DoxyCodeLine{147 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_a680f21c0b2648ed77b7b60d4d94f3fa9}{\_\_ResourceManagerLoad}}();}
-\DoxyCodeLine{148 }
-\DoxyCodeLine{155 \textcolor{keywordtype}{void} *\mbox{\hyperlink{ResourceManager_8h_a71fa23e458ac312d128a94b29677775e}{\_\_ResourceManagerGet}}(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{struct____Resource__t_a69305337d6eb4e0cae70eca34ac10c1f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{struct____Resource__t_a5dbfcd1f764e5abde7b577fcf2bac9df}{name}});}
-\DoxyCodeLine{156 }
-\DoxyCodeLine{162 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_ac20c5d409bf5ab698542476b602524e8}{\_\_ResourceManagerUnload}}();}
-\DoxyCodeLine{163 }
-\DoxyCodeLine{169 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_a9b16ceb0f89e4379a98e1bda156d0d41}{\_\_ResourceManagerDestroy}}();}
-\DoxyCodeLine{170 }
-\DoxyCodeLine{171 \textcolor{keyword}{static} \mbox{\hyperlink{struct____ResourceManager__t}{\_\_ResourceManager\_t}} ResourceManager = \{}
-\DoxyCodeLine{172     \mbox{\hyperlink{ResourceManager_8h_a4da23682811e7e6ed85e1b17dbba96de}{\_\_ResourceManagerInit}},}
-\DoxyCodeLine{173     \mbox{\hyperlink{ResourceManager_8h_a5cce0fca1d5e90fe829a7c40713ea395}{\_\_ResourceManagerAddResource}},}
-\DoxyCodeLine{174     \mbox{\hyperlink{ResourceManager_8h_aa0811d8277d927e65d21c57bf62e90d0}{\_\_ResourceManagerRemoveResource}},}
-\DoxyCodeLine{175     \mbox{\hyperlink{ResourceManager_8h_a680f21c0b2648ed77b7b60d4d94f3fa9}{\_\_ResourceManagerLoad}},}
-\DoxyCodeLine{176     \mbox{\hyperlink{ResourceManager_8h_a71fa23e458ac312d128a94b29677775e}{\_\_ResourceManagerGet}},}
-\DoxyCodeLine{177     \mbox{\hyperlink{ResourceManager_8h_ac20c5d409bf5ab698542476b602524e8}{\_\_ResourceManagerUnload}},}
-\DoxyCodeLine{178     \mbox{\hyperlink{ResourceManager_8h_a9b16ceb0f89e4379a98e1bda156d0d41}{\_\_ResourceManagerDestroy}}\}; }
-\DoxyCodeLine{179 }
-\DoxyCodeLine{180 \textcolor{preprocessor}{\#pragma endregion public\_resource\_manager\_obj\_and\_methods}}
-\DoxyCodeLine{181 }
-\DoxyCodeLine{182 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_\_RESOURCEMANAGER\_H\_\_ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{uthash_8h}{external/uthash/uthash.h}}"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{Config_8h}{Config.h}}"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#pragma region resource\_types\_and\_resource\_type\_strings}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{13 \textcolor{keyword}{typedef} \textcolor{keyword}{enum}}
+\DoxyCodeLine{14 \{}
+\DoxyCodeLine{15     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1ad427e6c760f65da2f84eb954ef0e60a7}{RESOURCE\_IMAGE}},         }
+\DoxyCodeLine{16     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1a207d6664c0e1815e8f17f1e656762c3e}{RESOURCE\_TEXTURE2D}},     }
+\DoxyCodeLine{17     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1a2a956d13a9b68b59a9e5ba38a3c7b81e}{RESOURCE\_FONT}},          }
+\DoxyCodeLine{18     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1a135e66f8ea21e46c548aa6436db8e62d}{RESOURCE\_WAVE}},          }
+\DoxyCodeLine{19     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1ada2d1d43619ec2e7d80d17c18870f6dc}{RESOURCE\_SOUND}},         }
+\DoxyCodeLine{20     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1a0789a03f2af1d6db39cfbda7e69121b7}{RESOURCE\_MUSIC}},         }
+\DoxyCodeLine{21 \} \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 }
+\DoxyCodeLine{27 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char} *ResourceTypeString[] = \{}
+\DoxyCodeLine{28     \textcolor{stringliteral}{"{}Image"{}},        }
+\DoxyCodeLine{29     \textcolor{stringliteral}{"{}Texture2D"{}},    }
+\DoxyCodeLine{30     \textcolor{stringliteral}{"{}Font"{}},         }
+\DoxyCodeLine{31     \textcolor{stringliteral}{"{}Wave"{}},         }
+\DoxyCodeLine{32     \textcolor{stringliteral}{"{}Sound"{}},        }
+\DoxyCodeLine{33     \textcolor{stringliteral}{"{}Music"{}}\};       }
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#pragma endregion resource\_types\_and\_resource\_type\_strings}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#pragma region private\_resource\_manager\_data\_types}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{42 \textcolor{keyword}{typedef} \textcolor{keyword}{union}}
+\DoxyCodeLine{43 \{}
+\DoxyCodeLine{44     Image \mbox{\hyperlink{unionResource__u_a2725de54dddac4752d2db604825113ea}{Image}};            }
+\DoxyCodeLine{45     Texture2D \mbox{\hyperlink{unionResource__u_a449cded414b4ef0d1874671adee0a48c}{Texture2D}};    }
+\DoxyCodeLine{46     Font \mbox{\hyperlink{unionResource__u_acdc8e3cae92eb2f18bfbd44a620fc76f}{Font}};              }
+\DoxyCodeLine{47     Wave \mbox{\hyperlink{unionResource__u_af3e7689dc67c9137cf5d28e9448a2a7b}{Wave}};              }
+\DoxyCodeLine{48     Sound \mbox{\hyperlink{unionResource__u_a57721eb85e16a3fbc8a0744c26dc25ab}{Sound}};            }
+\DoxyCodeLine{49     Music \mbox{\hyperlink{unionResource__u_a714c3048eaa1eb02f43027c739162fca}{Music}};            }
+\DoxyCodeLine{50 \} \mbox{\hyperlink{unionResource__u}{Resource\_u}};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{55 \textcolor{keyword}{struct }\mbox{\hyperlink{structResource__t}{Resource\_t}}}
+\DoxyCodeLine{56 \{}
+\DoxyCodeLine{57     \textcolor{keywordtype}{char} \mbox{\hyperlink{structResource__t_a8e8293aba7f9b699e7a950f7a074331f}{name}}[100];     }
+\DoxyCodeLine{58     \mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{structResource__t_a27dd9bca91ff19e4d13640d8e0830d5f}{type}};  }
+\DoxyCodeLine{59     \textcolor{keywordtype}{char} \mbox{\hyperlink{structResource__t_ab57f6fbe62d8300b08d4cb3a72bb24d6}{path}}[100];     }
+\DoxyCodeLine{60     \mbox{\hyperlink{unionResource__u}{Resource\_u}} \mbox{\hyperlink{structResource__t_a6b30ce75c0f9a646c15bc2184f0d8392}{data}};  }
+\DoxyCodeLine{61     \mbox{\hyperlink{structUT__hash__handle}{UT\_hash\_handle}} \mbox{\hyperlink{structResource__t_a200c88b42f13463ee06759251bc5a4b9}{hh}};  }
+\DoxyCodeLine{62 \};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structResource__t}{Resource\_t}} *\_\_ResourceManagerMap = NULL;    }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{69 \textcolor{keyword}{typedef} \textcolor{keyword}{struct}}
+\DoxyCodeLine{70 \{}
+\DoxyCodeLine{71     int (*Init)();  }
+\DoxyCodeLine{72     int (*AddResource)(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{structResource__t_a27dd9bca91ff19e4d13640d8e0830d5f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structResource__t_a8e8293aba7f9b699e7a950f7a074331f}{name}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structResource__t_ab57f6fbe62d8300b08d4cb3a72bb24d6}{path}});  }
+\DoxyCodeLine{73     int (*RemoveResource)(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{structResource__t_a27dd9bca91ff19e4d13640d8e0830d5f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structResource__t_a8e8293aba7f9b699e7a950f7a074331f}{name}}); }
+\DoxyCodeLine{74     int (*Load)();  }
+\DoxyCodeLine{75     \textcolor{keywordtype}{void} *(*Get)(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{structResource__t_a27dd9bca91ff19e4d13640d8e0830d5f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structResource__t_a8e8293aba7f9b699e7a950f7a074331f}{name}});  }
+\DoxyCodeLine{76     int (*Unload)();    }
+\DoxyCodeLine{77     int (*Destroy)();   }
+\DoxyCodeLine{78 \} \mbox{\hyperlink{structResourceManager__t}{ResourceManager\_t}};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 \textcolor{preprocessor}{\#pragma endregion private\_resource\_manager\_data\_types}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82 \textcolor{preprocessor}{\#pragma region private\_resource\_manager\_cls\_and\_methods}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{91 \textcolor{keywordtype}{char} *\mbox{\hyperlink{ResourceManager_8h_acc2010b0b166ece35980947489a7d4a9}{ResourceManagerGetResourceName}}(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{structResource__t_a27dd9bca91ff19e4d13640d8e0830d5f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structResource__t_a8e8293aba7f9b699e7a950f7a074331f}{name}});}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{99 \textcolor{keyword}{struct }\mbox{\hyperlink{structResource__t}{Resource\_t}} *\mbox{\hyperlink{ResourceManager_8h_ad2df943f829d556360259005aa7c45fb}{ResourceManagerGetResourcePointer}}(\textcolor{keywordtype}{char} *fullName);}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{107 \textcolor{keywordtype}{void} *\mbox{\hyperlink{ResourceManager_8h_ad1c90bf9d60af7f42eb2d16ac2469632}{ResourceManagerGetResourceDataPointer}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structResource__t}{Resource\_t}} *resource);}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#pragma endregion private\_resource\_manager\_cls\_and\_methods}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 \textcolor{preprocessor}{\#pragma region public\_resource\_manager\_obj\_and\_methods}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{118 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_ab072b5bc386167d2ac82da8cd7a9dcb0}{ResourceManagerInit}}();}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{128 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_ad6dde22ce22d60b32e0b310b80aa33da}{ResourceManagerAddResource}}(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{structResource__t_a27dd9bca91ff19e4d13640d8e0830d5f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structResource__t_a8e8293aba7f9b699e7a950f7a074331f}{name}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structResource__t_ab57f6fbe62d8300b08d4cb3a72bb24d6}{path}});}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{137 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_a9528ce63838878069a5d865321c26c76}{ResourceManagerRemoveResource}}(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{structResource__t_a27dd9bca91ff19e4d13640d8e0830d5f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structResource__t_a8e8293aba7f9b699e7a950f7a074331f}{name}});}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{144 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_ab76da0fa0f4f42a575b54ce194ed5265}{ResourceManagerLoad}}();}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{152 \textcolor{keywordtype}{void} *\mbox{\hyperlink{ResourceManager_8h_aee002a092b52cbebf3cc20f78b29948e}{ResourceManagerGet}}(\mbox{\hyperlink{ResourceManager_8h_a8571efa4409be32e28abf3ea74a0dbb1}{ResourceType}} \mbox{\hyperlink{structResource__t_a27dd9bca91ff19e4d13640d8e0830d5f}{type}}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structResource__t_a8e8293aba7f9b699e7a950f7a074331f}{name}});}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{159 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_a1276df3db22db0e74c06323210297193}{ResourceManagerUnload}}();}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{166 \textcolor{keywordtype}{int} \mbox{\hyperlink{ResourceManager_8h_af5aa7308b357784697c1cb201c7310b1}{ResourceManagerDestroy}}();}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168 \textcolor{keyword}{static} \mbox{\hyperlink{structResourceManager__t}{ResourceManager\_t}} ResourceManager = \{}
+\DoxyCodeLine{169     \mbox{\hyperlink{ResourceManager_8h_ab072b5bc386167d2ac82da8cd7a9dcb0}{ResourceManagerInit}},}
+\DoxyCodeLine{170     \mbox{\hyperlink{ResourceManager_8h_ad6dde22ce22d60b32e0b310b80aa33da}{ResourceManagerAddResource}},}
+\DoxyCodeLine{171     \mbox{\hyperlink{ResourceManager_8h_a9528ce63838878069a5d865321c26c76}{ResourceManagerRemoveResource}},}
+\DoxyCodeLine{172     \mbox{\hyperlink{ResourceManager_8h_ab76da0fa0f4f42a575b54ce194ed5265}{ResourceManagerLoad}},}
+\DoxyCodeLine{173     \mbox{\hyperlink{ResourceManager_8h_aee002a092b52cbebf3cc20f78b29948e}{ResourceManagerGet}},}
+\DoxyCodeLine{174     \mbox{\hyperlink{ResourceManager_8h_a1276df3db22db0e74c06323210297193}{ResourceManagerUnload}},}
+\DoxyCodeLine{175     \mbox{\hyperlink{ResourceManager_8h_af5aa7308b357784697c1cb201c7310b1}{ResourceManagerDestroy}}\}; }
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177 \textcolor{preprocessor}{\#pragma endregion public\_resource\_manager\_obj\_and\_methods}}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_\_RESOURCEMANAGER\_H\_\_ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

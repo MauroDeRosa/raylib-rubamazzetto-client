@@ -1,0 +1,65 @@
+\hypertarget{structcrypto__sign__vtable}{}\doxysection{crypto\+\_\+sign\+\_\+vtable Struct Reference}
+\label{structcrypto__sign__vtable}\index{crypto\_sign\_vtable@{crypto\_sign\_vtable}}
+
+
+Type definitions ///.  
+
+
+
+
+{\ttfamily \#include $<$monocypher.\+h$>$}
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+void($\ast$ \mbox{\hyperlink{structcrypto__sign__vtable_a0c75de402817e3e045d125f521667cdb}{hash}} )(uint8\+\_\+t hash\mbox{[}64\mbox{]}, const uint8\+\_\+t $\ast$message, size\+\_\+t message\+\_\+size)
+\item 
+void($\ast$ \mbox{\hyperlink{structcrypto__sign__vtable_a675a8e8364f5ca7990f009f2325261cb}{init}} )(void $\ast$ctx)
+\item 
+void($\ast$ \mbox{\hyperlink{structcrypto__sign__vtable_ae9f399477cd1e194b9b20969e19bfde6}{update}} )(void $\ast$ctx, const uint8\+\_\+t $\ast$message, size\+\_\+t message\+\_\+size)
+\item 
+void($\ast$ \mbox{\hyperlink{structcrypto__sign__vtable_a227cf83644e4333cba8d18867f8e04dc}{final}} )(void $\ast$ctx, uint8\+\_\+t \mbox{\hyperlink{structcrypto__sign__vtable_a0c75de402817e3e045d125f521667cdb}{hash}}\mbox{[}64\mbox{]})
+\item 
+size\+\_\+t \mbox{\hyperlink{structcrypto__sign__vtable_a70c9852972dc1740764108a59092bc59}{ctx\+\_\+size}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Type definitions ///. 
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structcrypto__sign__vtable_a70c9852972dc1740764108a59092bc59}\label{structcrypto__sign__vtable_a70c9852972dc1740764108a59092bc59}} 
+\index{crypto\_sign\_vtable@{crypto\_sign\_vtable}!ctx\_size@{ctx\_size}}
+\index{ctx\_size@{ctx\_size}!crypto\_sign\_vtable@{crypto\_sign\_vtable}}
+\doxysubsubsection{\texorpdfstring{ctx\_size}{ctx\_size}}
+{\footnotesize\ttfamily size\+\_\+t crypto\+\_\+sign\+\_\+vtable\+::ctx\+\_\+size}
+
+\mbox{\Hypertarget{structcrypto__sign__vtable_a227cf83644e4333cba8d18867f8e04dc}\label{structcrypto__sign__vtable_a227cf83644e4333cba8d18867f8e04dc}} 
+\index{crypto\_sign\_vtable@{crypto\_sign\_vtable}!final@{final}}
+\index{final@{final}!crypto\_sign\_vtable@{crypto\_sign\_vtable}}
+\doxysubsubsection{\texorpdfstring{final}{final}}
+{\footnotesize\ttfamily void($\ast$ crypto\+\_\+sign\+\_\+vtable\+::final) (void $\ast$ctx, uint8\+\_\+t \mbox{\hyperlink{structcrypto__sign__vtable_a0c75de402817e3e045d125f521667cdb}{hash}}\mbox{[}64\mbox{]})}
+
+\mbox{\Hypertarget{structcrypto__sign__vtable_a0c75de402817e3e045d125f521667cdb}\label{structcrypto__sign__vtable_a0c75de402817e3e045d125f521667cdb}} 
+\index{crypto\_sign\_vtable@{crypto\_sign\_vtable}!hash@{hash}}
+\index{hash@{hash}!crypto\_sign\_vtable@{crypto\_sign\_vtable}}
+\doxysubsubsection{\texorpdfstring{hash}{hash}}
+{\footnotesize\ttfamily void($\ast$ crypto\+\_\+sign\+\_\+vtable\+::hash) (uint8\+\_\+t hash\mbox{[}64\mbox{]}, const uint8\+\_\+t $\ast$message, size\+\_\+t message\+\_\+size)}
+
+\mbox{\Hypertarget{structcrypto__sign__vtable_a675a8e8364f5ca7990f009f2325261cb}\label{structcrypto__sign__vtable_a675a8e8364f5ca7990f009f2325261cb}} 
+\index{crypto\_sign\_vtable@{crypto\_sign\_vtable}!init@{init}}
+\index{init@{init}!crypto\_sign\_vtable@{crypto\_sign\_vtable}}
+\doxysubsubsection{\texorpdfstring{init}{init}}
+{\footnotesize\ttfamily void($\ast$ crypto\+\_\+sign\+\_\+vtable\+::init) (void $\ast$ctx)}
+
+\mbox{\Hypertarget{structcrypto__sign__vtable_ae9f399477cd1e194b9b20969e19bfde6}\label{structcrypto__sign__vtable_ae9f399477cd1e194b9b20969e19bfde6}} 
+\index{crypto\_sign\_vtable@{crypto\_sign\_vtable}!update@{update}}
+\index{update@{update}!crypto\_sign\_vtable@{crypto\_sign\_vtable}}
+\doxysubsubsection{\texorpdfstring{update}{update}}
+{\footnotesize\ttfamily void($\ast$ crypto\+\_\+sign\+\_\+vtable\+::update) (void $\ast$ctx, const uint8\+\_\+t $\ast$message, size\+\_\+t message\+\_\+size)}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/external/external/\mbox{\hyperlink{monocypher_8h}{monocypher.\+h}}\end{DoxyCompactItemize}

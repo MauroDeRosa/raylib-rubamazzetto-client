@@ -1,0 +1,254 @@
+\hypertarget{utarray_8h_source}{}\doxysection{utarray.\+h}
+\label{utarray_8h_source}\index{include/external/uthash/utarray.h@{include/external/uthash/utarray.h}}
+\mbox{\hyperlink{utarray_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{Copyright (c) 2008-\/2022, Troy D. Hanson  https://troydhanson.github.io/uthash/}}
+\DoxyCodeLine{3 \textcolor{comment}{All rights reserved.}}
+\DoxyCodeLine{4 \textcolor{comment}{}}
+\DoxyCodeLine{5 \textcolor{comment}{Redistribution and use in source and binary forms, with or without}}
+\DoxyCodeLine{6 \textcolor{comment}{modification, are permitted provided that the following conditions are met:}}
+\DoxyCodeLine{7 \textcolor{comment}{}}
+\DoxyCodeLine{8 \textcolor{comment}{    * Redistributions of source code must retain the above copyright}}
+\DoxyCodeLine{9 \textcolor{comment}{      notice, this list of conditions and the following disclaimer.}}
+\DoxyCodeLine{10 \textcolor{comment}{}}
+\DoxyCodeLine{11 \textcolor{comment}{THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "{}AS}}
+\DoxyCodeLine{12 \textcolor{comment}{IS"{} AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED}}
+\DoxyCodeLine{13 \textcolor{comment}{TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A}}
+\DoxyCodeLine{14 \textcolor{comment}{PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER}}
+\DoxyCodeLine{15 \textcolor{comment}{OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,}}
+\DoxyCodeLine{16 \textcolor{comment}{EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,}}
+\DoxyCodeLine{17 \textcolor{comment}{PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR}}
+\DoxyCodeLine{18 \textcolor{comment}{PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF}}
+\DoxyCodeLine{19 \textcolor{comment}{LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING}}
+\DoxyCodeLine{20 \textcolor{comment}{NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS}}
+\DoxyCodeLine{21 \textcolor{comment}{SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.}}
+\DoxyCodeLine{22 \textcolor{comment}{*/}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{comment}{/* a dynamic array implementation using macros}}
+\DoxyCodeLine{25 \textcolor{comment}{ */}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#ifndef UTARRAY\_H}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#define UTARRAY\_H}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#define UTARRAY\_VERSION 2.3.0}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <stddef.h>}  \textcolor{comment}{/* size\_t */}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <string.h>}  \textcolor{comment}{/* memset, etc */}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <stdlib.h>}  \textcolor{comment}{/* exit */}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#ifdef \_\_GNUC\_\_}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define UTARRAY\_UNUSED \_\_attribute\_\_((\_\_unused\_\_))}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#define UTARRAY\_UNUSED}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#ifdef oom}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#error "{}The name of macro 'oom' has been changed to 'utarray\_oom'. Please update your code."{}}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#define utarray\_oom() oom()}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#ifndef utarray\_oom}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#define utarray\_oom() exit(-\/1)}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{keyword}{typedef} void (\mbox{\hyperlink{utarray_8h_ad931ba49cf13f7303667ed0d8a6e5d93}{ctor\_f}})(\textcolor{keywordtype}{void} *\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *src);}
+\DoxyCodeLine{51 \textcolor{keyword}{typedef} void (\mbox{\hyperlink{utarray_8h_a500c5b77d5cc17d65406e75636778aab}{dtor\_f}})(\textcolor{keywordtype}{void} *elt);}
+\DoxyCodeLine{52 \textcolor{keyword}{typedef} void (\mbox{\hyperlink{utarray_8h_aeb7c14b677a2d1e28df69df28be4b462}{init\_f}})(\textcolor{keywordtype}{void} *elt);}
+\DoxyCodeLine{53 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{54     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structUT__icd_a7021fa86e4197995817c9682140c2c82}{sz}};}
+\DoxyCodeLine{55     \mbox{\hyperlink{utarray_8h_aeb7c14b677a2d1e28df69df28be4b462}{init\_f}} *\mbox{\hyperlink{structUT__icd_a4efb7d75484d26a649038a991329cfd1}{init}};}
+\DoxyCodeLine{56     \mbox{\hyperlink{utarray_8h_ad931ba49cf13f7303667ed0d8a6e5d93}{ctor\_f}} *\mbox{\hyperlink{structUT__icd_af58b65eb0c3c21a99dc31c61f996408b}{copy}};}
+\DoxyCodeLine{57     \mbox{\hyperlink{utarray_8h_a500c5b77d5cc17d65406e75636778aab}{dtor\_f}} *\mbox{\hyperlink{structUT__icd_ab1e1f6d1a48da57ff8e42b267dccedab}{dtor}};}
+\DoxyCodeLine{58 \} \mbox{\hyperlink{structUT__icd}{UT\_icd}};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{61     \textcolor{keywordtype}{unsigned} \mbox{\hyperlink{structUT__array_add4a738223f032481193cc5901cef56e}{i}},n;\textcolor{comment}{/* i: index of next available slot, n: num slots */}}
+\DoxyCodeLine{62     \mbox{\hyperlink{structUT__icd}{UT\_icd}} \mbox{\hyperlink{structUT__array_a8308fc1e930b18b9561e713fd13e5997}{icd}};  \textcolor{comment}{/* initializer, copy and destructor functions */}}
+\DoxyCodeLine{63     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structUT__array_aab8159eaea37e87d0af22c97758c7b77}{d}};     \textcolor{comment}{/* n slots of size icd-\/>sz*/}}
+\DoxyCodeLine{64 \} \mbox{\hyperlink{structUT__array}{UT\_array}};}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 \textcolor{preprocessor}{\#define utarray\_init(a,\_icd) do \{                                             \(\backslash\)}}
+\DoxyCodeLine{67 \textcolor{preprocessor}{  memset(a,0,sizeof(UT\_array));                                               \(\backslash\)}}
+\DoxyCodeLine{68 \textcolor{preprocessor}{  (a)-\/>icd = *(\_icd);                                                         \(\backslash\)}}
+\DoxyCodeLine{69 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 \textcolor{preprocessor}{\#define utarray\_done(a) do \{                                                  \(\backslash\)}}
+\DoxyCodeLine{72 \textcolor{preprocessor}{  if ((a)-\/>n) \{                                                               \(\backslash\)}}
+\DoxyCodeLine{73 \textcolor{preprocessor}{    if ((a)-\/>icd.dtor) \{                                                      \(\backslash\)}}
+\DoxyCodeLine{74 \textcolor{preprocessor}{      unsigned \_ut\_i;                                                         \(\backslash\)}}
+\DoxyCodeLine{75 \textcolor{preprocessor}{      for(\_ut\_i=0; \_ut\_i < (a)-\/>i; \_ut\_i++) \{                                 \(\backslash\)}}
+\DoxyCodeLine{76 \textcolor{preprocessor}{        (a)-\/>icd.dtor(utarray\_eltptr(a,\_ut\_i));                               \(\backslash\)}}
+\DoxyCodeLine{77 \textcolor{preprocessor}{      \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{78 \textcolor{preprocessor}{    \}                                                                         \(\backslash\)}}
+\DoxyCodeLine{79 \textcolor{preprocessor}{    free((a)-\/>d);                                                             \(\backslash\)}}
+\DoxyCodeLine{80 \textcolor{preprocessor}{  \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{81 \textcolor{preprocessor}{  (a)-\/>n=0;                                                                   \(\backslash\)}}
+\DoxyCodeLine{82 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 \textcolor{preprocessor}{\#define utarray\_new(a,\_icd) do \{                                              \(\backslash\)}}
+\DoxyCodeLine{85 \textcolor{preprocessor}{  (a) = (UT\_array*)malloc(sizeof(UT\_array));                                  \(\backslash\)}}
+\DoxyCodeLine{86 \textcolor{preprocessor}{  if ((a) == NULL) \{                                                          \(\backslash\)}}
+\DoxyCodeLine{87 \textcolor{preprocessor}{    utarray\_oom();                                                            \(\backslash\)}}
+\DoxyCodeLine{88 \textcolor{preprocessor}{  \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{89 \textcolor{preprocessor}{  utarray\_init(a,\_icd);                                                       \(\backslash\)}}
+\DoxyCodeLine{90 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#define utarray\_free(a) do \{                                                  \(\backslash\)}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{  utarray\_done(a);                                                            \(\backslash\)}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{  free(a);                                                                    \(\backslash\)}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#define utarray\_reserve(a,by) do \{                                            \(\backslash\)}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{  if (((a)-\/>i+(by)) > (a)-\/>n) \{                                               \(\backslash\)}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{    char *utarray\_tmp;                                                        \(\backslash\)}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{    while (((a)-\/>i+(by)) > (a)-\/>n) \{ (a)-\/>n = ((a)-\/>n ? (2*(a)-\/>n) : 8); \}    \(\backslash\)}}
+\DoxyCodeLine{101 \textcolor{preprocessor}{    utarray\_tmp=(char*)realloc((a)-\/>d, (a)-\/>n*(a)-\/>icd.sz);                   \(\backslash\)}}
+\DoxyCodeLine{102 \textcolor{preprocessor}{    if (utarray\_tmp == NULL) \{                                                \(\backslash\)}}
+\DoxyCodeLine{103 \textcolor{preprocessor}{      utarray\_oom();                                                          \(\backslash\)}}
+\DoxyCodeLine{104 \textcolor{preprocessor}{    \}                                                                         \(\backslash\)}}
+\DoxyCodeLine{105 \textcolor{preprocessor}{    (a)-\/>d=utarray\_tmp;                                                       \(\backslash\)}}
+\DoxyCodeLine{106 \textcolor{preprocessor}{  \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{107 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#define utarray\_push\_back(a,p) do \{                                           \(\backslash\)}}
+\DoxyCodeLine{110 \textcolor{preprocessor}{  utarray\_reserve(a,1);                                                       \(\backslash\)}}
+\DoxyCodeLine{111 \textcolor{preprocessor}{  if ((a)-\/>icd.copy) \{ (a)-\/>icd.copy( \_utarray\_eltptr(a,(a)-\/>i++), p); \}      \(\backslash\)}}
+\DoxyCodeLine{112 \textcolor{preprocessor}{  else \{ memcpy(\_utarray\_eltptr(a,(a)-\/>i++), p, (a)-\/>icd.sz); \};              \(\backslash\)}}
+\DoxyCodeLine{113 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115 \textcolor{preprocessor}{\#define utarray\_pop\_back(a) do \{                                              \(\backslash\)}}
+\DoxyCodeLine{116 \textcolor{preprocessor}{  if ((a)-\/>icd.dtor) \{ (a)-\/>icd.dtor( \_utarray\_eltptr(a,-\/-\/((a)-\/>i))); \}       \(\backslash\)}}
+\DoxyCodeLine{117 \textcolor{preprocessor}{  else \{ (a)-\/>i-\/-\/; \}                                                          \(\backslash\)}}
+\DoxyCodeLine{118 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120 \textcolor{preprocessor}{\#define utarray\_extend\_back(a) do \{                                           \(\backslash\)}}
+\DoxyCodeLine{121 \textcolor{preprocessor}{  utarray\_reserve(a,1);                                                       \(\backslash\)}}
+\DoxyCodeLine{122 \textcolor{preprocessor}{  if ((a)-\/>icd.init) \{ (a)-\/>icd.init(\_utarray\_eltptr(a,(a)-\/>i)); \}            \(\backslash\)}}
+\DoxyCodeLine{123 \textcolor{preprocessor}{  else \{ memset(\_utarray\_eltptr(a,(a)-\/>i),0,(a)-\/>icd.sz); \}                   \(\backslash\)}}
+\DoxyCodeLine{124 \textcolor{preprocessor}{  (a)-\/>i++;                                                                   \(\backslash\)}}
+\DoxyCodeLine{125 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127 \textcolor{preprocessor}{\#define utarray\_len(a) ((a)-\/>i)}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129 \textcolor{preprocessor}{\#define utarray\_eltptr(a,j) (((j) < (a)-\/>i) ? \_utarray\_eltptr(a,j) : NULL)}}
+\DoxyCodeLine{130 \textcolor{preprocessor}{\#define \_utarray\_eltptr(a,j) ((void*)((a)-\/>d + ((a)-\/>icd.sz * (j))))}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132 \textcolor{preprocessor}{\#define utarray\_insert(a,p,j) do \{                                            \(\backslash\)}}
+\DoxyCodeLine{133 \textcolor{preprocessor}{  if ((j) > (a)-\/>i) utarray\_resize(a,j);                                      \(\backslash\)}}
+\DoxyCodeLine{134 \textcolor{preprocessor}{  utarray\_reserve(a,1);                                                       \(\backslash\)}}
+\DoxyCodeLine{135 \textcolor{preprocessor}{  if ((j) < (a)-\/>i) \{                                                         \(\backslash\)}}
+\DoxyCodeLine{136 \textcolor{preprocessor}{    memmove( \_utarray\_eltptr(a,(j)+1), \_utarray\_eltptr(a,j),                  \(\backslash\)}}
+\DoxyCodeLine{137 \textcolor{preprocessor}{             ((a)-\/>i -\/ (j))*((a)-\/>icd.sz));                                   \(\backslash\)}}
+\DoxyCodeLine{138 \textcolor{preprocessor}{  \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{139 \textcolor{preprocessor}{  if ((a)-\/>icd.copy) \{ (a)-\/>icd.copy( \_utarray\_eltptr(a,j), p); \}             \(\backslash\)}}
+\DoxyCodeLine{140 \textcolor{preprocessor}{  else \{ memcpy(\_utarray\_eltptr(a,j), p, (a)-\/>icd.sz); \};                     \(\backslash\)}}
+\DoxyCodeLine{141 \textcolor{preprocessor}{  (a)-\/>i++;                                                                   \(\backslash\)}}
+\DoxyCodeLine{142 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 \textcolor{preprocessor}{\#define utarray\_inserta(a,w,j) do \{                                           \(\backslash\)}}
+\DoxyCodeLine{145 \textcolor{preprocessor}{  if (utarray\_len(w) == 0) break;                                             \(\backslash\)}}
+\DoxyCodeLine{146 \textcolor{preprocessor}{  if ((j) > (a)-\/>i) utarray\_resize(a,j);                                      \(\backslash\)}}
+\DoxyCodeLine{147 \textcolor{preprocessor}{  utarray\_reserve(a,utarray\_len(w));                                          \(\backslash\)}}
+\DoxyCodeLine{148 \textcolor{preprocessor}{  if ((j) < (a)-\/>i) \{                                                         \(\backslash\)}}
+\DoxyCodeLine{149 \textcolor{preprocessor}{    memmove(\_utarray\_eltptr(a,(j)+utarray\_len(w)),                            \(\backslash\)}}
+\DoxyCodeLine{150 \textcolor{preprocessor}{            \_utarray\_eltptr(a,j),                                             \(\backslash\)}}
+\DoxyCodeLine{151 \textcolor{preprocessor}{            ((a)-\/>i -\/ (j))*((a)-\/>icd.sz));                                    \(\backslash\)}}
+\DoxyCodeLine{152 \textcolor{preprocessor}{  \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{153 \textcolor{preprocessor}{  if ((a)-\/>icd.copy) \{                                                        \(\backslash\)}}
+\DoxyCodeLine{154 \textcolor{preprocessor}{    unsigned \_ut\_i;                                                           \(\backslash\)}}
+\DoxyCodeLine{155 \textcolor{preprocessor}{    for(\_ut\_i=0;\_ut\_i<(w)-\/>i;\_ut\_i++) \{                                       \(\backslash\)}}
+\DoxyCodeLine{156 \textcolor{preprocessor}{      (a)-\/>icd.copy(\_utarray\_eltptr(a, (j) + \_ut\_i), \_utarray\_eltptr(w, \_ut\_i)); \(\backslash\)}}
+\DoxyCodeLine{157 \textcolor{preprocessor}{    \}                                                                         \(\backslash\)}}
+\DoxyCodeLine{158 \textcolor{preprocessor}{  \} else \{                                                                    \(\backslash\)}}
+\DoxyCodeLine{159 \textcolor{preprocessor}{    memcpy(\_utarray\_eltptr(a,j), \_utarray\_eltptr(w,0),                        \(\backslash\)}}
+\DoxyCodeLine{160 \textcolor{preprocessor}{           utarray\_len(w)*((a)-\/>icd.sz));                                     \(\backslash\)}}
+\DoxyCodeLine{161 \textcolor{preprocessor}{  \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{162 \textcolor{preprocessor}{  (a)-\/>i += utarray\_len(w);                                                   \(\backslash\)}}
+\DoxyCodeLine{163 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165 \textcolor{preprocessor}{\#define utarray\_resize(dst,num) do \{                                          \(\backslash\)}}
+\DoxyCodeLine{166 \textcolor{preprocessor}{  unsigned \_ut\_i;                                                             \(\backslash\)}}
+\DoxyCodeLine{167 \textcolor{preprocessor}{  if ((dst)-\/>i > (unsigned)(num)) \{                                           \(\backslash\)}}
+\DoxyCodeLine{168 \textcolor{preprocessor}{    if ((dst)-\/>icd.dtor) \{                                                    \(\backslash\)}}
+\DoxyCodeLine{169 \textcolor{preprocessor}{      for (\_ut\_i = (num); \_ut\_i < (dst)-\/>i; ++\_ut\_i) \{                        \(\backslash\)}}
+\DoxyCodeLine{170 \textcolor{preprocessor}{        (dst)-\/>icd.dtor(\_utarray\_eltptr(dst, \_ut\_i));                         \(\backslash\)}}
+\DoxyCodeLine{171 \textcolor{preprocessor}{      \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{172 \textcolor{preprocessor}{    \}                                                                         \(\backslash\)}}
+\DoxyCodeLine{173 \textcolor{preprocessor}{  \} else if ((dst)-\/>i < (unsigned)(num)) \{                                    \(\backslash\)}}
+\DoxyCodeLine{174 \textcolor{preprocessor}{    utarray\_reserve(dst, (num) -\/ (dst)-\/>i);                                   \(\backslash\)}}
+\DoxyCodeLine{175 \textcolor{preprocessor}{    if ((dst)-\/>icd.init) \{                                                    \(\backslash\)}}
+\DoxyCodeLine{176 \textcolor{preprocessor}{      for (\_ut\_i = (dst)-\/>i; \_ut\_i < (unsigned)(num); ++\_ut\_i) \{              \(\backslash\)}}
+\DoxyCodeLine{177 \textcolor{preprocessor}{        (dst)-\/>icd.init(\_utarray\_eltptr(dst, \_ut\_i));                         \(\backslash\)}}
+\DoxyCodeLine{178 \textcolor{preprocessor}{      \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{179 \textcolor{preprocessor}{    \} else \{                                                                  \(\backslash\)}}
+\DoxyCodeLine{180 \textcolor{preprocessor}{      memset(\_utarray\_eltptr(dst, (dst)-\/>i), 0, (dst)-\/>icd.sz*((num) -\/ (dst)-\/>i)); \(\backslash\)}}
+\DoxyCodeLine{181 \textcolor{preprocessor}{    \}                                                                         \(\backslash\)}}
+\DoxyCodeLine{182 \textcolor{preprocessor}{  \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{183 \textcolor{preprocessor}{  (dst)-\/>i = (num);                                                           \(\backslash\)}}
+\DoxyCodeLine{184 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186 \textcolor{preprocessor}{\#define utarray\_concat(dst,src) do \{                                          \(\backslash\)}}
+\DoxyCodeLine{187 \textcolor{preprocessor}{  utarray\_inserta(dst, src, utarray\_len(dst));                                \(\backslash\)}}
+\DoxyCodeLine{188 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190 \textcolor{preprocessor}{\#define utarray\_erase(a,pos,len) do \{                                         \(\backslash\)}}
+\DoxyCodeLine{191 \textcolor{preprocessor}{  if ((a)-\/>icd.dtor) \{                                                        \(\backslash\)}}
+\DoxyCodeLine{192 \textcolor{preprocessor}{    unsigned \_ut\_i;                                                           \(\backslash\)}}
+\DoxyCodeLine{193 \textcolor{preprocessor}{    for (\_ut\_i = 0; \_ut\_i < (len); \_ut\_i++) \{                                 \(\backslash\)}}
+\DoxyCodeLine{194 \textcolor{preprocessor}{      (a)-\/>icd.dtor(utarray\_eltptr(a, (pos) + \_ut\_i));                        \(\backslash\)}}
+\DoxyCodeLine{195 \textcolor{preprocessor}{    \}                                                                         \(\backslash\)}}
+\DoxyCodeLine{196 \textcolor{preprocessor}{  \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{197 \textcolor{preprocessor}{  if ((a)-\/>i > ((pos) + (len))) \{                                             \(\backslash\)}}
+\DoxyCodeLine{198 \textcolor{preprocessor}{    memmove(\_utarray\_eltptr(a, pos), \_utarray\_eltptr(a, (pos) + (len)),       \(\backslash\)}}
+\DoxyCodeLine{199 \textcolor{preprocessor}{            ((a)-\/>i -\/ ((pos) + (len))) * (a)-\/>icd.sz);                        \(\backslash\)}}
+\DoxyCodeLine{200 \textcolor{preprocessor}{  \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{201 \textcolor{preprocessor}{  (a)-\/>i -\/= (len);                                                            \(\backslash\)}}
+\DoxyCodeLine{202 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204 \textcolor{preprocessor}{\#define utarray\_renew(a,u) do \{                                               \(\backslash\)}}
+\DoxyCodeLine{205 \textcolor{preprocessor}{  if (a) utarray\_clear(a);                                                    \(\backslash\)}}
+\DoxyCodeLine{206 \textcolor{preprocessor}{  else utarray\_new(a, u);                                                     \(\backslash\)}}
+\DoxyCodeLine{207 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209 \textcolor{preprocessor}{\#define utarray\_clear(a) do \{                                                 \(\backslash\)}}
+\DoxyCodeLine{210 \textcolor{preprocessor}{  if ((a)-\/>i > 0) \{                                                           \(\backslash\)}}
+\DoxyCodeLine{211 \textcolor{preprocessor}{    if ((a)-\/>icd.dtor) \{                                                      \(\backslash\)}}
+\DoxyCodeLine{212 \textcolor{preprocessor}{      unsigned \_ut\_i;                                                         \(\backslash\)}}
+\DoxyCodeLine{213 \textcolor{preprocessor}{      for(\_ut\_i=0; \_ut\_i < (a)-\/>i; \_ut\_i++) \{                                 \(\backslash\)}}
+\DoxyCodeLine{214 \textcolor{preprocessor}{        (a)-\/>icd.dtor(\_utarray\_eltptr(a, \_ut\_i));                             \(\backslash\)}}
+\DoxyCodeLine{215 \textcolor{preprocessor}{      \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{216 \textcolor{preprocessor}{    \}                                                                         \(\backslash\)}}
+\DoxyCodeLine{217 \textcolor{preprocessor}{    (a)-\/>i = 0;                                                               \(\backslash\)}}
+\DoxyCodeLine{218 \textcolor{preprocessor}{  \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{219 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221 \textcolor{preprocessor}{\#define utarray\_sort(a,cmp) do \{                                              \(\backslash\)}}
+\DoxyCodeLine{222 \textcolor{preprocessor}{  qsort((a)-\/>d, (a)-\/>i, (a)-\/>icd.sz, cmp);                                    \(\backslash\)}}
+\DoxyCodeLine{223 \textcolor{preprocessor}{\} while(0)}}
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225 \textcolor{preprocessor}{\#define utarray\_find(a,v,cmp) bsearch((v),(a)-\/>d,(a)-\/>i,(a)-\/>icd.sz,cmp)}}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227 \textcolor{preprocessor}{\#define utarray\_front(a) (((a)-\/>i) ? (\_utarray\_eltptr(a,0)) : NULL)}}
+\DoxyCodeLine{228 \textcolor{preprocessor}{\#define utarray\_next(a,e) (((e)==NULL) ? utarray\_front(a) : (((a)-\/>i != utarray\_eltidx(a,e)+1) ? \_utarray\_eltptr(a,utarray\_eltidx(a,e)+1) : NULL))}}
+\DoxyCodeLine{229 \textcolor{preprocessor}{\#define utarray\_prev(a,e) (((e)==NULL) ? utarray\_back(a) : ((utarray\_eltidx(a,e) != 0) ? \_utarray\_eltptr(a,utarray\_eltidx(a,e)-\/1) : NULL))}}
+\DoxyCodeLine{230 \textcolor{preprocessor}{\#define utarray\_back(a) (((a)-\/>i) ? (\_utarray\_eltptr(a,(a)-\/>i-\/1)) : NULL)}}
+\DoxyCodeLine{231 \textcolor{preprocessor}{\#define utarray\_eltidx(a,e) (((char*)(e) -\/ (a)-\/>d) / (a)-\/>icd.sz)}}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233 \textcolor{comment}{/* last we pre-\/define a few icd for common utarrays of ints and strings */}}
+\DoxyCodeLine{234 \textcolor{keyword}{static} \textcolor{keywordtype}{void} utarray\_str\_cpy(\textcolor{keywordtype}{void} *\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *src) \{}
+\DoxyCodeLine{235   \textcolor{keywordtype}{char} *\textcolor{keyword}{const} *srcc = (\textcolor{keywordtype}{char} *\textcolor{keyword}{const} *)src;}
+\DoxyCodeLine{236   \textcolor{keywordtype}{char} **dstc = (\textcolor{keywordtype}{char}**)\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}};}
+\DoxyCodeLine{237   *dstc = (*srcc == NULL) ? NULL : strdup(*srcc);}
+\DoxyCodeLine{238 \}}
+\DoxyCodeLine{239 \textcolor{keyword}{static} \textcolor{keywordtype}{void} utarray\_str\_dtor(\textcolor{keywordtype}{void} *elt) \{}
+\DoxyCodeLine{240   \textcolor{keywordtype}{char} **eltc = (\textcolor{keywordtype}{char}**)elt;}
+\DoxyCodeLine{241   \textcolor{keywordflow}{if} (*eltc != NULL) free(*eltc);}
+\DoxyCodeLine{242 \}}
+\DoxyCodeLine{243 \textcolor{keyword}{static} \textcolor{keyword}{const} \mbox{\hyperlink{structUT__icd}{UT\_icd}} ut\_str\_icd \mbox{\hyperlink{utarray_8h_a2b4b91e51e2ca6a9f691047be49f5796}{UTARRAY\_UNUSED}} = \{\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}*),NULL,utarray\_str\_cpy,utarray\_str\_dtor\};}
+\DoxyCodeLine{244 \textcolor{keyword}{static} \textcolor{keyword}{const} \mbox{\hyperlink{structUT__icd}{UT\_icd}} ut\_int\_icd \mbox{\hyperlink{utarray_8h_a2b4b91e51e2ca6a9f691047be49f5796}{UTARRAY\_UNUSED}} = \{\textcolor{keyword}{sizeof}(int),NULL,NULL,NULL\};}
+\DoxyCodeLine{245 \textcolor{keyword}{static} \textcolor{keyword}{const} \mbox{\hyperlink{structUT__icd}{UT\_icd}} ut\_ptr\_icd \mbox{\hyperlink{utarray_8h_a2b4b91e51e2ca6a9f691047be49f5796}{UTARRAY\_UNUSED}} = \{\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*),NULL,NULL,NULL\};}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* UTARRAY\_H */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

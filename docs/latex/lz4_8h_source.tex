@@ -1,0 +1,360 @@
+\hypertarget{lz4_8h_source}{}\doxysection{lz4.\+h}
+\label{lz4_8h_source}\index{include/external/external/lz4.h@{include/external/external/lz4.h}}
+\mbox{\hyperlink{lz4_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  LZ4 -\/ Fast LZ compression algorithm}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  Header File}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2011-\/2020, Yann Collet.}}
+\DoxyCodeLine{5 \textcolor{comment}{}}
+\DoxyCodeLine{6 \textcolor{comment}{   BSD 2-\/Clause License (http://www.opensource.org/licenses/bsd-\/license.php)}}
+\DoxyCodeLine{7 \textcolor{comment}{}}
+\DoxyCodeLine{8 \textcolor{comment}{   Redistribution and use in source and binary forms, with or without}}
+\DoxyCodeLine{9 \textcolor{comment}{   modification, are permitted provided that the following conditions are}}
+\DoxyCodeLine{10 \textcolor{comment}{   met:}}
+\DoxyCodeLine{11 \textcolor{comment}{}}
+\DoxyCodeLine{12 \textcolor{comment}{       * Redistributions of source code must retain the above copyright}}
+\DoxyCodeLine{13 \textcolor{comment}{   notice, this list of conditions and the following disclaimer.}}
+\DoxyCodeLine{14 \textcolor{comment}{       * Redistributions in binary form must reproduce the above}}
+\DoxyCodeLine{15 \textcolor{comment}{   copyright notice, this list of conditions and the following disclaimer}}
+\DoxyCodeLine{16 \textcolor{comment}{   in the documentation and/or other materials provided with the}}
+\DoxyCodeLine{17 \textcolor{comment}{   distribution.}}
+\DoxyCodeLine{18 \textcolor{comment}{}}
+\DoxyCodeLine{19 \textcolor{comment}{   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS}}
+\DoxyCodeLine{20 \textcolor{comment}{   "{}AS IS"{} AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT}}
+\DoxyCodeLine{21 \textcolor{comment}{   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR}}
+\DoxyCodeLine{22 \textcolor{comment}{   A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT}}
+\DoxyCodeLine{23 \textcolor{comment}{   OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,}}
+\DoxyCodeLine{24 \textcolor{comment}{   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT}}
+\DoxyCodeLine{25 \textcolor{comment}{   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,}}
+\DoxyCodeLine{26 \textcolor{comment}{   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY}}
+\DoxyCodeLine{27 \textcolor{comment}{   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT}}
+\DoxyCodeLine{28 \textcolor{comment}{   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE}}
+\DoxyCodeLine{29 \textcolor{comment}{   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.}}
+\DoxyCodeLine{30 \textcolor{comment}{}}
+\DoxyCodeLine{31 \textcolor{comment}{   You can contact the author at :}}
+\DoxyCodeLine{32 \textcolor{comment}{    -\/ LZ4 homepage : http://www.lz4.org}}
+\DoxyCodeLine{33 \textcolor{comment}{    -\/ LZ4 source repository : https://github.com/lz4/lz4}}
+\DoxyCodeLine{34 \textcolor{comment}{*/}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#if defined (\_\_cplusplus)}}
+\DoxyCodeLine{36 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \{}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#ifndef LZ4\_H\_2983827168210}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#define LZ4\_H\_2983827168210}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 \textcolor{comment}{/* -\/-\/-\/ Dependency -\/-\/-\/ */}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#include <stddef.h>}   \textcolor{comment}{/* size\_t */}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 }
+\DoxyCodeLine{76 \textcolor{comment}{/*\string^***************************************************************}}
+\DoxyCodeLine{77 \textcolor{comment}{*  Export parameters}}
+\DoxyCodeLine{78 \textcolor{comment}{*****************************************************************/}}
+\DoxyCodeLine{79 \textcolor{comment}{/*}}
+\DoxyCodeLine{80 \textcolor{comment}{*  LZ4\_DLL\_EXPORT :}}
+\DoxyCodeLine{81 \textcolor{comment}{*  Enable exporting of functions when building a Windows DLL}}
+\DoxyCodeLine{82 \textcolor{comment}{*  LZ4LIB\_VISIBILITY :}}
+\DoxyCodeLine{83 \textcolor{comment}{*  Control library symbols visibility.}}
+\DoxyCodeLine{84 \textcolor{comment}{*/}}
+\DoxyCodeLine{85 \textcolor{preprocessor}{\#ifndef LZ4LIB\_VISIBILITY}}
+\DoxyCodeLine{86 \textcolor{preprocessor}{\#  if defined(\_\_GNUC\_\_) \&\& (\_\_GNUC\_\_ >= 4)}}
+\DoxyCodeLine{87 \textcolor{preprocessor}{\#    define LZ4LIB\_VISIBILITY \_\_attribute\_\_ ((visibility ("{}default"{}})))}
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#  else}}
+\DoxyCodeLine{89 \textcolor{preprocessor}{\#    define LZ4LIB\_VISIBILITY}}
+\DoxyCodeLine{90 \textcolor{preprocessor}{\#  endif}}
+\DoxyCodeLine{91 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#if defined(LZ4\_DLL\_EXPORT) \&\& (LZ4\_DLL\_EXPORT==1)}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{\#  define LZ4LIB\_API \_\_declspec(dllexport) LZ4LIB\_VISIBILITY}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#elif defined(LZ4\_DLL\_IMPORT) \&\& (LZ4\_DLL\_IMPORT==1)}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#  define LZ4LIB\_API \_\_declspec(dllimport) LZ4LIB\_VISIBILITY }\textcolor{comment}{/* It isn't required but allows to generate better code, saving a function pointer load from the IAT and an indirect jump.*/}\textcolor{preprocessor}{}}
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#  define LZ4LIB\_API LZ4LIB\_VISIBILITY}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/   Version   -\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#define LZ4\_VERSION\_MAJOR    1    }\textcolor{comment}{/* for breaking interface changes  */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{102 \textcolor{preprocessor}{\#define LZ4\_VERSION\_MINOR    9    }\textcolor{comment}{/* for new (non-\/breaking) interface capabilities */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{103 \textcolor{preprocessor}{\#define LZ4\_VERSION\_RELEASE  3    }\textcolor{comment}{/* for tweaks, bug-\/fixes, or development */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105 \textcolor{preprocessor}{\#define LZ4\_VERSION\_NUMBER (LZ4\_VERSION\_MAJOR *100*100 + LZ4\_VERSION\_MINOR *100 + LZ4\_VERSION\_RELEASE)}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \textcolor{preprocessor}{\#define LZ4\_LIB\_VERSION LZ4\_VERSION\_MAJOR.LZ4\_VERSION\_MINOR.LZ4\_VERSION\_RELEASE}}
+\DoxyCodeLine{108 \textcolor{preprocessor}{\#define LZ4\_QUOTE(str) \#str}}
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#define LZ4\_EXPAND\_AND\_QUOTE(str) LZ4\_QUOTE(str)}}
+\DoxyCodeLine{110 \textcolor{preprocessor}{\#define LZ4\_VERSION\_STRING LZ4\_EXPAND\_AND\_QUOTE(LZ4\_LIB\_VERSION)}}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a5a98ff918f30c73b398535b8fb4c3b9b}{LZ4\_versionNumber}} (\textcolor{keywordtype}{void});  }
+\DoxyCodeLine{113 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a58036a1b0235763d6a81e9e0d748d071}{LZ4\_versionString}} (\textcolor{keywordtype}{void});   }
+\DoxyCodeLine{116 \textcolor{comment}{/*-\/************************************}}
+\DoxyCodeLine{117 \textcolor{comment}{*  Tuning parameter}}
+\DoxyCodeLine{118 \textcolor{comment}{**************************************/}}
+\DoxyCodeLine{119 \textcolor{preprocessor}{\#define LZ4\_MEMORY\_USAGE\_MIN 10}}
+\DoxyCodeLine{120 \textcolor{preprocessor}{\#define LZ4\_MEMORY\_USAGE\_DEFAULT 14}}
+\DoxyCodeLine{121 \textcolor{preprocessor}{\#define LZ4\_MEMORY\_USAGE\_MAX 20}}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{130 \textcolor{preprocessor}{\#ifndef LZ4\_MEMORY\_USAGE}}
+\DoxyCodeLine{131 \textcolor{preprocessor}{\# define LZ4\_MEMORY\_USAGE LZ4\_MEMORY\_USAGE\_DEFAULT}}
+\DoxyCodeLine{132 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134 \textcolor{preprocessor}{\#if (LZ4\_MEMORY\_USAGE < LZ4\_MEMORY\_USAGE\_MIN)}}
+\DoxyCodeLine{135 \textcolor{preprocessor}{\#  error "{}LZ4\_MEMORY\_USAGE is too small !"{}}}
+\DoxyCodeLine{136 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138 \textcolor{preprocessor}{\#if (LZ4\_MEMORY\_USAGE > LZ4\_MEMORY\_USAGE\_MAX)}}
+\DoxyCodeLine{139 \textcolor{preprocessor}{\#  error "{}LZ4\_MEMORY\_USAGE is too large !"{}}}
+\DoxyCodeLine{140 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142 \textcolor{comment}{/*-\/************************************}}
+\DoxyCodeLine{143 \textcolor{comment}{*  Simple Functions}}
+\DoxyCodeLine{144 \textcolor{comment}{**************************************/}}
+\DoxyCodeLine{159 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_ad6b447bf1644cc92bbce027e91e16dc6}{LZ4\_compress\_default}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{srcSize}}, \textcolor{keywordtype}{int} dstCapacity);}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{175 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a7e5d0cbb5c4a4b540c38fa80808228fb}{LZ4\_decompress\_safe}} (\textcolor{keyword}{const} \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f9a0600771a3eb50c56e55266a7da49}{compressedSize}}, \textcolor{keywordtype}{int} dstCapacity);}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178 \textcolor{comment}{/*-\/************************************}}
+\DoxyCodeLine{179 \textcolor{comment}{*  Advanced Functions}}
+\DoxyCodeLine{180 \textcolor{comment}{**************************************/}}
+\DoxyCodeLine{181 \textcolor{preprocessor}{\#define LZ4\_MAX\_INPUT\_SIZE        0x7E000000   }\textcolor{comment}{/* 2 113 929 216 bytes */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{182 \textcolor{preprocessor}{\#define LZ4\_COMPRESSBOUND(isize)  ((unsigned)(isize) > (unsigned)LZ4\_MAX\_INPUT\_SIZE ? 0 : (isize) + ((isize)/255) + 16)}}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{193 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a7d92f596953d35893e39db626ae321ee}{LZ4\_compressBound}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{inputSize}});}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{203 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a220fb40214b023f3fdb7e71df36b557e}{LZ4\_compress\_fast}} (\textcolor{keyword}{const} \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{srcSize}}, \textcolor{keywordtype}{int} dstCapacity, \textcolor{keywordtype}{int} acceleration);}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205 }
+\DoxyCodeLine{212 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a6b79b9da156ef5597696201f2e218a5a}{LZ4\_sizeofState}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{213 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_aa96a44c19a21b077143f501a8f092e92}{LZ4\_compress\_fast\_extState}} (\textcolor{keywordtype}{void}* state, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{srcSize}}, \textcolor{keywordtype}{int} dstCapacity, \textcolor{keywordtype}{int} acceleration);}
+\DoxyCodeLine{214 }
+\DoxyCodeLine{215 }
+\DoxyCodeLine{239 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_ad0230438779ccb604c6de7053d74e668}{LZ4\_compress\_destSize}} (\textcolor{keyword}{const} \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int}* srcSizePtr, \textcolor{keywordtype}{int} targetDstSize);}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241 }
+\DoxyCodeLine{276 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_aaba8ca0bd1f23633bdd834b36bb38989}{LZ4\_decompress\_safe\_partial}} (\textcolor{keyword}{const} \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{srcSize}}, \textcolor{keywordtype}{int} targetOutputSize, \textcolor{keywordtype}{int} dstCapacity);}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279 \textcolor{comment}{/*-\/*********************************************}}
+\DoxyCodeLine{280 \textcolor{comment}{*  Streaming Compression Functions}}
+\DoxyCodeLine{281 \textcolor{comment}{***********************************************/}}
+\DoxyCodeLine{282 \textcolor{keyword}{typedef} \textcolor{keyword}{union }\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_u}} \mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}};  \textcolor{comment}{/* incomplete type (defined later) */}}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{284 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* \mbox{\hyperlink{lz4_8h_a62561f6ed380269f1f2d20e659cd5865}{LZ4\_createStream}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{285 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int}           \mbox{\hyperlink{lz4_8h_a820a8fea119332103a839f27c14beb22}{LZ4\_freeStream}} (\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* streamPtr);}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{309 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{void} \mbox{\hyperlink{lz4_8h_a2298f038b5c1c52e77d9222add683a0a}{LZ4\_resetStream\_fast}} (\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* streamPtr);}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{322 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_ac14454c14304d2df9bfeaa81216053c1}{LZ4\_loadDict}} (\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* streamPtr, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* dictionary, \textcolor{keywordtype}{int} dictSize);}
+\DoxyCodeLine{323 }
+\DoxyCodeLine{347 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a03a0f96ab87158e1d291128f31f42203}{LZ4\_compress\_fast\_continue}} (\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* streamPtr, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{srcSize}}, \textcolor{keywordtype}{int} dstCapacity, \textcolor{keywordtype}{int} acceleration);}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{356 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a4c977430e9d2b077aee928e1915733ca}{LZ4\_saveDict}} (\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* streamPtr, \textcolor{keywordtype}{char}* safeBuffer, \textcolor{keywordtype}{int} maxDictSize);}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359 \textcolor{comment}{/*-\/**********************************************}}
+\DoxyCodeLine{360 \textcolor{comment}{*  Streaming Decompression Functions}}
+\DoxyCodeLine{361 \textcolor{comment}{*  Bufferless synchronous API}}
+\DoxyCodeLine{362 \textcolor{comment}{************************************************/}}
+\DoxyCodeLine{363 \textcolor{keyword}{typedef} \textcolor{keyword}{union }\mbox{\hyperlink{unionLZ4__streamDecode__u}{LZ4\_streamDecode\_u}} \mbox{\hyperlink{unionLZ4__streamDecode__u}{LZ4\_streamDecode\_t}};   \textcolor{comment}{/* tracking context */}}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{369 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \mbox{\hyperlink{unionLZ4__streamDecode__u}{LZ4\_streamDecode\_t}}* \mbox{\hyperlink{lz4_8h_aa886b47ec53a8e9c235a9f9027eadba4}{LZ4\_createStreamDecode}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{370 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int}                 \mbox{\hyperlink{lz4_8h_a37c487a088c1be5aa3924f51bb1529ab}{LZ4\_freeStreamDecode}} (\mbox{\hyperlink{unionLZ4__streamDecode__u}{LZ4\_streamDecode\_t}}* LZ4\_stream);}
+\DoxyCodeLine{371 }
+\DoxyCodeLine{379 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a81965fd474a946db05698f9aff385603}{LZ4\_setStreamDecode}} (\mbox{\hyperlink{unionLZ4__streamDecode__u}{LZ4\_streamDecode\_t}}* LZ4\_streamDecode, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* dictionary, \textcolor{keywordtype}{int} dictSize);}
+\DoxyCodeLine{380 }
+\DoxyCodeLine{392 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a2c90c1907cff39f778a91f1510f4e1ad}{LZ4\_decoderRingBufferSize}}(\textcolor{keywordtype}{int} maxBlockSize);}
+\DoxyCodeLine{393 \textcolor{preprocessor}{\#define LZ4\_DECODER\_RING\_BUFFER\_SIZE(maxBlockSize) (65536 + 14 + (maxBlockSize))  }\textcolor{comment}{/* for static allocation; maxBlockSize presumed valid */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{394 }
+\DoxyCodeLine{420 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_ac44d544cebf875d57e5952c9805c129d}{LZ4\_decompress\_safe\_continue}} (\mbox{\hyperlink{unionLZ4__streamDecode__u}{LZ4\_streamDecode\_t}}* LZ4\_streamDecode, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{srcSize}}, \textcolor{keywordtype}{int} dstCapacity);}
+\DoxyCodeLine{421 }
+\DoxyCodeLine{422 }
+\DoxyCodeLine{431 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a06d9d28c93a827ec653508ea8767bfb0}{LZ4\_decompress\_safe\_usingDict}} (\textcolor{keyword}{const} \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{srcSize}}, \textcolor{keywordtype}{int} dstCapcity, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* dictStart, \textcolor{keywordtype}{int} dictSize);}
+\DoxyCodeLine{432 }
+\DoxyCodeLine{433 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* LZ4\_H\_2983827168210 */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{434 }
+\DoxyCodeLine{435 }
+\DoxyCodeLine{436 \textcolor{comment}{/*\string^*************************************}}
+\DoxyCodeLine{437 \textcolor{comment}{ * !!!!!!   STATIC LINKING ONLY   !!!!!!}}
+\DoxyCodeLine{438 \textcolor{comment}{ ***************************************/}}
+\DoxyCodeLine{439 }
+\DoxyCodeLine{440 \textcolor{comment}{/*-\/****************************************************************************}}
+\DoxyCodeLine{441 \textcolor{comment}{ * Experimental section}}
+\DoxyCodeLine{442 \textcolor{comment}{ *}}
+\DoxyCodeLine{443 \textcolor{comment}{ * Symbols declared in this section must be considered unstable. Their}}
+\DoxyCodeLine{444 \textcolor{comment}{ * signatures or semantics may change, or they may be removed altogether in the}}
+\DoxyCodeLine{445 \textcolor{comment}{ * future. They are therefore only safe to depend on when the caller is}}
+\DoxyCodeLine{446 \textcolor{comment}{ * statically linked against the library.}}
+\DoxyCodeLine{447 \textcolor{comment}{ *}}
+\DoxyCodeLine{448 \textcolor{comment}{ * To protect against unsafe usage, not only are the declarations guarded,}}
+\DoxyCodeLine{449 \textcolor{comment}{ * the definitions are hidden by default}}
+\DoxyCodeLine{450 \textcolor{comment}{ * when building LZ4 as a shared/dynamic library.}}
+\DoxyCodeLine{451 \textcolor{comment}{ *}}
+\DoxyCodeLine{452 \textcolor{comment}{ * In order to access these declarations,}}
+\DoxyCodeLine{453 \textcolor{comment}{ * define LZ4\_STATIC\_LINKING\_ONLY in your application}}
+\DoxyCodeLine{454 \textcolor{comment}{ * before including LZ4's headers.}}
+\DoxyCodeLine{455 \textcolor{comment}{ *}}
+\DoxyCodeLine{456 \textcolor{comment}{ * In order to make their implementations accessible dynamically, you must}}
+\DoxyCodeLine{457 \textcolor{comment}{ * define LZ4\_PUBLISH\_STATIC\_FUNCTIONS when building the LZ4 library.}}
+\DoxyCodeLine{458 \textcolor{comment}{ ******************************************************************************/}}
+\DoxyCodeLine{459 }
+\DoxyCodeLine{460 \textcolor{preprocessor}{\#ifdef LZ4\_STATIC\_LINKING\_ONLY}}
+\DoxyCodeLine{461 }
+\DoxyCodeLine{462 \textcolor{preprocessor}{\#ifndef LZ4\_STATIC\_3504398509}}
+\DoxyCodeLine{463 \textcolor{preprocessor}{\#define LZ4\_STATIC\_3504398509}}
+\DoxyCodeLine{464 }
+\DoxyCodeLine{465 \textcolor{preprocessor}{\#ifdef LZ4\_PUBLISH\_STATIC\_FUNCTIONS}}
+\DoxyCodeLine{466 \textcolor{preprocessor}{\#define LZ4LIB\_STATIC\_API LZ4LIB\_API}}
+\DoxyCodeLine{467 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{468 \textcolor{preprocessor}{\#define LZ4LIB\_STATIC\_API}}
+\DoxyCodeLine{469 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{470 }
+\DoxyCodeLine{471 }
+\DoxyCodeLine{482 LZ4LIB\_STATIC\_API \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_ad9ca3cfc174b63e4ecf1897c32f146a7}{LZ4\_compress\_fast\_extState\_fastReset}} (\textcolor{keywordtype}{void}* state, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{srcSize}}, \textcolor{keywordtype}{int} dstCapacity, \textcolor{keywordtype}{int} acceleration);}
+\DoxyCodeLine{483 }
+\DoxyCodeLine{510 LZ4LIB\_STATIC\_API \textcolor{keywordtype}{void} \mbox{\hyperlink{lz4_8c_ae05f90c537857347fcd564a91241d45d}{LZ4\_attach\_dictionary}}(\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* workingStream, \textcolor{keyword}{const} \mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* dictionaryStream);}
+\DoxyCodeLine{511 }
+\DoxyCodeLine{512 }
+\DoxyCodeLine{564 \textcolor{preprocessor}{\#define LZ4\_DECOMPRESS\_INPLACE\_MARGIN(compressedSize)          (((compressedSize) >> 8) + 32)}}
+\DoxyCodeLine{565 \textcolor{preprocessor}{\#define LZ4\_DECOMPRESS\_INPLACE\_BUFFER\_SIZE(decompressedSize)   ((decompressedSize) + LZ4\_DECOMPRESS\_INPLACE\_MARGIN(decompressedSize))  }}
+\DoxyCodeLine{567 \textcolor{preprocessor}{\#ifndef LZ4\_DISTANCE\_MAX   }\textcolor{comment}{/* history window size; can be user-\/defined at compile time */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{568 \textcolor{preprocessor}{\#  define LZ4\_DISTANCE\_MAX 65535   }\textcolor{comment}{/* set to maximum value by default */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{569 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{570 }
+\DoxyCodeLine{571 \textcolor{preprocessor}{\#define LZ4\_COMPRESS\_INPLACE\_MARGIN                           (LZ4\_DISTANCE\_MAX + 32)   }\textcolor{comment}{/* LZ4\_DISTANCE\_MAX can be safely replaced by srcSize when it's smaller */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{572 \textcolor{preprocessor}{\#define LZ4\_COMPRESS\_INPLACE\_BUFFER\_SIZE(maxCompressedSize)   ((maxCompressedSize) + LZ4\_COMPRESS\_INPLACE\_MARGIN)  }}
+\DoxyCodeLine{574 \textcolor{preprocessor}{\#endif   }\textcolor{comment}{/* LZ4\_STATIC\_3504398509 */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{575 \textcolor{preprocessor}{\#endif   }\textcolor{comment}{/* LZ4\_STATIC\_LINKING\_ONLY */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{576 }
+\DoxyCodeLine{577 }
+\DoxyCodeLine{578 }
+\DoxyCodeLine{579 \textcolor{preprocessor}{\#ifndef LZ4\_H\_98237428734687}}
+\DoxyCodeLine{580 \textcolor{preprocessor}{\#define LZ4\_H\_98237428734687}}
+\DoxyCodeLine{581 }
+\DoxyCodeLine{582 \textcolor{comment}{/*-\/************************************************************}}
+\DoxyCodeLine{583 \textcolor{comment}{ *  Private Definitions}}
+\DoxyCodeLine{584 \textcolor{comment}{ **************************************************************}}
+\DoxyCodeLine{585 \textcolor{comment}{ * Do not use these definitions directly.}}
+\DoxyCodeLine{586 \textcolor{comment}{ * They are only exposed to allow static allocation of `LZ4\_stream\_t` and `LZ4\_streamDecode\_t`.}}
+\DoxyCodeLine{587 \textcolor{comment}{ * Accessing members will expose user code to API and/or ABI break in future versions of the library.}}
+\DoxyCodeLine{588 \textcolor{comment}{ **************************************************************/}}
+\DoxyCodeLine{589 \textcolor{preprocessor}{\#define LZ4\_HASHLOG   (LZ4\_MEMORY\_USAGE-\/2)}}
+\DoxyCodeLine{590 \textcolor{preprocessor}{\#define LZ4\_HASHTABLESIZE (1 << LZ4\_MEMORY\_USAGE)}}
+\DoxyCodeLine{591 \textcolor{preprocessor}{\#define LZ4\_HASH\_SIZE\_U32 (1 << LZ4\_HASHLOG)       }\textcolor{comment}{/* required as macro for static allocation */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{592 }
+\DoxyCodeLine{593 \textcolor{preprocessor}{\#if defined(\_\_cplusplus) || (defined (\_\_STDC\_VERSION\_\_) \&\& (\_\_STDC\_VERSION\_\_ >= 199901L) }\textcolor{comment}{/* C99 */}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{594 \textcolor{preprocessor}{\# include <stdint.h>}}
+\DoxyCodeLine{595   \textcolor{keyword}{typedef}  int8\_t  \mbox{\hyperlink{lz4_8h_aba765e125b21607162de0044c80dbfa5}{LZ4\_i8}};}
+\DoxyCodeLine{596   \textcolor{keyword}{typedef} uint8\_t  \mbox{\hyperlink{lz4_8h_acaa790a21198215fcdd2f4ea86073626}{LZ4\_byte}};}
+\DoxyCodeLine{597   \textcolor{keyword}{typedef} uint16\_t \mbox{\hyperlink{lz4_8h_a953a9d9f8732ebe668698741dc8f3fcc}{LZ4\_u16}};}
+\DoxyCodeLine{598   \textcolor{keyword}{typedef} uint32\_t \mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\_u32}};}
+\DoxyCodeLine{599 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{600   \textcolor{keyword}{typedef}   \textcolor{keywordtype}{signed} \textcolor{keywordtype}{char}  \mbox{\hyperlink{lz4_8h_aba765e125b21607162de0044c80dbfa5}{LZ4\_i8}};}
+\DoxyCodeLine{601   \textcolor{keyword}{typedef} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}  \mbox{\hyperlink{lz4_8h_acaa790a21198215fcdd2f4ea86073626}{LZ4\_byte}};}
+\DoxyCodeLine{602   \textcolor{keyword}{typedef} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} \mbox{\hyperlink{lz4_8h_a953a9d9f8732ebe668698741dc8f3fcc}{LZ4\_u16}};}
+\DoxyCodeLine{603   \textcolor{keyword}{typedef} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int}   \mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\_u32}};}
+\DoxyCodeLine{604 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{605 }
+\DoxyCodeLine{606 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\_stream\_t\_internal}} \mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\_stream\_t\_internal}};}
+\DoxyCodeLine{607 \textcolor{keyword}{struct }\mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\_stream\_t\_internal}} \{}
+\DoxyCodeLine{608     \mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\_u32}} \mbox{\hyperlink{structLZ4__stream__t__internal_afb3b54934c388fea25aa5bdc2afa0e32}{hashTable}}[\mbox{\hyperlink{lz4_8h_a75fa199d8ad0949f67b62054171dc473}{LZ4\_HASH\_SIZE\_U32}}];}
+\DoxyCodeLine{609     \mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\_u32}} \mbox{\hyperlink{structLZ4__stream__t__internal_ab3bd2c19764d29ca31461d6a3fc3345f}{currentOffset}};}
+\DoxyCodeLine{610     \mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\_u32}} \mbox{\hyperlink{structLZ4__stream__t__internal_a9f0c6d5c94e20c8716dbd4a07d7e1fe3}{tableType}};}
+\DoxyCodeLine{611     \textcolor{keyword}{const} \mbox{\hyperlink{lz4_8h_acaa790a21198215fcdd2f4ea86073626}{LZ4\_byte}}* \mbox{\hyperlink{structLZ4__stream__t__internal_ac49d2dcc57fb65fba2534f2bb231c8b9}{dictionary}};}
+\DoxyCodeLine{612     \textcolor{keyword}{const} \mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\_stream\_t\_internal}}* \mbox{\hyperlink{structLZ4__stream__t__internal_a149d776fc4b59881d47aa61c487138c4}{dictCtx}};}
+\DoxyCodeLine{613     \mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\_u32}} \mbox{\hyperlink{structLZ4__stream__t__internal_ae91b94da38c2a459926645c0bd28a814}{dictSize}};}
+\DoxyCodeLine{614 \};}
+\DoxyCodeLine{615 }
+\DoxyCodeLine{616 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{617     \textcolor{keyword}{const} \mbox{\hyperlink{lz4_8h_acaa790a21198215fcdd2f4ea86073626}{LZ4\_byte}}* \mbox{\hyperlink{structLZ4__streamDecode__t__internal_a786927f3c337119ad78fa2a58ca73db2}{externalDict}};}
+\DoxyCodeLine{618     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structLZ4__streamDecode__t__internal_a6c8e2dcc2579727808da0bfe7a44eaa0}{extDictSize}};}
+\DoxyCodeLine{619     \textcolor{keyword}{const} \mbox{\hyperlink{lz4_8h_acaa790a21198215fcdd2f4ea86073626}{LZ4\_byte}}* \mbox{\hyperlink{structLZ4__streamDecode__t__internal_a742712f31d2dafdbb124a251a097fee5}{prefixEnd}};}
+\DoxyCodeLine{620     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structLZ4__streamDecode__t__internal_a44f5f7acc14c2bb3865eccd5372107c4}{prefixSize}};}
+\DoxyCodeLine{621 \} \mbox{\hyperlink{structLZ4__streamDecode__t__internal}{LZ4\_streamDecode\_t\_internal}};}
+\DoxyCodeLine{622 }
+\DoxyCodeLine{623 }
+\DoxyCodeLine{634 \textcolor{preprocessor}{\#define LZ4\_STREAMSIZE       ((1UL << LZ4\_MEMORY\_USAGE) + 32)  }\textcolor{comment}{/* static size, for inter-\/version compatibility */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{635 \textcolor{preprocessor}{\#define LZ4\_STREAMSIZE\_VOIDP (LZ4\_STREAMSIZE / sizeof(void*))}}
+\DoxyCodeLine{636 \textcolor{keyword}{union }\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_u}} \{}
+\DoxyCodeLine{637     \textcolor{keywordtype}{void}* \mbox{\hyperlink{unionLZ4__stream__u_ae26655292476b5a7cb3496cbea099fe5}{table}}[\mbox{\hyperlink{lz4_8h_a46c76b999fe84b296be4dd4a8ea25746}{LZ4\_STREAMSIZE\_VOIDP}}];}
+\DoxyCodeLine{638     \mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\_stream\_t\_internal}} \mbox{\hyperlink{unionLZ4__stream__u_a0791f2829d7100e12eb5f99094d8855e}{internal\_donotuse}};}
+\DoxyCodeLine{639 \}; \textcolor{comment}{/* previously typedef'd to LZ4\_stream\_t */}}
+\DoxyCodeLine{640 }
+\DoxyCodeLine{641 }
+\DoxyCodeLine{656 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* \mbox{\hyperlink{lz4_8h_a0da60953abe0734aee6a462864fd9aa3}{LZ4\_initStream}} (\textcolor{keywordtype}{void}* buffer, \textcolor{keywordtype}{size\_t} size);}
+\DoxyCodeLine{657 }
+\DoxyCodeLine{658 }
+\DoxyCodeLine{666 \textcolor{preprocessor}{\#define LZ4\_STREAMDECODESIZE\_U64 (4 + ((sizeof(void*)==16) ? 2 : 0) }\textcolor{comment}{/*AS-\/400*/}\textcolor{preprocessor}{ )}}
+\DoxyCodeLine{667 \textcolor{preprocessor}{\#define LZ4\_STREAMDECODESIZE     (LZ4\_STREAMDECODESIZE\_U64 * sizeof(unsigned long long))}}
+\DoxyCodeLine{668 \textcolor{keyword}{union }\mbox{\hyperlink{unionLZ4__streamDecode__u}{LZ4\_streamDecode\_u}} \{}
+\DoxyCodeLine{669     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \mbox{\hyperlink{unionLZ4__streamDecode__u_ae208ed637966bd87b22917d46987af09}{table}}[\mbox{\hyperlink{lz4_8h_a414ecb38e0607f239de5ebca5a5beef5}{LZ4\_STREAMDECODESIZE\_U64}}];}
+\DoxyCodeLine{670     \mbox{\hyperlink{structLZ4__streamDecode__t__internal}{LZ4\_streamDecode\_t\_internal}} \mbox{\hyperlink{unionLZ4__streamDecode__u_a4ee7ad9d157b314d88fd901d35116c76}{internal\_donotuse}};}
+\DoxyCodeLine{671 \} ;   \textcolor{comment}{/* previously typedef'd to LZ4\_streamDecode\_t */}}
+\DoxyCodeLine{672 }
+\DoxyCodeLine{673 }
+\DoxyCodeLine{674 }
+\DoxyCodeLine{675 \textcolor{comment}{/*-\/************************************}}
+\DoxyCodeLine{676 \textcolor{comment}{*  Obsolete Functions}}
+\DoxyCodeLine{677 \textcolor{comment}{**************************************/}}
+\DoxyCodeLine{678 }
+\DoxyCodeLine{690 \textcolor{preprocessor}{\#ifdef LZ4\_DISABLE\_DEPRECATE\_WARNINGS}}
+\DoxyCodeLine{691 \textcolor{preprocessor}{\#  define LZ4\_DEPRECATED(message)   }\textcolor{comment}{/* disable deprecation warnings */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{692 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{693 \textcolor{preprocessor}{\#  if defined (\_\_cplusplus) \&\& (\_\_cplusplus >= 201402) }\textcolor{comment}{/* C++14 or greater */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{694 \textcolor{preprocessor}{\#    define LZ4\_DEPRECATED(message) [[deprecated(message)]]}}
+\DoxyCodeLine{695 \textcolor{preprocessor}{\#  elif defined(\_MSC\_VER)}}
+\DoxyCodeLine{696 \textcolor{preprocessor}{\#    define LZ4\_DEPRECATED(message) \_\_declspec(deprecated(message))}}
+\DoxyCodeLine{697 \textcolor{preprocessor}{\#  elif defined(\_\_clang\_\_) || (defined(\_\_GNUC\_\_) \&\& (\_\_GNUC\_\_ * 10 + \_\_GNUC\_MINOR\_\_ >= 45))}}
+\DoxyCodeLine{698 \textcolor{preprocessor}{\#    define LZ4\_DEPRECATED(message) \_\_attribute\_\_((deprecated(message)))}}
+\DoxyCodeLine{699 \textcolor{preprocessor}{\#  elif defined(\_\_GNUC\_\_) \&\& (\_\_GNUC\_\_ * 10 + \_\_GNUC\_MINOR\_\_ >= 31)}}
+\DoxyCodeLine{700 \textcolor{preprocessor}{\#    define LZ4\_DEPRECATED(message) \_\_attribute\_\_((deprecated))}}
+\DoxyCodeLine{701 \textcolor{preprocessor}{\#  else}}
+\DoxyCodeLine{702 \textcolor{preprocessor}{\#    pragma message("{}WARNING: LZ4\_DEPRECATED needs custom implementation for this compiler"{}})}
+\DoxyCodeLine{703 \textcolor{preprocessor}{\#    define LZ4\_DEPRECATED(message)   }\textcolor{comment}{/* disabled */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{704 \textcolor{preprocessor}{\#  endif}}
+\DoxyCodeLine{705 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* LZ4\_DISABLE\_DEPRECATE\_WARNINGS */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{706 }
+\DoxyCodeLine{708 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}(\textcolor{stringliteral}{"{}use LZ4\_compress\_default() instead"{}})       \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_a5eae984914665109fd891ff2bed82331}{LZ4\_compress}}               (const \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{srcSize}});}
+\DoxyCodeLine{709 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}use \mbox{\hyperlink{lz4_8h_ad6b447bf1644cc92bbce027e91e16dc6}{LZ4\_compress\_default}}() instead"{})       \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_a464e8e2a2ad215e0d94042722eb75551}{LZ4\_compress\_limitedOutput}} (const \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{srcSize}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{maxOutputSize}});}
+\DoxyCodeLine{710 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}use \mbox{\hyperlink{lz4_8h_aa96a44c19a21b077143f501a8f092e92}{LZ4\_compress\_fast\_extState}}() instead"{}) \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_a9fa2e6e61caea57ae1c3ef996f0e9ac9}{LZ4\_compress\_withState}}               (\textcolor{keywordtype}{void}* state, const \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{inputSize}});}
+\DoxyCodeLine{711 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}use \mbox{\hyperlink{lz4_8h_aa96a44c19a21b077143f501a8f092e92}{LZ4\_compress\_fast\_extState}}() instead"{}) \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_ab9e6911a8271745f3a45490edeae135b}{LZ4\_compress\_limitedOutput\_withState}} (\textcolor{keywordtype}{void}* state, const \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{inputSize}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{maxOutputSize}});}
+\DoxyCodeLine{712 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}use \mbox{\hyperlink{lz4_8h_a03a0f96ab87158e1d291128f31f42203}{LZ4\_compress\_fast\_continue}}() instead"{}) \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_a7936aa7dce7ba045f7daa578de555175}{LZ4\_compress\_continue}}                (\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* LZ4\_streamPtr, const \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{inputSize}});}
+\DoxyCodeLine{713 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}use \mbox{\hyperlink{lz4_8h_a03a0f96ab87158e1d291128f31f42203}{LZ4\_compress\_fast\_continue}}() instead"{}) \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_a4a6e82d1e76a274fe351f9d090c44e59}{LZ4\_compress\_limitedOutput\_continue}}  (\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* LZ4\_streamPtr, const \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{inputSize}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{maxOutputSize}});}
+\DoxyCodeLine{714 }
+\DoxyCodeLine{716 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}use \mbox{\hyperlink{lz4_8h_ad312b3a8741d421bbe6fbab8f5e2cb92}{LZ4\_decompress\_fast}}() instead"{}) \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_a76994c12731075f0d8a96239c8856192}{LZ4\_uncompress}} (const \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_ad51f027030cdccc88ee22f1252628af7}{outputSize}});}
+\DoxyCodeLine{717 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}use \mbox{\hyperlink{lz4_8h_a7e5d0cbb5c4a4b540c38fa80808228fb}{LZ4\_decompress\_safe}}() instead"{}) \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_a81aa900c172d655f8a4f0a75739791f0}{LZ4\_uncompress\_unknownOutputSize}} (const \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_adfcbb6553c624f57c2605cfcb121bccf}{isize}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{maxOutputSize}});}
+\DoxyCodeLine{718 }
+\DoxyCodeLine{719 \textcolor{comment}{/* Obsolete streaming functions (since v1.7.0)}}
+\DoxyCodeLine{720 \textcolor{comment}{ * degraded functionality; do not use!}}
+\DoxyCodeLine{721 \textcolor{comment}{ *}}
+\DoxyCodeLine{722 \textcolor{comment}{ * In order to perform streaming compression, these functions depended on data}}
+\DoxyCodeLine{723 \textcolor{comment}{ * that is no longer tracked in the state. They have been preserved as well as}}
+\DoxyCodeLine{724 \textcolor{comment}{ * possible: using them will still produce a correct output. However, they don't}}
+\DoxyCodeLine{725 \textcolor{comment}{ * actually retain any history between compression calls. The compression ratio}}
+\DoxyCodeLine{726 \textcolor{comment}{ * achieved will therefore be no better than compressing each chunk}}
+\DoxyCodeLine{727 \textcolor{comment}{ * independently.}}
+\DoxyCodeLine{728 \textcolor{comment}{ */}}
+\DoxyCodeLine{729 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}Use \mbox{\hyperlink{lz4_8h_a62561f6ed380269f1f2d20e659cd5865}{LZ4\_createStream}}() instead"{}) \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{void}* \mbox{\hyperlink{lz4_8c_afe9770c9f4098735952ff6d5464ef26e}{LZ4\_create}} (\textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a74538761f55cd8dbed4b6e62ce69876d}{inputBuffer}});}
+\DoxyCodeLine{730 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}Use \mbox{\hyperlink{lz4_8h_a62561f6ed380269f1f2d20e659cd5865}{LZ4\_createStream}}() instead"{}) \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int}   \mbox{\hyperlink{lz4_8c_a92f20fa55554d00760fb6fb4108a2825}{LZ4\_sizeofStreamState}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{731 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}Use \mbox{\hyperlink{lz4_8h_ac8d5c49bc84243e6b69df1ecc25d2425}{LZ4\_resetStream}}() instead"{})  \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int}   \mbox{\hyperlink{lz4_8c_acc12a443b49ec045db2399d57c0afde7}{LZ4\_resetStreamState}}(\textcolor{keywordtype}{void}* state, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a74538761f55cd8dbed4b6e62ce69876d}{inputBuffer}});}
+\DoxyCodeLine{732 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}Use \mbox{\hyperlink{lz4_8h_a4c977430e9d2b077aee928e1915733ca}{LZ4\_saveDict}}() instead"{})     \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8c_a78cb8b4ee777318e773f631700279e73}{LZ4\_slideInputBuffer}} (\textcolor{keywordtype}{void}* state);}
+\DoxyCodeLine{733 }
+\DoxyCodeLine{735 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}use \mbox{\hyperlink{lz4_8h_a06d9d28c93a827ec653508ea8767bfb0}{LZ4\_decompress\_safe\_usingDict}}() instead"{}) \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_a2ceb6bc3c28b8e95a220343c6c40bed6}{LZ4\_decompress\_safe\_withPrefix64k}} (const \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a0f9a0600771a3eb50c56e55266a7da49}{compressedSize}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a6c2299958529e6037c34f9b36f25f4d0}{maxDstSize}});}
+\DoxyCodeLine{736 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}use \mbox{\hyperlink{lz4_8h_a01381239c07e39f8df2d80adf2e6a55d}{LZ4\_decompress\_fast\_usingDict}}() instead"{}) \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8c_aef3d7b7bead970344b439ac9bd672065}{LZ4\_decompress\_fast\_withPrefix64k}} (const \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_acb72249f2d22c1084adf0de0406d6c3d}{originalSize}});}
+\DoxyCodeLine{737 }
+\DoxyCodeLine{764 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}This function is deprecated and unsafe. Consider using \mbox{\hyperlink{lz4_8h_a7e5d0cbb5c4a4b540c38fa80808228fb}{LZ4\_decompress\_safe}}() instead"{})}
+\DoxyCodeLine{765 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_ad312b3a8741d421bbe6fbab8f5e2cb92}{LZ4\_decompress\_fast}} (const \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_acb72249f2d22c1084adf0de0406d6c3d}{originalSize}});}
+\DoxyCodeLine{766 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}This function is deprecated and unsafe. Consider using \mbox{\hyperlink{lz4_8h_ac44d544cebf875d57e5952c9805c129d}{LZ4\_decompress\_safe\_continue}}() instead"{})}
+\DoxyCodeLine{767 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a3c30f5265e67c7d8d7552c864251bded}{LZ4\_decompress\_fast\_continue}} (\mbox{\hyperlink{unionLZ4__streamDecode__u}{LZ4\_streamDecode\_t}}* LZ4\_streamDecode, const \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_acb72249f2d22c1084adf0de0406d6c3d}{originalSize}});}
+\DoxyCodeLine{768 \mbox{\hyperlink{lz4_8h_afa2a2c9dbd9d88448d70c8fff093782b}{LZ4\_DEPRECATED}}("{}This function is deprecated and unsafe. Consider using \mbox{\hyperlink{lz4_8h_a06d9d28c93a827ec653508ea8767bfb0}{LZ4\_decompress\_safe\_usingDict}}() instead"{})}
+\DoxyCodeLine{769 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_a01381239c07e39f8df2d80adf2e6a55d}{LZ4\_decompress\_fast\_usingDict}} (const \textcolor{keywordtype}{char}* src, \textcolor{keywordtype}{char}* \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{lz4_8h_acb72249f2d22c1084adf0de0406d6c3d}{originalSize}}, const \textcolor{keywordtype}{char}* dictStart, \textcolor{keywordtype}{int} dictSize);}
+\DoxyCodeLine{770 }
+\DoxyCodeLine{777 \mbox{\hyperlink{lz4_8h_a00a61e1435005f8a621edf4bbe0ef844}{LZ4LIB\_API}} \textcolor{keywordtype}{void} \mbox{\hyperlink{lz4_8h_ac8d5c49bc84243e6b69df1ecc25d2425}{LZ4\_resetStream}} (\mbox{\hyperlink{unionLZ4__stream__u}{LZ4\_stream\_t}}* streamPtr);}
+\DoxyCodeLine{778 }
+\DoxyCodeLine{779 }
+\DoxyCodeLine{780 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* LZ4\_H\_98237428734687 */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{781 }
+\DoxyCodeLine{782 }
+\DoxyCodeLine{783 \textcolor{preprocessor}{\#if defined (\_\_cplusplus)}}
+\DoxyCodeLine{784 \}}
+\DoxyCodeLine{785 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

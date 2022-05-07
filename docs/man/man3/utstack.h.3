@@ -1,0 +1,83 @@
+.TH "include/external/uthash/utstack.h" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/external/uthash/utstack.h
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUTSTACK_VERSION\fP   2\&.3\&.0"
+.br
+.ti -1c
+.RI "#define \fBSTACK_TOP\fP(head)   (head)"
+.br
+.ti -1c
+.RI "#define \fBSTACK_EMPTY\fP(head)   (!(head))"
+.br
+.ti -1c
+.RI "#define \fBSTACK_PUSH\fP(head,  add)       \fBSTACK_PUSH2\fP(head,add,next)"
+.br
+.ti -1c
+.RI "#define \fBSTACK_PUSH2\fP(head,  add,  next)"
+.br
+.ti -1c
+.RI "#define \fBSTACK_POP\fP(head,  result)       \fBSTACK_POP2\fP(head,result,next)"
+.br
+.ti -1c
+.RI "#define \fBSTACK_POP2\fP(head,  result,  next)"
+.br
+.ti -1c
+.RI "#define \fBSTACK_COUNT\fP(head,  el,  counter)       \fBSTACK_COUNT2\fP(head,el,counter,next)                               \\"
+.br
+.ti -1c
+.RI "#define \fBSTACK_COUNT2\fP(head,  el,  counter,  next)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define STACK_COUNT(head, el, counter)       \fBSTACK_COUNT2\fP(head,el,counter,next)                               \\"
+
+.SS "#define STACK_COUNT2(head, el, counter, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                 \
+  (counter) = 0;                                                     \
+  for ((el) = (head); el; (el) = (el)->next) { ++(counter); }        \
+} while (0)
+.fi
+.SS "#define STACK_EMPTY(head)   (!(head))"
+
+.SS "#define STACK_POP(head, result)       \fBSTACK_POP2\fP(head,result,next)"
+
+.SS "#define STACK_POP2(head, result, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                 \
+  (result) = (head);                                                 \
+  (head) = (head)->next;                                             \
+} while (0)
+.fi
+.SS "#define STACK_PUSH(head, add)       \fBSTACK_PUSH2\fP(head,add,next)"
+
+.SS "#define STACK_PUSH2(head, add, next)"
+\fBValue:\fP
+.PP
+.nf
+do {                                                                 \
+  (add)->next = (head);                                              \
+  (head) = (add);                                                    \
+} while (0)
+.fi
+.SS "#define STACK_TOP(head)   (head)"
+
+.SS "#define UTSTACK_VERSION   2\&.3\&.0"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

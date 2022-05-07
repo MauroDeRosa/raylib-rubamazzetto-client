@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['sceneinittime_0',['sceneInitTime',['../structSceneManager__t.html#aae323ac1be06e4eec6eec43d39ea1ba4',1,'SceneManager_t']]],
-  ['sound_1',['Sound',['../union____Resource__u.html#a745df5ffa5a76d2f258a4f6e106c7248',1,'__Resource_u']]],
-  ['status_2',['status',['../structSceneManager__t.html#ae5d3a540d09fd9792cd308b9b915c02d',1,'SceneManager_t']]]
+  ['offset_0',['offset',['../structgidx__ctx.html#a7008772f4c61638894fb0f53472a027a',1,'gidx_ctx']]],
+  ['originalsize_1',['originalSize',['../lz4_8h.html#acb72249f2d22c1084adf0de0406d6c3d',1,'lz4.h']]],
+  ['outputsize_2',['outputSize',['../lz4_8h.html#ad51f027030cdccc88ee22f1252628af7',1,'lz4.h']]]
 ];

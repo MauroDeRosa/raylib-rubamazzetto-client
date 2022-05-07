@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Ruba Mazzetto: source/Scene/SceneSplashScreen.c File Reference</title>
+<title>Ruba Mazzetto: source/SceneManager/Scene/SceneSplashScreen.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,20 +98,12 @@ $(document).ready(function(){initNavTree('SceneSplashScreen_8c.html',''); initRe
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">SceneSplashScreen.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="SceneManager_8h_source.html">SceneManager.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="ResourceManager_8h_source.html">ResourceManager.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="SceneSplashScreen_8h_source.html">Scene/SceneSplashScreen.h</a>&quot;</code><br />
-<code>#include &lt;raylib.h&gt;</code><br />
-<code>#include &lt;raymath.h&gt;</code><br />
-<code>#include &quot;raylib-extra/raygui.h&quot;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;math.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;stdbool.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="SceneSplashScreen_8h_source.html">SceneManager/Scenes/SceneSplashScreen.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -120,31 +112,33 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab43ff7118d0a649a01db85e12f750f09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#ab43ff7118d0a649a01db85e12f750f09">SceneSplashScreenOnInit</a> (void **_$)</td></tr>
-<tr class="separator:ab43ff7118d0a649a01db85e12f750f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdc679f30f40372aa66080621a65ba0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#abdc679f30f40372aa66080621a65ba0d">SceneSplashScreenOnStart</a> (void **_$)</td></tr>
-<tr class="separator:abdc679f30f40372aa66080621a65ba0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16afc49de875930b58bab2af8d3170e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#a16afc49de875930b58bab2af8d3170e9">SceneSplashScreenOnUpdate</a> (void **_$)</td></tr>
-<tr class="separator:a16afc49de875930b58bab2af8d3170e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7650e6d28a0d149d208ba10c84b9d0b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#a7650e6d28a0d149d208ba10c84b9d0b2">SceneSplashScreenOnFixedUpdate</a> (void **_$)</td></tr>
-<tr class="separator:a7650e6d28a0d149d208ba10c84b9d0b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac223be9c43ded9148721e2579c46045f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#ac223be9c43ded9148721e2579c46045f">SceneSplashScreenOnRender</a> (void **_$)</td></tr>
-<tr class="separator:ac223be9c43ded9148721e2579c46045f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af310b115d55e2a8bffea3469377421c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#af310b115d55e2a8bffea3469377421c4">SceneSplashScreenOnExit</a> (void **_$)</td></tr>
-<tr class="separator:af310b115d55e2a8bffea3469377421c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a575b4fdfbe8033619bb2fa7018625961"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#a575b4fdfbe8033619bb2fa7018625961">SceneSplashScreenStart</a> ()</td></tr>
+<tr class="separator:a575b4fdfbe8033619bb2fa7018625961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1aff5e9e622ca0fe5b919e07cc92baa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#aa1aff5e9e622ca0fe5b919e07cc92baa">SceneSplashScreenUpdate</a> ()</td></tr>
+<tr class="separator:aa1aff5e9e622ca0fe5b919e07cc92baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73c19ea62d8fe97cbd4cdadad7b5ee61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#a73c19ea62d8fe97cbd4cdadad7b5ee61">SceneSplashScreenFixedUpdate</a> ()</td></tr>
+<tr class="separator:a73c19ea62d8fe97cbd4cdadad7b5ee61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ada333b57934b2d249f46a65f8ed052"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#a4ada333b57934b2d249f46a65f8ed052">SceneSplashScreenRender</a> ()</td></tr>
+<tr class="separator:a4ada333b57934b2d249f46a65f8ed052"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e98fc2b07145eacd5b1c4ff1a0b8849"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#a7e98fc2b07145eacd5b1c4ff1a0b8849">SceneSplashScreenExit</a> ()</td></tr>
+<tr class="separator:a7e98fc2b07145eacd5b1c4ff1a0b8849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a131df29bb366fb886ae1991c313626a0"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structSceneSplashScreenData.html">SceneSplashScreenData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SceneSplashScreen_8c.html#a131df29bb366fb886ae1991c313626a0">_SceneSplashScreenData</a></td></tr>
+<tr class="separator:a131df29bb366fb886ae1991c313626a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="af310b115d55e2a8bffea3469377421c4" name="af310b115d55e2a8bffea3469377421c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af310b115d55e2a8bffea3469377421c4">&#9670;&nbsp;</a></span>SceneSplashScreenOnExit()</h2>
+<a id="a7e98fc2b07145eacd5b1c4ff1a0b8849" name="a7e98fc2b07145eacd5b1c4ff1a0b8849"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e98fc2b07145eacd5b1c4ff1a0b8849">&#9670;&nbsp;</a></span>SceneSplashScreenExit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SceneSplashScreenOnExit </td>
+          <td class="memname">void SceneSplashScreenExit </td>
           <td>(</td>
-          <td class="paramtype">void **&#160;</td>
-          <td class="paramname"><em>_$</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -152,17 +146,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7650e6d28a0d149d208ba10c84b9d0b2" name="a7650e6d28a0d149d208ba10c84b9d0b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7650e6d28a0d149d208ba10c84b9d0b2">&#9670;&nbsp;</a></span>SceneSplashScreenOnFixedUpdate()</h2>
+<a id="a73c19ea62d8fe97cbd4cdadad7b5ee61" name="a73c19ea62d8fe97cbd4cdadad7b5ee61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73c19ea62d8fe97cbd4cdadad7b5ee61">&#9670;&nbsp;</a></span>SceneSplashScreenFixedUpdate()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SceneSplashScreenOnFixedUpdate </td>
+          <td class="memname">void SceneSplashScreenFixedUpdate </td>
           <td>(</td>
-          <td class="paramtype">void **&#160;</td>
-          <td class="paramname"><em>_$</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -170,17 +163,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab43ff7118d0a649a01db85e12f750f09" name="ab43ff7118d0a649a01db85e12f750f09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab43ff7118d0a649a01db85e12f750f09">&#9670;&nbsp;</a></span>SceneSplashScreenOnInit()</h2>
+<a id="a4ada333b57934b2d249f46a65f8ed052" name="a4ada333b57934b2d249f46a65f8ed052"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ada333b57934b2d249f46a65f8ed052">&#9670;&nbsp;</a></span>SceneSplashScreenRender()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SceneSplashScreenOnInit </td>
+          <td class="memname">void SceneSplashScreenRender </td>
           <td>(</td>
-          <td class="paramtype">void **&#160;</td>
-          <td class="paramname"><em>_$</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -188,17 +180,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac223be9c43ded9148721e2579c46045f" name="ac223be9c43ded9148721e2579c46045f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac223be9c43ded9148721e2579c46045f">&#9670;&nbsp;</a></span>SceneSplashScreenOnRender()</h2>
+<a id="a575b4fdfbe8033619bb2fa7018625961" name="a575b4fdfbe8033619bb2fa7018625961"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a575b4fdfbe8033619bb2fa7018625961">&#9670;&nbsp;</a></span>SceneSplashScreenStart()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SceneSplashScreenOnRender </td>
+          <td class="memname">void SceneSplashScreenStart </td>
           <td>(</td>
-          <td class="paramtype">void **&#160;</td>
-          <td class="paramname"><em>_$</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -206,17 +197,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abdc679f30f40372aa66080621a65ba0d" name="abdc679f30f40372aa66080621a65ba0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abdc679f30f40372aa66080621a65ba0d">&#9670;&nbsp;</a></span>SceneSplashScreenOnStart()</h2>
+<a id="aa1aff5e9e622ca0fe5b919e07cc92baa" name="aa1aff5e9e622ca0fe5b919e07cc92baa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1aff5e9e622ca0fe5b919e07cc92baa">&#9670;&nbsp;</a></span>SceneSplashScreenUpdate()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SceneSplashScreenOnStart </td>
+          <td class="memname">void SceneSplashScreenUpdate </td>
           <td>(</td>
-          <td class="paramtype">void **&#160;</td>
-          <td class="paramname"><em>_$</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -224,18 +214,15 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a16afc49de875930b58bab2af8d3170e9" name="a16afc49de875930b58bab2af8d3170e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16afc49de875930b58bab2af8d3170e9">&#9670;&nbsp;</a></span>SceneSplashScreenOnUpdate()</h2>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a131df29bb366fb886ae1991c313626a0" name="a131df29bb366fb886ae1991c313626a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a131df29bb366fb886ae1991c313626a0">&#9670;&nbsp;</a></span>_SceneSplashScreenData</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SceneSplashScreenOnUpdate </td>
-          <td>(</td>
-          <td class="paramtype">void **&#160;</td>
-          <td class="paramname"><em>_$</em></td><td>)</td>
-          <td></td>
+          <td class="memname">struct <a class="el" href="structSceneSplashScreenData.html">SceneSplashScreenData</a> _SceneSplashScreenData</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -247,7 +234,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="dir_1d637129aa84760b9947f02930732156.html">Scene</a></li><li class="navelem"><a class="el" href="SceneSplashScreen_8c.html">SceneSplashScreen.c</a></li>
+    <li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="dir_3baaaccb02e1f714e2086f8215f7315c.html">SceneManager</a></li><li class="navelem"><a class="el" href="dir_993fcc8e67a998cbadee9c99c0fb3a54.html">Scene</a></li><li class="navelem"><a class="el" href="SceneSplashScreen_8c.html">SceneSplashScreen.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>

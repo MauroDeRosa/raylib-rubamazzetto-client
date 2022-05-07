@@ -1,5 +1,5 @@
 \hypertarget{logger_8h_source}{}\doxysection{logger.\+h}
-\label{logger_8h_source}\index{include/logger.h@{include/logger.h}}
+\label{logger_8h_source}\index{include/utils/logger.h@{include/utils/logger.h}}
 \mbox{\hyperlink{logger_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_LOGGER\_H\_\_}}
@@ -8,14 +8,42 @@
 \DoxyCodeLine{4 \textcolor{preprocessor}{\#include <stdio.h>}}
 \DoxyCodeLine{5 \textcolor{preprocessor}{\#include <raylib.h>}}
 \DoxyCodeLine{6 }
-\DoxyCodeLine{7 \textcolor{preprocessor}{\#define LOG\_STYLE\_INDENTED 0}}
-\DoxyCodeLine{8 \textcolor{preprocessor}{\#define LOG\_STYLE\_BLANK\_LINE 1}}
+\DoxyCodeLine{7 \textcolor{comment}{// \#define LOG\_STYLE\_INDENTED }}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#define LOG\_STYLE\_BLANK\_LINE }}
 \DoxyCodeLine{9 \textcolor{preprocessor}{\#define LOG\_STYLE\_USE\_COLOR}}
 \DoxyCodeLine{10 }
-\DoxyCodeLine{11 \textcolor{keywordtype}{void} \mbox{\hyperlink{logger_8h_a6f4e5ee19a361485f5fa51721deea0ad}{LogVaList}}(\textcolor{keywordtype}{int} msgType, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *text, va\_list args);}
-\DoxyCodeLine{12 \textcolor{keywordtype}{void} \mbox{\hyperlink{logger_8h_a50efecd539e8c683deefc7d586316c99}{Log}}(\textcolor{keywordtype}{int} msgType, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *text, ...);}
-\DoxyCodeLine{13 }
-\DoxyCodeLine{14 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_\_LOGGER\_H\_\_ */}\textcolor{preprocessor}{}}
-\DoxyCodeLine{15 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifdef LOG\_STYLE\_USE\_COLOR}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#define LOG\_COLOR\_RESET "{}\(\backslash\)033[0m"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#define LOG\_COLOR\_RED "{}\(\backslash\)033[31m"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define LOG\_COLOR\_GREEN "{}\(\backslash\)033[32m"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#define LOG\_COLOR\_YELLOW "{}\(\backslash\)033[33m"{}}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#define LOG\_COLOR\_BLUE "{}\(\backslash\)033[34m"{}}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#define LOG\_COLOR\_MAGENTA "{}\(\backslash\)033[35m"{}}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define LOG\_COLOR\_CYAN "{}\(\backslash\)033[36m"{}}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#define LOG\_COLOR\_BLACK "{}\(\backslash\)033[37m"{}}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#define LOG\_COLOR\_WHITE "{}\(\backslash\)033[38m"{}}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#define LOG\_COLOR\_DEFAULT "{}\(\backslash\)033[39m"{}}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define LOG\_COLOR\_RESET "{}"{}}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#define LOG\_COLOR\_RED "{}"{}}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#define LOG\_COLOR\_GREEN "{}"{}}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#define LOG\_COLOR\_YELLOW "{}"{}}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#define LOG\_COLOR\_BLUE "{}"{}}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#define LOG\_COLOR\_MAGENTA "{}"{}}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#define LOG\_COLOR\_CYAN "{}"{}}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define LOG\_COLOR\_BLACK "{}"{}}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define LOG\_COLOR\_WHITE "{}"{}}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#define LOG\_COLOR\_DEFAULT "{}"{}}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// LOG\_STYLE\_USE\_COLOR}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{keywordtype}{void} \mbox{\hyperlink{logger_8h_a6f4e5ee19a361485f5fa51721deea0ad}{LogVaList}}(\textcolor{keywordtype}{int} msgType, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *text, va\_list args);}
+\DoxyCodeLine{40 \textcolor{keywordtype}{void} \mbox{\hyperlink{logger_8h_a50efecd539e8c683deefc7d586316c99}{Log}}(\textcolor{keywordtype}{int} msgType, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *text, ...);}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_\_LOGGER\_H\_\_ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{43 }
 
 \end{DoxyCode}

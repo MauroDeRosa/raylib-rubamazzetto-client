@@ -1,0 +1,45 @@
+.TH "crypto_blake2b_ctx" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+crypto_blake2b_ctx
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <monocypher\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint64_t \fBhash\fP [8]"
+.br
+.ti -1c
+.RI "uint64_t \fBinput_offset\fP [2]"
+.br
+.ti -1c
+.RI "uint64_t \fBinput\fP [16]"
+.br
+.ti -1c
+.RI "size_t \fBinput_idx\fP"
+.br
+.ti -1c
+.RI "size_t \fBhash_size\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "uint64_t crypto_blake2b_ctx::hash[8]"
+
+.SS "size_t crypto_blake2b_ctx::hash_size"
+
+.SS "uint64_t crypto_blake2b_ctx::input[16]"
+
+.SS "size_t crypto_blake2b_ctx::input_idx"
+
+.SS "uint64_t crypto_blake2b_ctx::input_offset[2]"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

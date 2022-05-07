@@ -1,54 +1,49 @@
-.TH "include/Scene/SceneSplashScreen.h" 3 "Fri May 6 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.TH "include/SceneManager/Scenes/SceneSplashScreen.h" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-include/Scene/SceneSplashScreen.h
+include/SceneManager/Scenes/SceneSplashScreen.h
 .SH SYNOPSIS
 .br
 .PP
-\fC#include 'SceneManager\&.h'\fP
+\fC#include 'SceneManager/Scene\&.h'\fP
 .br
 
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "void \fBSceneSplashScreenOnInit\fP (void **_$)"
+.RI "void \fBSceneSplashScreenStart\fP ()"
 .br
 .ti -1c
-.RI "void \fBSceneSplashScreenOnStart\fP (void **_$)"
+.RI "void \fBSceneSplashScreenUpdate\fP ()"
 .br
 .ti -1c
-.RI "void \fBSceneSplashScreenOnUpdate\fP (void **_$)"
+.RI "void \fBSceneSplashScreenFixedUpdate\fP ()"
 .br
 .ti -1c
-.RI "void \fBSceneSplashScreenOnFixedUpdate\fP (void **_$)"
+.RI "void \fBSceneSplashScreenRender\fP ()"
 .br
 .ti -1c
-.RI "void \fBSceneSplashScreenOnRender\fP (void **_$)"
+.RI "void \fBSceneSplashScreenExit\fP ()"
 .br
 .ti -1c
-.RI "void \fBSceneSplashScreenOnExit\fP (void **_$)"
-.br
-.ti -1c
-.RI "\fBDefineScene\fP (SceneSplashScreen, 'SceneSplashScreen', SceneSplashScreenOnInit, \fBSceneSplashScreenOnStart\fP, \fBSceneSplashScreenOnUpdate\fP, \fBSceneSplashScreenOnFixedUpdate\fP, \fBSceneSplashScreenOnRender\fP, \fBSceneSplashScreenOnExit\fP)"
+.RI "\fBDefineScene\fP (SceneSplashScreen, 'SceneSplashScreen', SceneSplashScreenStart, \fBSceneSplashScreenUpdate\fP, \fBSceneSplashScreenFixedUpdate\fP, \fBSceneSplashScreenRender\fP, \fBSceneSplashScreenExit\fP)"
 .br
 .in -1c
 .SH "Function Documentation"
 .PP 
-.SS "DefineScene (SceneSplashScreen, 'SceneSplashScreen', \fBSceneSplashScreenOnInit\fP, \fBSceneSplashScreenOnStart\fP, \fBSceneSplashScreenOnUpdate\fP, \fBSceneSplashScreenOnFixedUpdate\fP, \fBSceneSplashScreenOnRender\fP, \fBSceneSplashScreenOnExit\fP)"
+.SS "DefineScene (SceneSplashScreen, 'SceneSplashScreen', \fBSceneSplashScreenStart\fP, \fBSceneSplashScreenUpdate\fP, \fBSceneSplashScreenFixedUpdate\fP, \fBSceneSplashScreenRender\fP, \fBSceneSplashScreenExit\fP)"
 
-.SS "void SceneSplashScreenOnExit (void ** _$)"
+.SS "void SceneSplashScreenExit ()"
 
-.SS "void SceneSplashScreenOnFixedUpdate (void ** _$)"
+.SS "void SceneSplashScreenFixedUpdate ()"
 
-.SS "void SceneSplashScreenOnInit (void ** _$)"
+.SS "void SceneSplashScreenRender ()"
 
-.SS "void SceneSplashScreenOnRender (void ** _$)"
+.SS "void SceneSplashScreenStart ()"
 
-.SS "void SceneSplashScreenOnStart (void ** _$)"
-
-.SS "void SceneSplashScreenOnUpdate (void ** _$)"
+.SS "void SceneSplashScreenUpdate ()"
 
 .SH "Author"
 .PP 

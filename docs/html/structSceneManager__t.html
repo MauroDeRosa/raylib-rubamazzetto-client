@@ -106,98 +106,98 @@ $(document).ready(function(){initNavTree('structSceneManager__t.html',''); initR
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ae9283eb4e10a3190c983291fee5bb038"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#ae9283eb4e10a3190c983291fee5bb038">running</a></td></tr>
-<tr class="separator:ae9283eb4e10a3190c983291fee5bb038"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a992dc6ef9db9f6352f620e1572df81ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structScene.html">Scene</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#a992dc6ef9db9f6352f620e1572df81ea">current</a></td></tr>
-<tr class="separator:a992dc6ef9db9f6352f620e1572df81ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a805e7b49b97971baf8e0ed976e3a72bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structScene.html">Scene</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#a805e7b49b97971baf8e0ed976e3a72bc">next</a></td></tr>
-<tr class="separator:a805e7b49b97971baf8e0ed976e3a72bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5d3a540d09fd9792cd308b9b915c02d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="SceneManager_8h.html#ade9922e71b050ff4b4e44b7f5e799e4f">SceneManagerState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#ae5d3a540d09fd9792cd308b9b915c02d">status</a></td></tr>
-<tr class="separator:ae5d3a540d09fd9792cd308b9b915c02d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a514098f10086810199f9071a28364275"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#a514098f10086810199f9071a28364275">fixedUpdateTimer</a></td></tr>
-<tr class="separator:a514098f10086810199f9071a28364275"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae323ac1be06e4eec6eec43d39ea1ba4"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#aae323ac1be06e4eec6eec43d39ea1ba4">sceneInitTime</a></td></tr>
-<tr class="separator:aae323ac1be06e4eec6eec43d39ea1ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54cd5f7c337b5e16a9eaa7941407f297"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSceneManagerAttribute__t.html">SceneManagerAttribute_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#a54cd5f7c337b5e16a9eaa7941407f297">attr</a></td></tr>
+<tr class="separator:a54cd5f7c337b5e16a9eaa7941407f297"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c13feb6df897c5ff589569906220198"><td class="memItemLeft" align="right" valign="top">int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#a5c13feb6df897c5ff589569906220198">Init</a> )()</td></tr>
+<tr class="separator:a5c13feb6df897c5ff589569906220198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24a137cffd72068fa390727e325ed2fc"><td class="memItemLeft" align="right" valign="top">int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#a24a137cffd72068fa390727e325ed2fc">Register</a> )(const char *name, struct <a class="el" href="structScene__t.html">Scene_t</a> *scene)</td></tr>
+<tr class="separator:a24a137cffd72068fa390727e325ed2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ec7d564b6bac0ae8901c70fd9c651d2"><td class="memItemLeft" align="right" valign="top">int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#a0ec7d564b6bac0ae8901c70fd9c651d2">Start</a> )(const char *firstSceneName)</td></tr>
+<tr class="separator:a0ec7d564b6bac0ae8901c70fd9c651d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81f79655765dae171f5bae233e08ca57"><td class="memItemLeft" align="right" valign="top">double(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#a81f79655765dae171f5bae233e08ca57">Time</a> )()</td></tr>
+<tr class="separator:a81f79655765dae171f5bae233e08ca57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb7bf238748af71048094ac6e0d0a432"><td class="memItemLeft" align="right" valign="top">int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSceneManager__t.html#adb7bf238748af71048094ac6e0d0a432">Next</a> )(const char *name)</td></tr>
+<tr class="separator:adb7bf238748af71048094ac6e0d0a432"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a992dc6ef9db9f6352f620e1572df81ea" name="a992dc6ef9db9f6352f620e1572df81ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a992dc6ef9db9f6352f620e1572df81ea">&#9670;&nbsp;</a></span>current</h2>
+<a id="a54cd5f7c337b5e16a9eaa7941407f297" name="a54cd5f7c337b5e16a9eaa7941407f297"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54cd5f7c337b5e16a9eaa7941407f297">&#9670;&nbsp;</a></span>attr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structScene.html">Scene</a>* SceneManager_t::current</td>
+          <td class="memname"><a class="el" href="structSceneManagerAttribute__t.html">SceneManagerAttribute_t</a> SceneManager_t::attr</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a514098f10086810199f9071a28364275" name="a514098f10086810199f9071a28364275"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a514098f10086810199f9071a28364275">&#9670;&nbsp;</a></span>fixedUpdateTimer</h2>
+<a id="a5c13feb6df897c5ff589569906220198" name="a5c13feb6df897c5ff589569906220198"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c13feb6df897c5ff589569906220198">&#9670;&nbsp;</a></span>Init</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float SceneManager_t::fixedUpdateTimer</td>
+          <td class="memname">int(* SceneManager_t::Init) ()</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a805e7b49b97971baf8e0ed976e3a72bc" name="a805e7b49b97971baf8e0ed976e3a72bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a805e7b49b97971baf8e0ed976e3a72bc">&#9670;&nbsp;</a></span>next</h2>
+<a id="adb7bf238748af71048094ac6e0d0a432" name="adb7bf238748af71048094ac6e0d0a432"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb7bf238748af71048094ac6e0d0a432">&#9670;&nbsp;</a></span>Next</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structScene.html">Scene</a>* SceneManager_t::next</td>
+          <td class="memname">int(* SceneManager_t::Next) (const char *name)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ae9283eb4e10a3190c983291fee5bb038" name="ae9283eb4e10a3190c983291fee5bb038"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9283eb4e10a3190c983291fee5bb038">&#9670;&nbsp;</a></span>running</h2>
+<a id="a24a137cffd72068fa390727e325ed2fc" name="a24a137cffd72068fa390727e325ed2fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24a137cffd72068fa390727e325ed2fc">&#9670;&nbsp;</a></span>Register</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool SceneManager_t::running</td>
+          <td class="memname">int(* SceneManager_t::Register) (const char *name, struct <a class="el" href="structScene__t.html">Scene_t</a> *scene)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aae323ac1be06e4eec6eec43d39ea1ba4" name="aae323ac1be06e4eec6eec43d39ea1ba4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae323ac1be06e4eec6eec43d39ea1ba4">&#9670;&nbsp;</a></span>sceneInitTime</h2>
+<a id="a0ec7d564b6bac0ae8901c70fd9c651d2" name="a0ec7d564b6bac0ae8901c70fd9c651d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ec7d564b6bac0ae8901c70fd9c651d2">&#9670;&nbsp;</a></span>Start</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double SceneManager_t::sceneInitTime</td>
+          <td class="memname">int(* SceneManager_t::Start) (const char *firstSceneName)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ae5d3a540d09fd9792cd308b9b915c02d" name="ae5d3a540d09fd9792cd308b9b915c02d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5d3a540d09fd9792cd308b9b915c02d">&#9670;&nbsp;</a></span>status</h2>
+<a id="a81f79655765dae171f5bae233e08ca57" name="a81f79655765dae171f5bae233e08ca57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81f79655765dae171f5bae233e08ca57">&#9670;&nbsp;</a></span>Time</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="SceneManager_8h.html#ade9922e71b050ff4b4e44b7f5e799e4f">SceneManagerState</a> SceneManager_t::status</td>
+          <td class="memname">double(* SceneManager_t::Time) ()</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -205,7 +205,7 @@ Data Fields</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>include/<a class="el" href="SceneManager_8h_source.html">SceneManager.h</a></li>
+<li>include/SceneManager/<a class="el" href="SceneManager_8h_source.html">SceneManager.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

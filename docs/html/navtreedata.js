@@ -43,13 +43,13 @@ var NAVTREE =
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "Globals", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ],
+        [ "All", "globals.html", "globals_dup" ],
+        [ "Functions", "globals_func.html", "globals_func" ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
-        [ "Enumerator", "globals_eval.html", null ],
-        [ "Macros", "globals_defs.html", null ]
+        [ "Enumerator", "globals_eval.html", "globals_eval" ],
+        [ "Macros", "globals_defs.html", "globals_defs" ]
       ] ]
     ] ]
   ] ]
@@ -57,7 +57,12 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"ResourceManager_8c.html"
+"Config_8h.html",
+"logger_8h.html#ab3f1028e542649d3ad064ca8b9b123c0",
+"monocypher_8c.html#a2fda93d0698c993b75d5776a11378b5a",
+"raygui_8h.html#a794e6c06f489b192fe6b57c1a59e4931a49d0d756a4a4b8ae80563d214958a265",
+"raygui_8h.html#aca07434461c72d7568bb7e693723de14",
+"uthash_8h.html#a361cdc5e8d6d8fe5fae6912588ae15d0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

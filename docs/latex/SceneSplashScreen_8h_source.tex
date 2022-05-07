@@ -1,21 +1,20 @@
 \hypertarget{SceneSplashScreen_8h_source}{}\doxysection{Scene\+Splash\+Screen.\+h}
-\label{SceneSplashScreen_8h_source}\index{include/Scene/SceneSplashScreen.h@{include/Scene/SceneSplashScreen.h}}
+\label{SceneSplashScreen_8h_source}\index{include/SceneManager/Scenes/SceneSplashScreen.h@{include/SceneManager/Scenes/SceneSplashScreen.h}}
 \mbox{\hyperlink{SceneSplashScreen_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_SCENESPLASHSCREEN\_H\_\_}}
 \DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_SCENESPLASHSCREEN\_H\_\_}}
 \DoxyCodeLine{3 }
-\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{SceneManager_8h}{SceneManager.h}}"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{Scene_8h}{SceneManager/Scene.h}}"{}}}
 \DoxyCodeLine{5 }
-\DoxyCodeLine{6 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_ab43ff7118d0a649a01db85e12f750f09}{SceneSplashScreenOnInit}} (\textcolor{keywordtype}{void}** \_\$);}
-\DoxyCodeLine{7 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_abdc679f30f40372aa66080621a65ba0d}{SceneSplashScreenOnStart}}  (\textcolor{keywordtype}{void}** \_\$);}
-\DoxyCodeLine{8 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_a16afc49de875930b58bab2af8d3170e9}{SceneSplashScreenOnUpdate}} (\textcolor{keywordtype}{void}** \_\$);}
-\DoxyCodeLine{9 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_a7650e6d28a0d149d208ba10c84b9d0b2}{SceneSplashScreenOnFixedUpdate}} (\textcolor{keywordtype}{void}** \_\$);}
-\DoxyCodeLine{10 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_ac223be9c43ded9148721e2579c46045f}{SceneSplashScreenOnRender}} (\textcolor{keywordtype}{void}** \_\$);}
-\DoxyCodeLine{11 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_af310b115d55e2a8bffea3469377421c4}{SceneSplashScreenOnExit}} (\textcolor{keywordtype}{void}** \_\$);}
-\DoxyCodeLine{12 }
-\DoxyCodeLine{13 \mbox{\hyperlink{SceneSplashScreen_8h_a651d409f2b22f5931cf3e5f59be6e980}{DefineScene}}(SceneSplashScreen, \textcolor{stringliteral}{"{}SceneSplashScreen"{}}, \mbox{\hyperlink{SceneSplashScreen_8h_ab43ff7118d0a649a01db85e12f750f09}{SceneSplashScreenOnInit}}, \mbox{\hyperlink{SceneSplashScreen_8h_abdc679f30f40372aa66080621a65ba0d}{SceneSplashScreenOnStart}}, \mbox{\hyperlink{SceneSplashScreen_8h_a16afc49de875930b58bab2af8d3170e9}{SceneSplashScreenOnUpdate}}, \mbox{\hyperlink{SceneSplashScreen_8h_a7650e6d28a0d149d208ba10c84b9d0b2}{SceneSplashScreenOnFixedUpdate}}, \mbox{\hyperlink{SceneSplashScreen_8h_ac223be9c43ded9148721e2579c46045f}{SceneSplashScreenOnRender}}, \mbox{\hyperlink{SceneSplashScreen_8h_af310b115d55e2a8bffea3469377421c4}{SceneSplashScreenOnExit}});}
-\DoxyCodeLine{14 }
-\DoxyCodeLine{15 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_\_SCENESPLASHSCREEN\_H\_\_ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{6 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_a575b4fdfbe8033619bb2fa7018625961}{SceneSplashScreenStart}}();}
+\DoxyCodeLine{7 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_aa1aff5e9e622ca0fe5b919e07cc92baa}{SceneSplashScreenUpdate}}();}
+\DoxyCodeLine{8 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_a73c19ea62d8fe97cbd4cdadad7b5ee61}{SceneSplashScreenFixedUpdate}}();}
+\DoxyCodeLine{9 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_a4ada333b57934b2d249f46a65f8ed052}{SceneSplashScreenRender}}();}
+\DoxyCodeLine{10 \textcolor{keywordtype}{void} \mbox{\hyperlink{SceneSplashScreen_8h_a7e98fc2b07145eacd5b1c4ff1a0b8849}{SceneSplashScreenExit}}();}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \mbox{\hyperlink{SceneSplashScreen_8h_a7802acba23643d6b03143efe07c421ad}{DefineScene}}(SceneSplashScreen, \textcolor{stringliteral}{"{}SceneSplashScreen"{}},  \mbox{\hyperlink{SceneSplashScreen_8h_a575b4fdfbe8033619bb2fa7018625961}{SceneSplashScreenStart}}, \mbox{\hyperlink{SceneSplashScreen_8h_aa1aff5e9e622ca0fe5b919e07cc92baa}{SceneSplashScreenUpdate}}, \mbox{\hyperlink{SceneSplashScreen_8h_a73c19ea62d8fe97cbd4cdadad7b5ee61}{SceneSplashScreenFixedUpdate}}, \mbox{\hyperlink{SceneSplashScreen_8h_a4ada333b57934b2d249f46a65f8ed052}{SceneSplashScreenRender}}, \mbox{\hyperlink{SceneSplashScreen_8h_a7e98fc2b07145eacd5b1c4ff1a0b8849}{SceneSplashScreenExit}});}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_\_SCENESPLASHSCREEN\_H\_\_ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

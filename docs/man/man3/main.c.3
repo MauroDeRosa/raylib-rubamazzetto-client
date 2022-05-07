@@ -1,4 +1,4 @@
-.TH "source/main.c" 3 "Fri May 6 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.TH "source/main.c" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -8,13 +8,21 @@ source/main.c
 .PP
 \fC#include <raylib\&.h>\fP
 .br
-\fC#include 'logger\&.h'\fP
+\fC#include 'external/raygui\&.h'\fP
 .br
-\fC#include 'SceneManager\&.h'\fP
+\fC#include 'utils/logger\&.h'\fP
 .br
-\fC#include 'Scene/SceneSplashScreen\&.h'\fP
+\fC#include 'ResourceManager/ResourceManager\&.h'\fP
 .br
-\fC#include 'raylib\-extra/raygui\&.h'\fP
+\fC#include 'SceneManager/SceneManager\&.h'\fP
+.br
+\fC#include 'SceneManager/Scenes\&.h'\fP
+.br
+\fC#include 'Config\&.h'\fP
+.br
+\fC#include <libgen\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
 .br
 
 .SS "Macros"
@@ -28,7 +36,7 @@ source/main.c
 
 .in +1c
 .ti -1c
-.RI "int \fBmain\fP (void)"
+.RI "int \fBmain\fP (int argc, char **argv)"
 .br
 .in -1c
 .SH "Macro Definition Documentation"
@@ -37,7 +45,7 @@ source/main.c
 
 .SH "Function Documentation"
 .PP 
-.SS "int main (void)"
+.SS "int main (int argc, char ** argv)"
 
 .SH "Author"
 .PP 

@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['raygui_5fimplementation_0',['RAYGUI_IMPLEMENTATION',['../main_8c.html#ad1fe71f9ccb3e6d92e514597114e790c',1,'main.c']]],
-  ['resource_5fmanager_5ferror_1',['RESOURCE_MANAGER_ERROR',['../ResourceManager_8h.html#a7e3a1e4e19d236fbc308247b6783ecb5',1,'ResourceManager.h']]],
-  ['resource_5fmanager_5fprefix_2',['RESOURCE_MANAGER_PREFIX',['../ResourceManager_8c.html#a3a4b5247b4e620170ff86847f96c4db0',1,'ResourceManager.c']]],
-  ['resource_5fmanager_5fsuccess_3',['RESOURCE_MANAGER_SUCCESS',['../ResourceManager_8h.html#a120b5a23d7cc1cd8e605126f1185beed',1,'ResourceManager.h']]],
-  ['resource_5fmanager_5fwarning_4',['RESOURCE_MANAGER_WARNING',['../ResourceManager_8h.html#a16b5b5445a907f9c994a96c9a9184b37',1,'ResourceManager.h']]]
+  ['b_5fw_5fwidth_0',['B_W_WIDTH',['../monocypher_8c.html#adfe69d4414b8d82a5eb4f562a50d109a',1,'monocypher.c']]],
+  ['blake2_5fg_1',['BLAKE2_G',['../monocypher_8c.html#aa1fe4df24a975f435e50cdfd59db7269',1,'monocypher.c']]],
+  ['blake2_5fround_2',['BLAKE2_ROUND',['../monocypher_8c.html#a2d7e7c6b0d84cd071c0a521d47f04f49',1,'monocypher.c']]]
 ];

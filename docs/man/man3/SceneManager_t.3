@@ -1,4 +1,4 @@
-.TH "SceneManager_t" 3 "Fri May 6 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.TH "SceneManager_t" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -12,37 +12,37 @@ SceneManager_t
 
 .in +1c
 .ti -1c
-.RI "bool \fBrunning\fP"
+.RI "\fBSceneManagerAttribute_t\fP \fBattr\fP"
 .br
 .ti -1c
-.RI "\fBScene\fP * \fBcurrent\fP"
+.RI "int(* \fBInit\fP )()"
 .br
 .ti -1c
-.RI "\fBScene\fP * \fBnext\fP"
+.RI "int(* \fBRegister\fP )(const char *name, struct \fBScene_t\fP *scene)"
 .br
 .ti -1c
-.RI "\fBSceneManagerState\fP \fBstatus\fP"
+.RI "int(* \fBStart\fP )(const char *firstSceneName)"
 .br
 .ti -1c
-.RI "float \fBfixedUpdateTimer\fP"
+.RI "double(* \fBTime\fP )()"
 .br
 .ti -1c
-.RI "double \fBsceneInitTime\fP"
+.RI "int(* \fBNext\fP )(const char *name)"
 .br
 .in -1c
 .SH "Field Documentation"
 .PP 
-.SS "\fBScene\fP* SceneManager_t::current"
+.SS "\fBSceneManagerAttribute_t\fP SceneManager_t::attr"
 
-.SS "float SceneManager_t::fixedUpdateTimer"
+.SS "int(* SceneManager_t::Init) ()"
 
-.SS "\fBScene\fP* SceneManager_t::next"
+.SS "int(* SceneManager_t::Next) (const char *name)"
 
-.SS "bool SceneManager_t::running"
+.SS "int(* SceneManager_t::Register) (const char *name, struct \fBScene_t\fP *scene)"
 
-.SS "double SceneManager_t::sceneInitTime"
+.SS "int(* SceneManager_t::Start) (const char *firstSceneName)"
 
-.SS "\fBSceneManagerState\fP SceneManager_t::status"
+.SS "double(* SceneManager_t::Time) ()"
 
 
 .SH "Author"

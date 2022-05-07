@@ -1,0 +1,44 @@
+\hypertarget{Scene_8h_source}{}\doxysection{Scene.\+h}
+\label{Scene_8h_source}\index{include/SceneManager/Scene.h@{include/SceneManager/Scene.h}}
+\mbox{\hyperlink{Scene_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_SCENE\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_SCENE\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{SceneManager_8h}{SceneManager/SceneManager.h}}"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{ResourceManager_8h}{ResourceManager/ResourceManager.h}}"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{uthash_8h}{external/uthash/uthash.h}}"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{logger_8h}{utils/logger.h}}"{}}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <raylib.h>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{raygui_8h}{external/raygui.h}}"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{struct }\mbox{\hyperlink{structScene__t}{Scene\_t}}}
+\DoxyCodeLine{14 \{}
+\DoxyCodeLine{15     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structScene__t_a5c0b7277f48940ebfc12e6b9f73fc2e2}{name}};}
+\DoxyCodeLine{16     \textcolor{keywordtype}{double} \mbox{\hyperlink{structScene__t_a3cca5e7f5e39527d319ba4a9db747919}{startTime}};}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     void (*\mbox{\hyperlink{structScene__t_aff1f6aadfaa367d820dc523687c8955b}{Start}})();}
+\DoxyCodeLine{19     void (*\mbox{\hyperlink{structScene__t_abe190aad531d292437ec94b43ead26b3}{Update}})();}
+\DoxyCodeLine{20     void (*\mbox{\hyperlink{structScene__t_ab531ed78ded9d73b9425cea08035c328}{FixedUpdate}})();}
+\DoxyCodeLine{21     void (*\mbox{\hyperlink{structScene__t_a4516ec6494a2248f05fdcf09edda54c4}{Render}})();}
+\DoxyCodeLine{22     void (*\mbox{\hyperlink{structScene__t_a652d4d507376fb58f1ddafa655dd53b8}{Exit}})();}
+\DoxyCodeLine{23     \mbox{\hyperlink{structUT__hash__handle}{UT\_hash\_handle}} \mbox{\hyperlink{structScene__t_ad5b711bacdde67452f52354eb0dd7718}{hh}};}
+\DoxyCodeLine{24 \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define DefineScene(name, nameString, Start, Update, FixedUpdate, Render, Exit) \(\backslash\)}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{static struct Scene\_t name = \{ \(\backslash\)}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{    nameString , \(\backslash\)}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{    0.0 , \(\backslash\)}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{    Start , \(\backslash\)}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{    Update , \(\backslash\)}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{    FixedUpdate , \(\backslash\)}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{    Render , \(\backslash\)}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{    Exit \(\backslash\)}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\};}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_\_SCENE\_H\_\_ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

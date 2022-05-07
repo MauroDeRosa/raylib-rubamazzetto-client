@@ -1,0 +1,191 @@
+.TH "include/external/uthash/utringbuffer.h" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/external/uthash/utringbuffer.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'utarray\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBUT_ringbuffer\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUTRINGBUFFER_VERSION\fP   2\&.3\&.0"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_init\fP(a,  _n,  _icd)"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_clear\fP(a)"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_done\fP(a)"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_new\fP(a,  n,  _icd)"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_free\fP(a)"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_push_back\fP(a,  p)"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_len\fP(a)   ((a)\->f ? (a)\->n : (a)\->i)"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_empty\fP(a)   ((a)\->i == 0 && !(a)\->f)"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_full\fP(a)   ((a)\->f != 0)"
+.br
+.ti -1c
+.RI "#define \fB_utringbuffer_real_idx\fP(a,  j)   ((a)\->f ? ((j) + (a)\->i) % (a)\->n : (j))"
+.br
+.ti -1c
+.RI "#define \fB_utringbuffer_internalptr\fP(a,  j)   ((void*)((a)\->d + ((a)\->icd\&.sz * (j))))"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_eltptr\fP(a,  j)   ((0 <= (j) && (j) < \fButringbuffer_len\fP(a)) ? \fB_utringbuffer_internalptr\fP(a,\fB_utringbuffer_real_idx\fP(a,j)) : NULL)"
+.br
+.ti -1c
+.RI "#define \fB_utringbuffer_fake_idx\fP(a,  j)   ((a)\->f ? ((j) + (a)\->n \- (a)\->i) % (a)\->n : (j))"
+.br
+.ti -1c
+.RI "#define \fB_utringbuffer_internalidx\fP(a,  e)   (((char*)(e) >= (a)\->d) ? (((char*)(e) \- (a)\->d)/(a)\->icd\&.sz) : \-1)"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_eltidx\fP(a,  e)   \fB_utringbuffer_fake_idx\fP(a, \fB_utringbuffer_internalidx\fP(a,e))"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_front\fP(a)   \fButringbuffer_eltptr\fP(a,0)"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_next\fP(a,  e)   ((e)==NULL ? \fButringbuffer_front\fP(a) : \fButringbuffer_eltptr\fP(a, \fButringbuffer_eltidx\fP(a,e)+1))"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_prev\fP(a,  e)   ((e)==NULL ? \fButringbuffer_back\fP(a) : \fButringbuffer_eltptr\fP(a, \fButringbuffer_eltidx\fP(a,e)\-1))"
+.br
+.ti -1c
+.RI "#define \fButringbuffer_back\fP(a)   (\fButringbuffer_empty\fP(a) ? NULL : \fButringbuffer_eltptr\fP(a, \fButringbuffer_len\fP(a) \- 1))"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _utringbuffer_fake_idx(a, j)   ((a)\->f ? ((j) + (a)\->n \- (a)\->i) % (a)\->n : (j))"
+
+.SS "#define _utringbuffer_internalidx(a, e)   (((char*)(e) >= (a)\->d) ? (((char*)(e) \- (a)\->d)/(a)\->icd\&.sz) : \-1)"
+
+.SS "#define _utringbuffer_internalptr(a, j)   ((void*)((a)\->d + ((a)\->icd\&.sz * (j))))"
+
+.SS "#define _utringbuffer_real_idx(a, j)   ((a)\->f ? ((j) + (a)\->i) % (a)\->n : (j))"
+
+.SS "#define utringbuffer_back(a)   (\fButringbuffer_empty\fP(a) ? NULL : \fButringbuffer_eltptr\fP(a, \fButringbuffer_len\fP(a) \- 1))"
+
+.SS "#define utringbuffer_clear(a)"
+\fBValue:\fP
+.PP
+.nf
+  do {                                        \
+  if ((a)->icd\&.dtor) {                                                    \
+    if ((a)->f) {                                                         \
+      unsigned _ut_i;                                                     \
+      for (_ut_i = 0; _ut_i < (a)->n; ++_ut_i) {                          \
+        (a)->icd\&.dtor(utringbuffer_eltptr(a, _ut_i));                     \
+      }                                                                   \
+    } else {                                                              \
+      unsigned _ut_i;                                                     \
+      for (_ut_i = 0; _ut_i < (a)->i; ++_ut_i) {                          \
+        (a)->icd\&.dtor(utringbuffer_eltptr(a, _ut_i));                     \
+      }                                                                   \
+    }                                                                     \
+  }                                                                       \
+  (a)->i = 0;                                                             \
+  (a)->f = 0;                                                             \
+} while(0)
+.fi
+.SS "#define utringbuffer_done(a)"
+\fBValue:\fP
+.PP
+.nf
+  do {                                         \
+  utringbuffer_clear(a);                                                  \
+  free((a)->d); (a)->d = NULL;                                            \
+  (a)->n = 0;                                                             \
+} while(0)
+.fi
+.SS "#define utringbuffer_eltidx(a, e)   \fB_utringbuffer_fake_idx\fP(a, \fB_utringbuffer_internalidx\fP(a,e))"
+
+.SS "#define utringbuffer_eltptr(a, j)   ((0 <= (j) && (j) < \fButringbuffer_len\fP(a)) ? \fB_utringbuffer_internalptr\fP(a,\fB_utringbuffer_real_idx\fP(a,j)) : NULL)"
+
+.SS "#define utringbuffer_empty(a)   ((a)\->i == 0 && !(a)\->f)"
+
+.SS "#define utringbuffer_free(a)"
+\fBValue:\fP
+.PP
+.nf
+  do {                                         \
+  utringbuffer_done(a);                                                   \
+  free(a);                                                                \
+} while(0)
+.fi
+.SS "#define utringbuffer_front(a)   \fButringbuffer_eltptr\fP(a,0)"
+
+.SS "#define utringbuffer_full(a)   ((a)\->f != 0)"
+
+.SS "#define utringbuffer_init(a, _n, _icd)"
+\fBValue:\fP
+.PP
+.nf
+  do {                               \
+  memset(a, 0, sizeof(UT_ringbuffer));                                    \
+  (a)->icd = *(_icd);                                                     \
+  (a)->n = (_n);                                                          \
+  if ((a)->n) { (a)->d = (char*)malloc((a)->n * (_icd)->sz); }            \
+} while(0)
+.fi
+.SS "#define utringbuffer_len(a)   ((a)\->f ? (a)\->n : (a)\->i)"
+
+.SS "#define utringbuffer_new(a, n, _icd)"
+\fBValue:\fP
+.PP
+.nf
+  do {                                   \
+  a = (UT_ringbuffer*)malloc(sizeof(UT_ringbuffer));                      \
+  utringbuffer_init(a, n, _icd);                                          \
+} while(0)
+.fi
+.SS "#define utringbuffer_next(a, e)   ((e)==NULL ? \fButringbuffer_front\fP(a) : \fButringbuffer_eltptr\fP(a, \fButringbuffer_eltidx\fP(a,e)+1))"
+
+.SS "#define utringbuffer_prev(a, e)   ((e)==NULL ? \fButringbuffer_back\fP(a) : \fButringbuffer_eltptr\fP(a, \fButringbuffer_eltidx\fP(a,e)\-1))"
+
+.SS "#define utringbuffer_push_back(a, p)"
+\fBValue:\fP
+.PP
+.nf
+  do {                                                \
+  if ((a)->icd\&.dtor && (a)->f) { (a)->icd\&.dtor(_utringbuffer_internalptr(a,(a)->i)); }  \
+  if ((a)->icd\&.copy) { (a)->icd\&.copy( _utringbuffer_internalptr(a,(a)->i), p); }        \
+  else { memcpy(_utringbuffer_internalptr(a,(a)->i), p, (a)->icd\&.sz); };                \
+  if (++(a)->i == (a)->n) { (a)->i = 0; (a)->f = 1; }                                   \
+} while(0)
+.fi
+.SS "#define UTRINGBUFFER_VERSION   2\&.3\&.0"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

@@ -1,9 +1,9 @@
 var structSceneManager__t =
 [
-    [ "current", "structSceneManager__t.html#a992dc6ef9db9f6352f620e1572df81ea", null ],
-    [ "fixedUpdateTimer", "structSceneManager__t.html#a514098f10086810199f9071a28364275", null ],
-    [ "next", "structSceneManager__t.html#a805e7b49b97971baf8e0ed976e3a72bc", null ],
-    [ "running", "structSceneManager__t.html#ae9283eb4e10a3190c983291fee5bb038", null ],
-    [ "sceneInitTime", "structSceneManager__t.html#aae323ac1be06e4eec6eec43d39ea1ba4", null ],
-    [ "status", "structSceneManager__t.html#ae5d3a540d09fd9792cd308b9b915c02d", null ]
+    [ "attr", "structSceneManager__t.html#a54cd5f7c337b5e16a9eaa7941407f297", null ],
+    [ "Init", "structSceneManager__t.html#a5c13feb6df897c5ff589569906220198", null ],
+    [ "Next", "structSceneManager__t.html#adb7bf238748af71048094ac6e0d0a432", null ],
+    [ "Register", "structSceneManager__t.html#a24a137cffd72068fa390727e325ed2fc", null ],
+    [ "Start", "structSceneManager__t.html#a0ec7d564b6bac0ae8901c70fd9c651d2", null ],
+    [ "Time", "structSceneManager__t.html#a81f79655765dae171f5bae233e08ca57", null ]
 ];

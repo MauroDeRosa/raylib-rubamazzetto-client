@@ -1,0 +1,110 @@
+.TH "include/external/external/aes.h" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/external/external/aes.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <stddef\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBAES_ctx\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCBC\fP   1"
+.br
+.ti -1c
+.RI "#define \fBECB\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCTR\fP   1"
+.br
+.ti -1c
+.RI "#define \fBAES256\fP   1"
+.br
+.ti -1c
+.RI "#define \fBAES_BLOCKLEN\fP   16"
+.br
+.ti -1c
+.RI "#define \fBAES_KEYLEN\fP   32"
+.br
+.ti -1c
+.RI "#define \fBAES_keyExpSize\fP   240"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBAES_init_ctx\fP (struct \fBAES_ctx\fP *ctx, const uint8_t *key)"
+.br
+.ti -1c
+.RI "void \fBAES_init_ctx_iv\fP (struct \fBAES_ctx\fP *ctx, const uint8_t *key, const uint8_t *iv)"
+.br
+.ti -1c
+.RI "void \fBAES_ctx_set_iv\fP (struct \fBAES_ctx\fP *ctx, const uint8_t *iv)"
+.br
+.ti -1c
+.RI "void \fBAES_ECB_encrypt\fP (const struct \fBAES_ctx\fP *ctx, uint8_t *buf)"
+.br
+.ti -1c
+.RI "void \fBAES_ECB_decrypt\fP (const struct \fBAES_ctx\fP *ctx, uint8_t *buf)"
+.br
+.ti -1c
+.RI "void \fBAES_CBC_encrypt_buffer\fP (struct \fBAES_ctx\fP *ctx, uint8_t *buf, size_t length)"
+.br
+.ti -1c
+.RI "void \fBAES_CBC_decrypt_buffer\fP (struct \fBAES_ctx\fP *ctx, uint8_t *buf, size_t length)"
+.br
+.ti -1c
+.RI "void \fBAES_CTR_xcrypt_buffer\fP (struct \fBAES_ctx\fP *ctx, uint8_t *buf, size_t length)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define AES256   1"
+
+.SS "#define AES_BLOCKLEN   16"
+
+.SS "#define AES_keyExpSize   240"
+
+.SS "#define AES_KEYLEN   32"
+
+.SS "#define CBC   1"
+
+.SS "#define CTR   1"
+
+.SS "#define ECB   1"
+
+.SH "Function Documentation"
+.PP 
+.SS "void AES_CBC_decrypt_buffer (struct \fBAES_ctx\fP * ctx, uint8_t * buf, size_t length)"
+
+.SS "void AES_CBC_encrypt_buffer (struct \fBAES_ctx\fP * ctx, uint8_t * buf, size_t length)"
+
+.SS "void AES_CTR_xcrypt_buffer (struct \fBAES_ctx\fP * ctx, uint8_t * buf, size_t length)"
+
+.SS "void AES_ctx_set_iv (struct \fBAES_ctx\fP * ctx, const uint8_t * iv)"
+
+.SS "void AES_ECB_decrypt (const struct \fBAES_ctx\fP * ctx, uint8_t * buf)"
+
+.SS "void AES_ECB_encrypt (const struct \fBAES_ctx\fP * ctx, uint8_t * buf)"
+
+.SS "void AES_init_ctx (struct \fBAES_ctx\fP * ctx, const uint8_t * key)"
+
+.SS "void AES_init_ctx_iv (struct \fBAES_ctx\fP * ctx, const uint8_t * key, const uint8_t * iv)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

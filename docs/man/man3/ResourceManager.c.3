@@ -1,74 +1,76 @@
-.TH "source/ResourceManager.c" 3 "Fri May 6 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.TH "source/ResourceManager/ResourceManager.c" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-source/ResourceManager.c
+source/ResourceManager/ResourceManager.c
 .SH SYNOPSIS
 .br
 .PP
-\fC#include 'ResourceManager\&.h'\fP
+\fC#include 'ResourceManager/ResourceManager\&.h'\fP
 .br
-\fC#include 'logger\&.h'\fP
+\fC#include 'utils/logger\&.h'\fP
 .br
 \fC#include <string\&.h>\fP
+.br
+\fC#include 'Config\&.h'\fP
 .br
 
 .SS "Macros"
 
 .in +1c
 .ti -1c
-.RI "#define \fBRESOURCE_MANAGER_PREFIX\fP   '[ResourceManager] '"
+.RI "#define \fBRESOURCE_MANAGER_PREFIX\fP   \fBLOG_COLOR_YELLOW\fP '[ResourceManager] ' LOG_COLOR_RESET"
 .br
 .in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "int \fB__ResourceManagerInit\fP ()"
+.RI "int \fBResourceManagerInit\fP ()"
 .br
 .RI "Initialize the ResourceManager HashMap\&. "
 .ti -1c
-.RI "int \fB__ResourceManagerAddResource\fP (\fBResourceType\fP type, const char *name, const char *path)"
+.RI "int \fBResourceManagerAddResource\fP (\fBResourceType\fP type, const char *name, const char *path)"
 .br
 .RI "adds a resource of the specified name, type and path to the __ResourceManagerMap HashMap "
 .ti -1c
-.RI "int \fB__ResourceManagerRemoveResource\fP (\fBResourceType\fP type, const char *name)"
+.RI "int \fBResourceManagerRemoveResource\fP (\fBResourceType\fP type, const char *name)"
 .br
 .RI "removes a resource of the specified name and type from the __ResourceManagerMap HashMap "
 .ti -1c
-.RI "int \fB__ResourceManagerLoad\fP ()"
+.RI "int \fBResourceManagerLoad\fP ()"
 .br
 .RI "iterates through Resource HashMap and call the exact Raylib Load function for each Resource Type "
 .ti -1c
-.RI "void * \fB__ResourceManagerGet\fP (\fBResourceType\fP type, const char *name)"
+.RI "void * \fBResourceManagerGet\fP (\fBResourceType\fP type, const char *name)"
 .br
-.RI "gets a pointer to the resource data of the specified ResourceType after being loaded through \fB__ResourceManagerLoad()\fP "
+.RI "gets a pointer to the resource data of the specified ResourceType after being loaded through \fBResourceManagerLoad()\fP "
 .ti -1c
-.RI "int \fB__ResourceManagerUnload\fP ()"
+.RI "int \fBResourceManagerUnload\fP ()"
 .br
 .RI "iterates through Resource HashMap and call the exact Raylib Unload function for each Resource Type "
 .ti -1c
-.RI "int \fB__ResourceManagerDestroy\fP ()"
+.RI "int \fBResourceManagerDestroy\fP ()"
 .br
 .RI "iterates through Resource HashMap, dereference HashMap elements and frees memory "
 .ti -1c
-.RI "char * \fB__ResourceManagerGetResourceName\fP (\fBResourceType\fP type, const char *name)"
+.RI "char * \fBResourceManagerGetResourceName\fP (\fBResourceType\fP type, const char *name)"
 .br
 .RI "Get a string in the form 'ResourceType_name'\&. "
 .ti -1c
-.RI "struct \fB__Resource_t\fP * \fB__ResourceManagerGetResourcePointer\fP (char *fullName)"
+.RI "struct \fBResource_t\fP * \fBResourceManagerGetResourcePointer\fP (char *fullName)"
 .br
 .ti -1c
-.RI "void * \fB__ResourceManagerGetResourceDataPointer\fP (struct \fB__Resource_t\fP *resource)"
+.RI "void * \fBResourceManagerGetResourceDataPointer\fP (struct \fBResource_t\fP *resource)"
 .br
 .in -1c
 .SH "Macro Definition Documentation"
 .PP 
-.SS "#define RESOURCE_MANAGER_PREFIX   '[ResourceManager] '"
+.SS "#define RESOURCE_MANAGER_PREFIX   \fBLOG_COLOR_YELLOW\fP '[ResourceManager] ' LOG_COLOR_RESET"
 
 .SH "Function Documentation"
 .PP 
-.SS "int __ResourceManagerAddResource (\fBResourceType\fP type, const char * name, const char * path)"
+.SS "int ResourceManagerAddResource (\fBResourceType\fP type, const char * name, const char * path)"
 
 .PP
 adds a resource of the specified name, type and path to the __ResourceManagerMap HashMap 
@@ -90,7 +92,7 @@ adds a resource of the specified name, type and path to the __ResourceManagerMap
 .PP
 \fBSee also\fP
 .RS 4
-\fB__Resource_t\fP 
+\fBResource_t\fP 
 .RE
 .PP
 \fBParameters\fP
@@ -100,25 +102,25 @@ adds a resource of the specified name, type and path to the __ResourceManagerMap
 .PP
 \fBReturns\fP
 .RS 4
-int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+int APP_ERROR or APP_WARNING or APP_SUCCESS 
 .RE
 .PP
 
-.SS "int __ResourceManagerDestroy ()"
+.SS "int ResourceManagerDestroy ()"
 
 .PP
 iterates through Resource HashMap, dereference HashMap elements and frees memory 
 .PP
 \fBReturns\fP
 .RS 4
-int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+int APP_ERROR or APP_WARNING or APP_SUCCESS 
 .RE
 .PP
 
-.SS "void * __ResourceManagerGet (\fBResourceType\fP type, const char * name)"
+.SS "void * ResourceManagerGet (\fBResourceType\fP type, const char * name)"
 
 .PP
-gets a pointer to the resource data of the specified ResourceType after being loaded through \fB__ResourceManagerLoad()\fP 
+gets a pointer to the resource data of the specified ResourceType after being loaded through \fBResourceManagerLoad()\fP 
 .PP
 \fBParameters\fP
 .RS 4
@@ -137,7 +139,7 @@ gets a pointer to the resource data of the specified ResourceType after being lo
 .PP
 \fBSee also\fP
 .RS 4
-\fB__Resource_t\fP 
+\fBResource_t\fP 
 .RE
 .PP
 \fBReturns\fP
@@ -146,7 +148,7 @@ void*
 .RE
 .PP
 
-.SS "void * __ResourceManagerGetResourceDataPointer (struct \fB__Resource_t\fP * resource)"
+.SS "void * ResourceManagerGetResourceDataPointer (struct \fBResource_t\fP * resource)"
 
 .PP
 \fBParameters\fP
@@ -160,7 +162,7 @@ void*
 .RE
 .PP
 
-.SS "char * __ResourceManagerGetResourceName (\fBResourceType\fP type, const char * name)"
+.SS "char * ResourceManagerGetResourceName (\fBResourceType\fP type, const char * name)"
 
 .PP
 Get a string in the form 'ResourceType_name'\&. 
@@ -182,7 +184,7 @@ Get a string in the form 'ResourceType_name'\&.
 .PP
 \fBSee also\fP
 .RS 4
-\fB__Resource_t\fP 
+\fBResource_t\fP 
 .RE
 .PP
 \fBReturns\fP
@@ -194,11 +196,11 @@ char* a string containing 'ResourceType_name' (must be freed)
 .RS 4
 \fBResourceType\fP 
 .PP
-\fB__Resource_t\fP 
+\fBResource_t\fP 
 .RE
 .PP
 
-.SS "struct \fB__Resource_t\fP * __ResourceManagerGetResourcePointer (char * fullName)"
+.SS "struct \fBResource_t\fP * ResourceManagerGetResourcePointer (char * fullName)"
 
 .PP
 \fBParameters\fP
@@ -208,16 +210,16 @@ char* a string containing 'ResourceType_name' (must be freed)
 .PP
 \fBReturns\fP
 .RS 4
-struct __Resource_t* The pointer to the Resource element found in Hasmap\&. NULL if nothing was found 
+struct Resource_t* The pointer to the Resource element found in Hasmap\&. NULL if nothing was found 
 .RE
 .PP
 \fBSee also\fP
 .RS 4
-\fB__Resource_t\fP 
+\fBResource_t\fP 
 .RE
 .PP
 
-.SS "int __ResourceManagerInit ()"
+.SS "int ResourceManagerInit ()"
 
 .PP
 Initialize the ResourceManager HashMap\&. 
@@ -229,22 +231,22 @@ __ResourceManagerMap
 .PP
 \fBReturns\fP
 .RS 4
-int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+int APP_ERROR or APP_WARNING or APP_SUCCESS 
 .RE
 .PP
 
-.SS "int __ResourceManagerLoad ()"
+.SS "int ResourceManagerLoad ()"
 
 .PP
 iterates through Resource HashMap and call the exact Raylib Load function for each Resource Type 
 .PP
 \fBReturns\fP
 .RS 4
-int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+int APP_ERROR or APP_WARNING or APP_SUCCESS 
 .RE
 .PP
 
-.SS "int __ResourceManagerRemoveResource (\fBResourceType\fP type, const char * name)"
+.SS "int ResourceManagerRemoveResource (\fBResourceType\fP type, const char * name)"
 
 .PP
 removes a resource of the specified name and type from the __ResourceManagerMap HashMap 
@@ -266,23 +268,23 @@ removes a resource of the specified name and type from the __ResourceManagerMap 
 .PP
 \fBSee also\fP
 .RS 4
-\fB__Resource_t\fP 
+\fBResource_t\fP 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+int APP_ERROR or APP_WARNING or APP_SUCCESS 
 .RE
 .PP
 
-.SS "int __ResourceManagerUnload ()"
+.SS "int ResourceManagerUnload ()"
 
 .PP
 iterates through Resource HashMap and call the exact Raylib Unload function for each Resource Type 
 .PP
 \fBReturns\fP
 .RS 4
-int RESOURCE_MANAGER_ERROR or RESOURCE_MANAGER_WARNING or RESOURCE_MANAGER_SUCCESS 
+int APP_ERROR or APP_WARNING or APP_SUCCESS 
 .RE
 .PP
 

@@ -1,0 +1,768 @@
+\hypertarget{monocypher_8c}{}\doxysection{include/external/external/monocypher.c File Reference}
+\label{monocypher_8c}\index{include/external/external/monocypher.c@{include/external/external/monocypher.c}}
+{\ttfamily \#include \char`\"{}monocypher.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structblock}{block}}
+\begin{DoxyCompactList}\small\item\em Argon2 i ///. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structgidx__ctx}{gidx\+\_\+ctx}}
+\item 
+struct \mbox{\hyperlink{structge}{ge}}
+\begin{DoxyCompactList}\small\item\em Ed25519 ///. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structge__cached}{ge\+\_\+cached}}
+\item 
+struct \mbox{\hyperlink{structge__precomp}{ge\+\_\+precomp}}
+\item 
+struct \mbox{\hyperlink{structslide__ctx}{slide\+\_\+ctx}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_a07fe98f84cf1fe008e7cb3eda126b859}{FOR\+\_\+T}}(type,  i,  start,  end)~for (type i = (start); i $<$ (end); i++)
+\begin{DoxyCompactList}\small\item\em Utilities ///. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{monocypher_8c_a7193936d00c5176808a87b6142ba10c3}{FOR}}(i,  start,  end)~\mbox{\hyperlink{monocypher_8c_a07fe98f84cf1fe008e7cb3eda126b859}{FOR\+\_\+T}}(size\+\_\+t, i, start, end)
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_aed003a32e5f74ca9773a89fd44088569}{COPY}}(\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}},  src,  size)~\mbox{\hyperlink{monocypher_8c_a7193936d00c5176808a87b6142ba10c3}{FOR}}(i, 0, size) (\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}})\mbox{[}i\mbox{]} = (src)\mbox{[}i\mbox{]}
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_adc347ca4ca98f82fa1b041a76a01672a}{ZERO}}(buf,  size)~\mbox{\hyperlink{monocypher_8c_a7193936d00c5176808a87b6142ba10c3}{FOR}}(i, 0, size) (buf)\mbox{[}i\mbox{]} = 0
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_a2ec2a7ea97bf6be30be6f129bf1f8159}{WIPE\+\_\+\+CTX}}(ctx)~\mbox{\hyperlink{monocypher_8h_a84904a8f94da26863cb33a9375c0a63a}{crypto\+\_\+wipe}}(ctx   , sizeof($\ast$(ctx)))
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_afd8dec8072750d9351368c9261684eb8}{WIPE\+\_\+\+BUFFER}}(buffer)~\mbox{\hyperlink{monocypher_8h_a84904a8f94da26863cb33a9375c0a63a}{crypto\+\_\+wipe}}(buffer, sizeof(buffer))
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_a3acffbd305ee72dcd4593c0d8af64a4f}{MIN}}(a,  b)~((a) $<$= (b) ? (a) \+: (b))
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_afa99ec4acc4ecb2dc3c2d05da15d0e3f}{MAX}}(a,  b)~((a) $>$= (b) ? (a) \+: (b))
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_aae524f06f43cef9dde57fb1cecc75d4a}{QUARTERROUND}}(a,  b,  c,  d)
+\begin{DoxyCompactList}\small\item\em Chacha 20 ///. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{monocypher_8c_aa1fe4df24a975f435e50cdfd59db7269}{BLAKE2\+\_\+G}}(a,  b,  c,  d,  x,  y)
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_a2d7e7c6b0d84cd071c0a521d47f04f49}{BLAKE2\+\_\+\+ROUND}}(i)
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}{LSB}}(x)~((x) \& 0xffffffff)
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_a4770411521cb86ce3f7758c3d73d018b}{G}}(a,  b,  c,  d)
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_ac321e7ac149a8ede58a63eca669452fe}{ROUND}}(v0,  v1,  v2,  v3,  v4,  v5,  v6,  v7,  v8,  v9,  v10,  v11,  v12,  v13,  v14,  v15)
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_ae1b2ce1a4280ed182c971369454ca269}{FE\+\_\+\+CARRY}}
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_ac89278bac688d8ca5c46fcdbe687e916}{P\+\_\+\+W\+\_\+\+WIDTH}}~3
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_adfe69d4414b8d82a5eb4f562a50d109a}{B\+\_\+\+W\+\_\+\+WIDTH}}~5
+\item 
+\#define \mbox{\hyperlink{monocypher_8c_a303159fd6a9d1642638d6ba07b4592f2}{P\+\_\+\+W\+\_\+\+SIZE}}~(1$<$$<$(\mbox{\hyperlink{monocypher_8c_ac89278bac688d8ca5c46fcdbe687e916}{P\+\_\+\+W\+\_\+\+WIDTH}}-\/2))
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int8\+\_\+t \mbox{\hyperlink{monocypher_8c_ae3702327b5f47e83b431e22b33da7b58}{i8}}
+\item 
+typedef uint8\+\_\+t \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}
+\item 
+typedef int16\+\_\+t \mbox{\hyperlink{monocypher_8c_ad309dbcaeea13aa602d686964156ea0b}{i16}}
+\item 
+typedef uint32\+\_\+t \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}
+\item 
+typedef int32\+\_\+t \mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}}
+\item 
+typedef int64\+\_\+t \mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}}
+\item 
+typedef uint64\+\_\+t \mbox{\hyperlink{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}}
+\item 
+typedef \mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} \mbox{\hyperlink{monocypher_8c_a939afbd56e733375ca04aff2e4f852ff}{fe}}\mbox{[}10\mbox{]}
+\begin{DoxyCompactList}\small\item\em Arithmetic modulo 2$^\wedge$255 -\/ 19 ///. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{monocypher_8c_a2f387f76030d5e7ed3014319053ab25b}{crypto\+\_\+verify16}} (const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} a\mbox{[}16\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} b\mbox{[}16\mbox{]})
+\begin{DoxyCompactList}\small\item\em High level interface ///. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{monocypher_8c_a480a45cbfde604361084c74dcbf87524}{crypto\+\_\+verify32}} (const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} a\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} b\mbox{[}32\mbox{]})
+\item 
+int \mbox{\hyperlink{monocypher_8c_a5ba26d97015ee0a42bf1f16a8d692465}{crypto\+\_\+verify64}} (const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} a\mbox{[}64\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} b\mbox{[}64\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_a84904a8f94da26863cb33a9375c0a63a}{crypto\+\_\+wipe}} (void $\ast$secret, size\+\_\+t size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_ae634bd6e628cec626aea02ff97bd4208}{crypto\+\_\+hchacha20}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} out\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} in\mbox{[}16\mbox{]})
+\begin{DoxyCompactList}\small\item\em Low level primitives ///. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}} \mbox{\hyperlink{monocypher_8c_a460d09e79ef44e357d8d6cfc43eff7b3}{crypto\+\_\+chacha20\+\_\+ctr}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$cipher\+\_\+text, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$plain\+\_\+text, size\+\_\+t text\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} nonce\mbox{[}8\mbox{]}, \mbox{\hyperlink{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}} ctr)
+\item 
+\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} \mbox{\hyperlink{monocypher_8c_afbfbf79e1a85b1eb892670dcd621c9d6}{crypto\+\_\+ietf\+\_\+chacha20\+\_\+ctr}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$cipher\+\_\+text, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$plain\+\_\+text, size\+\_\+t text\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} nonce\mbox{[}12\mbox{]}, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} ctr)
+\item 
+\mbox{\hyperlink{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}} \mbox{\hyperlink{monocypher_8c_a0efbf5207c518b6bcb8e3c8afde29231}{crypto\+\_\+xchacha20\+\_\+ctr}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$cipher\+\_\+text, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$plain\+\_\+text, size\+\_\+t text\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} nonce\mbox{[}24\mbox{]}, \mbox{\hyperlink{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}} ctr)
+\item 
+void \mbox{\hyperlink{monocypher_8c_aa26a0ec13bff7b9c3c303fbb37face26}{crypto\+\_\+chacha20}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$cipher\+\_\+text, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$plain\+\_\+text, size\+\_\+t text\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} nonce\mbox{[}8\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_acd02021aafe613e04c56de79a4a04ec9}{crypto\+\_\+ietf\+\_\+chacha20}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$cipher\+\_\+text, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$plain\+\_\+text, size\+\_\+t text\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} nonce\mbox{[}12\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_a6211bda325d7b6e1167010b4127ed51a}{crypto\+\_\+xchacha20}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$cipher\+\_\+text, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$plain\+\_\+text, size\+\_\+t text\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} nonce\mbox{[}24\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_ac77e5874b8d8a807cfd51d1c65700b75}{crypto\+\_\+poly1305\+\_\+init}} (\mbox{\hyperlink{structcrypto__poly1305__ctx}{crypto\+\_\+poly1305\+\_\+ctx}} $\ast$ctx, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_add8d1b0ddda7526387dcca0ef0d6a712}{crypto\+\_\+poly1305\+\_\+update}} (\mbox{\hyperlink{structcrypto__poly1305__ctx}{crypto\+\_\+poly1305\+\_\+ctx}} $\ast$ctx, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$message, size\+\_\+t message\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a0b8a2c612432d7d5dc41280f4c92a01e}{crypto\+\_\+poly1305\+\_\+final}} (\mbox{\hyperlink{structcrypto__poly1305__ctx}{crypto\+\_\+poly1305\+\_\+ctx}} $\ast$ctx, \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} mac\mbox{[}16\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_a9dc321043935b5071200f7b696d6ae2b}{crypto\+\_\+poly1305}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} mac\mbox{[}16\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$message, size\+\_\+t message\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_a51e778e490fe7b0ce911de81b6ea8461}{crypto\+\_\+blake2b\+\_\+general\+\_\+init}} (\mbox{\hyperlink{structcrypto__blake2b__ctx}{crypto\+\_\+blake2b\+\_\+ctx}} $\ast$ctx, size\+\_\+t hash\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$key, size\+\_\+t key\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a000834674405f5a0d81184134095aa00}{crypto\+\_\+blake2b\+\_\+init}} (\mbox{\hyperlink{structcrypto__blake2b__ctx}{crypto\+\_\+blake2b\+\_\+ctx}} $\ast$ctx)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a0d11738421fa5018ed0ec03e434c1274}{crypto\+\_\+blake2b\+\_\+update}} (\mbox{\hyperlink{structcrypto__blake2b__ctx}{crypto\+\_\+blake2b\+\_\+ctx}} $\ast$ctx, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$message, size\+\_\+t message\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a1422c3757f13d228c1ac3dc936490c62}{crypto\+\_\+blake2b\+\_\+final}} (\mbox{\hyperlink{structcrypto__blake2b__ctx}{crypto\+\_\+blake2b\+\_\+ctx}} $\ast$ctx, \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$hash)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a1c18b805ddd9df214fd0223b66f9e2a6}{crypto\+\_\+blake2b\+\_\+general}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$hash, size\+\_\+t hash\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$key, size\+\_\+t key\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$message, size\+\_\+t message\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_ad4a25c008228bb78917c305268633f36}{crypto\+\_\+blake2b}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} hash\mbox{[}64\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$message, size\+\_\+t message\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_aedb358008ec320d7dbc30b5447712342}{crypto\+\_\+argon2i\+\_\+general}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$hash, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} hash\+\_\+size, void $\ast$work\+\_\+area, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} nb\+\_\+blocks, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} nb\+\_\+iterations, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$password, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} password\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$salt, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} salt\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$key, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} key\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$ad, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} ad\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a3f03ab6ffdbf45d32aebe90f39a1fae3}{crypto\+\_\+argon2i}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$hash, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} hash\+\_\+size, void $\ast$work\+\_\+area, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} nb\+\_\+blocks, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} nb\+\_\+iterations, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$password, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} password\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$salt, \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} salt\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a297c5caead6b2a62437c81bef875faa6}{crypto\+\_\+x25519}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} raw\+\_\+shared\+\_\+secret\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} your\+\_\+secret\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} their\+\_\+public\+\_\+key\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_a17eaafdb62f01899fd7769bf728900f8}{crypto\+\_\+x25519\+\_\+public\+\_\+key}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} secret\+\_\+key\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_ac08aa33931d3d013b5590a5c2285cb43}{crypto\+\_\+sign\+\_\+public\+\_\+key\+\_\+custom\+\_\+hash}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} secret\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{structcrypto__sign__vtable}{crypto\+\_\+sign\+\_\+vtable}} $\ast$hash)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a18eb436f2563173aaaddce1fcddee26e}{crypto\+\_\+sign\+\_\+public\+\_\+key}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} secret\+\_\+key\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_ac53a3c38569af32c8312795e415d2365}{crypto\+\_\+sign\+\_\+init\+\_\+first\+\_\+pass\+\_\+custom\+\_\+hash}} (\mbox{\hyperlink{structcrypto__sign__ctx__abstract}{crypto\+\_\+sign\+\_\+ctx\+\_\+abstract}} $\ast$ctx, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} secret\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{structcrypto__sign__vtable}{crypto\+\_\+sign\+\_\+vtable}} $\ast$hash)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a66d9333be03262fadfdb1274b187035d}{crypto\+\_\+sign\+\_\+init\+\_\+first\+\_\+pass}} (\mbox{\hyperlink{structcrypto__sign__ctx__abstract}{crypto\+\_\+sign\+\_\+ctx\+\_\+abstract}} $\ast$ctx, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} secret\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_a186a06bdb406f8fd6cfd322bfa1bec33}{crypto\+\_\+sign\+\_\+update}} (\mbox{\hyperlink{structcrypto__sign__ctx__abstract}{crypto\+\_\+sign\+\_\+ctx\+\_\+abstract}} $\ast$ctx, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$msg, size\+\_\+t msg\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a43c47f7ac5c8f0a7f8196f32ff0a93dd}{crypto\+\_\+sign\+\_\+init\+\_\+second\+\_\+pass}} (\mbox{\hyperlink{structcrypto__sign__ctx__abstract}{crypto\+\_\+sign\+\_\+ctx\+\_\+abstract}} $\ast$ctx)
+\item 
+void \mbox{\hyperlink{monocypher_8c_acdc0d84c24be30371b0cc98faeb32afd}{crypto\+\_\+sign\+\_\+final}} (\mbox{\hyperlink{structcrypto__sign__ctx__abstract}{crypto\+\_\+sign\+\_\+ctx\+\_\+abstract}} $\ast$ctx, \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} signature\mbox{[}64\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_a27ec2a75334ac2499f802ca8450021e0}{crypto\+\_\+sign}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} signature\mbox{[}64\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} secret\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$message, size\+\_\+t message\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_ac55b9343e90e84b74428302bccafb723}{crypto\+\_\+check\+\_\+init\+\_\+custom\+\_\+hash}} (\mbox{\hyperlink{monocypher_8h_a69ae05847339b961bafab67017ed372a}{crypto\+\_\+check\+\_\+ctx\+\_\+abstract}} $\ast$ctx, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} signature\mbox{[}64\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{structcrypto__sign__vtable}{crypto\+\_\+sign\+\_\+vtable}} $\ast$hash)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a8b4f1c982bc1824f7e5b5e69f1a3eacb}{crypto\+\_\+check\+\_\+init}} (\mbox{\hyperlink{monocypher_8h_a69ae05847339b961bafab67017ed372a}{crypto\+\_\+check\+\_\+ctx\+\_\+abstract}} $\ast$ctx, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} signature\mbox{[}64\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_ab4908997d48ae62e0227c1185268369b}{crypto\+\_\+check\+\_\+update}} (\mbox{\hyperlink{monocypher_8h_a69ae05847339b961bafab67017ed372a}{crypto\+\_\+check\+\_\+ctx\+\_\+abstract}} $\ast$ctx, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$msg, size\+\_\+t msg\+\_\+size)
+\item 
+int \mbox{\hyperlink{monocypher_8c_a869333b55e033d73e9ba6d36e7a91acc}{crypto\+\_\+check\+\_\+final}} (\mbox{\hyperlink{monocypher_8h_a69ae05847339b961bafab67017ed372a}{crypto\+\_\+check\+\_\+ctx\+\_\+abstract}} $\ast$ctx)
+\item 
+int \mbox{\hyperlink{monocypher_8c_a0a081a8a32ee216184b0a80e65bc5632}{crypto\+\_\+check}} (const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} signature\mbox{[}64\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$message, size\+\_\+t message\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_ad1c4e319f94b10cab20a5133fe883444}{crypto\+\_\+from\+\_\+eddsa\+\_\+private}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} x25519\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} eddsa\mbox{[}32\mbox{]})
+\begin{DoxyCompactList}\small\item\em Ed\+DSA to X25519 ///. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{monocypher_8c_a1b4b32c927af6ad1dc9b8d697e17bf22}{crypto\+\_\+from\+\_\+eddsa\+\_\+public}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} x25519\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} eddsa\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_aac91b6b4254ad5c3716e38582ddd44f9}{crypto\+\_\+x25519\+\_\+dirty\+\_\+small}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} secret\+\_\+key\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_a3d723cc737498990cd6f36db997bcfc9}{crypto\+\_\+x25519\+\_\+dirty\+\_\+fast}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} secret\+\_\+key\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_ac445cea8f2d8ff6d9c7d0c3d29a8f4ca}{crypto\+\_\+hidden\+\_\+to\+\_\+curve}} (uint8\+\_\+t curve\mbox{[}32\mbox{]}, const uint8\+\_\+t hidden\mbox{[}32\mbox{]})
+\item 
+int \mbox{\hyperlink{monocypher_8c_a47363d9653182a57966fe8a0dcfe04f1}{crypto\+\_\+curve\+\_\+to\+\_\+hidden}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} hidden\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} public\+\_\+key\mbox{[}32\mbox{]}, \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} tweak)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a659013cfc56327e65f62a66ad680e132}{crypto\+\_\+hidden\+\_\+key\+\_\+pair}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} hidden\mbox{[}32\mbox{]}, \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} secret\+\_\+key\mbox{[}32\mbox{]}, \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} seed\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_a20d6501a0ceb47ac186422d836411905}{crypto\+\_\+key\+\_\+exchange}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} shared\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} your\+\_\+secret\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} their\+\_\+public\+\_\+key\mbox{[}32\mbox{]})
+\begin{DoxyCompactList}\small\item\em Key exchange ///. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{monocypher_8c_a40d1e320cac9b8b4348899d2d66fdbb1}{crypto\+\_\+x25519\+\_\+inverse}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} blind\+\_\+salt\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} private\+\_\+key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} curve\+\_\+point\mbox{[}32\mbox{]})
+\item 
+void \mbox{\hyperlink{monocypher_8c_a2fda93d0698c993b75d5776a11378b5a}{crypto\+\_\+lock\+\_\+aead}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} mac\mbox{[}16\mbox{]}, \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$cipher\+\_\+text, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} nonce\mbox{[}24\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$ad, size\+\_\+t ad\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$plain\+\_\+text, size\+\_\+t text\+\_\+size)
+\item 
+int \mbox{\hyperlink{monocypher_8c_a94f5b1016792a9351fc28fa29fbcb96b}{crypto\+\_\+unlock\+\_\+aead}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$plain\+\_\+text, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} nonce\mbox{[}24\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} mac\mbox{[}16\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$ad, size\+\_\+t ad\+\_\+size, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$cipher\+\_\+text, size\+\_\+t text\+\_\+size)
+\item 
+void \mbox{\hyperlink{monocypher_8c_a6ac72121db30ae7e96b020d6e4a9ae48}{crypto\+\_\+lock}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} mac\mbox{[}16\mbox{]}, \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$cipher\+\_\+text, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} nonce\mbox{[}24\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$plain\+\_\+text, size\+\_\+t text\+\_\+size)
+\item 
+int \mbox{\hyperlink{monocypher_8c_a07e102540303f4b5bc297935444818f6}{crypto\+\_\+unlock}} (\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$plain\+\_\+text, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} key\mbox{[}32\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} nonce\mbox{[}24\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} mac\mbox{[}16\mbox{]}, const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$cipher\+\_\+text, size\+\_\+t text\+\_\+size)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structcrypto__sign__vtable}{crypto\+\_\+sign\+\_\+vtable}} \mbox{\hyperlink{monocypher_8c_a8ba80651f0e9b1d5270c9fa8582986fd}{crypto\+\_\+blake2b\+\_\+vtable}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{monocypher_8c_adfe69d4414b8d82a5eb4f562a50d109a}\label{monocypher_8c_adfe69d4414b8d82a5eb4f562a50d109a}} 
+\index{monocypher.c@{monocypher.c}!B\_W\_WIDTH@{B\_W\_WIDTH}}
+\index{B\_W\_WIDTH@{B\_W\_WIDTH}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{B\_W\_WIDTH}{B\_W\_WIDTH}}
+{\footnotesize\ttfamily \#define B\+\_\+\+W\+\_\+\+WIDTH~5}
+
+\mbox{\Hypertarget{monocypher_8c_aa1fe4df24a975f435e50cdfd59db7269}\label{monocypher_8c_aa1fe4df24a975f435e50cdfd59db7269}} 
+\index{monocypher.c@{monocypher.c}!BLAKE2\_G@{BLAKE2\_G}}
+\index{BLAKE2\_G@{BLAKE2\_G}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{BLAKE2\_G}{BLAKE2\_G}}
+{\footnotesize\ttfamily \#define BLAKE2\+\_\+G(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b,  }\item[{}]{c,  }\item[{}]{d,  }\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    a += b + x;  d = rotr64(d \string^ a, 32); \(\backslash\)}
+\DoxyCodeLine{    c += d;      b = rotr64(b \string^ c, 24); \(\backslash\)}
+\DoxyCodeLine{    a += b + y;  d = rotr64(d \string^ a, 16); \(\backslash\)}
+\DoxyCodeLine{    c += d;      b = rotr64(b \string^ c, 63)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{monocypher_8c_a2d7e7c6b0d84cd071c0a521d47f04f49}\label{monocypher_8c_a2d7e7c6b0d84cd071c0a521d47f04f49}} 
+\index{monocypher.c@{monocypher.c}!BLAKE2\_ROUND@{BLAKE2\_ROUND}}
+\index{BLAKE2\_ROUND@{BLAKE2\_ROUND}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{BLAKE2\_ROUND}{BLAKE2\_ROUND}}
+{\footnotesize\ttfamily \#define BLAKE2\+\_\+\+ROUND(\begin{DoxyParamCaption}\item[{}]{i }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \mbox{\hyperlink{monocypher_8c_aa1fe4df24a975f435e50cdfd59db7269}{BLAKE2\_G}}(v0, v4, v8 , v12, input[sigma[i][ 0]], input[sigma[i][ 1]]); \(\backslash\)}
+\DoxyCodeLine{    BLAKE2\_G(v1, v5, v9 , v13, input[sigma[i][ 2]], input[sigma[i][ 3]]); \(\backslash\)}
+\DoxyCodeLine{    BLAKE2\_G(v2, v6, v10, v14, input[sigma[i][ 4]], input[sigma[i][ 5]]); \(\backslash\)}
+\DoxyCodeLine{    BLAKE2\_G(v3, v7, v11, v15, input[sigma[i][ 6]], input[sigma[i][ 7]]); \(\backslash\)}
+\DoxyCodeLine{    BLAKE2\_G(v0, v5, v10, v15, input[sigma[i][ 8]], input[sigma[i][ 9]]); \(\backslash\)}
+\DoxyCodeLine{    BLAKE2\_G(v1, v6, v11, v12, input[sigma[i][10]], input[sigma[i][11]]); \(\backslash\)}
+\DoxyCodeLine{    BLAKE2\_G(v2, v7, v8 , v13, input[sigma[i][12]], input[sigma[i][13]]); \(\backslash\)}
+\DoxyCodeLine{    BLAKE2\_G(v3, v4, v9 , v14, input[sigma[i][14]], input[sigma[i][15]])}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{monocypher_8c_aed003a32e5f74ca9773a89fd44088569}\label{monocypher_8c_aed003a32e5f74ca9773a89fd44088569}} 
+\index{monocypher.c@{monocypher.c}!COPY@{COPY}}
+\index{COPY@{COPY}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{COPY}{COPY}}
+{\footnotesize\ttfamily \#define COPY(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}},  }\item[{}]{src,  }\item[{}]{size }\end{DoxyParamCaption})~\mbox{\hyperlink{monocypher_8c_a7193936d00c5176808a87b6142ba10c3}{FOR}}(i, 0, size) (\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}})\mbox{[}i\mbox{]} = (src)\mbox{[}i\mbox{]}}
+
+\mbox{\Hypertarget{monocypher_8c_ae1b2ce1a4280ed182c971369454ca269}\label{monocypher_8c_ae1b2ce1a4280ed182c971369454ca269}} 
+\index{monocypher.c@{monocypher.c}!FE\_CARRY@{FE\_CARRY}}
+\index{FE\_CARRY@{FE\_CARRY}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{FE\_CARRY}{FE\_CARRY}}
+{\footnotesize\ttfamily \#define FE\+\_\+\+CARRY}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}} c;                                                              \(\backslash\)}
+\DoxyCodeLine{    c = (t0 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<25)) >> 26;  t0 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 26);  t1 += c; \(\backslash\)}
+\DoxyCodeLine{    c = (t4 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<25)) >> 26;  t4 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 26);  t5 += c; \(\backslash\)}
+\DoxyCodeLine{    c = (t1 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<24)) >> 25;  t1 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 25);  t2 += c; \(\backslash\)}
+\DoxyCodeLine{    c = (t5 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<24)) >> 25;  t5 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 25);  t6 += c; \(\backslash\)}
+\DoxyCodeLine{    c = (t2 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<25)) >> 26;  t2 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 26);  t3 += c; \(\backslash\)}
+\DoxyCodeLine{    c = (t6 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<25)) >> 26;  t6 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 26);  t7 += c; \(\backslash\)}
+\DoxyCodeLine{    c = (t3 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<24)) >> 25;  t3 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 25);  t4 += c; \(\backslash\)}
+\DoxyCodeLine{    c = (t7 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<24)) >> 25;  t7 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 25);  t8 += c; \(\backslash\)}
+\DoxyCodeLine{    c = (t4 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<25)) >> 26;  t4 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 26);  t5 += c; \(\backslash\)}
+\DoxyCodeLine{    c = (t8 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<25)) >> 26;  t8 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 26);  t9 += c; \(\backslash\)}
+\DoxyCodeLine{    c = (t9 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<24)) >> 25;  t9 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 25);  t0 += c * 19; \(\backslash\)}
+\DoxyCodeLine{    c = (t0 + ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1<<25)) >> 26;  t0 -\/= c * ((\mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}})1 << 26);  t1 += c; \(\backslash\)}
+\DoxyCodeLine{    h[0]=(\mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}})t0;  h[1]=(\mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}})t1;  h[2]=(\mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}})t2;  h[3]=(\mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}})t3;  h[4]=(\mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}})t4; \(\backslash\)}
+\DoxyCodeLine{    h[5]=(\mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}})t5;  h[6]=(\mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}})t6;  h[7]=(\mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}})t7;  h[8]=(\mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}})t8;  h[9]=(\mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}})t9}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{monocypher_8c_a7193936d00c5176808a87b6142ba10c3}\label{monocypher_8c_a7193936d00c5176808a87b6142ba10c3}} 
+\index{monocypher.c@{monocypher.c}!FOR@{FOR}}
+\index{FOR@{FOR}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{FOR}{FOR}}
+{\footnotesize\ttfamily \#define FOR(\begin{DoxyParamCaption}\item[{}]{i,  }\item[{}]{start,  }\item[{}]{end }\end{DoxyParamCaption})~\mbox{\hyperlink{monocypher_8c_a07fe98f84cf1fe008e7cb3eda126b859}{FOR\+\_\+T}}(size\+\_\+t, i, start, end)}
+
+\mbox{\Hypertarget{monocypher_8c_a07fe98f84cf1fe008e7cb3eda126b859}\label{monocypher_8c_a07fe98f84cf1fe008e7cb3eda126b859}} 
+\index{monocypher.c@{monocypher.c}!FOR\_T@{FOR\_T}}
+\index{FOR\_T@{FOR\_T}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{FOR\_T}{FOR\_T}}
+{\footnotesize\ttfamily \#define FOR\+\_\+T(\begin{DoxyParamCaption}\item[{}]{type,  }\item[{}]{i,  }\item[{}]{start,  }\item[{}]{end }\end{DoxyParamCaption})~for (type i = (start); i $<$ (end); i++)}
+
+
+
+Utilities ///. 
+
+\mbox{\Hypertarget{monocypher_8c_a4770411521cb86ce3f7758c3d73d018b}\label{monocypher_8c_a4770411521cb86ce3f7758c3d73d018b}} 
+\index{monocypher.c@{monocypher.c}!G@{G}}
+\index{G@{G}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{G}{G}}
+{\footnotesize\ttfamily \#define G(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b,  }\item[{}]{c,  }\item[{}]{d }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    a += b + 2 * \mbox{\hyperlink{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}{LSB}}(a) * \mbox{\hyperlink{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}{LSB}}(b);  d \string^= a;  d = rotr64(d, 32);   \(\backslash\)}
+\DoxyCodeLine{    c += d + 2 * \mbox{\hyperlink{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}{LSB}}(c) * \mbox{\hyperlink{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}{LSB}}(d);  b \string^= c;  b = rotr64(b, 24);   \(\backslash\)}
+\DoxyCodeLine{    a += b + 2 * \mbox{\hyperlink{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}{LSB}}(a) * \mbox{\hyperlink{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}{LSB}}(b);  d \string^= a;  d = rotr64(d, 16);   \(\backslash\)}
+\DoxyCodeLine{    c += d + 2 * \mbox{\hyperlink{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}{LSB}}(c) * \mbox{\hyperlink{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}{LSB}}(d);  b \string^= c;  b = rotr64(b, 63)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}\label{monocypher_8c_a34a3aa6cbadec6a80ab1eae8efd0083d}} 
+\index{monocypher.c@{monocypher.c}!LSB@{LSB}}
+\index{LSB@{LSB}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{LSB}{LSB}}
+{\footnotesize\ttfamily \#define LSB(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~((x) \& 0xffffffff)}
+
+\mbox{\Hypertarget{monocypher_8c_afa99ec4acc4ecb2dc3c2d05da15d0e3f}\label{monocypher_8c_afa99ec4acc4ecb2dc3c2d05da15d0e3f}} 
+\index{monocypher.c@{monocypher.c}!MAX@{MAX}}
+\index{MAX@{MAX}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{MAX}{MAX}}
+{\footnotesize\ttfamily \#define MAX(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~((a) $>$= (b) ? (a) \+: (b))}
+
+\mbox{\Hypertarget{monocypher_8c_a3acffbd305ee72dcd4593c0d8af64a4f}\label{monocypher_8c_a3acffbd305ee72dcd4593c0d8af64a4f}} 
+\index{monocypher.c@{monocypher.c}!MIN@{MIN}}
+\index{MIN@{MIN}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{MIN}{MIN}}
+{\footnotesize\ttfamily \#define MIN(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~((a) $<$= (b) ? (a) \+: (b))}
+
+\mbox{\Hypertarget{monocypher_8c_a303159fd6a9d1642638d6ba07b4592f2}\label{monocypher_8c_a303159fd6a9d1642638d6ba07b4592f2}} 
+\index{monocypher.c@{monocypher.c}!P\_W\_SIZE@{P\_W\_SIZE}}
+\index{P\_W\_SIZE@{P\_W\_SIZE}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{P\_W\_SIZE}{P\_W\_SIZE}}
+{\footnotesize\ttfamily \#define P\+\_\+\+W\+\_\+\+SIZE~(1$<$$<$(\mbox{\hyperlink{monocypher_8c_ac89278bac688d8ca5c46fcdbe687e916}{P\+\_\+\+W\+\_\+\+WIDTH}}-\/2))}
+
+\mbox{\Hypertarget{monocypher_8c_ac89278bac688d8ca5c46fcdbe687e916}\label{monocypher_8c_ac89278bac688d8ca5c46fcdbe687e916}} 
+\index{monocypher.c@{monocypher.c}!P\_W\_WIDTH@{P\_W\_WIDTH}}
+\index{P\_W\_WIDTH@{P\_W\_WIDTH}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{P\_W\_WIDTH}{P\_W\_WIDTH}}
+{\footnotesize\ttfamily \#define P\+\_\+\+W\+\_\+\+WIDTH~3}
+
+\mbox{\Hypertarget{monocypher_8c_aae524f06f43cef9dde57fb1cecc75d4a}\label{monocypher_8c_aae524f06f43cef9dde57fb1cecc75d4a}} 
+\index{monocypher.c@{monocypher.c}!QUARTERROUND@{QUARTERROUND}}
+\index{QUARTERROUND@{QUARTERROUND}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{QUARTERROUND}{QUARTERROUND}}
+{\footnotesize\ttfamily \#define QUARTERROUND(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b,  }\item[{}]{c,  }\item[{}]{d }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    a += b;  d = rotl32(d \string^ a, 16);  \(\backslash\)}
+\DoxyCodeLine{    c += d;  b = rotl32(b \string^ c, 12);  \(\backslash\)}
+\DoxyCodeLine{    a += b;  d = rotl32(d \string^ a,  8);  \(\backslash\)}
+\DoxyCodeLine{    c += d;  b = rotl32(b \string^ c,  7)}
+
+\end{DoxyCode}
+
+
+Chacha 20 ///. 
+
+\mbox{\Hypertarget{monocypher_8c_ac321e7ac149a8ede58a63eca669452fe}\label{monocypher_8c_ac321e7ac149a8ede58a63eca669452fe}} 
+\index{monocypher.c@{monocypher.c}!ROUND@{ROUND}}
+\index{ROUND@{ROUND}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{ROUND}{ROUND}}
+{\footnotesize\ttfamily \#define ROUND(\begin{DoxyParamCaption}\item[{}]{v0,  }\item[{}]{v1,  }\item[{}]{v2,  }\item[{}]{v3,  }\item[{}]{v4,  }\item[{}]{v5,  }\item[{}]{v6,  }\item[{}]{v7,  }\item[{}]{v8,  }\item[{}]{v9,  }\item[{}]{v10,  }\item[{}]{v11,  }\item[{}]{v12,  }\item[{}]{v13,  }\item[{}]{v14,  }\item[{}]{v15 }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \mbox{\hyperlink{monocypher_8c_a4770411521cb86ce3f7758c3d73d018b}{G}}(v0, v4,  v8, v12);  \mbox{\hyperlink{monocypher_8c_a4770411521cb86ce3f7758c3d73d018b}{G}}(v1, v5,  v9, v13);          \(\backslash\)}
+\DoxyCodeLine{    G(v2, v6, v10, v14);  \mbox{\hyperlink{monocypher_8c_a4770411521cb86ce3f7758c3d73d018b}{G}}(v3, v7, v11, v15);          \(\backslash\)}
+\DoxyCodeLine{    G(v0, v5, v10, v15);  \mbox{\hyperlink{monocypher_8c_a4770411521cb86ce3f7758c3d73d018b}{G}}(v1, v6, v11, v12);          \(\backslash\)}
+\DoxyCodeLine{    G(v2, v7,  v8, v13);  \mbox{\hyperlink{monocypher_8c_a4770411521cb86ce3f7758c3d73d018b}{G}}(v3, v4,  v9, v14)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{monocypher_8c_afd8dec8072750d9351368c9261684eb8}\label{monocypher_8c_afd8dec8072750d9351368c9261684eb8}} 
+\index{monocypher.c@{monocypher.c}!WIPE\_BUFFER@{WIPE\_BUFFER}}
+\index{WIPE\_BUFFER@{WIPE\_BUFFER}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{WIPE\_BUFFER}{WIPE\_BUFFER}}
+{\footnotesize\ttfamily \#define WIPE\+\_\+\+BUFFER(\begin{DoxyParamCaption}\item[{}]{buffer }\end{DoxyParamCaption})~\mbox{\hyperlink{monocypher_8h_a84904a8f94da26863cb33a9375c0a63a}{crypto\+\_\+wipe}}(buffer, sizeof(buffer))}
+
+\mbox{\Hypertarget{monocypher_8c_a2ec2a7ea97bf6be30be6f129bf1f8159}\label{monocypher_8c_a2ec2a7ea97bf6be30be6f129bf1f8159}} 
+\index{monocypher.c@{monocypher.c}!WIPE\_CTX@{WIPE\_CTX}}
+\index{WIPE\_CTX@{WIPE\_CTX}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{WIPE\_CTX}{WIPE\_CTX}}
+{\footnotesize\ttfamily \#define WIPE\+\_\+\+CTX(\begin{DoxyParamCaption}\item[{}]{ctx }\end{DoxyParamCaption})~\mbox{\hyperlink{monocypher_8h_a84904a8f94da26863cb33a9375c0a63a}{crypto\+\_\+wipe}}(ctx   , sizeof($\ast$(ctx)))}
+
+\mbox{\Hypertarget{monocypher_8c_adc347ca4ca98f82fa1b041a76a01672a}\label{monocypher_8c_adc347ca4ca98f82fa1b041a76a01672a}} 
+\index{monocypher.c@{monocypher.c}!ZERO@{ZERO}}
+\index{ZERO@{ZERO}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{ZERO}{ZERO}}
+{\footnotesize\ttfamily \#define ZERO(\begin{DoxyParamCaption}\item[{}]{buf,  }\item[{}]{size }\end{DoxyParamCaption})~\mbox{\hyperlink{monocypher_8c_a7193936d00c5176808a87b6142ba10c3}{FOR}}(i, 0, size) (buf)\mbox{[}i\mbox{]} = 0}
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{monocypher_8c_a939afbd56e733375ca04aff2e4f852ff}\label{monocypher_8c_a939afbd56e733375ca04aff2e4f852ff}} 
+\index{monocypher.c@{monocypher.c}!fe@{fe}}
+\index{fe@{fe}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{fe}{fe}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} fe\mbox{[}10\mbox{]}}
+
+
+
+Arithmetic modulo 2$^\wedge$255 -\/ 19 ///. 
+
+\mbox{\Hypertarget{monocypher_8c_ad309dbcaeea13aa602d686964156ea0b}\label{monocypher_8c_ad309dbcaeea13aa602d686964156ea0b}} 
+\index{monocypher.c@{monocypher.c}!i16@{i16}}
+\index{i16@{i16}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{i16}{i16}}
+{\footnotesize\ttfamily typedef int16\+\_\+t \mbox{\hyperlink{monocypher_8c_ad309dbcaeea13aa602d686964156ea0b}{i16}}}
+
+\mbox{\Hypertarget{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}\label{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}} 
+\index{monocypher.c@{monocypher.c}!i32@{i32}}
+\index{i32@{i32}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{i32}{i32}}
+{\footnotesize\ttfamily typedef int32\+\_\+t \mbox{\hyperlink{monocypher_8c_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}}}
+
+\mbox{\Hypertarget{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}\label{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}} 
+\index{monocypher.c@{monocypher.c}!i64@{i64}}
+\index{i64@{i64}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{i64}{i64}}
+{\footnotesize\ttfamily typedef int64\+\_\+t \mbox{\hyperlink{monocypher_8c_a85cb35fbe5bf2961d7ad5f26814a91a2}{i64}}}
+
+\mbox{\Hypertarget{monocypher_8c_ae3702327b5f47e83b431e22b33da7b58}\label{monocypher_8c_ae3702327b5f47e83b431e22b33da7b58}} 
+\index{monocypher.c@{monocypher.c}!i8@{i8}}
+\index{i8@{i8}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{i8}{i8}}
+{\footnotesize\ttfamily typedef int8\+\_\+t \mbox{\hyperlink{monocypher_8c_ae3702327b5f47e83b431e22b33da7b58}{i8}}}
+
+\mbox{\Hypertarget{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}\label{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}} 
+\index{monocypher.c@{monocypher.c}!u32@{u32}}
+\index{u32@{u32}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{u32}{u32}}
+{\footnotesize\ttfamily typedef uint32\+\_\+t \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}
+
+\mbox{\Hypertarget{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}\label{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}} 
+\index{monocypher.c@{monocypher.c}!u64@{u64}}
+\index{u64@{u64}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{u64}{u64}}
+{\footnotesize\ttfamily typedef uint64\+\_\+t \mbox{\hyperlink{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}}}
+
+\mbox{\Hypertarget{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}\label{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}} 
+\index{monocypher.c@{monocypher.c}!u8@{u8}}
+\index{u8@{u8}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{u8}{u8}}
+{\footnotesize\ttfamily typedef uint8\+\_\+t \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{monocypher_8c_a3f03ab6ffdbf45d32aebe90f39a1fae3}\label{monocypher_8c_a3f03ab6ffdbf45d32aebe90f39a1fae3}} 
+\index{monocypher.c@{monocypher.c}!crypto\_argon2i@{crypto\_argon2i}}
+\index{crypto\_argon2i@{crypto\_argon2i}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_argon2i()}{crypto\_argon2i()}}
+{\footnotesize\ttfamily void crypto\+\_\+argon2i (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{hash,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{hash\+\_\+size,  }\item[{void $\ast$}]{work\+\_\+area,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{nb\+\_\+blocks,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{nb\+\_\+iterations,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{password,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{password\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{salt,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{salt\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_aedb358008ec320d7dbc30b5447712342}\label{monocypher_8c_aedb358008ec320d7dbc30b5447712342}} 
+\index{monocypher.c@{monocypher.c}!crypto\_argon2i\_general@{crypto\_argon2i\_general}}
+\index{crypto\_argon2i\_general@{crypto\_argon2i\_general}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_argon2i\_general()}{crypto\_argon2i\_general()}}
+{\footnotesize\ttfamily void crypto\+\_\+argon2i\+\_\+general (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{hash,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{hash\+\_\+size,  }\item[{void $\ast$}]{work\+\_\+area,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{nb\+\_\+blocks,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{nb\+\_\+iterations,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{password,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{password\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{salt,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{salt\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{key,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{key\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{ad,  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{ad\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_ad4a25c008228bb78917c305268633f36}\label{monocypher_8c_ad4a25c008228bb78917c305268633f36}} 
+\index{monocypher.c@{monocypher.c}!crypto\_blake2b@{crypto\_blake2b}}
+\index{crypto\_blake2b@{crypto\_blake2b}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_blake2b()}{crypto\_blake2b()}}
+{\footnotesize\ttfamily void crypto\+\_\+blake2b (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{hash\mbox{[}64\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{message,  }\item[{size\+\_\+t}]{message\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a1422c3757f13d228c1ac3dc936490c62}\label{monocypher_8c_a1422c3757f13d228c1ac3dc936490c62}} 
+\index{monocypher.c@{monocypher.c}!crypto\_blake2b\_final@{crypto\_blake2b\_final}}
+\index{crypto\_blake2b\_final@{crypto\_blake2b\_final}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_blake2b\_final()}{crypto\_blake2b\_final()}}
+{\footnotesize\ttfamily void crypto\+\_\+blake2b\+\_\+final (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__blake2b__ctx}{crypto\+\_\+blake2b\+\_\+ctx}} $\ast$}]{ctx,  }\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{hash }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a1c18b805ddd9df214fd0223b66f9e2a6}\label{monocypher_8c_a1c18b805ddd9df214fd0223b66f9e2a6}} 
+\index{monocypher.c@{monocypher.c}!crypto\_blake2b\_general@{crypto\_blake2b\_general}}
+\index{crypto\_blake2b\_general@{crypto\_blake2b\_general}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_blake2b\_general()}{crypto\_blake2b\_general()}}
+{\footnotesize\ttfamily void crypto\+\_\+blake2b\+\_\+general (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{hash,  }\item[{size\+\_\+t}]{hash\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{key,  }\item[{size\+\_\+t}]{key\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{message,  }\item[{size\+\_\+t}]{message\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a51e778e490fe7b0ce911de81b6ea8461}\label{monocypher_8c_a51e778e490fe7b0ce911de81b6ea8461}} 
+\index{monocypher.c@{monocypher.c}!crypto\_blake2b\_general\_init@{crypto\_blake2b\_general\_init}}
+\index{crypto\_blake2b\_general\_init@{crypto\_blake2b\_general\_init}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_blake2b\_general\_init()}{crypto\_blake2b\_general\_init()}}
+{\footnotesize\ttfamily void crypto\+\_\+blake2b\+\_\+general\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__blake2b__ctx}{crypto\+\_\+blake2b\+\_\+ctx}} $\ast$}]{ctx,  }\item[{size\+\_\+t}]{hash\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{key,  }\item[{size\+\_\+t}]{key\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a000834674405f5a0d81184134095aa00}\label{monocypher_8c_a000834674405f5a0d81184134095aa00}} 
+\index{monocypher.c@{monocypher.c}!crypto\_blake2b\_init@{crypto\_blake2b\_init}}
+\index{crypto\_blake2b\_init@{crypto\_blake2b\_init}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_blake2b\_init()}{crypto\_blake2b\_init()}}
+{\footnotesize\ttfamily void crypto\+\_\+blake2b\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__blake2b__ctx}{crypto\+\_\+blake2b\+\_\+ctx}} $\ast$}]{ctx }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a0d11738421fa5018ed0ec03e434c1274}\label{monocypher_8c_a0d11738421fa5018ed0ec03e434c1274}} 
+\index{monocypher.c@{monocypher.c}!crypto\_blake2b\_update@{crypto\_blake2b\_update}}
+\index{crypto\_blake2b\_update@{crypto\_blake2b\_update}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_blake2b\_update()}{crypto\_blake2b\_update()}}
+{\footnotesize\ttfamily void crypto\+\_\+blake2b\+\_\+update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__blake2b__ctx}{crypto\+\_\+blake2b\+\_\+ctx}} $\ast$}]{ctx,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{message,  }\item[{size\+\_\+t}]{message\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_aa26a0ec13bff7b9c3c303fbb37face26}\label{monocypher_8c_aa26a0ec13bff7b9c3c303fbb37face26}} 
+\index{monocypher.c@{monocypher.c}!crypto\_chacha20@{crypto\_chacha20}}
+\index{crypto\_chacha20@{crypto\_chacha20}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_chacha20()}{crypto\_chacha20()}}
+{\footnotesize\ttfamily void crypto\+\_\+chacha20 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{cipher\+\_\+text,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{plain\+\_\+text,  }\item[{size\+\_\+t}]{text\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{nonce\mbox{[}8\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a460d09e79ef44e357d8d6cfc43eff7b3}\label{monocypher_8c_a460d09e79ef44e357d8d6cfc43eff7b3}} 
+\index{monocypher.c@{monocypher.c}!crypto\_chacha20\_ctr@{crypto\_chacha20\_ctr}}
+\index{crypto\_chacha20\_ctr@{crypto\_chacha20\_ctr}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_chacha20\_ctr()}{crypto\_chacha20\_ctr()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}} crypto\+\_\+chacha20\+\_\+ctr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{cipher\+\_\+text,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{plain\+\_\+text,  }\item[{size\+\_\+t}]{text\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{nonce\mbox{[}8\mbox{]},  }\item[{\mbox{\hyperlink{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}}}]{ctr }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a0a081a8a32ee216184b0a80e65bc5632}\label{monocypher_8c_a0a081a8a32ee216184b0a80e65bc5632}} 
+\index{monocypher.c@{monocypher.c}!crypto\_check@{crypto\_check}}
+\index{crypto\_check@{crypto\_check}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_check()}{crypto\_check()}}
+{\footnotesize\ttfamily int crypto\+\_\+check (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{signature\mbox{[}64\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{message,  }\item[{size\+\_\+t}]{message\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a869333b55e033d73e9ba6d36e7a91acc}\label{monocypher_8c_a869333b55e033d73e9ba6d36e7a91acc}} 
+\index{monocypher.c@{monocypher.c}!crypto\_check\_final@{crypto\_check\_final}}
+\index{crypto\_check\_final@{crypto\_check\_final}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_check\_final()}{crypto\_check\_final()}}
+{\footnotesize\ttfamily int crypto\+\_\+check\+\_\+final (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8h_a69ae05847339b961bafab67017ed372a}{crypto\+\_\+check\+\_\+ctx\+\_\+abstract}} $\ast$}]{ctx }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a8b4f1c982bc1824f7e5b5e69f1a3eacb}\label{monocypher_8c_a8b4f1c982bc1824f7e5b5e69f1a3eacb}} 
+\index{monocypher.c@{monocypher.c}!crypto\_check\_init@{crypto\_check\_init}}
+\index{crypto\_check\_init@{crypto\_check\_init}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_check\_init()}{crypto\_check\_init()}}
+{\footnotesize\ttfamily void crypto\+\_\+check\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8h_a69ae05847339b961bafab67017ed372a}{crypto\+\_\+check\+\_\+ctx\+\_\+abstract}} $\ast$}]{ctx,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{signature\mbox{[}64\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_ac55b9343e90e84b74428302bccafb723}\label{monocypher_8c_ac55b9343e90e84b74428302bccafb723}} 
+\index{monocypher.c@{monocypher.c}!crypto\_check\_init\_custom\_hash@{crypto\_check\_init\_custom\_hash}}
+\index{crypto\_check\_init\_custom\_hash@{crypto\_check\_init\_custom\_hash}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_check\_init\_custom\_hash()}{crypto\_check\_init\_custom\_hash()}}
+{\footnotesize\ttfamily void crypto\+\_\+check\+\_\+init\+\_\+custom\+\_\+hash (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8h_a69ae05847339b961bafab67017ed372a}{crypto\+\_\+check\+\_\+ctx\+\_\+abstract}} $\ast$}]{ctx,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{signature\mbox{[}64\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{structcrypto__sign__vtable}{crypto\+\_\+sign\+\_\+vtable}} $\ast$}]{hash }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_ab4908997d48ae62e0227c1185268369b}\label{monocypher_8c_ab4908997d48ae62e0227c1185268369b}} 
+\index{monocypher.c@{monocypher.c}!crypto\_check\_update@{crypto\_check\_update}}
+\index{crypto\_check\_update@{crypto\_check\_update}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_check\_update()}{crypto\_check\_update()}}
+{\footnotesize\ttfamily void crypto\+\_\+check\+\_\+update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8h_a69ae05847339b961bafab67017ed372a}{crypto\+\_\+check\+\_\+ctx\+\_\+abstract}} $\ast$}]{ctx,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{msg,  }\item[{size\+\_\+t}]{msg\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a47363d9653182a57966fe8a0dcfe04f1}\label{monocypher_8c_a47363d9653182a57966fe8a0dcfe04f1}} 
+\index{monocypher.c@{monocypher.c}!crypto\_curve\_to\_hidden@{crypto\_curve\_to\_hidden}}
+\index{crypto\_curve\_to\_hidden@{crypto\_curve\_to\_hidden}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_curve\_to\_hidden()}{crypto\_curve\_to\_hidden()}}
+{\footnotesize\ttfamily int crypto\+\_\+curve\+\_\+to\+\_\+hidden (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{hidden\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]},  }\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{tweak }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_ad1c4e319f94b10cab20a5133fe883444}\label{monocypher_8c_ad1c4e319f94b10cab20a5133fe883444}} 
+\index{monocypher.c@{monocypher.c}!crypto\_from\_eddsa\_private@{crypto\_from\_eddsa\_private}}
+\index{crypto\_from\_eddsa\_private@{crypto\_from\_eddsa\_private}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_from\_eddsa\_private()}{crypto\_from\_eddsa\_private()}}
+{\footnotesize\ttfamily void crypto\+\_\+from\+\_\+eddsa\+\_\+private (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{x25519\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{eddsa\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Ed\+DSA to X25519 ///. 
+
+\mbox{\Hypertarget{monocypher_8c_a1b4b32c927af6ad1dc9b8d697e17bf22}\label{monocypher_8c_a1b4b32c927af6ad1dc9b8d697e17bf22}} 
+\index{monocypher.c@{monocypher.c}!crypto\_from\_eddsa\_public@{crypto\_from\_eddsa\_public}}
+\index{crypto\_from\_eddsa\_public@{crypto\_from\_eddsa\_public}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_from\_eddsa\_public()}{crypto\_from\_eddsa\_public()}}
+{\footnotesize\ttfamily void crypto\+\_\+from\+\_\+eddsa\+\_\+public (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{x25519\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{eddsa\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_ae634bd6e628cec626aea02ff97bd4208}\label{monocypher_8c_ae634bd6e628cec626aea02ff97bd4208}} 
+\index{monocypher.c@{monocypher.c}!crypto\_hchacha20@{crypto\_hchacha20}}
+\index{crypto\_hchacha20@{crypto\_hchacha20}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_hchacha20()}{crypto\_hchacha20()}}
+{\footnotesize\ttfamily void crypto\+\_\+hchacha20 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{out\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{in\mbox{[}16\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Low level primitives ///. 
+
+\mbox{\Hypertarget{monocypher_8c_a659013cfc56327e65f62a66ad680e132}\label{monocypher_8c_a659013cfc56327e65f62a66ad680e132}} 
+\index{monocypher.c@{monocypher.c}!crypto\_hidden\_key\_pair@{crypto\_hidden\_key\_pair}}
+\index{crypto\_hidden\_key\_pair@{crypto\_hidden\_key\_pair}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_hidden\_key\_pair()}{crypto\_hidden\_key\_pair()}}
+{\footnotesize\ttfamily void crypto\+\_\+hidden\+\_\+key\+\_\+pair (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{hidden\mbox{[}32\mbox{]},  }\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{secret\+\_\+key\mbox{[}32\mbox{]},  }\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{seed\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_ac445cea8f2d8ff6d9c7d0c3d29a8f4ca}\label{monocypher_8c_ac445cea8f2d8ff6d9c7d0c3d29a8f4ca}} 
+\index{monocypher.c@{monocypher.c}!crypto\_hidden\_to\_curve@{crypto\_hidden\_to\_curve}}
+\index{crypto\_hidden\_to\_curve@{crypto\_hidden\_to\_curve}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_hidden\_to\_curve()}{crypto\_hidden\_to\_curve()}}
+{\footnotesize\ttfamily void crypto\+\_\+hidden\+\_\+to\+\_\+curve (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{curve\mbox{[}32\mbox{]},  }\item[{const uint8\+\_\+t}]{hidden\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_acd02021aafe613e04c56de79a4a04ec9}\label{monocypher_8c_acd02021aafe613e04c56de79a4a04ec9}} 
+\index{monocypher.c@{monocypher.c}!crypto\_ietf\_chacha20@{crypto\_ietf\_chacha20}}
+\index{crypto\_ietf\_chacha20@{crypto\_ietf\_chacha20}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_ietf\_chacha20()}{crypto\_ietf\_chacha20()}}
+{\footnotesize\ttfamily void crypto\+\_\+ietf\+\_\+chacha20 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{cipher\+\_\+text,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{plain\+\_\+text,  }\item[{size\+\_\+t}]{text\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{nonce\mbox{[}12\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_afbfbf79e1a85b1eb892670dcd621c9d6}\label{monocypher_8c_afbfbf79e1a85b1eb892670dcd621c9d6}} 
+\index{monocypher.c@{monocypher.c}!crypto\_ietf\_chacha20\_ctr@{crypto\_ietf\_chacha20\_ctr}}
+\index{crypto\_ietf\_chacha20\_ctr@{crypto\_ietf\_chacha20\_ctr}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_ietf\_chacha20\_ctr()}{crypto\_ietf\_chacha20\_ctr()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}} crypto\+\_\+ietf\+\_\+chacha20\+\_\+ctr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{cipher\+\_\+text,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{plain\+\_\+text,  }\item[{size\+\_\+t}]{text\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{nonce\mbox{[}12\mbox{]},  }\item[{\mbox{\hyperlink{monocypher_8c_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{ctr }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a20d6501a0ceb47ac186422d836411905}\label{monocypher_8c_a20d6501a0ceb47ac186422d836411905}} 
+\index{monocypher.c@{monocypher.c}!crypto\_key\_exchange@{crypto\_key\_exchange}}
+\index{crypto\_key\_exchange@{crypto\_key\_exchange}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_key\_exchange()}{crypto\_key\_exchange()}}
+{\footnotesize\ttfamily void crypto\+\_\+key\+\_\+exchange (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{shared\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{your\+\_\+secret\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{their\+\_\+public\+\_\+key\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Key exchange ///. 
+
+\mbox{\Hypertarget{monocypher_8c_a6ac72121db30ae7e96b020d6e4a9ae48}\label{monocypher_8c_a6ac72121db30ae7e96b020d6e4a9ae48}} 
+\index{monocypher.c@{monocypher.c}!crypto\_lock@{crypto\_lock}}
+\index{crypto\_lock@{crypto\_lock}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_lock()}{crypto\_lock()}}
+{\footnotesize\ttfamily void crypto\+\_\+lock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{mac\mbox{[}16\mbox{]},  }\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{cipher\+\_\+text,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{nonce\mbox{[}24\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{plain\+\_\+text,  }\item[{size\+\_\+t}]{text\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a2fda93d0698c993b75d5776a11378b5a}\label{monocypher_8c_a2fda93d0698c993b75d5776a11378b5a}} 
+\index{monocypher.c@{monocypher.c}!crypto\_lock\_aead@{crypto\_lock\_aead}}
+\index{crypto\_lock\_aead@{crypto\_lock\_aead}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_lock\_aead()}{crypto\_lock\_aead()}}
+{\footnotesize\ttfamily void crypto\+\_\+lock\+\_\+aead (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{mac\mbox{[}16\mbox{]},  }\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{cipher\+\_\+text,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{nonce\mbox{[}24\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{ad,  }\item[{size\+\_\+t}]{ad\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{plain\+\_\+text,  }\item[{size\+\_\+t}]{text\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a9dc321043935b5071200f7b696d6ae2b}\label{monocypher_8c_a9dc321043935b5071200f7b696d6ae2b}} 
+\index{monocypher.c@{monocypher.c}!crypto\_poly1305@{crypto\_poly1305}}
+\index{crypto\_poly1305@{crypto\_poly1305}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_poly1305()}{crypto\_poly1305()}}
+{\footnotesize\ttfamily void crypto\+\_\+poly1305 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{mac\mbox{[}16\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{message,  }\item[{size\+\_\+t}]{message\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a0b8a2c612432d7d5dc41280f4c92a01e}\label{monocypher_8c_a0b8a2c612432d7d5dc41280f4c92a01e}} 
+\index{monocypher.c@{monocypher.c}!crypto\_poly1305\_final@{crypto\_poly1305\_final}}
+\index{crypto\_poly1305\_final@{crypto\_poly1305\_final}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_poly1305\_final()}{crypto\_poly1305\_final()}}
+{\footnotesize\ttfamily void crypto\+\_\+poly1305\+\_\+final (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__poly1305__ctx}{crypto\+\_\+poly1305\+\_\+ctx}} $\ast$}]{ctx,  }\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{mac\mbox{[}16\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_ac77e5874b8d8a807cfd51d1c65700b75}\label{monocypher_8c_ac77e5874b8d8a807cfd51d1c65700b75}} 
+\index{monocypher.c@{monocypher.c}!crypto\_poly1305\_init@{crypto\_poly1305\_init}}
+\index{crypto\_poly1305\_init@{crypto\_poly1305\_init}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_poly1305\_init()}{crypto\_poly1305\_init()}}
+{\footnotesize\ttfamily void crypto\+\_\+poly1305\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__poly1305__ctx}{crypto\+\_\+poly1305\+\_\+ctx}} $\ast$}]{ctx,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_add8d1b0ddda7526387dcca0ef0d6a712}\label{monocypher_8c_add8d1b0ddda7526387dcca0ef0d6a712}} 
+\index{monocypher.c@{monocypher.c}!crypto\_poly1305\_update@{crypto\_poly1305\_update}}
+\index{crypto\_poly1305\_update@{crypto\_poly1305\_update}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_poly1305\_update()}{crypto\_poly1305\_update()}}
+{\footnotesize\ttfamily void crypto\+\_\+poly1305\+\_\+update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__poly1305__ctx}{crypto\+\_\+poly1305\+\_\+ctx}} $\ast$}]{ctx,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{message,  }\item[{size\+\_\+t}]{message\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a27ec2a75334ac2499f802ca8450021e0}\label{monocypher_8c_a27ec2a75334ac2499f802ca8450021e0}} 
+\index{monocypher.c@{monocypher.c}!crypto\_sign@{crypto\_sign}}
+\index{crypto\_sign@{crypto\_sign}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_sign()}{crypto\_sign()}}
+{\footnotesize\ttfamily void crypto\+\_\+sign (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{signature\mbox{[}64\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{secret\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{message,  }\item[{size\+\_\+t}]{message\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_acdc0d84c24be30371b0cc98faeb32afd}\label{monocypher_8c_acdc0d84c24be30371b0cc98faeb32afd}} 
+\index{monocypher.c@{monocypher.c}!crypto\_sign\_final@{crypto\_sign\_final}}
+\index{crypto\_sign\_final@{crypto\_sign\_final}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_sign\_final()}{crypto\_sign\_final()}}
+{\footnotesize\ttfamily void crypto\+\_\+sign\+\_\+final (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__sign__ctx__abstract}{crypto\+\_\+sign\+\_\+ctx\+\_\+abstract}} $\ast$}]{ctx,  }\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{signature\mbox{[}64\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a66d9333be03262fadfdb1274b187035d}\label{monocypher_8c_a66d9333be03262fadfdb1274b187035d}} 
+\index{monocypher.c@{monocypher.c}!crypto\_sign\_init\_first\_pass@{crypto\_sign\_init\_first\_pass}}
+\index{crypto\_sign\_init\_first\_pass@{crypto\_sign\_init\_first\_pass}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_sign\_init\_first\_pass()}{crypto\_sign\_init\_first\_pass()}}
+{\footnotesize\ttfamily void crypto\+\_\+sign\+\_\+init\+\_\+first\+\_\+pass (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__sign__ctx__abstract}{crypto\+\_\+sign\+\_\+ctx\+\_\+abstract}} $\ast$}]{ctx,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{secret\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_ac53a3c38569af32c8312795e415d2365}\label{monocypher_8c_ac53a3c38569af32c8312795e415d2365}} 
+\index{monocypher.c@{monocypher.c}!crypto\_sign\_init\_first\_pass\_custom\_hash@{crypto\_sign\_init\_first\_pass\_custom\_hash}}
+\index{crypto\_sign\_init\_first\_pass\_custom\_hash@{crypto\_sign\_init\_first\_pass\_custom\_hash}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_sign\_init\_first\_pass\_custom\_hash()}{crypto\_sign\_init\_first\_pass\_custom\_hash()}}
+{\footnotesize\ttfamily void crypto\+\_\+sign\+\_\+init\+\_\+first\+\_\+pass\+\_\+custom\+\_\+hash (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__sign__ctx__abstract}{crypto\+\_\+sign\+\_\+ctx\+\_\+abstract}} $\ast$}]{ctx,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{secret\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{structcrypto__sign__vtable}{crypto\+\_\+sign\+\_\+vtable}} $\ast$}]{hash }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a43c47f7ac5c8f0a7f8196f32ff0a93dd}\label{monocypher_8c_a43c47f7ac5c8f0a7f8196f32ff0a93dd}} 
+\index{monocypher.c@{monocypher.c}!crypto\_sign\_init\_second\_pass@{crypto\_sign\_init\_second\_pass}}
+\index{crypto\_sign\_init\_second\_pass@{crypto\_sign\_init\_second\_pass}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_sign\_init\_second\_pass()}{crypto\_sign\_init\_second\_pass()}}
+{\footnotesize\ttfamily void crypto\+\_\+sign\+\_\+init\+\_\+second\+\_\+pass (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__sign__ctx__abstract}{crypto\+\_\+sign\+\_\+ctx\+\_\+abstract}} $\ast$}]{ctx }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a18eb436f2563173aaaddce1fcddee26e}\label{monocypher_8c_a18eb436f2563173aaaddce1fcddee26e}} 
+\index{monocypher.c@{monocypher.c}!crypto\_sign\_public\_key@{crypto\_sign\_public\_key}}
+\index{crypto\_sign\_public\_key@{crypto\_sign\_public\_key}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_sign\_public\_key()}{crypto\_sign\_public\_key()}}
+{\footnotesize\ttfamily void crypto\+\_\+sign\+\_\+public\+\_\+key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{secret\+\_\+key\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_ac08aa33931d3d013b5590a5c2285cb43}\label{monocypher_8c_ac08aa33931d3d013b5590a5c2285cb43}} 
+\index{monocypher.c@{monocypher.c}!crypto\_sign\_public\_key\_custom\_hash@{crypto\_sign\_public\_key\_custom\_hash}}
+\index{crypto\_sign\_public\_key\_custom\_hash@{crypto\_sign\_public\_key\_custom\_hash}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_sign\_public\_key\_custom\_hash()}{crypto\_sign\_public\_key\_custom\_hash()}}
+{\footnotesize\ttfamily void crypto\+\_\+sign\+\_\+public\+\_\+key\+\_\+custom\+\_\+hash (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{secret\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{structcrypto__sign__vtable}{crypto\+\_\+sign\+\_\+vtable}} $\ast$}]{hash }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a186a06bdb406f8fd6cfd322bfa1bec33}\label{monocypher_8c_a186a06bdb406f8fd6cfd322bfa1bec33}} 
+\index{monocypher.c@{monocypher.c}!crypto\_sign\_update@{crypto\_sign\_update}}
+\index{crypto\_sign\_update@{crypto\_sign\_update}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_sign\_update()}{crypto\_sign\_update()}}
+{\footnotesize\ttfamily void crypto\+\_\+sign\+\_\+update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcrypto__sign__ctx__abstract}{crypto\+\_\+sign\+\_\+ctx\+\_\+abstract}} $\ast$}]{ctx,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{msg,  }\item[{size\+\_\+t}]{msg\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a07e102540303f4b5bc297935444818f6}\label{monocypher_8c_a07e102540303f4b5bc297935444818f6}} 
+\index{monocypher.c@{monocypher.c}!crypto\_unlock@{crypto\_unlock}}
+\index{crypto\_unlock@{crypto\_unlock}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_unlock()}{crypto\_unlock()}}
+{\footnotesize\ttfamily int crypto\+\_\+unlock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{plain\+\_\+text,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{nonce\mbox{[}24\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{mac\mbox{[}16\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{cipher\+\_\+text,  }\item[{size\+\_\+t}]{text\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a94f5b1016792a9351fc28fa29fbcb96b}\label{monocypher_8c_a94f5b1016792a9351fc28fa29fbcb96b}} 
+\index{monocypher.c@{monocypher.c}!crypto\_unlock\_aead@{crypto\_unlock\_aead}}
+\index{crypto\_unlock\_aead@{crypto\_unlock\_aead}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_unlock\_aead()}{crypto\_unlock\_aead()}}
+{\footnotesize\ttfamily int crypto\+\_\+unlock\+\_\+aead (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{plain\+\_\+text,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{nonce\mbox{[}24\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{mac\mbox{[}16\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{ad,  }\item[{size\+\_\+t}]{ad\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{cipher\+\_\+text,  }\item[{size\+\_\+t}]{text\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a2f387f76030d5e7ed3014319053ab25b}\label{monocypher_8c_a2f387f76030d5e7ed3014319053ab25b}} 
+\index{monocypher.c@{monocypher.c}!crypto\_verify16@{crypto\_verify16}}
+\index{crypto\_verify16@{crypto\_verify16}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_verify16()}{crypto\_verify16()}}
+{\footnotesize\ttfamily int crypto\+\_\+verify16 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{a\mbox{[}16\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{b\mbox{[}16\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+High level interface ///. 
+
+\mbox{\Hypertarget{monocypher_8c_a480a45cbfde604361084c74dcbf87524}\label{monocypher_8c_a480a45cbfde604361084c74dcbf87524}} 
+\index{monocypher.c@{monocypher.c}!crypto\_verify32@{crypto\_verify32}}
+\index{crypto\_verify32@{crypto\_verify32}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_verify32()}{crypto\_verify32()}}
+{\footnotesize\ttfamily int crypto\+\_\+verify32 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{a\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{b\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a5ba26d97015ee0a42bf1f16a8d692465}\label{monocypher_8c_a5ba26d97015ee0a42bf1f16a8d692465}} 
+\index{monocypher.c@{monocypher.c}!crypto\_verify64@{crypto\_verify64}}
+\index{crypto\_verify64@{crypto\_verify64}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_verify64()}{crypto\_verify64()}}
+{\footnotesize\ttfamily int crypto\+\_\+verify64 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{a\mbox{[}64\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{b\mbox{[}64\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a84904a8f94da26863cb33a9375c0a63a}\label{monocypher_8c_a84904a8f94da26863cb33a9375c0a63a}} 
+\index{monocypher.c@{monocypher.c}!crypto\_wipe@{crypto\_wipe}}
+\index{crypto\_wipe@{crypto\_wipe}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_wipe()}{crypto\_wipe()}}
+{\footnotesize\ttfamily void crypto\+\_\+wipe (\begin{DoxyParamCaption}\item[{void $\ast$}]{secret,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a297c5caead6b2a62437c81bef875faa6}\label{monocypher_8c_a297c5caead6b2a62437c81bef875faa6}} 
+\index{monocypher.c@{monocypher.c}!crypto\_x25519@{crypto\_x25519}}
+\index{crypto\_x25519@{crypto\_x25519}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_x25519()}{crypto\_x25519()}}
+{\footnotesize\ttfamily void crypto\+\_\+x25519 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{raw\+\_\+shared\+\_\+secret\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{your\+\_\+secret\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{their\+\_\+public\+\_\+key\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a3d723cc737498990cd6f36db997bcfc9}\label{monocypher_8c_a3d723cc737498990cd6f36db997bcfc9}} 
+\index{monocypher.c@{monocypher.c}!crypto\_x25519\_dirty\_fast@{crypto\_x25519\_dirty\_fast}}
+\index{crypto\_x25519\_dirty\_fast@{crypto\_x25519\_dirty\_fast}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_x25519\_dirty\_fast()}{crypto\_x25519\_dirty\_fast()}}
+{\footnotesize\ttfamily void crypto\+\_\+x25519\+\_\+dirty\+\_\+fast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{secret\+\_\+key\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_aac91b6b4254ad5c3716e38582ddd44f9}\label{monocypher_8c_aac91b6b4254ad5c3716e38582ddd44f9}} 
+\index{monocypher.c@{monocypher.c}!crypto\_x25519\_dirty\_small@{crypto\_x25519\_dirty\_small}}
+\index{crypto\_x25519\_dirty\_small@{crypto\_x25519\_dirty\_small}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_x25519\_dirty\_small()}{crypto\_x25519\_dirty\_small()}}
+{\footnotesize\ttfamily void crypto\+\_\+x25519\+\_\+dirty\+\_\+small (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{secret\+\_\+key\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a40d1e320cac9b8b4348899d2d66fdbb1}\label{monocypher_8c_a40d1e320cac9b8b4348899d2d66fdbb1}} 
+\index{monocypher.c@{monocypher.c}!crypto\_x25519\_inverse@{crypto\_x25519\_inverse}}
+\index{crypto\_x25519\_inverse@{crypto\_x25519\_inverse}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_x25519\_inverse()}{crypto\_x25519\_inverse()}}
+{\footnotesize\ttfamily void crypto\+\_\+x25519\+\_\+inverse (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{blind\+\_\+salt\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{private\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{curve\+\_\+point\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a17eaafdb62f01899fd7769bf728900f8}\label{monocypher_8c_a17eaafdb62f01899fd7769bf728900f8}} 
+\index{monocypher.c@{monocypher.c}!crypto\_x25519\_public\_key@{crypto\_x25519\_public\_key}}
+\index{crypto\_x25519\_public\_key@{crypto\_x25519\_public\_key}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_x25519\_public\_key()}{crypto\_x25519\_public\_key()}}
+{\footnotesize\ttfamily void crypto\+\_\+x25519\+\_\+public\+\_\+key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{public\+\_\+key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{secret\+\_\+key\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a6211bda325d7b6e1167010b4127ed51a}\label{monocypher_8c_a6211bda325d7b6e1167010b4127ed51a}} 
+\index{monocypher.c@{monocypher.c}!crypto\_xchacha20@{crypto\_xchacha20}}
+\index{crypto\_xchacha20@{crypto\_xchacha20}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_xchacha20()}{crypto\_xchacha20()}}
+{\footnotesize\ttfamily void crypto\+\_\+xchacha20 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{cipher\+\_\+text,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{plain\+\_\+text,  }\item[{size\+\_\+t}]{text\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{nonce\mbox{[}24\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{monocypher_8c_a0efbf5207c518b6bcb8e3c8afde29231}\label{monocypher_8c_a0efbf5207c518b6bcb8e3c8afde29231}} 
+\index{monocypher.c@{monocypher.c}!crypto\_xchacha20\_ctr@{crypto\_xchacha20\_ctr}}
+\index{crypto\_xchacha20\_ctr@{crypto\_xchacha20\_ctr}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_xchacha20\_ctr()}{crypto\_xchacha20\_ctr()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}} crypto\+\_\+xchacha20\+\_\+ctr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{cipher\+\_\+text,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}} $\ast$}]{plain\+\_\+text,  }\item[{size\+\_\+t}]{text\+\_\+size,  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{key\mbox{[}32\mbox{]},  }\item[{const \mbox{\hyperlink{monocypher_8c_a92c50087ca0e64fa93fc59402c55f8ca}{u8}}}]{nonce\mbox{[}24\mbox{]},  }\item[{\mbox{\hyperlink{monocypher_8c_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}}}]{ctr }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{monocypher_8c_a8ba80651f0e9b1d5270c9fa8582986fd}\label{monocypher_8c_a8ba80651f0e9b1d5270c9fa8582986fd}} 
+\index{monocypher.c@{monocypher.c}!crypto\_blake2b\_vtable@{crypto\_blake2b\_vtable}}
+\index{crypto\_blake2b\_vtable@{crypto\_blake2b\_vtable}!monocypher.c@{monocypher.c}}
+\doxysubsubsection{\texorpdfstring{crypto\_blake2b\_vtable}{crypto\_blake2b\_vtable}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structcrypto__sign__vtable}{crypto\+\_\+sign\+\_\+vtable}} crypto\+\_\+blake2b\+\_\+vtable}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    \mbox{\hyperlink{monocypher_8c_ad4a25c008228bb78917c305268633f36}{crypto\_blake2b}},}
+\DoxyCodeLine{    blake2b\_vtable\_init,}
+\DoxyCodeLine{    blake2b\_vtable\_update,}
+\DoxyCodeLine{    blake2b\_vtable\_final,}
+\DoxyCodeLine{    \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structcrypto__sign__ctx}{crypto\_sign\_ctx}}),}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}

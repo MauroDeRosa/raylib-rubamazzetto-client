@@ -1,0 +1,65 @@
+\hypertarget{structLZ4__stream__t__internal}{}\doxysection{LZ4\+\_\+stream\+\_\+t\+\_\+internal Struct Reference}
+\label{structLZ4__stream__t__internal}\index{LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}}
+
+
+{\ttfamily \#include $<$lz4.\+h$>$}
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\+\_\+u32}} \mbox{\hyperlink{structLZ4__stream__t__internal_afb3b54934c388fea25aa5bdc2afa0e32}{hash\+Table}} \mbox{[}\mbox{\hyperlink{lz4_8h_a75fa199d8ad0949f67b62054171dc473}{LZ4\+\_\+\+HASH\+\_\+\+SIZE\+\_\+\+U32}}\mbox{]}
+\item 
+\mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\+\_\+u32}} \mbox{\hyperlink{structLZ4__stream__t__internal_ab3bd2c19764d29ca31461d6a3fc3345f}{current\+Offset}}
+\item 
+\mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\+\_\+u32}} \mbox{\hyperlink{structLZ4__stream__t__internal_a9f0c6d5c94e20c8716dbd4a07d7e1fe3}{table\+Type}}
+\item 
+const \mbox{\hyperlink{lz4_8h_acaa790a21198215fcdd2f4ea86073626}{LZ4\+\_\+byte}} $\ast$ \mbox{\hyperlink{structLZ4__stream__t__internal_ac49d2dcc57fb65fba2534f2bb231c8b9}{dictionary}}
+\item 
+const \mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\+\_\+stream\+\_\+t\+\_\+internal}} $\ast$ \mbox{\hyperlink{structLZ4__stream__t__internal_a149d776fc4b59881d47aa61c487138c4}{dict\+Ctx}}
+\item 
+\mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\+\_\+u32}} \mbox{\hyperlink{structLZ4__stream__t__internal_ae91b94da38c2a459926645c0bd28a814}{dict\+Size}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structLZ4__stream__t__internal_ab3bd2c19764d29ca31461d6a3fc3345f}\label{structLZ4__stream__t__internal_ab3bd2c19764d29ca31461d6a3fc3345f}} 
+\index{LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}!currentOffset@{currentOffset}}
+\index{currentOffset@{currentOffset}!LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}}
+\doxysubsubsection{\texorpdfstring{currentOffset}{currentOffset}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\+\_\+u32}} LZ4\+\_\+stream\+\_\+t\+\_\+internal\+::current\+Offset}
+
+\mbox{\Hypertarget{structLZ4__stream__t__internal_a149d776fc4b59881d47aa61c487138c4}\label{structLZ4__stream__t__internal_a149d776fc4b59881d47aa61c487138c4}} 
+\index{LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}!dictCtx@{dictCtx}}
+\index{dictCtx@{dictCtx}!LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}}
+\doxysubsubsection{\texorpdfstring{dictCtx}{dictCtx}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\+\_\+stream\+\_\+t\+\_\+internal}}$\ast$ LZ4\+\_\+stream\+\_\+t\+\_\+internal\+::dict\+Ctx}
+
+\mbox{\Hypertarget{structLZ4__stream__t__internal_ac49d2dcc57fb65fba2534f2bb231c8b9}\label{structLZ4__stream__t__internal_ac49d2dcc57fb65fba2534f2bb231c8b9}} 
+\index{LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}!dictionary@{dictionary}}
+\index{dictionary@{dictionary}!LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}}
+\doxysubsubsection{\texorpdfstring{dictionary}{dictionary}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{lz4_8h_acaa790a21198215fcdd2f4ea86073626}{LZ4\+\_\+byte}}$\ast$ LZ4\+\_\+stream\+\_\+t\+\_\+internal\+::dictionary}
+
+\mbox{\Hypertarget{structLZ4__stream__t__internal_ae91b94da38c2a459926645c0bd28a814}\label{structLZ4__stream__t__internal_ae91b94da38c2a459926645c0bd28a814}} 
+\index{LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}!dictSize@{dictSize}}
+\index{dictSize@{dictSize}!LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}}
+\doxysubsubsection{\texorpdfstring{dictSize}{dictSize}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\+\_\+u32}} LZ4\+\_\+stream\+\_\+t\+\_\+internal\+::dict\+Size}
+
+\mbox{\Hypertarget{structLZ4__stream__t__internal_afb3b54934c388fea25aa5bdc2afa0e32}\label{structLZ4__stream__t__internal_afb3b54934c388fea25aa5bdc2afa0e32}} 
+\index{LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}!hashTable@{hashTable}}
+\index{hashTable@{hashTable}!LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}}
+\doxysubsubsection{\texorpdfstring{hashTable}{hashTable}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\+\_\+u32}} LZ4\+\_\+stream\+\_\+t\+\_\+internal\+::hash\+Table\mbox{[}\mbox{\hyperlink{lz4_8h_a75fa199d8ad0949f67b62054171dc473}{LZ4\+\_\+\+HASH\+\_\+\+SIZE\+\_\+\+U32}}\mbox{]}}
+
+\mbox{\Hypertarget{structLZ4__stream__t__internal_a9f0c6d5c94e20c8716dbd4a07d7e1fe3}\label{structLZ4__stream__t__internal_a9f0c6d5c94e20c8716dbd4a07d7e1fe3}} 
+\index{LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}!tableType@{tableType}}
+\index{tableType@{tableType}!LZ4\_stream\_t\_internal@{LZ4\_stream\_t\_internal}}
+\doxysubsubsection{\texorpdfstring{tableType}{tableType}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8h_af72533ac9fd69bdeff6b48c8c9065f81}{LZ4\+\_\+u32}} LZ4\+\_\+stream\+\_\+t\+\_\+internal\+::table\+Type}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/external/external/\mbox{\hyperlink{lz4_8h}{lz4.\+h}}\end{DoxyCompactItemize}

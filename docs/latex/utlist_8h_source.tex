@@ -1,0 +1,1079 @@
+\hypertarget{utlist_8h_source}{}\doxysection{utlist.\+h}
+\label{utlist_8h_source}\index{include/external/uthash/utlist.h@{include/external/uthash/utlist.h}}
+\mbox{\hyperlink{utlist_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{Copyright (c) 2007-\/2022, Troy D. Hanson  https://troydhanson.github.io/uthash/}}
+\DoxyCodeLine{3 \textcolor{comment}{All rights reserved.}}
+\DoxyCodeLine{4 \textcolor{comment}{}}
+\DoxyCodeLine{5 \textcolor{comment}{Redistribution and use in source and binary forms, with or without}}
+\DoxyCodeLine{6 \textcolor{comment}{modification, are permitted provided that the following conditions are met:}}
+\DoxyCodeLine{7 \textcolor{comment}{}}
+\DoxyCodeLine{8 \textcolor{comment}{    * Redistributions of source code must retain the above copyright}}
+\DoxyCodeLine{9 \textcolor{comment}{      notice, this list of conditions and the following disclaimer.}}
+\DoxyCodeLine{10 \textcolor{comment}{}}
+\DoxyCodeLine{11 \textcolor{comment}{THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "{}AS}}
+\DoxyCodeLine{12 \textcolor{comment}{IS"{} AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED}}
+\DoxyCodeLine{13 \textcolor{comment}{TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A}}
+\DoxyCodeLine{14 \textcolor{comment}{PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER}}
+\DoxyCodeLine{15 \textcolor{comment}{OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,}}
+\DoxyCodeLine{16 \textcolor{comment}{EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,}}
+\DoxyCodeLine{17 \textcolor{comment}{PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR}}
+\DoxyCodeLine{18 \textcolor{comment}{PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF}}
+\DoxyCodeLine{19 \textcolor{comment}{LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING}}
+\DoxyCodeLine{20 \textcolor{comment}{NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS}}
+\DoxyCodeLine{21 \textcolor{comment}{SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.}}
+\DoxyCodeLine{22 \textcolor{comment}{*/}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#ifndef UTLIST\_H}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#define UTLIST\_H}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#define UTLIST\_VERSION 2.3.0}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <assert.h>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{comment}{/*}}
+\DoxyCodeLine{32 \textcolor{comment}{ * This file contains macros to manipulate singly and doubly-\/linked lists.}}
+\DoxyCodeLine{33 \textcolor{comment}{ *}}
+\DoxyCodeLine{34 \textcolor{comment}{ * 1. LL\_ macros:  singly-\/linked lists.}}
+\DoxyCodeLine{35 \textcolor{comment}{ * 2. DL\_ macros:  doubly-\/linked lists.}}
+\DoxyCodeLine{36 \textcolor{comment}{ * 3. CDL\_ macros: circular doubly-\/linked lists.}}
+\DoxyCodeLine{37 \textcolor{comment}{ *}}
+\DoxyCodeLine{38 \textcolor{comment}{ * To use singly-\/linked lists, your structure must have a "{}next"{} pointer.}}
+\DoxyCodeLine{39 \textcolor{comment}{ * To use doubly-\/linked lists, your structure must "{}prev"{} and "{}next"{} pointers.}}
+\DoxyCodeLine{40 \textcolor{comment}{ * Either way, the pointer to the head of the list must be initialized to NULL.}}
+\DoxyCodeLine{41 \textcolor{comment}{ *}}
+\DoxyCodeLine{42 \textcolor{comment}{ * -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/.EXAMPLE -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{43 \textcolor{comment}{ * struct item \{}}
+\DoxyCodeLine{44 \textcolor{comment}{ *      int id;}}
+\DoxyCodeLine{45 \textcolor{comment}{ *      struct item *prev, *next;}}
+\DoxyCodeLine{46 \textcolor{comment}{ * \}}}
+\DoxyCodeLine{47 \textcolor{comment}{ *}}
+\DoxyCodeLine{48 \textcolor{comment}{ * struct item *list = NULL:}}
+\DoxyCodeLine{49 \textcolor{comment}{ *}}
+\DoxyCodeLine{50 \textcolor{comment}{ * int main() \{}}
+\DoxyCodeLine{51 \textcolor{comment}{ *      struct item *item;}}
+\DoxyCodeLine{52 \textcolor{comment}{ *      ... allocate and populate item ...}}
+\DoxyCodeLine{53 \textcolor{comment}{ *      DL\_APPEND(list, item);}}
+\DoxyCodeLine{54 \textcolor{comment}{ * \}}}
+\DoxyCodeLine{55 \textcolor{comment}{ * -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{56 \textcolor{comment}{ *}}
+\DoxyCodeLine{57 \textcolor{comment}{ * For doubly-\/linked lists, the append and delete macros are O(1)}}
+\DoxyCodeLine{58 \textcolor{comment}{ * For singly-\/linked lists, append and delete are O(n) but prepend is O(1)}}
+\DoxyCodeLine{59 \textcolor{comment}{ * The sort macro is O(n log(n)) for all types of single/double/circular lists.}}
+\DoxyCodeLine{60 \textcolor{comment}{ */}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{comment}{/* These macros use decltype or the earlier \_\_typeof GNU extension.}}
+\DoxyCodeLine{63 \textcolor{comment}{   As decltype is only available in newer compilers (VS2010 or gcc 4.3+}}
+\DoxyCodeLine{64 \textcolor{comment}{   when compiling c++ source) this code uses whatever method is needed}}
+\DoxyCodeLine{65 \textcolor{comment}{   or, for VS2008 where neither is available, uses casting workarounds. */}}
+\DoxyCodeLine{66 \textcolor{preprocessor}{\#if !defined(LDECLTYPE) \&\& !defined(NO\_DECLTYPE)}}
+\DoxyCodeLine{67 \textcolor{preprocessor}{\#if defined(\_MSC\_VER)   }\textcolor{comment}{/* MS compiler */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#if \_MSC\_VER >= 1600 \&\& defined(\_\_cplusplus)  }\textcolor{comment}{/* VS2010 or newer in C++ mode */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{69 \textcolor{preprocessor}{\#define LDECLTYPE(x) decltype(x)}}
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#else                   }\textcolor{comment}{/* VS2008 or older (or VS2010 in C mode) */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{71 \textcolor{preprocessor}{\#define NO\_DECLTYPE}}
+\DoxyCodeLine{72 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{73 \textcolor{preprocessor}{\#elif defined(\_\_BORLANDC\_\_) || defined(\_\_ICCARM\_\_) || defined(\_\_LCC\_\_) || defined(\_\_WATCOMC\_\_)}}
+\DoxyCodeLine{74 \textcolor{preprocessor}{\#define NO\_DECLTYPE}}
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#else                   }\textcolor{comment}{/* GNU, Sun and other compilers */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{76 \textcolor{preprocessor}{\#define LDECLTYPE(x) \_\_typeof(x)}}
+\DoxyCodeLine{77 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{78 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 \textcolor{comment}{/* for VS2008 we use some workarounds to get around the lack of decltype,}}
+\DoxyCodeLine{81 \textcolor{comment}{ * namely, we always reassign our tmp variable to the list head if we need}}
+\DoxyCodeLine{82 \textcolor{comment}{ * to dereference its prev/next pointers, and save/restore the real head.*/}}
+\DoxyCodeLine{83 \textcolor{preprocessor}{\#ifdef NO\_DECLTYPE}}
+\DoxyCodeLine{84 \textcolor{preprocessor}{\#define IF\_NO\_DECLTYPE(x) x}}
+\DoxyCodeLine{85 \textcolor{preprocessor}{\#define LDECLTYPE(x) char*}}
+\DoxyCodeLine{86 \textcolor{preprocessor}{\#define UTLIST\_SV(elt,list) \_tmp = (char*)(list); \{char **\_alias = (char**)\&(list); *\_alias = (elt); \}}}
+\DoxyCodeLine{87 \textcolor{preprocessor}{\#define UTLIST\_NEXT(elt,list,next) ((char*)((list)-\/>next))}}
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#define UTLIST\_NEXTASGN(elt,list,to,next) \{ char **\_alias = (char**)\&((list)-\/>next); *\_alias=(char*)(to); \}}}
+\DoxyCodeLine{89 \textcolor{comment}{/* \#define UTLIST\_PREV(elt,list,prev) ((char*)((list)-\/>prev)) */}}
+\DoxyCodeLine{90 \textcolor{preprocessor}{\#define UTLIST\_PREVASGN(elt,list,to,prev) \{ char **\_alias = (char**)\&((list)-\/>prev); *\_alias=(char*)(to); \}}}
+\DoxyCodeLine{91 \textcolor{preprocessor}{\#define UTLIST\_RS(list) \{ char **\_alias = (char**)\&(list); *\_alias=\_tmp; \}}}
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#define UTLIST\_CASTASGN(a,b) \{ char **\_alias = (char**)\&(a); *\_alias=(char*)(b); \}}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#define IF\_NO\_DECLTYPE(x)}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#define UTLIST\_SV(elt,list)}}
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#define UTLIST\_NEXT(elt,list,next) ((elt)-\/>next)}}
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#define UTLIST\_NEXTASGN(elt,list,to,next) ((elt)-\/>next)=(to)}}
+\DoxyCodeLine{98 \textcolor{comment}{/* \#define UTLIST\_PREV(elt,list,prev) ((elt)-\/>prev) */}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{\#define UTLIST\_PREVASGN(elt,list,to,prev) ((elt)-\/>prev)=(to)}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{\#define UTLIST\_RS(list)}}
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#define UTLIST\_CASTASGN(a,b) (a)=(b)}}
+\DoxyCodeLine{102 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104 \textcolor{comment}{/******************************************************************************}}
+\DoxyCodeLine{105 \textcolor{comment}{ * The sort macro is an adaptation of Simon Tatham's O(n log(n)) mergesort    *}}
+\DoxyCodeLine{106 \textcolor{comment}{ * Unwieldy variable names used here to avoid shadowing passed-\/in variables.  *}}
+\DoxyCodeLine{107 \textcolor{comment}{ *****************************************************************************/}}
+\DoxyCodeLine{108 \textcolor{preprocessor}{\#define LL\_SORT(list, cmp)                                                                     \(\backslash\)}}
+\DoxyCodeLine{109 \textcolor{preprocessor}{    LL\_SORT2(list, cmp, next)}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 \textcolor{preprocessor}{\#define LL\_SORT2(list, cmp, next)                                                              \(\backslash\)}}
+\DoxyCodeLine{112 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{113 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_p;                                                                       \(\backslash\)}}
+\DoxyCodeLine{114 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_q;                                                                       \(\backslash\)}}
+\DoxyCodeLine{115 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_e;                                                                       \(\backslash\)}}
+\DoxyCodeLine{116 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_tail;                                                                    \(\backslash\)}}
+\DoxyCodeLine{117 \textcolor{preprocessor}{  IF\_NO\_DECLTYPE(LDECLTYPE(list) \_tmp;)                                                        \(\backslash\)}}
+\DoxyCodeLine{118 \textcolor{preprocessor}{  int \_ls\_insize, \_ls\_nmerges, \_ls\_psize, \_ls\_qsize, \_ls\_i, \_ls\_looping;                       \(\backslash\)}}
+\DoxyCodeLine{119 \textcolor{preprocessor}{  if (list) \{                                                                                  \(\backslash\)}}
+\DoxyCodeLine{120 \textcolor{preprocessor}{    \_ls\_insize = 1;                                                                            \(\backslash\)}}
+\DoxyCodeLine{121 \textcolor{preprocessor}{    \_ls\_looping = 1;                                                                           \(\backslash\)}}
+\DoxyCodeLine{122 \textcolor{preprocessor}{    while (\_ls\_looping) \{                                                                      \(\backslash\)}}
+\DoxyCodeLine{123 \textcolor{preprocessor}{      UTLIST\_CASTASGN(\_ls\_p,list);                                                             \(\backslash\)}}
+\DoxyCodeLine{124 \textcolor{preprocessor}{      (list) = NULL;                                                                           \(\backslash\)}}
+\DoxyCodeLine{125 \textcolor{preprocessor}{      \_ls\_tail = NULL;                                                                         \(\backslash\)}}
+\DoxyCodeLine{126 \textcolor{preprocessor}{      \_ls\_nmerges = 0;                                                                         \(\backslash\)}}
+\DoxyCodeLine{127 \textcolor{preprocessor}{      while (\_ls\_p) \{                                                                          \(\backslash\)}}
+\DoxyCodeLine{128 \textcolor{preprocessor}{        \_ls\_nmerges++;                                                                         \(\backslash\)}}
+\DoxyCodeLine{129 \textcolor{preprocessor}{        \_ls\_q = \_ls\_p;                                                                         \(\backslash\)}}
+\DoxyCodeLine{130 \textcolor{preprocessor}{        \_ls\_psize = 0;                                                                         \(\backslash\)}}
+\DoxyCodeLine{131 \textcolor{preprocessor}{        for (\_ls\_i = 0; \_ls\_i < \_ls\_insize; \_ls\_i++) \{                                         \(\backslash\)}}
+\DoxyCodeLine{132 \textcolor{preprocessor}{          \_ls\_psize++;                                                                         \(\backslash\)}}
+\DoxyCodeLine{133 \textcolor{preprocessor}{          UTLIST\_SV(\_ls\_q,list); \_ls\_q = UTLIST\_NEXT(\_ls\_q,list,next); UTLIST\_RS(list);        \(\backslash\)}}
+\DoxyCodeLine{134 \textcolor{preprocessor}{          if (!\_ls\_q) break;                                                                   \(\backslash\)}}
+\DoxyCodeLine{135 \textcolor{preprocessor}{        \}                                                                                      \(\backslash\)}}
+\DoxyCodeLine{136 \textcolor{preprocessor}{        \_ls\_qsize = \_ls\_insize;                                                                \(\backslash\)}}
+\DoxyCodeLine{137 \textcolor{preprocessor}{        while (\_ls\_psize > 0 || (\_ls\_qsize > 0 \&\& \_ls\_q)) \{                                    \(\backslash\)}}
+\DoxyCodeLine{138 \textcolor{preprocessor}{          if (\_ls\_psize == 0) \{                                                                \(\backslash\)}}
+\DoxyCodeLine{139 \textcolor{preprocessor}{            \_ls\_e = \_ls\_q; UTLIST\_SV(\_ls\_q,list); \_ls\_q =                                      \(\backslash\)}}
+\DoxyCodeLine{140 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_q,list,next); UTLIST\_RS(list); \_ls\_qsize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{141 \textcolor{preprocessor}{          \} else if (\_ls\_qsize == 0 || !\_ls\_q) \{                                               \(\backslash\)}}
+\DoxyCodeLine{142 \textcolor{preprocessor}{            \_ls\_e = \_ls\_p; UTLIST\_SV(\_ls\_p,list); \_ls\_p =                                      \(\backslash\)}}
+\DoxyCodeLine{143 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_p,list,next); UTLIST\_RS(list); \_ls\_psize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{144 \textcolor{preprocessor}{          \} else if (cmp(\_ls\_p,\_ls\_q) <= 0) \{                                                  \(\backslash\)}}
+\DoxyCodeLine{145 \textcolor{preprocessor}{            \_ls\_e = \_ls\_p; UTLIST\_SV(\_ls\_p,list); \_ls\_p =                                      \(\backslash\)}}
+\DoxyCodeLine{146 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_p,list,next); UTLIST\_RS(list); \_ls\_psize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{147 \textcolor{preprocessor}{          \} else \{                                                                             \(\backslash\)}}
+\DoxyCodeLine{148 \textcolor{preprocessor}{            \_ls\_e = \_ls\_q; UTLIST\_SV(\_ls\_q,list); \_ls\_q =                                      \(\backslash\)}}
+\DoxyCodeLine{149 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_q,list,next); UTLIST\_RS(list); \_ls\_qsize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{150 \textcolor{preprocessor}{          \}                                                                                    \(\backslash\)}}
+\DoxyCodeLine{151 \textcolor{preprocessor}{          if (\_ls\_tail) \{                                                                      \(\backslash\)}}
+\DoxyCodeLine{152 \textcolor{preprocessor}{            UTLIST\_SV(\_ls\_tail,list); UTLIST\_NEXTASGN(\_ls\_tail,list,\_ls\_e,next); UTLIST\_RS(list); \(\backslash\)}}
+\DoxyCodeLine{153 \textcolor{preprocessor}{          \} else \{                                                                             \(\backslash\)}}
+\DoxyCodeLine{154 \textcolor{preprocessor}{            UTLIST\_CASTASGN(list,\_ls\_e);                                                       \(\backslash\)}}
+\DoxyCodeLine{155 \textcolor{preprocessor}{          \}                                                                                    \(\backslash\)}}
+\DoxyCodeLine{156 \textcolor{preprocessor}{          \_ls\_tail = \_ls\_e;                                                                    \(\backslash\)}}
+\DoxyCodeLine{157 \textcolor{preprocessor}{        \}                                                                                      \(\backslash\)}}
+\DoxyCodeLine{158 \textcolor{preprocessor}{        \_ls\_p = \_ls\_q;                                                                         \(\backslash\)}}
+\DoxyCodeLine{159 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{160 \textcolor{preprocessor}{      if (\_ls\_tail) \{                                                                          \(\backslash\)}}
+\DoxyCodeLine{161 \textcolor{preprocessor}{        UTLIST\_SV(\_ls\_tail,list); UTLIST\_NEXTASGN(\_ls\_tail,list,NULL,next); UTLIST\_RS(list);   \(\backslash\)}}
+\DoxyCodeLine{162 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{163 \textcolor{preprocessor}{      if (\_ls\_nmerges <= 1) \{                                                                  \(\backslash\)}}
+\DoxyCodeLine{164 \textcolor{preprocessor}{        \_ls\_looping=0;                                                                         \(\backslash\)}}
+\DoxyCodeLine{165 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{166 \textcolor{preprocessor}{      \_ls\_insize *= 2;                                                                         \(\backslash\)}}
+\DoxyCodeLine{167 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{168 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{169 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172 \textcolor{preprocessor}{\#define DL\_SORT(list, cmp)                                                                     \(\backslash\)}}
+\DoxyCodeLine{173 \textcolor{preprocessor}{    DL\_SORT2(list, cmp, prev, next)}}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175 \textcolor{preprocessor}{\#define DL\_SORT2(list, cmp, prev, next)                                                        \(\backslash\)}}
+\DoxyCodeLine{176 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{177 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_p;                                                                       \(\backslash\)}}
+\DoxyCodeLine{178 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_q;                                                                       \(\backslash\)}}
+\DoxyCodeLine{179 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_e;                                                                       \(\backslash\)}}
+\DoxyCodeLine{180 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_tail;                                                                    \(\backslash\)}}
+\DoxyCodeLine{181 \textcolor{preprocessor}{  IF\_NO\_DECLTYPE(LDECLTYPE(list) \_tmp;)                                                        \(\backslash\)}}
+\DoxyCodeLine{182 \textcolor{preprocessor}{  int \_ls\_insize, \_ls\_nmerges, \_ls\_psize, \_ls\_qsize, \_ls\_i, \_ls\_looping;                       \(\backslash\)}}
+\DoxyCodeLine{183 \textcolor{preprocessor}{  if (list) \{                                                                                  \(\backslash\)}}
+\DoxyCodeLine{184 \textcolor{preprocessor}{    \_ls\_insize = 1;                                                                            \(\backslash\)}}
+\DoxyCodeLine{185 \textcolor{preprocessor}{    \_ls\_looping = 1;                                                                           \(\backslash\)}}
+\DoxyCodeLine{186 \textcolor{preprocessor}{    while (\_ls\_looping) \{                                                                      \(\backslash\)}}
+\DoxyCodeLine{187 \textcolor{preprocessor}{      UTLIST\_CASTASGN(\_ls\_p,list);                                                             \(\backslash\)}}
+\DoxyCodeLine{188 \textcolor{preprocessor}{      (list) = NULL;                                                                           \(\backslash\)}}
+\DoxyCodeLine{189 \textcolor{preprocessor}{      \_ls\_tail = NULL;                                                                         \(\backslash\)}}
+\DoxyCodeLine{190 \textcolor{preprocessor}{      \_ls\_nmerges = 0;                                                                         \(\backslash\)}}
+\DoxyCodeLine{191 \textcolor{preprocessor}{      while (\_ls\_p) \{                                                                          \(\backslash\)}}
+\DoxyCodeLine{192 \textcolor{preprocessor}{        \_ls\_nmerges++;                                                                         \(\backslash\)}}
+\DoxyCodeLine{193 \textcolor{preprocessor}{        \_ls\_q = \_ls\_p;                                                                         \(\backslash\)}}
+\DoxyCodeLine{194 \textcolor{preprocessor}{        \_ls\_psize = 0;                                                                         \(\backslash\)}}
+\DoxyCodeLine{195 \textcolor{preprocessor}{        for (\_ls\_i = 0; \_ls\_i < \_ls\_insize; \_ls\_i++) \{                                         \(\backslash\)}}
+\DoxyCodeLine{196 \textcolor{preprocessor}{          \_ls\_psize++;                                                                         \(\backslash\)}}
+\DoxyCodeLine{197 \textcolor{preprocessor}{          UTLIST\_SV(\_ls\_q,list); \_ls\_q = UTLIST\_NEXT(\_ls\_q,list,next); UTLIST\_RS(list);        \(\backslash\)}}
+\DoxyCodeLine{198 \textcolor{preprocessor}{          if (!\_ls\_q) break;                                                                   \(\backslash\)}}
+\DoxyCodeLine{199 \textcolor{preprocessor}{        \}                                                                                      \(\backslash\)}}
+\DoxyCodeLine{200 \textcolor{preprocessor}{        \_ls\_qsize = \_ls\_insize;                                                                \(\backslash\)}}
+\DoxyCodeLine{201 \textcolor{preprocessor}{        while ((\_ls\_psize > 0) || ((\_ls\_qsize > 0) \&\& \_ls\_q)) \{                                \(\backslash\)}}
+\DoxyCodeLine{202 \textcolor{preprocessor}{          if (\_ls\_psize == 0) \{                                                                \(\backslash\)}}
+\DoxyCodeLine{203 \textcolor{preprocessor}{            \_ls\_e = \_ls\_q; UTLIST\_SV(\_ls\_q,list); \_ls\_q =                                      \(\backslash\)}}
+\DoxyCodeLine{204 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_q,list,next); UTLIST\_RS(list); \_ls\_qsize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{205 \textcolor{preprocessor}{          \} else if ((\_ls\_qsize == 0) || (!\_ls\_q)) \{                                           \(\backslash\)}}
+\DoxyCodeLine{206 \textcolor{preprocessor}{            \_ls\_e = \_ls\_p; UTLIST\_SV(\_ls\_p,list); \_ls\_p =                                      \(\backslash\)}}
+\DoxyCodeLine{207 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_p,list,next); UTLIST\_RS(list); \_ls\_psize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{208 \textcolor{preprocessor}{          \} else if (cmp(\_ls\_p,\_ls\_q) <= 0) \{                                                  \(\backslash\)}}
+\DoxyCodeLine{209 \textcolor{preprocessor}{            \_ls\_e = \_ls\_p; UTLIST\_SV(\_ls\_p,list); \_ls\_p =                                      \(\backslash\)}}
+\DoxyCodeLine{210 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_p,list,next); UTLIST\_RS(list); \_ls\_psize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{211 \textcolor{preprocessor}{          \} else \{                                                                             \(\backslash\)}}
+\DoxyCodeLine{212 \textcolor{preprocessor}{            \_ls\_e = \_ls\_q; UTLIST\_SV(\_ls\_q,list); \_ls\_q =                                      \(\backslash\)}}
+\DoxyCodeLine{213 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_q,list,next); UTLIST\_RS(list); \_ls\_qsize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{214 \textcolor{preprocessor}{          \}                                                                                    \(\backslash\)}}
+\DoxyCodeLine{215 \textcolor{preprocessor}{          if (\_ls\_tail) \{                                                                      \(\backslash\)}}
+\DoxyCodeLine{216 \textcolor{preprocessor}{            UTLIST\_SV(\_ls\_tail,list); UTLIST\_NEXTASGN(\_ls\_tail,list,\_ls\_e,next); UTLIST\_RS(list); \(\backslash\)}}
+\DoxyCodeLine{217 \textcolor{preprocessor}{          \} else \{                                                                             \(\backslash\)}}
+\DoxyCodeLine{218 \textcolor{preprocessor}{            UTLIST\_CASTASGN(list,\_ls\_e);                                                       \(\backslash\)}}
+\DoxyCodeLine{219 \textcolor{preprocessor}{          \}                                                                                    \(\backslash\)}}
+\DoxyCodeLine{220 \textcolor{preprocessor}{          UTLIST\_SV(\_ls\_e,list); UTLIST\_PREVASGN(\_ls\_e,list,\_ls\_tail,prev); UTLIST\_RS(list);   \(\backslash\)}}
+\DoxyCodeLine{221 \textcolor{preprocessor}{          \_ls\_tail = \_ls\_e;                                                                    \(\backslash\)}}
+\DoxyCodeLine{222 \textcolor{preprocessor}{        \}                                                                                      \(\backslash\)}}
+\DoxyCodeLine{223 \textcolor{preprocessor}{        \_ls\_p = \_ls\_q;                                                                         \(\backslash\)}}
+\DoxyCodeLine{224 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{225 \textcolor{preprocessor}{      UTLIST\_CASTASGN((list)-\/>prev, \_ls\_tail);                                                 \(\backslash\)}}
+\DoxyCodeLine{226 \textcolor{preprocessor}{      UTLIST\_SV(\_ls\_tail,list); UTLIST\_NEXTASGN(\_ls\_tail,list,NULL,next); UTLIST\_RS(list);     \(\backslash\)}}
+\DoxyCodeLine{227 \textcolor{preprocessor}{      if (\_ls\_nmerges <= 1) \{                                                                  \(\backslash\)}}
+\DoxyCodeLine{228 \textcolor{preprocessor}{        \_ls\_looping=0;                                                                         \(\backslash\)}}
+\DoxyCodeLine{229 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{230 \textcolor{preprocessor}{      \_ls\_insize *= 2;                                                                         \(\backslash\)}}
+\DoxyCodeLine{231 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{232 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{233 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{235 \textcolor{preprocessor}{\#define CDL\_SORT(list, cmp)                                                                    \(\backslash\)}}
+\DoxyCodeLine{236 \textcolor{preprocessor}{    CDL\_SORT2(list, cmp, prev, next)}}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238 \textcolor{preprocessor}{\#define CDL\_SORT2(list, cmp, prev, next)                                                       \(\backslash\)}}
+\DoxyCodeLine{239 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{240 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_p;                                                                       \(\backslash\)}}
+\DoxyCodeLine{241 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_q;                                                                       \(\backslash\)}}
+\DoxyCodeLine{242 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_e;                                                                       \(\backslash\)}}
+\DoxyCodeLine{243 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_tail;                                                                    \(\backslash\)}}
+\DoxyCodeLine{244 \textcolor{preprocessor}{  LDECLTYPE(list) \_ls\_oldhead;                                                                 \(\backslash\)}}
+\DoxyCodeLine{245 \textcolor{preprocessor}{  LDECLTYPE(list) \_tmp;                                                                        \(\backslash\)}}
+\DoxyCodeLine{246 \textcolor{preprocessor}{  int \_ls\_insize, \_ls\_nmerges, \_ls\_psize, \_ls\_qsize, \_ls\_i, \_ls\_looping;                       \(\backslash\)}}
+\DoxyCodeLine{247 \textcolor{preprocessor}{  if (list) \{                                                                                  \(\backslash\)}}
+\DoxyCodeLine{248 \textcolor{preprocessor}{    \_ls\_insize = 1;                                                                            \(\backslash\)}}
+\DoxyCodeLine{249 \textcolor{preprocessor}{    \_ls\_looping = 1;                                                                           \(\backslash\)}}
+\DoxyCodeLine{250 \textcolor{preprocessor}{    while (\_ls\_looping) \{                                                                      \(\backslash\)}}
+\DoxyCodeLine{251 \textcolor{preprocessor}{      UTLIST\_CASTASGN(\_ls\_p,list);                                                             \(\backslash\)}}
+\DoxyCodeLine{252 \textcolor{preprocessor}{      UTLIST\_CASTASGN(\_ls\_oldhead,list);                                                       \(\backslash\)}}
+\DoxyCodeLine{253 \textcolor{preprocessor}{      (list) = NULL;                                                                           \(\backslash\)}}
+\DoxyCodeLine{254 \textcolor{preprocessor}{      \_ls\_tail = NULL;                                                                         \(\backslash\)}}
+\DoxyCodeLine{255 \textcolor{preprocessor}{      \_ls\_nmerges = 0;                                                                         \(\backslash\)}}
+\DoxyCodeLine{256 \textcolor{preprocessor}{      while (\_ls\_p) \{                                                                          \(\backslash\)}}
+\DoxyCodeLine{257 \textcolor{preprocessor}{        \_ls\_nmerges++;                                                                         \(\backslash\)}}
+\DoxyCodeLine{258 \textcolor{preprocessor}{        \_ls\_q = \_ls\_p;                                                                         \(\backslash\)}}
+\DoxyCodeLine{259 \textcolor{preprocessor}{        \_ls\_psize = 0;                                                                         \(\backslash\)}}
+\DoxyCodeLine{260 \textcolor{preprocessor}{        for (\_ls\_i = 0; \_ls\_i < \_ls\_insize; \_ls\_i++) \{                                         \(\backslash\)}}
+\DoxyCodeLine{261 \textcolor{preprocessor}{          \_ls\_psize++;                                                                         \(\backslash\)}}
+\DoxyCodeLine{262 \textcolor{preprocessor}{          UTLIST\_SV(\_ls\_q,list);                                                               \(\backslash\)}}
+\DoxyCodeLine{263 \textcolor{preprocessor}{          if (UTLIST\_NEXT(\_ls\_q,list,next) == \_ls\_oldhead) \{                                   \(\backslash\)}}
+\DoxyCodeLine{264 \textcolor{preprocessor}{            \_ls\_q = NULL;                                                                      \(\backslash\)}}
+\DoxyCodeLine{265 \textcolor{preprocessor}{          \} else \{                                                                             \(\backslash\)}}
+\DoxyCodeLine{266 \textcolor{preprocessor}{            \_ls\_q = UTLIST\_NEXT(\_ls\_q,list,next);                                              \(\backslash\)}}
+\DoxyCodeLine{267 \textcolor{preprocessor}{          \}                                                                                    \(\backslash\)}}
+\DoxyCodeLine{268 \textcolor{preprocessor}{          UTLIST\_RS(list);                                                                     \(\backslash\)}}
+\DoxyCodeLine{269 \textcolor{preprocessor}{          if (!\_ls\_q) break;                                                                   \(\backslash\)}}
+\DoxyCodeLine{270 \textcolor{preprocessor}{        \}                                                                                      \(\backslash\)}}
+\DoxyCodeLine{271 \textcolor{preprocessor}{        \_ls\_qsize = \_ls\_insize;                                                                \(\backslash\)}}
+\DoxyCodeLine{272 \textcolor{preprocessor}{        while (\_ls\_psize > 0 || (\_ls\_qsize > 0 \&\& \_ls\_q)) \{                                    \(\backslash\)}}
+\DoxyCodeLine{273 \textcolor{preprocessor}{          if (\_ls\_psize == 0) \{                                                                \(\backslash\)}}
+\DoxyCodeLine{274 \textcolor{preprocessor}{            \_ls\_e = \_ls\_q; UTLIST\_SV(\_ls\_q,list); \_ls\_q =                                      \(\backslash\)}}
+\DoxyCodeLine{275 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_q,list,next); UTLIST\_RS(list); \_ls\_qsize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{276 \textcolor{preprocessor}{            if (\_ls\_q == \_ls\_oldhead) \{ \_ls\_q = NULL; \}                                        \(\backslash\)}}
+\DoxyCodeLine{277 \textcolor{preprocessor}{          \} else if (\_ls\_qsize == 0 || !\_ls\_q) \{                                               \(\backslash\)}}
+\DoxyCodeLine{278 \textcolor{preprocessor}{            \_ls\_e = \_ls\_p; UTLIST\_SV(\_ls\_p,list); \_ls\_p =                                      \(\backslash\)}}
+\DoxyCodeLine{279 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_p,list,next); UTLIST\_RS(list); \_ls\_psize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{280 \textcolor{preprocessor}{            if (\_ls\_p == \_ls\_oldhead) \{ \_ls\_p = NULL; \}                                        \(\backslash\)}}
+\DoxyCodeLine{281 \textcolor{preprocessor}{          \} else if (cmp(\_ls\_p,\_ls\_q) <= 0) \{                                                  \(\backslash\)}}
+\DoxyCodeLine{282 \textcolor{preprocessor}{            \_ls\_e = \_ls\_p; UTLIST\_SV(\_ls\_p,list); \_ls\_p =                                      \(\backslash\)}}
+\DoxyCodeLine{283 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_p,list,next); UTLIST\_RS(list); \_ls\_psize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{284 \textcolor{preprocessor}{            if (\_ls\_p == \_ls\_oldhead) \{ \_ls\_p = NULL; \}                                        \(\backslash\)}}
+\DoxyCodeLine{285 \textcolor{preprocessor}{          \} else \{                                                                             \(\backslash\)}}
+\DoxyCodeLine{286 \textcolor{preprocessor}{            \_ls\_e = \_ls\_q; UTLIST\_SV(\_ls\_q,list); \_ls\_q =                                      \(\backslash\)}}
+\DoxyCodeLine{287 \textcolor{preprocessor}{              UTLIST\_NEXT(\_ls\_q,list,next); UTLIST\_RS(list); \_ls\_qsize-\/-\/;                      \(\backslash\)}}
+\DoxyCodeLine{288 \textcolor{preprocessor}{            if (\_ls\_q == \_ls\_oldhead) \{ \_ls\_q = NULL; \}                                        \(\backslash\)}}
+\DoxyCodeLine{289 \textcolor{preprocessor}{          \}                                                                                    \(\backslash\)}}
+\DoxyCodeLine{290 \textcolor{preprocessor}{          if (\_ls\_tail) \{                                                                      \(\backslash\)}}
+\DoxyCodeLine{291 \textcolor{preprocessor}{            UTLIST\_SV(\_ls\_tail,list); UTLIST\_NEXTASGN(\_ls\_tail,list,\_ls\_e,next); UTLIST\_RS(list); \(\backslash\)}}
+\DoxyCodeLine{292 \textcolor{preprocessor}{          \} else \{                                                                             \(\backslash\)}}
+\DoxyCodeLine{293 \textcolor{preprocessor}{            UTLIST\_CASTASGN(list,\_ls\_e);                                                       \(\backslash\)}}
+\DoxyCodeLine{294 \textcolor{preprocessor}{          \}                                                                                    \(\backslash\)}}
+\DoxyCodeLine{295 \textcolor{preprocessor}{          UTLIST\_SV(\_ls\_e,list); UTLIST\_PREVASGN(\_ls\_e,list,\_ls\_tail,prev); UTLIST\_RS(list);   \(\backslash\)}}
+\DoxyCodeLine{296 \textcolor{preprocessor}{          \_ls\_tail = \_ls\_e;                                                                    \(\backslash\)}}
+\DoxyCodeLine{297 \textcolor{preprocessor}{        \}                                                                                      \(\backslash\)}}
+\DoxyCodeLine{298 \textcolor{preprocessor}{        \_ls\_p = \_ls\_q;                                                                         \(\backslash\)}}
+\DoxyCodeLine{299 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{300 \textcolor{preprocessor}{      UTLIST\_CASTASGN((list)-\/>prev,\_ls\_tail);                                                  \(\backslash\)}}
+\DoxyCodeLine{301 \textcolor{preprocessor}{      UTLIST\_CASTASGN(\_tmp,list);                                                              \(\backslash\)}}
+\DoxyCodeLine{302 \textcolor{preprocessor}{      UTLIST\_SV(\_ls\_tail,list); UTLIST\_NEXTASGN(\_ls\_tail,list,\_tmp,next); UTLIST\_RS(list);     \(\backslash\)}}
+\DoxyCodeLine{303 \textcolor{preprocessor}{      if (\_ls\_nmerges <= 1) \{                                                                  \(\backslash\)}}
+\DoxyCodeLine{304 \textcolor{preprocessor}{        \_ls\_looping=0;                                                                         \(\backslash\)}}
+\DoxyCodeLine{305 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{306 \textcolor{preprocessor}{      \_ls\_insize *= 2;                                                                         \(\backslash\)}}
+\DoxyCodeLine{307 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{308 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{309 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311 \textcolor{comment}{/******************************************************************************}}
+\DoxyCodeLine{312 \textcolor{comment}{ * singly linked list macros (non-\/circular)                                   *}}
+\DoxyCodeLine{313 \textcolor{comment}{ *****************************************************************************/}}
+\DoxyCodeLine{314 \textcolor{preprocessor}{\#define LL\_PREPEND(head,add)                                                                   \(\backslash\)}}
+\DoxyCodeLine{315 \textcolor{preprocessor}{    LL\_PREPEND2(head,add,next)}}
+\DoxyCodeLine{316 }
+\DoxyCodeLine{317 \textcolor{preprocessor}{\#define LL\_PREPEND2(head,add,next)                                                             \(\backslash\)}}
+\DoxyCodeLine{318 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{319 \textcolor{preprocessor}{  (add)-\/>next = (head);                                                                        \(\backslash\)}}
+\DoxyCodeLine{320 \textcolor{preprocessor}{  (head) = (add);                                                                              \(\backslash\)}}
+\DoxyCodeLine{321 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{322 }
+\DoxyCodeLine{323 \textcolor{preprocessor}{\#define LL\_CONCAT(head1,head2)                                                                 \(\backslash\)}}
+\DoxyCodeLine{324 \textcolor{preprocessor}{    LL\_CONCAT2(head1,head2,next)}}
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326 \textcolor{preprocessor}{\#define LL\_CONCAT2(head1,head2,next)                                                           \(\backslash\)}}
+\DoxyCodeLine{327 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{328 \textcolor{preprocessor}{  LDECLTYPE(head1) \_tmp;                                                                       \(\backslash\)}}
+\DoxyCodeLine{329 \textcolor{preprocessor}{  if (head1) \{                                                                                 \(\backslash\)}}
+\DoxyCodeLine{330 \textcolor{preprocessor}{    \_tmp = (head1);                                                                            \(\backslash\)}}
+\DoxyCodeLine{331 \textcolor{preprocessor}{    while (\_tmp-\/>next) \{ \_tmp = \_tmp-\/>next; \}                                                  \(\backslash\)}}
+\DoxyCodeLine{332 \textcolor{preprocessor}{    \_tmp-\/>next=(head2);                                                                        \(\backslash\)}}
+\DoxyCodeLine{333 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{334 \textcolor{preprocessor}{    (head1)=(head2);                                                                           \(\backslash\)}}
+\DoxyCodeLine{335 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{336 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338 \textcolor{preprocessor}{\#define LL\_APPEND(head,add)                                                                    \(\backslash\)}}
+\DoxyCodeLine{339 \textcolor{preprocessor}{    LL\_APPEND2(head,add,next)}}
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341 \textcolor{preprocessor}{\#define LL\_APPEND2(head,add,next)                                                              \(\backslash\)}}
+\DoxyCodeLine{342 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{343 \textcolor{preprocessor}{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}}
+\DoxyCodeLine{344 \textcolor{preprocessor}{  (add)-\/>next=NULL;                                                                            \(\backslash\)}}
+\DoxyCodeLine{345 \textcolor{preprocessor}{  if (head) \{                                                                                  \(\backslash\)}}
+\DoxyCodeLine{346 \textcolor{preprocessor}{    \_tmp = (head);                                                                             \(\backslash\)}}
+\DoxyCodeLine{347 \textcolor{preprocessor}{    while (\_tmp-\/>next) \{ \_tmp = \_tmp-\/>next; \}                                                  \(\backslash\)}}
+\DoxyCodeLine{348 \textcolor{preprocessor}{    \_tmp-\/>next=(add);                                                                          \(\backslash\)}}
+\DoxyCodeLine{349 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{350 \textcolor{preprocessor}{    (head)=(add);                                                                              \(\backslash\)}}
+\DoxyCodeLine{351 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{352 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354 \textcolor{preprocessor}{\#define LL\_INSERT\_INORDER(head,add,cmp)                                                        \(\backslash\)}}
+\DoxyCodeLine{355 \textcolor{preprocessor}{    LL\_INSERT\_INORDER2(head,add,cmp,next)}}
+\DoxyCodeLine{356 }
+\DoxyCodeLine{357 \textcolor{preprocessor}{\#define LL\_INSERT\_INORDER2(head,add,cmp,next)                                                  \(\backslash\)}}
+\DoxyCodeLine{358 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{359 \textcolor{preprocessor}{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}}
+\DoxyCodeLine{360 \textcolor{preprocessor}{  if (head) \{                                                                                  \(\backslash\)}}
+\DoxyCodeLine{361 \textcolor{preprocessor}{    LL\_LOWER\_BOUND2(head, \_tmp, add, cmp, next);                                               \(\backslash\)}}
+\DoxyCodeLine{362 \textcolor{preprocessor}{    LL\_APPEND\_ELEM2(head, \_tmp, add, next);                                                    \(\backslash\)}}
+\DoxyCodeLine{363 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{364 \textcolor{preprocessor}{    (head) = (add);                                                                            \(\backslash\)}}
+\DoxyCodeLine{365 \textcolor{preprocessor}{    (head)-\/>next = NULL;                                                                       \(\backslash\)}}
+\DoxyCodeLine{366 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{367 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{368 }
+\DoxyCodeLine{369 \textcolor{preprocessor}{\#define LL\_LOWER\_BOUND(head,elt,like,cmp)                                                      \(\backslash\)}}
+\DoxyCodeLine{370 \textcolor{preprocessor}{    LL\_LOWER\_BOUND2(head,elt,like,cmp,next)}}
+\DoxyCodeLine{371 }
+\DoxyCodeLine{372 \textcolor{preprocessor}{\#define LL\_LOWER\_BOUND2(head,elt,like,cmp,next)                                                \(\backslash\)}}
+\DoxyCodeLine{373 \textcolor{preprocessor}{  do \{                                                                                         \(\backslash\)}}
+\DoxyCodeLine{374 \textcolor{preprocessor}{    if ((head) == NULL || (cmp(head, like)) >= 0) \{                                            \(\backslash\)}}
+\DoxyCodeLine{375 \textcolor{preprocessor}{      (elt) = NULL;                                                                            \(\backslash\)}}
+\DoxyCodeLine{376 \textcolor{preprocessor}{    \} else \{                                                                                   \(\backslash\)}}
+\DoxyCodeLine{377 \textcolor{preprocessor}{      for ((elt) = (head); (elt)-\/>next != NULL; (elt) = (elt)-\/>next) \{                         \(\backslash\)}}
+\DoxyCodeLine{378 \textcolor{preprocessor}{        if (cmp((elt)-\/>next, like) >= 0) \{                                                     \(\backslash\)}}
+\DoxyCodeLine{379 \textcolor{preprocessor}{          break;                                                                               \(\backslash\)}}
+\DoxyCodeLine{380 \textcolor{preprocessor}{        \}                                                                                      \(\backslash\)}}
+\DoxyCodeLine{381 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{382 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{383 \textcolor{preprocessor}{  \} while (0)}}
+\DoxyCodeLine{384 }
+\DoxyCodeLine{385 \textcolor{preprocessor}{\#define LL\_DELETE(head,del)                                                                    \(\backslash\)}}
+\DoxyCodeLine{386 \textcolor{preprocessor}{    LL\_DELETE2(head,del,next)}}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388 \textcolor{preprocessor}{\#define LL\_DELETE2(head,del,next)                                                              \(\backslash\)}}
+\DoxyCodeLine{389 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{390 \textcolor{preprocessor}{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}}
+\DoxyCodeLine{391 \textcolor{preprocessor}{  if ((head) == (del)) \{                                                                       \(\backslash\)}}
+\DoxyCodeLine{392 \textcolor{preprocessor}{    (head)=(head)-\/>next;                                                                       \(\backslash\)}}
+\DoxyCodeLine{393 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{394 \textcolor{preprocessor}{    \_tmp = (head);                                                                             \(\backslash\)}}
+\DoxyCodeLine{395 \textcolor{preprocessor}{    while (\_tmp-\/>next \&\& (\_tmp-\/>next != (del))) \{                                              \(\backslash\)}}
+\DoxyCodeLine{396 \textcolor{preprocessor}{      \_tmp = \_tmp-\/>next;                                                                       \(\backslash\)}}
+\DoxyCodeLine{397 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{398 \textcolor{preprocessor}{    if (\_tmp-\/>next) \{                                                                          \(\backslash\)}}
+\DoxyCodeLine{399 \textcolor{preprocessor}{      \_tmp-\/>next = (del)-\/>next;                                                                \(\backslash\)}}
+\DoxyCodeLine{400 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{401 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{402 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{403 }
+\DoxyCodeLine{404 \textcolor{preprocessor}{\#define LL\_COUNT(head,el,counter)                                                              \(\backslash\)}}
+\DoxyCodeLine{405 \textcolor{preprocessor}{    LL\_COUNT2(head,el,counter,next)                                                            \(\backslash\)}}
+\DoxyCodeLine{406 \textcolor{preprocessor}{}}
+\DoxyCodeLine{407 \textcolor{preprocessor}{\#define LL\_COUNT2(head,el,counter,next)                                                        \(\backslash\)}}
+\DoxyCodeLine{408 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{409 \textcolor{preprocessor}{  (counter) = 0;                                                                               \(\backslash\)}}
+\DoxyCodeLine{410 \textcolor{preprocessor}{  LL\_FOREACH2(head,el,next) \{ ++(counter); \}                                                   \(\backslash\)}}
+\DoxyCodeLine{411 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{412 }
+\DoxyCodeLine{413 \textcolor{preprocessor}{\#define LL\_FOREACH(head,el)                                                                    \(\backslash\)}}
+\DoxyCodeLine{414 \textcolor{preprocessor}{    LL\_FOREACH2(head,el,next)}}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416 \textcolor{preprocessor}{\#define LL\_FOREACH2(head,el,next)                                                              \(\backslash\)}}
+\DoxyCodeLine{417 \textcolor{preprocessor}{    for ((el) = (head); el; (el) = (el)-\/>next)}}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419 \textcolor{preprocessor}{\#define LL\_FOREACH\_SAFE(head,el,tmp)                                                           \(\backslash\)}}
+\DoxyCodeLine{420 \textcolor{preprocessor}{    LL\_FOREACH\_SAFE2(head,el,tmp,next)}}
+\DoxyCodeLine{421 }
+\DoxyCodeLine{422 \textcolor{preprocessor}{\#define LL\_FOREACH\_SAFE2(head,el,tmp,next)                                                     \(\backslash\)}}
+\DoxyCodeLine{423 \textcolor{preprocessor}{  for ((el) = (head); (el) \&\& ((tmp) = (el)-\/>next, 1); (el) = (tmp))}}
+\DoxyCodeLine{424 }
+\DoxyCodeLine{425 \textcolor{preprocessor}{\#define LL\_SEARCH\_SCALAR(head,out,field,val)                                                   \(\backslash\)}}
+\DoxyCodeLine{426 \textcolor{preprocessor}{    LL\_SEARCH\_SCALAR2(head,out,field,val,next)}}
+\DoxyCodeLine{427 }
+\DoxyCodeLine{428 \textcolor{preprocessor}{\#define LL\_SEARCH\_SCALAR2(head,out,field,val,next)                                             \(\backslash\)}}
+\DoxyCodeLine{429 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{430 \textcolor{preprocessor}{    LL\_FOREACH2(head,out,next) \{                                                               \(\backslash\)}}
+\DoxyCodeLine{431 \textcolor{preprocessor}{      if ((out)-\/>field == (val)) break;                                                        \(\backslash\)}}
+\DoxyCodeLine{432 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{433 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{434 }
+\DoxyCodeLine{435 \textcolor{preprocessor}{\#define LL\_SEARCH(head,out,elt,cmp)                                                            \(\backslash\)}}
+\DoxyCodeLine{436 \textcolor{preprocessor}{    LL\_SEARCH2(head,out,elt,cmp,next)}}
+\DoxyCodeLine{437 }
+\DoxyCodeLine{438 \textcolor{preprocessor}{\#define LL\_SEARCH2(head,out,elt,cmp,next)                                                      \(\backslash\)}}
+\DoxyCodeLine{439 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{440 \textcolor{preprocessor}{    LL\_FOREACH2(head,out,next) \{                                                               \(\backslash\)}}
+\DoxyCodeLine{441 \textcolor{preprocessor}{      if ((cmp(out,elt))==0) break;                                                            \(\backslash\)}}
+\DoxyCodeLine{442 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{443 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{444 }
+\DoxyCodeLine{445 \textcolor{preprocessor}{\#define LL\_REPLACE\_ELEM2(head, el, add, next)                                                  \(\backslash\)}}
+\DoxyCodeLine{446 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{447 \textcolor{preprocessor}{ LDECLTYPE(head) \_tmp;                                                                         \(\backslash\)}}
+\DoxyCodeLine{448 \textcolor{preprocessor}{ assert((head) != NULL);                                                                       \(\backslash\)}}
+\DoxyCodeLine{449 \textcolor{preprocessor}{ assert((el) != NULL);                                                                         \(\backslash\)}}
+\DoxyCodeLine{450 \textcolor{preprocessor}{ assert((add) != NULL);                                                                        \(\backslash\)}}
+\DoxyCodeLine{451 \textcolor{preprocessor}{ (add)-\/>next = (el)-\/>next;                                                                     \(\backslash\)}}
+\DoxyCodeLine{452 \textcolor{preprocessor}{ if ((head) == (el)) \{                                                                         \(\backslash\)}}
+\DoxyCodeLine{453 \textcolor{preprocessor}{  (head) = (add);                                                                              \(\backslash\)}}
+\DoxyCodeLine{454 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{455 \textcolor{preprocessor}{  \_tmp = (head);                                                                               \(\backslash\)}}
+\DoxyCodeLine{456 \textcolor{preprocessor}{  while (\_tmp-\/>next \&\& (\_tmp-\/>next != (el))) \{                                                 \(\backslash\)}}
+\DoxyCodeLine{457 \textcolor{preprocessor}{   \_tmp = \_tmp-\/>next;                                                                          \(\backslash\)}}
+\DoxyCodeLine{458 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{459 \textcolor{preprocessor}{  if (\_tmp-\/>next) \{                                                                            \(\backslash\)}}
+\DoxyCodeLine{460 \textcolor{preprocessor}{    \_tmp-\/>next = (add);                                                                        \(\backslash\)}}
+\DoxyCodeLine{461 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{462 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{463 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{464 }
+\DoxyCodeLine{465 \textcolor{preprocessor}{\#define LL\_REPLACE\_ELEM(head, el, add)                                                         \(\backslash\)}}
+\DoxyCodeLine{466 \textcolor{preprocessor}{    LL\_REPLACE\_ELEM2(head, el, add, next)}}
+\DoxyCodeLine{467 }
+\DoxyCodeLine{468 \textcolor{preprocessor}{\#define LL\_PREPEND\_ELEM2(head, el, add, next)                                                  \(\backslash\)}}
+\DoxyCodeLine{469 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{470 \textcolor{preprocessor}{ if (el) \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{471 \textcolor{preprocessor}{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}}
+\DoxyCodeLine{472 \textcolor{preprocessor}{  assert((head) != NULL);                                                                      \(\backslash\)}}
+\DoxyCodeLine{473 \textcolor{preprocessor}{  assert((add) != NULL);                                                                       \(\backslash\)}}
+\DoxyCodeLine{474 \textcolor{preprocessor}{  (add)-\/>next = (el);                                                                          \(\backslash\)}}
+\DoxyCodeLine{475 \textcolor{preprocessor}{  if ((head) == (el)) \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{476 \textcolor{preprocessor}{   (head) = (add);                                                                             \(\backslash\)}}
+\DoxyCodeLine{477 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{478 \textcolor{preprocessor}{   \_tmp = (head);                                                                              \(\backslash\)}}
+\DoxyCodeLine{479 \textcolor{preprocessor}{   while (\_tmp-\/>next \&\& (\_tmp-\/>next != (el))) \{                                                \(\backslash\)}}
+\DoxyCodeLine{480 \textcolor{preprocessor}{    \_tmp = \_tmp-\/>next;                                                                         \(\backslash\)}}
+\DoxyCodeLine{481 \textcolor{preprocessor}{   \}                                                                                           \(\backslash\)}}
+\DoxyCodeLine{482 \textcolor{preprocessor}{   if (\_tmp-\/>next) \{                                                                           \(\backslash\)}}
+\DoxyCodeLine{483 \textcolor{preprocessor}{     \_tmp-\/>next = (add);                                                                       \(\backslash\)}}
+\DoxyCodeLine{484 \textcolor{preprocessor}{   \}                                                                                           \(\backslash\)}}
+\DoxyCodeLine{485 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{486 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{487 \textcolor{preprocessor}{  LL\_APPEND2(head, add, next);                                                                 \(\backslash\)}}
+\DoxyCodeLine{488 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{489 \textcolor{preprocessor}{\} while (0)                                                                                    \(\backslash\)}}
+\DoxyCodeLine{490 \textcolor{preprocessor}{}}
+\DoxyCodeLine{491 \textcolor{preprocessor}{\#define LL\_PREPEND\_ELEM(head, el, add)                                                         \(\backslash\)}}
+\DoxyCodeLine{492 \textcolor{preprocessor}{    LL\_PREPEND\_ELEM2(head, el, add, next)}}
+\DoxyCodeLine{493 }
+\DoxyCodeLine{494 \textcolor{preprocessor}{\#define LL\_APPEND\_ELEM2(head, el, add, next)                                                   \(\backslash\)}}
+\DoxyCodeLine{495 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{496 \textcolor{preprocessor}{ if (el) \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{497 \textcolor{preprocessor}{  assert((head) != NULL);                                                                      \(\backslash\)}}
+\DoxyCodeLine{498 \textcolor{preprocessor}{  assert((add) != NULL);                                                                       \(\backslash\)}}
+\DoxyCodeLine{499 \textcolor{preprocessor}{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}}
+\DoxyCodeLine{500 \textcolor{preprocessor}{  (el)-\/>next = (add);                                                                          \(\backslash\)}}
+\DoxyCodeLine{501 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{502 \textcolor{preprocessor}{  LL\_PREPEND2(head, add, next);                                                                \(\backslash\)}}
+\DoxyCodeLine{503 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{504 \textcolor{preprocessor}{\} while (0)                                                                                    \(\backslash\)}}
+\DoxyCodeLine{505 \textcolor{preprocessor}{}}
+\DoxyCodeLine{506 \textcolor{preprocessor}{\#define LL\_APPEND\_ELEM(head, el, add)                                                          \(\backslash\)}}
+\DoxyCodeLine{507 \textcolor{preprocessor}{    LL\_APPEND\_ELEM2(head, el, add, next)}}
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509 \textcolor{preprocessor}{\#ifdef NO\_DECLTYPE}}
+\DoxyCodeLine{510 \textcolor{comment}{/* Here are VS2008 / NO\_DECLTYPE replacements for a few functions */}}
+\DoxyCodeLine{511 }
+\DoxyCodeLine{512 \textcolor{preprocessor}{\#undef LL\_CONCAT2}}
+\DoxyCodeLine{513 \textcolor{preprocessor}{\#define LL\_CONCAT2(head1,head2,next)                                                           \(\backslash\)}}
+\DoxyCodeLine{514 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{515 \textcolor{preprocessor}{  char *\_tmp;                                                                                  \(\backslash\)}}
+\DoxyCodeLine{516 \textcolor{preprocessor}{  if (head1) \{                                                                                 \(\backslash\)}}
+\DoxyCodeLine{517 \textcolor{preprocessor}{    \_tmp = (char*)(head1);                                                                     \(\backslash\)}}
+\DoxyCodeLine{518 \textcolor{preprocessor}{    while ((head1)-\/>next) \{ (head1) = (head1)-\/>next; \}                                         \(\backslash\)}}
+\DoxyCodeLine{519 \textcolor{preprocessor}{    (head1)-\/>next = (head2);                                                                   \(\backslash\)}}
+\DoxyCodeLine{520 \textcolor{preprocessor}{    UTLIST\_RS(head1);                                                                          \(\backslash\)}}
+\DoxyCodeLine{521 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{522 \textcolor{preprocessor}{    (head1)=(head2);                                                                           \(\backslash\)}}
+\DoxyCodeLine{523 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{524 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{525 }
+\DoxyCodeLine{526 \textcolor{preprocessor}{\#undef LL\_APPEND2}}
+\DoxyCodeLine{527 \textcolor{preprocessor}{\#define LL\_APPEND2(head,add,next)                                                              \(\backslash\)}}
+\DoxyCodeLine{528 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{529 \textcolor{preprocessor}{  if (head) \{                                                                                  \(\backslash\)}}
+\DoxyCodeLine{530 \textcolor{preprocessor}{    (add)-\/>next = head;     }\textcolor{comment}{/* use add-\/>next as a temp variable */}\textcolor{preprocessor}{                             \(\backslash\)}}
+\DoxyCodeLine{531 \textcolor{preprocessor}{    while ((add)-\/>next-\/>next) \{ (add)-\/>next = (add)-\/>next-\/>next; \}                             \(\backslash\)}}
+\DoxyCodeLine{532 \textcolor{preprocessor}{    (add)-\/>next-\/>next=(add);                                                                   \(\backslash\)}}
+\DoxyCodeLine{533 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{534 \textcolor{preprocessor}{    (head)=(add);                                                                              \(\backslash\)}}
+\DoxyCodeLine{535 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{536 \textcolor{preprocessor}{  (add)-\/>next=NULL;                                                                            \(\backslash\)}}
+\DoxyCodeLine{537 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{538 }
+\DoxyCodeLine{539 \textcolor{preprocessor}{\#undef LL\_INSERT\_INORDER2}}
+\DoxyCodeLine{540 \textcolor{preprocessor}{\#define LL\_INSERT\_INORDER2(head,add,cmp,next)                                                  \(\backslash\)}}
+\DoxyCodeLine{541 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{542 \textcolor{preprocessor}{  if ((head) == NULL || (cmp(head, add)) >= 0) \{                                               \(\backslash\)}}
+\DoxyCodeLine{543 \textcolor{preprocessor}{    (add)-\/>next = (head);                                                                      \(\backslash\)}}
+\DoxyCodeLine{544 \textcolor{preprocessor}{    (head) = (add);                                                                            \(\backslash\)}}
+\DoxyCodeLine{545 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{546 \textcolor{preprocessor}{    char *\_tmp = (char*)(head);                                                                \(\backslash\)}}
+\DoxyCodeLine{547 \textcolor{preprocessor}{    while ((head)-\/>next != NULL \&\& (cmp((head)-\/>next, add)) < 0) \{                             \(\backslash\)}}
+\DoxyCodeLine{548 \textcolor{preprocessor}{      (head) = (head)-\/>next;                                                                   \(\backslash\)}}
+\DoxyCodeLine{549 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{550 \textcolor{preprocessor}{    (add)-\/>next = (head)-\/>next;                                                                \(\backslash\)}}
+\DoxyCodeLine{551 \textcolor{preprocessor}{    (head)-\/>next = (add);                                                                      \(\backslash\)}}
+\DoxyCodeLine{552 \textcolor{preprocessor}{    UTLIST\_RS(head);                                                                           \(\backslash\)}}
+\DoxyCodeLine{553 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{554 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{555 }
+\DoxyCodeLine{556 \textcolor{preprocessor}{\#undef LL\_DELETE2}}
+\DoxyCodeLine{557 \textcolor{preprocessor}{\#define LL\_DELETE2(head,del,next)                                                              \(\backslash\)}}
+\DoxyCodeLine{558 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{559 \textcolor{preprocessor}{  if ((head) == (del)) \{                                                                       \(\backslash\)}}
+\DoxyCodeLine{560 \textcolor{preprocessor}{    (head)=(head)-\/>next;                                                                       \(\backslash\)}}
+\DoxyCodeLine{561 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{562 \textcolor{preprocessor}{    char *\_tmp = (char*)(head);                                                                \(\backslash\)}}
+\DoxyCodeLine{563 \textcolor{preprocessor}{    while ((head)-\/>next \&\& ((head)-\/>next != (del))) \{                                          \(\backslash\)}}
+\DoxyCodeLine{564 \textcolor{preprocessor}{      (head) = (head)-\/>next;                                                                   \(\backslash\)}}
+\DoxyCodeLine{565 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{566 \textcolor{preprocessor}{    if ((head)-\/>next) \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{567 \textcolor{preprocessor}{      (head)-\/>next = ((del)-\/>next);                                                            \(\backslash\)}}
+\DoxyCodeLine{568 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{569 \textcolor{preprocessor}{    UTLIST\_RS(head);                                                                           \(\backslash\)}}
+\DoxyCodeLine{570 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{571 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{572 }
+\DoxyCodeLine{573 \textcolor{preprocessor}{\#undef LL\_REPLACE\_ELEM2}}
+\DoxyCodeLine{574 \textcolor{preprocessor}{\#define LL\_REPLACE\_ELEM2(head, el, add, next)                                                  \(\backslash\)}}
+\DoxyCodeLine{575 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{576 \textcolor{preprocessor}{  assert((head) != NULL);                                                                      \(\backslash\)}}
+\DoxyCodeLine{577 \textcolor{preprocessor}{  assert((el) != NULL);                                                                        \(\backslash\)}}
+\DoxyCodeLine{578 \textcolor{preprocessor}{  assert((add) != NULL);                                                                       \(\backslash\)}}
+\DoxyCodeLine{579 \textcolor{preprocessor}{  if ((head) == (el)) \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{580 \textcolor{preprocessor}{    (head) = (add);                                                                            \(\backslash\)}}
+\DoxyCodeLine{581 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{582 \textcolor{preprocessor}{    (add)-\/>next = head;                                                                        \(\backslash\)}}
+\DoxyCodeLine{583 \textcolor{preprocessor}{    while ((add)-\/>next-\/>next \&\& ((add)-\/>next-\/>next != (el))) \{                                 \(\backslash\)}}
+\DoxyCodeLine{584 \textcolor{preprocessor}{      (add)-\/>next = (add)-\/>next-\/>next;                                                         \(\backslash\)}}
+\DoxyCodeLine{585 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{586 \textcolor{preprocessor}{    if ((add)-\/>next-\/>next) \{                                                                   \(\backslash\)}}
+\DoxyCodeLine{587 \textcolor{preprocessor}{      (add)-\/>next-\/>next = (add);                                                               \(\backslash\)}}
+\DoxyCodeLine{588 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{589 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{590 \textcolor{preprocessor}{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}}
+\DoxyCodeLine{591 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{592 }
+\DoxyCodeLine{593 \textcolor{preprocessor}{\#undef LL\_PREPEND\_ELEM2}}
+\DoxyCodeLine{594 \textcolor{preprocessor}{\#define LL\_PREPEND\_ELEM2(head, el, add, next)                                                  \(\backslash\)}}
+\DoxyCodeLine{595 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{596 \textcolor{preprocessor}{  if (el) \{                                                                                    \(\backslash\)}}
+\DoxyCodeLine{597 \textcolor{preprocessor}{    assert((head) != NULL);                                                                    \(\backslash\)}}
+\DoxyCodeLine{598 \textcolor{preprocessor}{    assert((add) != NULL);                                                                     \(\backslash\)}}
+\DoxyCodeLine{599 \textcolor{preprocessor}{    if ((head) == (el)) \{                                                                      \(\backslash\)}}
+\DoxyCodeLine{600 \textcolor{preprocessor}{      (head) = (add);                                                                          \(\backslash\)}}
+\DoxyCodeLine{601 \textcolor{preprocessor}{    \} else \{                                                                                   \(\backslash\)}}
+\DoxyCodeLine{602 \textcolor{preprocessor}{      (add)-\/>next = (head);                                                                    \(\backslash\)}}
+\DoxyCodeLine{603 \textcolor{preprocessor}{      while ((add)-\/>next-\/>next \&\& ((add)-\/>next-\/>next != (el))) \{                               \(\backslash\)}}
+\DoxyCodeLine{604 \textcolor{preprocessor}{        (add)-\/>next = (add)-\/>next-\/>next;                                                       \(\backslash\)}}
+\DoxyCodeLine{605 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{606 \textcolor{preprocessor}{      if ((add)-\/>next-\/>next) \{                                                                 \(\backslash\)}}
+\DoxyCodeLine{607 \textcolor{preprocessor}{        (add)-\/>next-\/>next = (add);                                                             \(\backslash\)}}
+\DoxyCodeLine{608 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{609 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{610 \textcolor{preprocessor}{    (add)-\/>next = (el);                                                                        \(\backslash\)}}
+\DoxyCodeLine{611 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{612 \textcolor{preprocessor}{    LL\_APPEND2(head, add, next);                                                               \(\backslash\)}}
+\DoxyCodeLine{613 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{614 \textcolor{preprocessor}{\} while (0)                                                                                    \(\backslash\)}}
+\DoxyCodeLine{615 \textcolor{preprocessor}{}}
+\DoxyCodeLine{616 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* NO\_DECLTYPE */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{617 }
+\DoxyCodeLine{618 \textcolor{comment}{/******************************************************************************}}
+\DoxyCodeLine{619 \textcolor{comment}{ * doubly linked list macros (non-\/circular)                                   *}}
+\DoxyCodeLine{620 \textcolor{comment}{ *****************************************************************************/}}
+\DoxyCodeLine{621 \textcolor{preprocessor}{\#define DL\_PREPEND(head,add)                                                                   \(\backslash\)}}
+\DoxyCodeLine{622 \textcolor{preprocessor}{    DL\_PREPEND2(head,add,prev,next)}}
+\DoxyCodeLine{623 }
+\DoxyCodeLine{624 \textcolor{preprocessor}{\#define DL\_PREPEND2(head,add,prev,next)                                                        \(\backslash\)}}
+\DoxyCodeLine{625 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{626 \textcolor{preprocessor}{ (add)-\/>next = (head);                                                                         \(\backslash\)}}
+\DoxyCodeLine{627 \textcolor{preprocessor}{ if (head) \{                                                                                   \(\backslash\)}}
+\DoxyCodeLine{628 \textcolor{preprocessor}{   (add)-\/>prev = (head)-\/>prev;                                                                 \(\backslash\)}}
+\DoxyCodeLine{629 \textcolor{preprocessor}{   (head)-\/>prev = (add);                                                                       \(\backslash\)}}
+\DoxyCodeLine{630 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{631 \textcolor{preprocessor}{   (add)-\/>prev = (add);                                                                        \(\backslash\)}}
+\DoxyCodeLine{632 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{633 \textcolor{preprocessor}{ (head) = (add);                                                                               \(\backslash\)}}
+\DoxyCodeLine{634 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{635 }
+\DoxyCodeLine{636 \textcolor{preprocessor}{\#define DL\_APPEND(head,add)                                                                    \(\backslash\)}}
+\DoxyCodeLine{637 \textcolor{preprocessor}{    DL\_APPEND2(head,add,prev,next)}}
+\DoxyCodeLine{638 }
+\DoxyCodeLine{639 \textcolor{preprocessor}{\#define DL\_APPEND2(head,add,prev,next)                                                         \(\backslash\)}}
+\DoxyCodeLine{640 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{641 \textcolor{preprocessor}{  if (head) \{                                                                                  \(\backslash\)}}
+\DoxyCodeLine{642 \textcolor{preprocessor}{      (add)-\/>prev = (head)-\/>prev;                                                              \(\backslash\)}}
+\DoxyCodeLine{643 \textcolor{preprocessor}{      (head)-\/>prev-\/>next = (add);                                                              \(\backslash\)}}
+\DoxyCodeLine{644 \textcolor{preprocessor}{      (head)-\/>prev = (add);                                                                    \(\backslash\)}}
+\DoxyCodeLine{645 \textcolor{preprocessor}{      (add)-\/>next = NULL;                                                                      \(\backslash\)}}
+\DoxyCodeLine{646 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{647 \textcolor{preprocessor}{      (head)=(add);                                                                            \(\backslash\)}}
+\DoxyCodeLine{648 \textcolor{preprocessor}{      (head)-\/>prev = (head);                                                                   \(\backslash\)}}
+\DoxyCodeLine{649 \textcolor{preprocessor}{      (head)-\/>next = NULL;                                                                     \(\backslash\)}}
+\DoxyCodeLine{650 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{651 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{652 }
+\DoxyCodeLine{653 \textcolor{preprocessor}{\#define DL\_INSERT\_INORDER(head,add,cmp)                                                        \(\backslash\)}}
+\DoxyCodeLine{654 \textcolor{preprocessor}{    DL\_INSERT\_INORDER2(head,add,cmp,prev,next)}}
+\DoxyCodeLine{655 }
+\DoxyCodeLine{656 \textcolor{preprocessor}{\#define DL\_INSERT\_INORDER2(head,add,cmp,prev,next)                                             \(\backslash\)}}
+\DoxyCodeLine{657 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{658 \textcolor{preprocessor}{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}}
+\DoxyCodeLine{659 \textcolor{preprocessor}{  if (head) \{                                                                                  \(\backslash\)}}
+\DoxyCodeLine{660 \textcolor{preprocessor}{    DL\_LOWER\_BOUND2(head, \_tmp, add, cmp, next);                                               \(\backslash\)}}
+\DoxyCodeLine{661 \textcolor{preprocessor}{    DL\_APPEND\_ELEM2(head, \_tmp, add, prev, next);                                              \(\backslash\)}}
+\DoxyCodeLine{662 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{663 \textcolor{preprocessor}{    (head) = (add);                                                                            \(\backslash\)}}
+\DoxyCodeLine{664 \textcolor{preprocessor}{    (head)-\/>prev = (head);                                                                     \(\backslash\)}}
+\DoxyCodeLine{665 \textcolor{preprocessor}{    (head)-\/>next = NULL;                                                                       \(\backslash\)}}
+\DoxyCodeLine{666 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{667 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{668 }
+\DoxyCodeLine{669 \textcolor{preprocessor}{\#define DL\_LOWER\_BOUND(head,elt,like,cmp)                                                      \(\backslash\)}}
+\DoxyCodeLine{670 \textcolor{preprocessor}{    DL\_LOWER\_BOUND2(head,elt,like,cmp,next)}}
+\DoxyCodeLine{671 }
+\DoxyCodeLine{672 \textcolor{preprocessor}{\#define DL\_LOWER\_BOUND2(head,elt,like,cmp,next)                                                \(\backslash\)}}
+\DoxyCodeLine{673 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{674 \textcolor{preprocessor}{  if ((head) == NULL || (cmp(head, like)) >= 0) \{                                              \(\backslash\)}}
+\DoxyCodeLine{675 \textcolor{preprocessor}{    (elt) = NULL;                                                                              \(\backslash\)}}
+\DoxyCodeLine{676 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{677 \textcolor{preprocessor}{    for ((elt) = (head); (elt)-\/>next != NULL; (elt) = (elt)-\/>next) \{                           \(\backslash\)}}
+\DoxyCodeLine{678 \textcolor{preprocessor}{      if ((cmp((elt)-\/>next, like)) >= 0) \{                                                     \(\backslash\)}}
+\DoxyCodeLine{679 \textcolor{preprocessor}{        break;                                                                                 \(\backslash\)}}
+\DoxyCodeLine{680 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{681 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{682 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{683 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{684 }
+\DoxyCodeLine{685 \textcolor{preprocessor}{\#define DL\_CONCAT(head1,head2)                                                                 \(\backslash\)}}
+\DoxyCodeLine{686 \textcolor{preprocessor}{    DL\_CONCAT2(head1,head2,prev,next)}}
+\DoxyCodeLine{687 }
+\DoxyCodeLine{688 \textcolor{preprocessor}{\#define DL\_CONCAT2(head1,head2,prev,next)                                                      \(\backslash\)}}
+\DoxyCodeLine{689 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{690 \textcolor{preprocessor}{  LDECLTYPE(head1) \_tmp;                                                                       \(\backslash\)}}
+\DoxyCodeLine{691 \textcolor{preprocessor}{  if (head2) \{                                                                                 \(\backslash\)}}
+\DoxyCodeLine{692 \textcolor{preprocessor}{    if (head1) \{                                                                               \(\backslash\)}}
+\DoxyCodeLine{693 \textcolor{preprocessor}{        UTLIST\_CASTASGN(\_tmp, (head2)-\/>prev);                                                  \(\backslash\)}}
+\DoxyCodeLine{694 \textcolor{preprocessor}{        (head2)-\/>prev = (head1)-\/>prev;                                                         \(\backslash\)}}
+\DoxyCodeLine{695 \textcolor{preprocessor}{        (head1)-\/>prev-\/>next = (head2);                                                         \(\backslash\)}}
+\DoxyCodeLine{696 \textcolor{preprocessor}{        UTLIST\_CASTASGN((head1)-\/>prev, \_tmp);                                                  \(\backslash\)}}
+\DoxyCodeLine{697 \textcolor{preprocessor}{    \} else \{                                                                                   \(\backslash\)}}
+\DoxyCodeLine{698 \textcolor{preprocessor}{        (head1)=(head2);                                                                       \(\backslash\)}}
+\DoxyCodeLine{699 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{700 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{701 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{702 }
+\DoxyCodeLine{703 \textcolor{preprocessor}{\#define DL\_DELETE(head,del)                                                                    \(\backslash\)}}
+\DoxyCodeLine{704 \textcolor{preprocessor}{    DL\_DELETE2(head,del,prev,next)}}
+\DoxyCodeLine{705 }
+\DoxyCodeLine{706 \textcolor{preprocessor}{\#define DL\_DELETE2(head,del,prev,next)                                                         \(\backslash\)}}
+\DoxyCodeLine{707 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{708 \textcolor{preprocessor}{  assert((head) != NULL);                                                                      \(\backslash\)}}
+\DoxyCodeLine{709 \textcolor{preprocessor}{  assert((del)-\/>prev != NULL);                                                                 \(\backslash\)}}
+\DoxyCodeLine{710 \textcolor{preprocessor}{  if ((del)-\/>prev == (del)) \{                                                                  \(\backslash\)}}
+\DoxyCodeLine{711 \textcolor{preprocessor}{      (head)=NULL;                                                                             \(\backslash\)}}
+\DoxyCodeLine{712 \textcolor{preprocessor}{  \} else if ((del)==(head)) \{                                                                  \(\backslash\)}}
+\DoxyCodeLine{713 \textcolor{preprocessor}{      (del)-\/>next-\/>prev = (del)-\/>prev;                                                         \(\backslash\)}}
+\DoxyCodeLine{714 \textcolor{preprocessor}{      (head) = (del)-\/>next;                                                                    \(\backslash\)}}
+\DoxyCodeLine{715 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{716 \textcolor{preprocessor}{      (del)-\/>prev-\/>next = (del)-\/>next;                                                         \(\backslash\)}}
+\DoxyCodeLine{717 \textcolor{preprocessor}{      if ((del)-\/>next) \{                                                                       \(\backslash\)}}
+\DoxyCodeLine{718 \textcolor{preprocessor}{          (del)-\/>next-\/>prev = (del)-\/>prev;                                                     \(\backslash\)}}
+\DoxyCodeLine{719 \textcolor{preprocessor}{      \} else \{                                                                                 \(\backslash\)}}
+\DoxyCodeLine{720 \textcolor{preprocessor}{          (head)-\/>prev = (del)-\/>prev;                                                          \(\backslash\)}}
+\DoxyCodeLine{721 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{722 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{723 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{724 }
+\DoxyCodeLine{725 \textcolor{preprocessor}{\#define DL\_COUNT(head,el,counter)                                                              \(\backslash\)}}
+\DoxyCodeLine{726 \textcolor{preprocessor}{    DL\_COUNT2(head,el,counter,next)                                                            \(\backslash\)}}
+\DoxyCodeLine{727 \textcolor{preprocessor}{}}
+\DoxyCodeLine{728 \textcolor{preprocessor}{\#define DL\_COUNT2(head,el,counter,next)                                                        \(\backslash\)}}
+\DoxyCodeLine{729 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{730 \textcolor{preprocessor}{  (counter) = 0;                                                                               \(\backslash\)}}
+\DoxyCodeLine{731 \textcolor{preprocessor}{  DL\_FOREACH2(head,el,next) \{ ++(counter); \}                                                   \(\backslash\)}}
+\DoxyCodeLine{732 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{733 }
+\DoxyCodeLine{734 \textcolor{preprocessor}{\#define DL\_FOREACH(head,el)                                                                    \(\backslash\)}}
+\DoxyCodeLine{735 \textcolor{preprocessor}{    DL\_FOREACH2(head,el,next)}}
+\DoxyCodeLine{736 }
+\DoxyCodeLine{737 \textcolor{preprocessor}{\#define DL\_FOREACH2(head,el,next)                                                              \(\backslash\)}}
+\DoxyCodeLine{738 \textcolor{preprocessor}{    for ((el) = (head); el; (el) = (el)-\/>next)}}
+\DoxyCodeLine{739 }
+\DoxyCodeLine{740 \textcolor{comment}{/* this version is safe for deleting the elements during iteration */}}
+\DoxyCodeLine{741 \textcolor{preprocessor}{\#define DL\_FOREACH\_SAFE(head,el,tmp)                                                           \(\backslash\)}}
+\DoxyCodeLine{742 \textcolor{preprocessor}{    DL\_FOREACH\_SAFE2(head,el,tmp,next)}}
+\DoxyCodeLine{743 }
+\DoxyCodeLine{744 \textcolor{preprocessor}{\#define DL\_FOREACH\_SAFE2(head,el,tmp,next)                                                     \(\backslash\)}}
+\DoxyCodeLine{745 \textcolor{preprocessor}{  for ((el) = (head); (el) \&\& ((tmp) = (el)-\/>next, 1); (el) = (tmp))}}
+\DoxyCodeLine{746 }
+\DoxyCodeLine{747 \textcolor{comment}{/* these are identical to their singly-\/linked list counterparts */}}
+\DoxyCodeLine{748 \textcolor{preprocessor}{\#define DL\_SEARCH\_SCALAR LL\_SEARCH\_SCALAR}}
+\DoxyCodeLine{749 \textcolor{preprocessor}{\#define DL\_SEARCH LL\_SEARCH}}
+\DoxyCodeLine{750 \textcolor{preprocessor}{\#define DL\_SEARCH\_SCALAR2 LL\_SEARCH\_SCALAR2}}
+\DoxyCodeLine{751 \textcolor{preprocessor}{\#define DL\_SEARCH2 LL\_SEARCH2}}
+\DoxyCodeLine{752 }
+\DoxyCodeLine{753 \textcolor{preprocessor}{\#define DL\_REPLACE\_ELEM2(head, el, add, prev, next)                                            \(\backslash\)}}
+\DoxyCodeLine{754 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{755 \textcolor{preprocessor}{ assert((head) != NULL);                                                                       \(\backslash\)}}
+\DoxyCodeLine{756 \textcolor{preprocessor}{ assert((el) != NULL);                                                                         \(\backslash\)}}
+\DoxyCodeLine{757 \textcolor{preprocessor}{ assert((add) != NULL);                                                                        \(\backslash\)}}
+\DoxyCodeLine{758 \textcolor{preprocessor}{ if ((head) == (el)) \{                                                                         \(\backslash\)}}
+\DoxyCodeLine{759 \textcolor{preprocessor}{  (head) = (add);                                                                              \(\backslash\)}}
+\DoxyCodeLine{760 \textcolor{preprocessor}{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}}
+\DoxyCodeLine{761 \textcolor{preprocessor}{  if ((el)-\/>next == NULL) \{                                                                    \(\backslash\)}}
+\DoxyCodeLine{762 \textcolor{preprocessor}{   (add)-\/>prev = (add);                                                                        \(\backslash\)}}
+\DoxyCodeLine{763 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{764 \textcolor{preprocessor}{   (add)-\/>prev = (el)-\/>prev;                                                                   \(\backslash\)}}
+\DoxyCodeLine{765 \textcolor{preprocessor}{   (add)-\/>next-\/>prev = (add);                                                                  \(\backslash\)}}
+\DoxyCodeLine{766 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{767 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{768 \textcolor{preprocessor}{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}}
+\DoxyCodeLine{769 \textcolor{preprocessor}{  (add)-\/>prev = (el)-\/>prev;                                                                    \(\backslash\)}}
+\DoxyCodeLine{770 \textcolor{preprocessor}{  (add)-\/>prev-\/>next = (add);                                                                   \(\backslash\)}}
+\DoxyCodeLine{771 \textcolor{preprocessor}{  if ((el)-\/>next == NULL) \{                                                                    \(\backslash\)}}
+\DoxyCodeLine{772 \textcolor{preprocessor}{   (head)-\/>prev = (add);                                                                       \(\backslash\)}}
+\DoxyCodeLine{773 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{774 \textcolor{preprocessor}{   (add)-\/>next-\/>prev = (add);                                                                  \(\backslash\)}}
+\DoxyCodeLine{775 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{776 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{777 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{778 }
+\DoxyCodeLine{779 \textcolor{preprocessor}{\#define DL\_REPLACE\_ELEM(head, el, add)                                                         \(\backslash\)}}
+\DoxyCodeLine{780 \textcolor{preprocessor}{    DL\_REPLACE\_ELEM2(head, el, add, prev, next)}}
+\DoxyCodeLine{781 }
+\DoxyCodeLine{782 \textcolor{preprocessor}{\#define DL\_PREPEND\_ELEM2(head, el, add, prev, next)                                            \(\backslash\)}}
+\DoxyCodeLine{783 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{784 \textcolor{preprocessor}{ if (el) \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{785 \textcolor{preprocessor}{  assert((head) != NULL);                                                                      \(\backslash\)}}
+\DoxyCodeLine{786 \textcolor{preprocessor}{  assert((add) != NULL);                                                                       \(\backslash\)}}
+\DoxyCodeLine{787 \textcolor{preprocessor}{  (add)-\/>next = (el);                                                                          \(\backslash\)}}
+\DoxyCodeLine{788 \textcolor{preprocessor}{  (add)-\/>prev = (el)-\/>prev;                                                                    \(\backslash\)}}
+\DoxyCodeLine{789 \textcolor{preprocessor}{  (el)-\/>prev = (add);                                                                          \(\backslash\)}}
+\DoxyCodeLine{790 \textcolor{preprocessor}{  if ((head) == (el)) \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{791 \textcolor{preprocessor}{   (head) = (add);                                                                             \(\backslash\)}}
+\DoxyCodeLine{792 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{793 \textcolor{preprocessor}{   (add)-\/>prev-\/>next = (add);                                                                  \(\backslash\)}}
+\DoxyCodeLine{794 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{795 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{796 \textcolor{preprocessor}{  DL\_APPEND2(head, add, prev, next);                                                           \(\backslash\)}}
+\DoxyCodeLine{797 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{798 \textcolor{preprocessor}{\} while (0)                                                                                    \(\backslash\)}}
+\DoxyCodeLine{799 \textcolor{preprocessor}{}}
+\DoxyCodeLine{800 \textcolor{preprocessor}{\#define DL\_PREPEND\_ELEM(head, el, add)                                                         \(\backslash\)}}
+\DoxyCodeLine{801 \textcolor{preprocessor}{    DL\_PREPEND\_ELEM2(head, el, add, prev, next)}}
+\DoxyCodeLine{802 }
+\DoxyCodeLine{803 \textcolor{preprocessor}{\#define DL\_APPEND\_ELEM2(head, el, add, prev, next)                                             \(\backslash\)}}
+\DoxyCodeLine{804 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{805 \textcolor{preprocessor}{ if (el) \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{806 \textcolor{preprocessor}{  assert((head) != NULL);                                                                      \(\backslash\)}}
+\DoxyCodeLine{807 \textcolor{preprocessor}{  assert((add) != NULL);                                                                       \(\backslash\)}}
+\DoxyCodeLine{808 \textcolor{preprocessor}{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}}
+\DoxyCodeLine{809 \textcolor{preprocessor}{  (add)-\/>prev = (el);                                                                          \(\backslash\)}}
+\DoxyCodeLine{810 \textcolor{preprocessor}{  (el)-\/>next = (add);                                                                          \(\backslash\)}}
+\DoxyCodeLine{811 \textcolor{preprocessor}{  if ((add)-\/>next) \{                                                                           \(\backslash\)}}
+\DoxyCodeLine{812 \textcolor{preprocessor}{   (add)-\/>next-\/>prev = (add);                                                                  \(\backslash\)}}
+\DoxyCodeLine{813 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{814 \textcolor{preprocessor}{   (head)-\/>prev = (add);                                                                       \(\backslash\)}}
+\DoxyCodeLine{815 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{816 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{817 \textcolor{preprocessor}{  DL\_PREPEND2(head, add, prev, next);                                                          \(\backslash\)}}
+\DoxyCodeLine{818 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{819 \textcolor{preprocessor}{\} while (0)                                                                                    \(\backslash\)}}
+\DoxyCodeLine{820 \textcolor{preprocessor}{}}
+\DoxyCodeLine{821 \textcolor{preprocessor}{\#define DL\_APPEND\_ELEM(head, el, add)                                                          \(\backslash\)}}
+\DoxyCodeLine{822 \textcolor{preprocessor}{   DL\_APPEND\_ELEM2(head, el, add, prev, next)}}
+\DoxyCodeLine{823 }
+\DoxyCodeLine{824 \textcolor{preprocessor}{\#ifdef NO\_DECLTYPE}}
+\DoxyCodeLine{825 \textcolor{comment}{/* Here are VS2008 / NO\_DECLTYPE replacements for a few functions */}}
+\DoxyCodeLine{826 }
+\DoxyCodeLine{827 \textcolor{preprocessor}{\#undef DL\_INSERT\_INORDER2}}
+\DoxyCodeLine{828 \textcolor{preprocessor}{\#define DL\_INSERT\_INORDER2(head,add,cmp,prev,next)                                             \(\backslash\)}}
+\DoxyCodeLine{829 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{830 \textcolor{preprocessor}{  if ((head) == NULL) \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{831 \textcolor{preprocessor}{    (add)-\/>prev = (add);                                                                       \(\backslash\)}}
+\DoxyCodeLine{832 \textcolor{preprocessor}{    (add)-\/>next = NULL;                                                                        \(\backslash\)}}
+\DoxyCodeLine{833 \textcolor{preprocessor}{    (head) = (add);                                                                            \(\backslash\)}}
+\DoxyCodeLine{834 \textcolor{preprocessor}{  \} else if ((cmp(head, add)) >= 0) \{                                                          \(\backslash\)}}
+\DoxyCodeLine{835 \textcolor{preprocessor}{    (add)-\/>prev = (head)-\/>prev;                                                                \(\backslash\)}}
+\DoxyCodeLine{836 \textcolor{preprocessor}{    (add)-\/>next = (head);                                                                      \(\backslash\)}}
+\DoxyCodeLine{837 \textcolor{preprocessor}{    (head)-\/>prev = (add);                                                                      \(\backslash\)}}
+\DoxyCodeLine{838 \textcolor{preprocessor}{    (head) = (add);                                                                            \(\backslash\)}}
+\DoxyCodeLine{839 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{840 \textcolor{preprocessor}{    char *\_tmp = (char*)(head);                                                                \(\backslash\)}}
+\DoxyCodeLine{841 \textcolor{preprocessor}{    while ((head)-\/>next \&\& (cmp((head)-\/>next, add)) < 0) \{                                     \(\backslash\)}}
+\DoxyCodeLine{842 \textcolor{preprocessor}{      (head) = (head)-\/>next;                                                                   \(\backslash\)}}
+\DoxyCodeLine{843 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{844 \textcolor{preprocessor}{    (add)-\/>prev = (head);                                                                      \(\backslash\)}}
+\DoxyCodeLine{845 \textcolor{preprocessor}{    (add)-\/>next = (head)-\/>next;                                                                \(\backslash\)}}
+\DoxyCodeLine{846 \textcolor{preprocessor}{    (head)-\/>next = (add);                                                                      \(\backslash\)}}
+\DoxyCodeLine{847 \textcolor{preprocessor}{    UTLIST\_RS(head);                                                                           \(\backslash\)}}
+\DoxyCodeLine{848 \textcolor{preprocessor}{    if ((add)-\/>next) \{                                                                         \(\backslash\)}}
+\DoxyCodeLine{849 \textcolor{preprocessor}{      (add)-\/>next-\/>prev = (add);                                                               \(\backslash\)}}
+\DoxyCodeLine{850 \textcolor{preprocessor}{    \} else \{                                                                                   \(\backslash\)}}
+\DoxyCodeLine{851 \textcolor{preprocessor}{      (head)-\/>prev = (add);                                                                    \(\backslash\)}}
+\DoxyCodeLine{852 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{853 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{854 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{855 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* NO\_DECLTYPE */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{856 }
+\DoxyCodeLine{857 \textcolor{comment}{/******************************************************************************}}
+\DoxyCodeLine{858 \textcolor{comment}{ * circular doubly linked list macros                                         *}}
+\DoxyCodeLine{859 \textcolor{comment}{ *****************************************************************************/}}
+\DoxyCodeLine{860 \textcolor{preprocessor}{\#define CDL\_APPEND(head,add)                                                                   \(\backslash\)}}
+\DoxyCodeLine{861 \textcolor{preprocessor}{    CDL\_APPEND2(head,add,prev,next)}}
+\DoxyCodeLine{862 }
+\DoxyCodeLine{863 \textcolor{preprocessor}{\#define CDL\_APPEND2(head,add,prev,next)                                                        \(\backslash\)}}
+\DoxyCodeLine{864 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{865 \textcolor{preprocessor}{ if (head) \{                                                                                   \(\backslash\)}}
+\DoxyCodeLine{866 \textcolor{preprocessor}{   (add)-\/>prev = (head)-\/>prev;                                                                 \(\backslash\)}}
+\DoxyCodeLine{867 \textcolor{preprocessor}{   (add)-\/>next = (head);                                                                       \(\backslash\)}}
+\DoxyCodeLine{868 \textcolor{preprocessor}{   (head)-\/>prev = (add);                                                                       \(\backslash\)}}
+\DoxyCodeLine{869 \textcolor{preprocessor}{   (add)-\/>prev-\/>next = (add);                                                                  \(\backslash\)}}
+\DoxyCodeLine{870 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{871 \textcolor{preprocessor}{   (add)-\/>prev = (add);                                                                        \(\backslash\)}}
+\DoxyCodeLine{872 \textcolor{preprocessor}{   (add)-\/>next = (add);                                                                        \(\backslash\)}}
+\DoxyCodeLine{873 \textcolor{preprocessor}{   (head) = (add);                                                                             \(\backslash\)}}
+\DoxyCodeLine{874 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{875 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{876 }
+\DoxyCodeLine{877 \textcolor{preprocessor}{\#define CDL\_PREPEND(head,add)                                                                  \(\backslash\)}}
+\DoxyCodeLine{878 \textcolor{preprocessor}{    CDL\_PREPEND2(head,add,prev,next)}}
+\DoxyCodeLine{879 }
+\DoxyCodeLine{880 \textcolor{preprocessor}{\#define CDL\_PREPEND2(head,add,prev,next)                                                       \(\backslash\)}}
+\DoxyCodeLine{881 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{882 \textcolor{preprocessor}{ if (head) \{                                                                                   \(\backslash\)}}
+\DoxyCodeLine{883 \textcolor{preprocessor}{   (add)-\/>prev = (head)-\/>prev;                                                                 \(\backslash\)}}
+\DoxyCodeLine{884 \textcolor{preprocessor}{   (add)-\/>next = (head);                                                                       \(\backslash\)}}
+\DoxyCodeLine{885 \textcolor{preprocessor}{   (head)-\/>prev = (add);                                                                       \(\backslash\)}}
+\DoxyCodeLine{886 \textcolor{preprocessor}{   (add)-\/>prev-\/>next = (add);                                                                  \(\backslash\)}}
+\DoxyCodeLine{887 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{888 \textcolor{preprocessor}{   (add)-\/>prev = (add);                                                                        \(\backslash\)}}
+\DoxyCodeLine{889 \textcolor{preprocessor}{   (add)-\/>next = (add);                                                                        \(\backslash\)}}
+\DoxyCodeLine{890 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{891 \textcolor{preprocessor}{ (head) = (add);                                                                               \(\backslash\)}}
+\DoxyCodeLine{892 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{893 }
+\DoxyCodeLine{894 \textcolor{preprocessor}{\#define CDL\_INSERT\_INORDER(head,add,cmp)                                                       \(\backslash\)}}
+\DoxyCodeLine{895 \textcolor{preprocessor}{    CDL\_INSERT\_INORDER2(head,add,cmp,prev,next)}}
+\DoxyCodeLine{896 }
+\DoxyCodeLine{897 \textcolor{preprocessor}{\#define CDL\_INSERT\_INORDER2(head,add,cmp,prev,next)                                            \(\backslash\)}}
+\DoxyCodeLine{898 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{899 \textcolor{preprocessor}{  LDECLTYPE(head) \_tmp;                                                                        \(\backslash\)}}
+\DoxyCodeLine{900 \textcolor{preprocessor}{  if (head) \{                                                                                  \(\backslash\)}}
+\DoxyCodeLine{901 \textcolor{preprocessor}{    CDL\_LOWER\_BOUND2(head, \_tmp, add, cmp, next);                                              \(\backslash\)}}
+\DoxyCodeLine{902 \textcolor{preprocessor}{    CDL\_APPEND\_ELEM2(head, \_tmp, add, prev, next);                                             \(\backslash\)}}
+\DoxyCodeLine{903 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{904 \textcolor{preprocessor}{    (head) = (add);                                                                            \(\backslash\)}}
+\DoxyCodeLine{905 \textcolor{preprocessor}{    (head)-\/>next = (head);                                                                     \(\backslash\)}}
+\DoxyCodeLine{906 \textcolor{preprocessor}{    (head)-\/>prev = (head);                                                                     \(\backslash\)}}
+\DoxyCodeLine{907 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{908 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{909 }
+\DoxyCodeLine{910 \textcolor{preprocessor}{\#define CDL\_LOWER\_BOUND(head,elt,like,cmp)                                                     \(\backslash\)}}
+\DoxyCodeLine{911 \textcolor{preprocessor}{    CDL\_LOWER\_BOUND2(head,elt,like,cmp,next)}}
+\DoxyCodeLine{912 }
+\DoxyCodeLine{913 \textcolor{preprocessor}{\#define CDL\_LOWER\_BOUND2(head,elt,like,cmp,next)                                               \(\backslash\)}}
+\DoxyCodeLine{914 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{915 \textcolor{preprocessor}{  if ((head) == NULL || (cmp(head, like)) >= 0) \{                                              \(\backslash\)}}
+\DoxyCodeLine{916 \textcolor{preprocessor}{    (elt) = NULL;                                                                              \(\backslash\)}}
+\DoxyCodeLine{917 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{918 \textcolor{preprocessor}{    for ((elt) = (head); (elt)-\/>next != (head); (elt) = (elt)-\/>next) \{                         \(\backslash\)}}
+\DoxyCodeLine{919 \textcolor{preprocessor}{      if ((cmp((elt)-\/>next, like)) >= 0) \{                                                     \(\backslash\)}}
+\DoxyCodeLine{920 \textcolor{preprocessor}{        break;                                                                                 \(\backslash\)}}
+\DoxyCodeLine{921 \textcolor{preprocessor}{      \}                                                                                        \(\backslash\)}}
+\DoxyCodeLine{922 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{923 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{924 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{925 }
+\DoxyCodeLine{926 \textcolor{preprocessor}{\#define CDL\_DELETE(head,del)                                                                   \(\backslash\)}}
+\DoxyCodeLine{927 \textcolor{preprocessor}{    CDL\_DELETE2(head,del,prev,next)}}
+\DoxyCodeLine{928 }
+\DoxyCodeLine{929 \textcolor{preprocessor}{\#define CDL\_DELETE2(head,del,prev,next)                                                        \(\backslash\)}}
+\DoxyCodeLine{930 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{931 \textcolor{preprocessor}{  if (((head)==(del)) \&\& ((head)-\/>next == (head))) \{                                           \(\backslash\)}}
+\DoxyCodeLine{932 \textcolor{preprocessor}{      (head) = NULL;                                                                           \(\backslash\)}}
+\DoxyCodeLine{933 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{934 \textcolor{preprocessor}{     (del)-\/>next-\/>prev = (del)-\/>prev;                                                          \(\backslash\)}}
+\DoxyCodeLine{935 \textcolor{preprocessor}{     (del)-\/>prev-\/>next = (del)-\/>next;                                                          \(\backslash\)}}
+\DoxyCodeLine{936 \textcolor{preprocessor}{     if ((del) == (head)) (head)=(del)-\/>next;                                                  \(\backslash\)}}
+\DoxyCodeLine{937 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{938 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{939 }
+\DoxyCodeLine{940 \textcolor{preprocessor}{\#define CDL\_COUNT(head,el,counter)                                                             \(\backslash\)}}
+\DoxyCodeLine{941 \textcolor{preprocessor}{    CDL\_COUNT2(head,el,counter,next)                                                           \(\backslash\)}}
+\DoxyCodeLine{942 \textcolor{preprocessor}{}}
+\DoxyCodeLine{943 \textcolor{preprocessor}{\#define CDL\_COUNT2(head, el, counter,next)                                                     \(\backslash\)}}
+\DoxyCodeLine{944 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{945 \textcolor{preprocessor}{  (counter) = 0;                                                                               \(\backslash\)}}
+\DoxyCodeLine{946 \textcolor{preprocessor}{  CDL\_FOREACH2(head,el,next) \{ ++(counter); \}                                                  \(\backslash\)}}
+\DoxyCodeLine{947 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{948 }
+\DoxyCodeLine{949 \textcolor{preprocessor}{\#define CDL\_FOREACH(head,el)                                                                   \(\backslash\)}}
+\DoxyCodeLine{950 \textcolor{preprocessor}{    CDL\_FOREACH2(head,el,next)}}
+\DoxyCodeLine{951 }
+\DoxyCodeLine{952 \textcolor{preprocessor}{\#define CDL\_FOREACH2(head,el,next)                                                             \(\backslash\)}}
+\DoxyCodeLine{953 \textcolor{preprocessor}{    for ((el)=(head);el;(el)=(((el)-\/>next==(head)) ? NULL : (el)-\/>next))}}
+\DoxyCodeLine{954 }
+\DoxyCodeLine{955 \textcolor{preprocessor}{\#define CDL\_FOREACH\_SAFE(head,el,tmp1,tmp2)                                                    \(\backslash\)}}
+\DoxyCodeLine{956 \textcolor{preprocessor}{    CDL\_FOREACH\_SAFE2(head,el,tmp1,tmp2,prev,next)}}
+\DoxyCodeLine{957 }
+\DoxyCodeLine{958 \textcolor{preprocessor}{\#define CDL\_FOREACH\_SAFE2(head,el,tmp1,tmp2,prev,next)                                         \(\backslash\)}}
+\DoxyCodeLine{959 \textcolor{preprocessor}{  for ((el) = (head), (tmp1) = (head) ? (head)-\/>prev : NULL;                                   \(\backslash\)}}
+\DoxyCodeLine{960 \textcolor{preprocessor}{       (el) \&\& ((tmp2) = (el)-\/>next, 1);                                                       \(\backslash\)}}
+\DoxyCodeLine{961 \textcolor{preprocessor}{       (el) = ((el) == (tmp1) ? NULL : (tmp2)))}}
+\DoxyCodeLine{962 }
+\DoxyCodeLine{963 \textcolor{preprocessor}{\#define CDL\_SEARCH\_SCALAR(head,out,field,val)                                                  \(\backslash\)}}
+\DoxyCodeLine{964 \textcolor{preprocessor}{    CDL\_SEARCH\_SCALAR2(head,out,field,val,next)}}
+\DoxyCodeLine{965 }
+\DoxyCodeLine{966 \textcolor{preprocessor}{\#define CDL\_SEARCH\_SCALAR2(head,out,field,val,next)                                            \(\backslash\)}}
+\DoxyCodeLine{967 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{968 \textcolor{preprocessor}{    CDL\_FOREACH2(head,out,next) \{                                                              \(\backslash\)}}
+\DoxyCodeLine{969 \textcolor{preprocessor}{      if ((out)-\/>field == (val)) break;                                                        \(\backslash\)}}
+\DoxyCodeLine{970 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{971 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{972 }
+\DoxyCodeLine{973 \textcolor{preprocessor}{\#define CDL\_SEARCH(head,out,elt,cmp)                                                           \(\backslash\)}}
+\DoxyCodeLine{974 \textcolor{preprocessor}{    CDL\_SEARCH2(head,out,elt,cmp,next)}}
+\DoxyCodeLine{975 }
+\DoxyCodeLine{976 \textcolor{preprocessor}{\#define CDL\_SEARCH2(head,out,elt,cmp,next)                                                     \(\backslash\)}}
+\DoxyCodeLine{977 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{978 \textcolor{preprocessor}{    CDL\_FOREACH2(head,out,next) \{                                                              \(\backslash\)}}
+\DoxyCodeLine{979 \textcolor{preprocessor}{      if ((cmp(out,elt))==0) break;                                                            \(\backslash\)}}
+\DoxyCodeLine{980 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{981 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{982 }
+\DoxyCodeLine{983 \textcolor{preprocessor}{\#define CDL\_REPLACE\_ELEM2(head, el, add, prev, next)                                           \(\backslash\)}}
+\DoxyCodeLine{984 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{985 \textcolor{preprocessor}{ assert((head) != NULL);                                                                       \(\backslash\)}}
+\DoxyCodeLine{986 \textcolor{preprocessor}{ assert((el) != NULL);                                                                         \(\backslash\)}}
+\DoxyCodeLine{987 \textcolor{preprocessor}{ assert((add) != NULL);                                                                        \(\backslash\)}}
+\DoxyCodeLine{988 \textcolor{preprocessor}{ if ((el)-\/>next == (el)) \{                                                                     \(\backslash\)}}
+\DoxyCodeLine{989 \textcolor{preprocessor}{  (add)-\/>next = (add);                                                                         \(\backslash\)}}
+\DoxyCodeLine{990 \textcolor{preprocessor}{  (add)-\/>prev = (add);                                                                         \(\backslash\)}}
+\DoxyCodeLine{991 \textcolor{preprocessor}{  (head) = (add);                                                                              \(\backslash\)}}
+\DoxyCodeLine{992 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{993 \textcolor{preprocessor}{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}}
+\DoxyCodeLine{994 \textcolor{preprocessor}{  (add)-\/>prev = (el)-\/>prev;                                                                    \(\backslash\)}}
+\DoxyCodeLine{995 \textcolor{preprocessor}{  (add)-\/>next-\/>prev = (add);                                                                   \(\backslash\)}}
+\DoxyCodeLine{996 \textcolor{preprocessor}{  (add)-\/>prev-\/>next = (add);                                                                   \(\backslash\)}}
+\DoxyCodeLine{997 \textcolor{preprocessor}{  if ((head) == (el)) \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{998 \textcolor{preprocessor}{   (head) = (add);                                                                             \(\backslash\)}}
+\DoxyCodeLine{999 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{1000 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{1001 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{1002 }
+\DoxyCodeLine{1003 \textcolor{preprocessor}{\#define CDL\_REPLACE\_ELEM(head, el, add)                                                        \(\backslash\)}}
+\DoxyCodeLine{1004 \textcolor{preprocessor}{    CDL\_REPLACE\_ELEM2(head, el, add, prev, next)}}
+\DoxyCodeLine{1005 }
+\DoxyCodeLine{1006 \textcolor{preprocessor}{\#define CDL\_PREPEND\_ELEM2(head, el, add, prev, next)                                           \(\backslash\)}}
+\DoxyCodeLine{1007 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{1008 \textcolor{preprocessor}{  if (el) \{                                                                                    \(\backslash\)}}
+\DoxyCodeLine{1009 \textcolor{preprocessor}{    assert((head) != NULL);                                                                    \(\backslash\)}}
+\DoxyCodeLine{1010 \textcolor{preprocessor}{    assert((add) != NULL);                                                                     \(\backslash\)}}
+\DoxyCodeLine{1011 \textcolor{preprocessor}{    (add)-\/>next = (el);                                                                        \(\backslash\)}}
+\DoxyCodeLine{1012 \textcolor{preprocessor}{    (add)-\/>prev = (el)-\/>prev;                                                                  \(\backslash\)}}
+\DoxyCodeLine{1013 \textcolor{preprocessor}{    (el)-\/>prev = (add);                                                                        \(\backslash\)}}
+\DoxyCodeLine{1014 \textcolor{preprocessor}{    (add)-\/>prev-\/>next = (add);                                                                 \(\backslash\)}}
+\DoxyCodeLine{1015 \textcolor{preprocessor}{    if ((head) == (el)) \{                                                                      \(\backslash\)}}
+\DoxyCodeLine{1016 \textcolor{preprocessor}{      (head) = (add);                                                                          \(\backslash\)}}
+\DoxyCodeLine{1017 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{1018 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{1019 \textcolor{preprocessor}{    CDL\_APPEND2(head, add, prev, next);                                                        \(\backslash\)}}
+\DoxyCodeLine{1020 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{1021 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{1022 }
+\DoxyCodeLine{1023 \textcolor{preprocessor}{\#define CDL\_PREPEND\_ELEM(head, el, add)                                                        \(\backslash\)}}
+\DoxyCodeLine{1024 \textcolor{preprocessor}{    CDL\_PREPEND\_ELEM2(head, el, add, prev, next)}}
+\DoxyCodeLine{1025 }
+\DoxyCodeLine{1026 \textcolor{preprocessor}{\#define CDL\_APPEND\_ELEM2(head, el, add, prev, next)                                            \(\backslash\)}}
+\DoxyCodeLine{1027 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{1028 \textcolor{preprocessor}{ if (el) \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{1029 \textcolor{preprocessor}{  assert((head) != NULL);                                                                      \(\backslash\)}}
+\DoxyCodeLine{1030 \textcolor{preprocessor}{  assert((add) != NULL);                                                                       \(\backslash\)}}
+\DoxyCodeLine{1031 \textcolor{preprocessor}{  (add)-\/>next = (el)-\/>next;                                                                    \(\backslash\)}}
+\DoxyCodeLine{1032 \textcolor{preprocessor}{  (add)-\/>prev = (el);                                                                          \(\backslash\)}}
+\DoxyCodeLine{1033 \textcolor{preprocessor}{  (el)-\/>next = (add);                                                                          \(\backslash\)}}
+\DoxyCodeLine{1034 \textcolor{preprocessor}{  (add)-\/>next-\/>prev = (add);                                                                   \(\backslash\)}}
+\DoxyCodeLine{1035 \textcolor{preprocessor}{ \} else \{                                                                                      \(\backslash\)}}
+\DoxyCodeLine{1036 \textcolor{preprocessor}{  CDL\_PREPEND2(head, add, prev, next);                                                         \(\backslash\)}}
+\DoxyCodeLine{1037 \textcolor{preprocessor}{ \}                                                                                             \(\backslash\)}}
+\DoxyCodeLine{1038 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{1039 }
+\DoxyCodeLine{1040 \textcolor{preprocessor}{\#define CDL\_APPEND\_ELEM(head, el, add)                                                         \(\backslash\)}}
+\DoxyCodeLine{1041 \textcolor{preprocessor}{    CDL\_APPEND\_ELEM2(head, el, add, prev, next)}}
+\DoxyCodeLine{1042 }
+\DoxyCodeLine{1043 \textcolor{preprocessor}{\#ifdef NO\_DECLTYPE}}
+\DoxyCodeLine{1044 \textcolor{comment}{/* Here are VS2008 / NO\_DECLTYPE replacements for a few functions */}}
+\DoxyCodeLine{1045 }
+\DoxyCodeLine{1046 \textcolor{preprocessor}{\#undef CDL\_INSERT\_INORDER2}}
+\DoxyCodeLine{1047 \textcolor{preprocessor}{\#define CDL\_INSERT\_INORDER2(head,add,cmp,prev,next)                                            \(\backslash\)}}
+\DoxyCodeLine{1048 \textcolor{preprocessor}{do \{                                                                                           \(\backslash\)}}
+\DoxyCodeLine{1049 \textcolor{preprocessor}{  if ((head) == NULL) \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{1050 \textcolor{preprocessor}{    (add)-\/>prev = (add);                                                                       \(\backslash\)}}
+\DoxyCodeLine{1051 \textcolor{preprocessor}{    (add)-\/>next = (add);                                                                       \(\backslash\)}}
+\DoxyCodeLine{1052 \textcolor{preprocessor}{    (head) = (add);                                                                            \(\backslash\)}}
+\DoxyCodeLine{1053 \textcolor{preprocessor}{  \} else if ((cmp(head, add)) >= 0) \{                                                          \(\backslash\)}}
+\DoxyCodeLine{1054 \textcolor{preprocessor}{    (add)-\/>prev = (head)-\/>prev;                                                                \(\backslash\)}}
+\DoxyCodeLine{1055 \textcolor{preprocessor}{    (add)-\/>next = (head);                                                                      \(\backslash\)}}
+\DoxyCodeLine{1056 \textcolor{preprocessor}{    (add)-\/>prev-\/>next = (add);                                                                 \(\backslash\)}}
+\DoxyCodeLine{1057 \textcolor{preprocessor}{    (head)-\/>prev = (add);                                                                      \(\backslash\)}}
+\DoxyCodeLine{1058 \textcolor{preprocessor}{    (head) = (add);                                                                            \(\backslash\)}}
+\DoxyCodeLine{1059 \textcolor{preprocessor}{  \} else \{                                                                                     \(\backslash\)}}
+\DoxyCodeLine{1060 \textcolor{preprocessor}{    char *\_tmp = (char*)(head);                                                                \(\backslash\)}}
+\DoxyCodeLine{1061 \textcolor{preprocessor}{    while ((char*)(head)-\/>next != \_tmp \&\& (cmp((head)-\/>next, add)) < 0) \{                      \(\backslash\)}}
+\DoxyCodeLine{1062 \textcolor{preprocessor}{      (head) = (head)-\/>next;                                                                   \(\backslash\)}}
+\DoxyCodeLine{1063 \textcolor{preprocessor}{    \}                                                                                          \(\backslash\)}}
+\DoxyCodeLine{1064 \textcolor{preprocessor}{    (add)-\/>prev = (head);                                                                      \(\backslash\)}}
+\DoxyCodeLine{1065 \textcolor{preprocessor}{    (add)-\/>next = (head)-\/>next;                                                                \(\backslash\)}}
+\DoxyCodeLine{1066 \textcolor{preprocessor}{    (add)-\/>next-\/>prev = (add);                                                                 \(\backslash\)}}
+\DoxyCodeLine{1067 \textcolor{preprocessor}{    (head)-\/>next = (add);                                                                      \(\backslash\)}}
+\DoxyCodeLine{1068 \textcolor{preprocessor}{    UTLIST\_RS(head);                                                                           \(\backslash\)}}
+\DoxyCodeLine{1069 \textcolor{preprocessor}{  \}                                                                                            \(\backslash\)}}
+\DoxyCodeLine{1070 \textcolor{preprocessor}{\} while (0)}}
+\DoxyCodeLine{1071 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* NO\_DECLTYPE */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{1072 }
+\DoxyCodeLine{1073 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* UTLIST\_H */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

@@ -1,30 +1,12 @@
-.TH "source/Scene/SceneSplashScreen.c" 3 "Fri May 6 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.TH "source/SceneManager/Scene/SceneSplashScreen.c" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-source/Scene/SceneSplashScreen.c
+source/SceneManager/Scene/SceneSplashScreen.c
 .SH SYNOPSIS
 .br
 .PP
-\fC#include 'SceneManager\&.h'\fP
-.br
-\fC#include 'ResourceManager\&.h'\fP
-.br
-\fC#include 'Scene/SceneSplashScreen\&.h'\fP
-.br
-\fC#include <raylib\&.h>\fP
-.br
-\fC#include <raymath\&.h>\fP
-.br
-\fC#include 'raylib\-extra/raygui\&.h'\fP
-.br
-\fC#include <stdlib\&.h>\fP
-.br
-\fC#include <math\&.h>\fP
-.br
-\fC#include <stdint\&.h>\fP
-.br
-\fC#include <stdbool\&.h>\fP
+\fC#include 'SceneManager/Scenes/SceneSplashScreen\&.h'\fP
 .br
 
 .SS "Data Structures"
@@ -38,37 +20,43 @@ source/Scene/SceneSplashScreen.c
 
 .in +1c
 .ti -1c
-.RI "void \fBSceneSplashScreenOnInit\fP (void **_$)"
+.RI "void \fBSceneSplashScreenStart\fP ()"
 .br
 .ti -1c
-.RI "void \fBSceneSplashScreenOnStart\fP (void **_$)"
+.RI "void \fBSceneSplashScreenUpdate\fP ()"
 .br
 .ti -1c
-.RI "void \fBSceneSplashScreenOnUpdate\fP (void **_$)"
+.RI "void \fBSceneSplashScreenFixedUpdate\fP ()"
 .br
 .ti -1c
-.RI "void \fBSceneSplashScreenOnFixedUpdate\fP (void **_$)"
+.RI "void \fBSceneSplashScreenRender\fP ()"
 .br
 .ti -1c
-.RI "void \fBSceneSplashScreenOnRender\fP (void **_$)"
+.RI "void \fBSceneSplashScreenExit\fP ()"
 .br
+.in -1c
+.SS "Variables"
+
+.in +1c
 .ti -1c
-.RI "void \fBSceneSplashScreenOnExit\fP (void **_$)"
+.RI "struct \fBSceneSplashScreenData\fP \fB_SceneSplashScreenData\fP"
 .br
 .in -1c
 .SH "Function Documentation"
 .PP 
-.SS "void SceneSplashScreenOnExit (void ** _$)"
+.SS "void SceneSplashScreenExit ()"
 
-.SS "void SceneSplashScreenOnFixedUpdate (void ** _$)"
+.SS "void SceneSplashScreenFixedUpdate ()"
 
-.SS "void SceneSplashScreenOnInit (void ** _$)"
+.SS "void SceneSplashScreenRender ()"
 
-.SS "void SceneSplashScreenOnRender (void ** _$)"
+.SS "void SceneSplashScreenStart ()"
 
-.SS "void SceneSplashScreenOnStart (void ** _$)"
+.SS "void SceneSplashScreenUpdate ()"
 
-.SS "void SceneSplashScreenOnUpdate (void ** _$)"
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBSceneSplashScreenData\fP _SceneSplashScreenData"
 
 .SH "Author"
 .PP 

@@ -1,8 +1,8 @@
-.TH "include/logger.h" 3 "Fri May 6 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.TH "include/utils/logger.h" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-include/logger.h
+include/utils/logger.h
 .SH SYNOPSIS
 .br
 .PP
@@ -15,13 +15,40 @@ include/logger.h
 
 .in +1c
 .ti -1c
-.RI "#define \fBLOG_STYLE_INDENTED\fP   0"
-.br
-.ti -1c
-.RI "#define \fBLOG_STYLE_BLANK_LINE\fP   1"
+.RI "#define \fBLOG_STYLE_BLANK_LINE\fP"
 .br
 .ti -1c
 .RI "#define \fBLOG_STYLE_USE_COLOR\fP"
+.br
+.ti -1c
+.RI "#define \fBLOG_COLOR_RESET\fP   '\\033[0m'"
+.br
+.ti -1c
+.RI "#define \fBLOG_COLOR_RED\fP   '\\033[31m'"
+.br
+.ti -1c
+.RI "#define \fBLOG_COLOR_GREEN\fP   '\\033[32m'"
+.br
+.ti -1c
+.RI "#define \fBLOG_COLOR_YELLOW\fP   '\\033[33m'"
+.br
+.ti -1c
+.RI "#define \fBLOG_COLOR_BLUE\fP   '\\033[34m'"
+.br
+.ti -1c
+.RI "#define \fBLOG_COLOR_MAGENTA\fP   '\\033[35m'"
+.br
+.ti -1c
+.RI "#define \fBLOG_COLOR_CYAN\fP   '\\033[36m'"
+.br
+.ti -1c
+.RI "#define \fBLOG_COLOR_BLACK\fP   '\\033[37m'"
+.br
+.ti -1c
+.RI "#define \fBLOG_COLOR_WHITE\fP   '\\033[38m'"
+.br
+.ti -1c
+.RI "#define \fBLOG_COLOR_DEFAULT\fP   '\\033[39m'"
 .br
 .in -1c
 .SS "Functions"
@@ -36,9 +63,27 @@ include/logger.h
 .in -1c
 .SH "Macro Definition Documentation"
 .PP 
-.SS "#define LOG_STYLE_BLANK_LINE   1"
+.SS "#define LOG_COLOR_BLACK   '\\033[37m'"
 
-.SS "#define LOG_STYLE_INDENTED   0"
+.SS "#define LOG_COLOR_BLUE   '\\033[34m'"
+
+.SS "#define LOG_COLOR_CYAN   '\\033[36m'"
+
+.SS "#define LOG_COLOR_DEFAULT   '\\033[39m'"
+
+.SS "#define LOG_COLOR_GREEN   '\\033[32m'"
+
+.SS "#define LOG_COLOR_MAGENTA   '\\033[35m'"
+
+.SS "#define LOG_COLOR_RED   '\\033[31m'"
+
+.SS "#define LOG_COLOR_RESET   '\\033[0m'"
+
+.SS "#define LOG_COLOR_WHITE   '\\033[38m'"
+
+.SS "#define LOG_COLOR_YELLOW   '\\033[33m'"
+
+.SS "#define LOG_STYLE_BLANK_LINE"
 
 .SS "#define LOG_STYLE_USE_COLOR"
 

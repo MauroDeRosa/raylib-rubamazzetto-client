@@ -1,0 +1,75 @@
+.TH "UT_hash_table" 3 "Sun May 8 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+UT_hash_table
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <uthash\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBUT_hash_bucket\fP * \fBbuckets\fP"
+.br
+.ti -1c
+.RI "unsigned \fBnum_buckets\fP"
+.br
+.ti -1c
+.RI "unsigned \fBlog2_num_buckets\fP"
+.br
+.ti -1c
+.RI "unsigned \fBnum_items\fP"
+.br
+.ti -1c
+.RI "struct \fBUT_hash_handle\fP * \fBtail\fP"
+.br
+.ti -1c
+.RI "ptrdiff_t \fBhho\fP"
+.br
+.ti -1c
+.RI "unsigned \fBideal_chain_maxlen\fP"
+.br
+.ti -1c
+.RI "unsigned \fBnonideal_items\fP"
+.br
+.ti -1c
+.RI "unsigned \fBineff_expands\fP"
+.br
+.ti -1c
+.RI "unsigned \fBnoexpand\fP"
+.br
+.ti -1c
+.RI "uint32_t \fBsignature\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "\fBUT_hash_bucket\fP* UT_hash_table::buckets"
+
+.SS "ptrdiff_t UT_hash_table::hho"
+
+.SS "unsigned UT_hash_table::ideal_chain_maxlen"
+
+.SS "unsigned UT_hash_table::ineff_expands"
+
+.SS "unsigned UT_hash_table::log2_num_buckets"
+
+.SS "unsigned UT_hash_table::noexpand"
+
+.SS "unsigned UT_hash_table::nonideal_items"
+
+.SS "unsigned UT_hash_table::num_buckets"
+
+.SS "unsigned UT_hash_table::num_items"
+
+.SS "uint32_t UT_hash_table::signature"
+
+.SS "struct \fBUT_hash_handle\fP* UT_hash_table::tail"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

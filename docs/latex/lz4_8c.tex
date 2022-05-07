@@ -1,0 +1,1168 @@
+\hypertarget{lz4_8c}{}\doxysection{include/external/external/lz4.c File Reference}
+\label{lz4_8c}\index{include/external/external/lz4.c@{include/external/external/lz4.c}}
+{\ttfamily \#include \char`\"{}lz4.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aad22227b784a1d159d1afb79e0314ab0}{LZ4\+\_\+\+HEAPMODE}}~0
+\item 
+\#define \mbox{\hyperlink{lz4_8c_adea34c0babc399b21c7a6438954c278b}{LZ4\+\_\+\+ACCELERATION\+\_\+\+DEFAULT}}~1
+\item 
+\#define \mbox{\hyperlink{lz4_8c_ac43936b4b9066c8c0d524493a1813d8a}{LZ4\+\_\+\+ACCELERATION\+\_\+\+MAX}}~65537
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a484b22f8b4e0a1749aaf4ce38fa5a0c2}{LZ4\+\_\+\+SRC\+\_\+\+INCLUDED}}~1
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a9f6dad34ffe2a398c20ed5ed3792152a}{LZ4\+\_\+\+STATIC\+\_\+\+LINKING\+\_\+\+ONLY}}
+\item 
+\#define \mbox{\hyperlink{lz4_8c_abc48339936d049baa5eef32ee0e9de75}{LZ4\+\_\+\+DISABLE\+\_\+\+DEPRECATE\+\_\+\+WARNINGS}}~/$\ast$ due to \mbox{\hyperlink{lz4_8c_a2ceb6bc3c28b8e95a220343c6c40bed6}{LZ4\+\_\+decompress\+\_\+safe\+\_\+with\+Prefix64k}} $\ast$/
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a9f6dad34ffe2a398c20ed5ed3792152a}{LZ4\+\_\+\+STATIC\+\_\+\+LINKING\+\_\+\+ONLY}}~/$\ast$ LZ4\+\_\+\+DISTANCE\+\_\+\+MAX $\ast$/
+\item 
+\#define \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}}~static
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}}
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a7d26a1c40d6107cf2f19558492591e67}{expect}}(expr,  value)~(expr)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aa0672ea7123854cc5f51902a06c473fb}{likely}}(expr)~\mbox{\hyperlink{lz4_8c_a7d26a1c40d6107cf2f19558492591e67}{expect}}((expr) != 0, 1)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_ad8700448546b3b5111404cc021061fd5}{unlikely}}(expr)~\mbox{\hyperlink{lz4_8c_a7d26a1c40d6107cf2f19558492591e67}{expect}}((expr) != 0, 0)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a6c439b01b6c27280593774a911bfa4ac}{LZ4\+\_\+\+ALIGN\+\_\+\+TEST}}~1
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a973873efb6444e9c575ac51a2e2dab8b}{ALLOC}}(s)~malloc(s)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aa94b481965fc08c7d1a3cc637d3efdcd}{ALLOC\+\_\+\+AND\+\_\+\+ZERO}}(s)~calloc(1,s)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a9747598bddd9ac7a5f754ed567624f23}{FREEMEM}}(p)~free(p)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aac9d513b59141751b50b246e5b632f2d}{MEM\+\_\+\+INIT}}(p,  v,  s)~memset((p),(v),(s))
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a2d835b35b6582451a75dc6ff464a9e75}{MINMATCH}}~4
+\item 
+\#define \mbox{\hyperlink{lz4_8c_ade83a0730ce39465e00284b8d1b29784}{WILDCOPYLENGTH}}~8
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a7a912d9a1f869b93be505568dce7fa8c}{LASTLITERALS}}~5   /$\ast$ see ../doc/lz4\+\_\+\+Block\+\_\+format.\+md\#parsing-\/restrictions $\ast$/
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a6bb5847a99cd90aca07870a394cbe70d}{MFLIMIT}}~12   /$\ast$ see ../doc/lz4\+\_\+\+Block\+\_\+format.\+md\#parsing-\/restrictions $\ast$/
+\item 
+\#define \mbox{\hyperlink{lz4_8c_acd67b050f5c5a9c22357493223a620c0}{MATCH\+\_\+\+SAFEGUARD\+\_\+\+DISTANCE}}~((2$\ast$\mbox{\hyperlink{lz4_8c_ade83a0730ce39465e00284b8d1b29784}{WILDCOPYLENGTH}}) -\/ \mbox{\hyperlink{lz4_8c_a2d835b35b6582451a75dc6ff464a9e75}{MINMATCH}})   /$\ast$ ensure it\textquotesingle{}s possible to write 2 x wildcopy\+Length without overflowing output buffer $\ast$/
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aa7091dfd46e0c63c7974aa8cecae6207}{FASTLOOP\+\_\+\+SAFE\+\_\+\+DISTANCE}}~64
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a1841fd1a462d245d8c73dce55e2f45da}{KB}}~$\ast$(1 $<$$<$10)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aa6b38d492364d98453284934ed7caee9}{MB}}~$\ast$(1 $<$$<$20)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a44172ac633c517cb4c9e278cef36b000}{GB}}~$\ast$(1U$<$$<$30)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a677dd41923a5dc079254ea9f689d78dd}{LZ4\+\_\+\+DISTANCE\+\_\+\+ABSOLUTE\+\_\+\+MAX}}~65535
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aa84b594ef328b62b23e36c78abe2aaf0}{ML\+\_\+\+BITS}}~4
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aa939dccc909b8b36baadb3265a72b37a}{ML\+\_\+\+MASK}}~((1U$<$$<$\mbox{\hyperlink{lz4_8c_aa84b594ef328b62b23e36c78abe2aaf0}{ML\+\_\+\+BITS}})-\/1)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_ae6261d794dfe7c6816e3b342c643f56f}{RUN\+\_\+\+BITS}}~(8-\/\mbox{\hyperlink{lz4_8c_aa84b594ef328b62b23e36c78abe2aaf0}{ML\+\_\+\+BITS}})
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aec45fd08a68c07b74493e631ae52aca1}{RUN\+\_\+\+MASK}}~((1U$<$$<$\mbox{\hyperlink{lz4_8c_ae6261d794dfe7c6816e3b342c643f56f}{RUN\+\_\+\+BITS}})-\/1)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_acdcc5aaebf3f273c1762f24a6ece2e5e}{assert}}(condition)~((void)0)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a233a86aeac0d8f5c00236b4d8d055761}{LZ4\+\_\+\+STATIC\+\_\+\+ASSERT}}(c)~\{ enum \{ LZ4\+\_\+static\+\_\+assert = 1/(int)(!!(c)) \}; \}   /$\ast$ use after variable declarations $\ast$/
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a8728fe9e99fe783be28c0f38bb0d0761}{DEBUGLOG}}(l, ...)~\{\}    /$\ast$ disabled $\ast$/
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a5ed8599ff9813a458df4a9d4d81bef58}{LZ4\+\_\+memcpy}}(\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}},  src,  size)~memcpy(\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, src, size)
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a3a953ec2c42892177653816eeeb91211}{LZ4\+\_\+\+FAST\+\_\+\+DEC\+\_\+\+LOOP}}~0
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a0b31438dd90256ed47b3bea0eb62be06}{STEPSIZE}}~sizeof(\mbox{\hyperlink{lz4_8c_a2835baf742d73416e69ab571e9a9dacb}{reg\+\_\+t}})
+\item 
+\#define \mbox{\hyperlink{lz4_8c_aae700b88149456d76a68c28e04320048}{HASH\+\_\+\+UNIT}}~sizeof(\mbox{\hyperlink{lz4_8c_a2835baf742d73416e69ab571e9a9dacb}{reg\+\_\+t}})
+\item 
+\#define \mbox{\hyperlink{lz4_8c_a3acffbd305ee72dcd4593c0d8af64a4f}{MIN}}(a,  b)~( (a) $<$ (b) ? (a) \+: (b) )
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned char \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}}
+\item 
+typedef unsigned short \mbox{\hyperlink{lz4_8c_adf928e51a60dba0df29d615401cc55a8}{U16}}
+\item 
+typedef unsigned int \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}}
+\item 
+typedef signed int \mbox{\hyperlink{lz4_8c_a57a2244776e01ad620c556de58eb7880}{S32}}
+\item 
+typedef unsigned long long \mbox{\hyperlink{lz4_8c_a24c386d3758eba951eb7532fdbb45804}{U64}}
+\item 
+typedef size\+\_\+t \mbox{\hyperlink{lz4_8c_ab750201a68131ce52397fad8a0c7ae79}{uptrval}}
+\item 
+typedef size\+\_\+t \mbox{\hyperlink{lz4_8c_a2835baf742d73416e69ab571e9a9dacb}{reg\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{lz4_8c_ab93acf685743debab05876250a1cbe28}{limited\+Output\+\_\+directive}} \{ \mbox{\hyperlink{lz4_8c_ab93acf685743debab05876250a1cbe28adc568f9214a2932542608f43124efcff}{not\+Limited}} = 0
+, \mbox{\hyperlink{lz4_8c_ab93acf685743debab05876250a1cbe28a06ce6334cca200bdb7d30cf1422ca5aa}{limited\+Output}} = 1
+, \mbox{\hyperlink{lz4_8c_ab93acf685743debab05876250a1cbe28a76ae01d59d140527a5540583923a0294}{fill\+Output}} = 2
+ \}
+\item 
+enum \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} \{ \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699a160636a34765ad36416d316e62406d31}{cleared\+Table}} = 0
+, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699a5c952c05e312cfc0589ef1d283397560}{by\+Ptr}}
+, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699ae7520fe8d6957f5029ddeb0652c65471}{by\+U32}}
+, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699a48aff40d7237850c996a1f6c266a598f}{by\+U16}}
+ \}
+\item 
+enum \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4c}{dict\+\_\+directive}} \{ \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4ca0c48f9478a9b96dcb96a1a8781aba13f}{no\+Dict}} = 0
+, \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4ca34c34b9cfe0046130ff97acf6914519d}{with\+Prefix64k}}
+, \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4caa8cc166c33fdfcd904c260136978913b}{using\+Ext\+Dict}}
+, \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4caf6d955259638feac01c4e4cace77c617}{using\+Dict\+Ctx}}
+ \}
+\item 
+enum \mbox{\hyperlink{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351}{dict\+Issue\+\_\+directive}} \{ \mbox{\hyperlink{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351a2a95ee19c5c0704200f9154a4abcf115}{no\+Dict\+Issue}} = 0
+, \mbox{\hyperlink{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351a4609b423b2c861fd5968b33837c76236}{dict\+Small}}
+ \}
+\item 
+enum \mbox{\hyperlink{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746}{end\+Condition\+\_\+directive}} \{ \mbox{\hyperlink{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746a92d766b3022f9d86ccf764d716a46b2a}{end\+On\+Output\+Size}} = 0
+, \mbox{\hyperlink{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746a2a30c7b77002529763d202e7ac636539}{end\+On\+Input\+Size}} = 1
+ \}
+\item 
+enum \mbox{\hyperlink{lz4_8c_a2719d1421671f2c7fa3c68ca7465994c}{early\+End\+\_\+directive}} \{ \mbox{\hyperlink{lz4_8c_a2719d1421671f2c7fa3c68ca7465994ca5551916aeb552806ac850d0875151113}{decode\+\_\+full\+\_\+block}} = 0
+, \mbox{\hyperlink{lz4_8c_a2719d1421671f2c7fa3c68ca7465994ca032ce1b03f03cde2ed5ab8cfdf0d5e7f}{partial\+\_\+decode}} = 1
+ \}
+\item 
+enum \mbox{\hyperlink{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3}{variable\+\_\+length\+\_\+error}} \{ \mbox{\hyperlink{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3a19c5cc5c8516ea67ef3b2ec2de6fc484}{loop\+\_\+error}} = -\/2
+, \mbox{\hyperlink{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3a4dd6136f5d290f53a4ac8864c0a12f99}{initial\+\_\+error}} = -\/1
+, \mbox{\hyperlink{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3ad8b76af209cd7ba83b4ebf33ba1637b2}{ok}} = 0
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void \mbox{\hyperlink{lz4_8c_a07728e73c2d01917fa46e28357fb6fd1}{LZ4\+\_\+wild\+Copy8}} (void $\ast$dst\+Ptr, const void $\ast$src\+Ptr, void $\ast$dst\+End)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} unsigned \mbox{\hyperlink{lz4_8c_a94258766267d7286a6962c805eb56fea}{LZ4\+\_\+count}} (const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$p\+In, const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$p\+Match, const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$p\+In\+Limit)
+\item 
+int \mbox{\hyperlink{lz4_8c_a9a7a69397b6452fcf6a35caa40493776}{LZ4\+\_\+version\+Number}} (void)
+\item 
+const char $\ast$ \mbox{\hyperlink{lz4_8c_a6ef97df81fadbddc3a58c1b96ca0a81d}{LZ4\+\_\+version\+String}} (void)
+\item 
+int \mbox{\hyperlink{lz4_8c_a2b09f5ca41ce609bb136d3637beffe04}{LZ4\+\_\+compress\+Bound}} (int \mbox{\hyperlink{lz4_8h_adfcbb6553c624f57c2605cfcb121bccf}{isize}})
+\item 
+int \mbox{\hyperlink{lz4_8c_a5533b6e13559d2c75ac5ac6d4eb13beb}{LZ4\+\_\+sizeof\+State}} (void)
+\item 
+int \mbox{\hyperlink{lz4_8c_aa21d9d803f8efcb91ecbb99062fd6b9e}{LZ4\+\_\+compress\+\_\+force\+Ext\+Dict}} (\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$LZ4\+\_\+dict, const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{src\+Size}})
+\item 
+int \mbox{\hyperlink{lz4_8c_a8bb3038074030f03d5b70229b9841a51}{LZ4\+\_\+decompress\+\_\+safe\+\_\+force\+Ext\+Dict}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a0f9a0600771a3eb50c56e55266a7da49}{compressed\+Size}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}}, const void $\ast$dict\+Start, size\+\_\+t dict\+Size)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} \mbox{\hyperlink{lz4_8c_a4b2bca18b9716c1b14c20ef98c00706a}{LZ4\+\_\+hash4}} (\mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} sequence, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const table\+Type)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} \mbox{\hyperlink{lz4_8c_adc69f36cc4b0eec011a50a195eadfecc}{LZ4\+\_\+hash5}} (\mbox{\hyperlink{lz4_8c_a24c386d3758eba951eb7532fdbb45804}{U64}} sequence, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const table\+Type)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} \mbox{\hyperlink{lz4_8c_ac12a7e2c99e027f4890aa543dc3fc367}{LZ4\+\_\+hash\+Position}} (const void $\ast$const p, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const table\+Type)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void \mbox{\hyperlink{lz4_8c_aa81c43ba8b3f5f2c3728aaecd44d6a02}{LZ4\+\_\+clear\+Hash}} (\mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} h, void $\ast$table\+Base, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const table\+Type)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void \mbox{\hyperlink{lz4_8c_aa691b9fc80f3e34c2b3e776a4a488911}{LZ4\+\_\+put\+Index\+On\+Hash}} (\mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} idx, \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} h, void $\ast$table\+Base, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const table\+Type)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void \mbox{\hyperlink{lz4_8c_a0eba3b95eb6fc95a7796c30657417ac1}{LZ4\+\_\+put\+Position\+On\+Hash}} (const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$p, \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} h, void $\ast$table\+Base, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const table\+Type, const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$src\+Base)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void \mbox{\hyperlink{lz4_8c_a6efaf92ef3c802858a2246a5a588dcb9}{LZ4\+\_\+put\+Position}} (const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$p, void $\ast$table\+Base, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} table\+Type, const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$src\+Base)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} \mbox{\hyperlink{lz4_8c_a53d709e1ac9aff4321467ffe1fef571f}{LZ4\+\_\+get\+Index\+On\+Hash}} (\mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} h, const void $\ast$table\+Base, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} table\+Type)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$ \mbox{\hyperlink{lz4_8c_aae6e31487a50e9124929fd1fa710d58e}{LZ4\+\_\+get\+Position}} (const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$p, const void $\ast$table\+Base, \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} table\+Type, const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$src\+Base)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void \mbox{\hyperlink{lz4_8c_a89986cece123f15fc68536ad0244ee0d}{LZ4\+\_\+prepare\+Table}} (\mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\+\_\+stream\+\_\+t\+\_\+internal}} $\ast$const cctx, const int \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{input\+Size}}, const \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} table\+Type)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} int \mbox{\hyperlink{lz4_8c_aaf9d82d99a9a4f4d33da21867c6aa751}{LZ4\+\_\+compress\+\_\+generic\+\_\+validated}} (\mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\+\_\+stream\+\_\+t\+\_\+internal}} $\ast$const cctx, const char $\ast$const \mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$const \mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, const int \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{input\+Size}}, int $\ast$input\+Consumed, const int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}}, const \mbox{\hyperlink{lz4_8c_ab93acf685743debab05876250a1cbe28}{limited\+Output\+\_\+directive}} output\+Directive, const \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} table\+Type, const \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4c}{dict\+\_\+directive}} dict\+Directive, const \mbox{\hyperlink{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351}{dict\+Issue\+\_\+directive}} dict\+Issue, const int acceleration)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} int \mbox{\hyperlink{lz4_8c_a2c16b0c1f9b51bb73e155876011fc97a}{LZ4\+\_\+compress\+\_\+generic}} (\mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\+\_\+stream\+\_\+t\+\_\+internal}} $\ast$const cctx, const char $\ast$const src, char $\ast$const \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, const int \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{src\+Size}}, int $\ast$input\+Consumed, const int dst\+Capacity, const \mbox{\hyperlink{lz4_8c_ab93acf685743debab05876250a1cbe28}{limited\+Output\+\_\+directive}} output\+Directive, const \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} table\+Type, const \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4c}{dict\+\_\+directive}} dict\+Directive, const \mbox{\hyperlink{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351}{dict\+Issue\+\_\+directive}} dict\+Issue, const int acceleration)
+\item 
+int \mbox{\hyperlink{lz4_8c_a19a6258c0092d5b3255a41d7566248d7}{LZ4\+\_\+compress\+\_\+fast\+\_\+ext\+State}} (void $\ast$state, const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{input\+Size}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}}, int acceleration)
+\item 
+int \mbox{\hyperlink{lz4_8c_ad9ca3cfc174b63e4ecf1897c32f146a7}{LZ4\+\_\+compress\+\_\+fast\+\_\+ext\+State\+\_\+fast\+Reset}} (void $\ast$state, const char $\ast$src, char $\ast$\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, int \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{src\+Size}}, int dst\+Capacity, int acceleration)
+\item 
+int \mbox{\hyperlink{lz4_8c_a7466a8eca8f7b2eeec7887c9371d21e1}{LZ4\+\_\+compress\+\_\+fast}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{input\+Size}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}}, int acceleration)
+\item 
+int \mbox{\hyperlink{lz4_8c_a4a0eddbe2e6f52ce91e259fa57459fbd}{LZ4\+\_\+compress\+\_\+default}} (const char $\ast$src, char $\ast$\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, int \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{src\+Size}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}})
+\item 
+int \mbox{\hyperlink{lz4_8c_a54116374080dae219ffa71e484ce5f2a}{LZ4\+\_\+compress\+\_\+dest\+Size}} (const char $\ast$src, char $\ast$\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, int $\ast$src\+Size\+Ptr, int target\+Dst\+Size)
+\item 
+\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$ \mbox{\hyperlink{lz4_8c_a9f7c46cabd525df03c0a4b79634a041b}{LZ4\+\_\+create\+Stream}} (void)
+\item 
+\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$ \mbox{\hyperlink{lz4_8c_a7a89d0d01282953dc67d3215cf4bbde4}{LZ4\+\_\+init\+Stream}} (void $\ast$buffer, size\+\_\+t size)
+\item 
+void \mbox{\hyperlink{lz4_8c_a62d9f1ebf60fd83bf2f0d1a58e80a64c}{LZ4\+\_\+reset\+Stream}} (\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$LZ4\+\_\+stream)
+\item 
+void \mbox{\hyperlink{lz4_8c_a679ba06947df2172511239fecedd3a11}{LZ4\+\_\+reset\+Stream\+\_\+fast}} (\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$ctx)
+\item 
+int \mbox{\hyperlink{lz4_8c_a6a4702cac776d39c52074280d8fb84db}{LZ4\+\_\+free\+Stream}} (\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$LZ4\+\_\+stream)
+\item 
+int \mbox{\hyperlink{lz4_8c_a2b94615ba633a2c5511758d5f2cb34f5}{LZ4\+\_\+load\+Dict}} (\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$LZ4\+\_\+dict, const char $\ast$dictionary, int dict\+Size)
+\item 
+void \mbox{\hyperlink{lz4_8c_ae05f90c537857347fcd564a91241d45d}{LZ4\+\_\+attach\+\_\+dictionary}} (\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$working\+Stream, const \mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$dictionary\+Stream)
+\item 
+int \mbox{\hyperlink{lz4_8c_abee2872be58007aae02ca0ca467dae4f}{LZ4\+\_\+compress\+\_\+fast\+\_\+continue}} (\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$LZ4\+\_\+stream, const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{input\+Size}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}}, int acceleration)
+\item 
+int \mbox{\hyperlink{lz4_8c_abb233b63fc3488ce647ee9c7b0a95a76}{LZ4\+\_\+save\+Dict}} (\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$LZ4\+\_\+dict, char $\ast$safe\+Buffer, int dict\+Size)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} unsigned \mbox{\hyperlink{lz4_8c_a54ff5f47024f14f6cbc486fa483811f4}{read\+\_\+variable\+\_\+length}} (const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$$\ast$ip, const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$lencheck, int loop\+\_\+check, int initial\+\_\+check, \mbox{\hyperlink{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3}{variable\+\_\+length\+\_\+error}} $\ast$error)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} int \mbox{\hyperlink{lz4_8c_ac53b33bff098af0f44931aaae87ef585}{LZ4\+\_\+decompress\+\_\+generic}} (const char $\ast$const src, char $\ast$const \mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, int \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{src\+Size}}, int \mbox{\hyperlink{lz4_8h_ad51f027030cdccc88ee22f1252628af7}{output\+Size}}, \mbox{\hyperlink{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746}{end\+Condition\+\_\+directive}} end\+On\+Input, \mbox{\hyperlink{lz4_8c_a2719d1421671f2c7fa3c68ca7465994c}{early\+End\+\_\+directive}} partial\+Decoding, \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4c}{dict\+\_\+directive}} dict, const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$const low\+Prefix, const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$const dict\+Start, const size\+\_\+t dict\+Size)
+\item 
+\mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int \mbox{\hyperlink{lz4_8c_ae753d1e5bc9c6a1529b1fe73d39a4972}{LZ4\+\_\+decompress\+\_\+safe}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a0f9a0600771a3eb50c56e55266a7da49}{compressed\+Size}}, int max\+Decompressed\+Size)
+\item 
+\mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int \mbox{\hyperlink{lz4_8c_aba0e874c2e4d3532e86526a55d2228fa}{LZ4\+\_\+decompress\+\_\+safe\+\_\+partial}} (const char $\ast$src, char $\ast$\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, int \mbox{\hyperlink{lz4_8h_a0f9a0600771a3eb50c56e55266a7da49}{compressed\+Size}}, int target\+Output\+Size, int dst\+Capacity)
+\item 
+\mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int \mbox{\hyperlink{lz4_8c_ab6434fcc90ca0e0725503bf440b68294}{LZ4\+\_\+decompress\+\_\+fast}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_acb72249f2d22c1084adf0de0406d6c3d}{original\+Size}})
+\item 
+\mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int \mbox{\hyperlink{lz4_8c_a2ceb6bc3c28b8e95a220343c6c40bed6}{LZ4\+\_\+decompress\+\_\+safe\+\_\+with\+Prefix64k}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a0f9a0600771a3eb50c56e55266a7da49}{compressed\+Size}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}})
+\item 
+int \mbox{\hyperlink{lz4_8c_aef3d7b7bead970344b439ac9bd672065}{LZ4\+\_\+decompress\+\_\+fast\+\_\+with\+Prefix64k}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_acb72249f2d22c1084adf0de0406d6c3d}{original\+Size}})
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} int \mbox{\hyperlink{lz4_8c_a8dbbbc837a88da1386c24d27d5cffe81}{LZ4\+\_\+decompress\+\_\+safe\+\_\+double\+Dict}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a0f9a0600771a3eb50c56e55266a7da49}{compressed\+Size}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}}, size\+\_\+t prefix\+Size, const void $\ast$dict\+Start, size\+\_\+t dict\+Size)
+\item 
+\mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} int \mbox{\hyperlink{lz4_8c_a35d5ee5e0fbdca149b72d45837cfdc7b}{LZ4\+\_\+decompress\+\_\+fast\+\_\+double\+Dict}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_acb72249f2d22c1084adf0de0406d6c3d}{original\+Size}}, size\+\_\+t prefix\+Size, const void $\ast$dict\+Start, size\+\_\+t dict\+Size)
+\item 
+\mbox{\hyperlink{lz4_8h_a76a1eaa4729efddb43040217daad4d4e}{LZ4\+\_\+stream\+Decode\+\_\+t}} $\ast$ \mbox{\hyperlink{lz4_8c_afe5b34a42176888d7e31d79c25dc052b}{LZ4\+\_\+create\+Stream\+Decode}} (void)
+\item 
+int \mbox{\hyperlink{lz4_8c_afdcbf92c1921ecf2838db322c77c1485}{LZ4\+\_\+free\+Stream\+Decode}} (\mbox{\hyperlink{lz4_8h_a76a1eaa4729efddb43040217daad4d4e}{LZ4\+\_\+stream\+Decode\+\_\+t}} $\ast$LZ4\+\_\+stream)
+\item 
+int \mbox{\hyperlink{lz4_8c_a971624e4abed2ab679a8c1728875663b}{LZ4\+\_\+set\+Stream\+Decode}} (\mbox{\hyperlink{lz4_8h_a76a1eaa4729efddb43040217daad4d4e}{LZ4\+\_\+stream\+Decode\+\_\+t}} $\ast$LZ4\+\_\+stream\+Decode, const char $\ast$dictionary, int dict\+Size)
+\item 
+int \mbox{\hyperlink{lz4_8c_a48c320b65924a5e535cf8d8cee7f6755}{LZ4\+\_\+decoder\+Ring\+Buffer\+Size}} (int max\+Block\+Size)
+\item 
+\mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int \mbox{\hyperlink{lz4_8c_aa04e6d12be3e13001d9b01cd73c58111}{LZ4\+\_\+decompress\+\_\+safe\+\_\+continue}} (\mbox{\hyperlink{lz4_8h_a76a1eaa4729efddb43040217daad4d4e}{LZ4\+\_\+stream\+Decode\+\_\+t}} $\ast$LZ4\+\_\+stream\+Decode, const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a0f9a0600771a3eb50c56e55266a7da49}{compressed\+Size}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}})
+\item 
+\mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int \mbox{\hyperlink{lz4_8c_a5863feb1caa76aa91d23c14e57282bc8}{LZ4\+\_\+decompress\+\_\+fast\+\_\+continue}} (\mbox{\hyperlink{lz4_8h_a76a1eaa4729efddb43040217daad4d4e}{LZ4\+\_\+stream\+Decode\+\_\+t}} $\ast$LZ4\+\_\+stream\+Decode, const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_acb72249f2d22c1084adf0de0406d6c3d}{original\+Size}})
+\item 
+int \mbox{\hyperlink{lz4_8c_a36c8331cc4609de05d87da6c0eea574e}{LZ4\+\_\+decompress\+\_\+safe\+\_\+using\+Dict}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a0f9a0600771a3eb50c56e55266a7da49}{compressed\+Size}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}}, const char $\ast$dict\+Start, int dict\+Size)
+\item 
+int \mbox{\hyperlink{lz4_8c_a1af9f7a2df20389dd9a0a31706c683b7}{LZ4\+\_\+decompress\+\_\+fast\+\_\+using\+Dict}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_acb72249f2d22c1084adf0de0406d6c3d}{original\+Size}}, const char $\ast$dict\+Start, int dict\+Size)
+\item 
+int \mbox{\hyperlink{lz4_8c_a464e8e2a2ad215e0d94042722eb75551}{LZ4\+\_\+compress\+\_\+limited\+Output}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{input\+Size}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}})
+\item 
+int \mbox{\hyperlink{lz4_8c_a5eae984914665109fd891ff2bed82331}{LZ4\+\_\+compress}} (const char $\ast$src, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{src\+Size}})
+\item 
+int \mbox{\hyperlink{lz4_8c_ab9e6911a8271745f3a45490edeae135b}{LZ4\+\_\+compress\+\_\+limited\+Output\+\_\+with\+State}} (void $\ast$state, const char $\ast$src, char $\ast$\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, int \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{src\+Size}}, int dst\+Size)
+\item 
+int \mbox{\hyperlink{lz4_8c_a9fa2e6e61caea57ae1c3ef996f0e9ac9}{LZ4\+\_\+compress\+\_\+with\+State}} (void $\ast$state, const char $\ast$src, char $\ast$\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, int \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{src\+Size}})
+\item 
+int \mbox{\hyperlink{lz4_8c_a4a6e82d1e76a274fe351f9d090c44e59}{LZ4\+\_\+compress\+\_\+limited\+Output\+\_\+continue}} (\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$LZ4\+\_\+stream, const char $\ast$src, char $\ast$\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, int \mbox{\hyperlink{lz4_8h_a0f93ad4b0b04b77f089a39036b3814dc}{src\+Size}}, int dst\+Capacity)
+\item 
+int \mbox{\hyperlink{lz4_8c_a7936aa7dce7ba045f7daa578de555175}{LZ4\+\_\+compress\+\_\+continue}} (\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$LZ4\+\_\+stream, const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_a8f274f682cf5ca365dd560d994011541}{input\+Size}})
+\item 
+int \mbox{\hyperlink{lz4_8c_a76994c12731075f0d8a96239c8856192}{LZ4\+\_\+uncompress}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_ad51f027030cdccc88ee22f1252628af7}{output\+Size}})
+\item 
+int \mbox{\hyperlink{lz4_8c_a81aa900c172d655f8a4f0a75739791f0}{LZ4\+\_\+uncompress\+\_\+unknown\+Output\+Size}} (const char $\ast$\mbox{\hyperlink{lz4_8h_a0211201f992ec3f0b641c9ceff5f837a}{source}}, char $\ast$\mbox{\hyperlink{lz4_8h_aedfbaa502c9c447fc19b72fec8fc48e0}{dest}}, int \mbox{\hyperlink{lz4_8h_adfcbb6553c624f57c2605cfcb121bccf}{isize}}, int \mbox{\hyperlink{lz4_8h_ab258c6d1e889ad8640854042a5898eb4}{max\+Output\+Size}})
+\item 
+int \mbox{\hyperlink{lz4_8c_a92f20fa55554d00760fb6fb4108a2825}{LZ4\+\_\+sizeof\+Stream\+State}} (void)
+\item 
+int \mbox{\hyperlink{lz4_8c_acc12a443b49ec045db2399d57c0afde7}{LZ4\+\_\+reset\+Stream\+State}} (void $\ast$state, char $\ast$\mbox{\hyperlink{lz4_8h_a74538761f55cd8dbed4b6e62ce69876d}{input\+Buffer}})
+\item 
+void $\ast$ \mbox{\hyperlink{lz4_8c_afe9770c9f4098735952ff6d5464ef26e}{LZ4\+\_\+create}} (char $\ast$\mbox{\hyperlink{lz4_8h_a74538761f55cd8dbed4b6e62ce69876d}{input\+Buffer}})
+\item 
+char $\ast$ \mbox{\hyperlink{lz4_8c_a78cb8b4ee777318e773f631700279e73}{LZ4\+\_\+slide\+Input\+Buffer}} (void $\ast$state)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{lz4_8c_a973873efb6444e9c575ac51a2e2dab8b}\label{lz4_8c_a973873efb6444e9c575ac51a2e2dab8b}} 
+\index{lz4.c@{lz4.c}!ALLOC@{ALLOC}}
+\index{ALLOC@{ALLOC}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{ALLOC}{ALLOC}}
+{\footnotesize\ttfamily \#define ALLOC(\begin{DoxyParamCaption}\item[{}]{s }\end{DoxyParamCaption})~malloc(s)}
+
+\mbox{\Hypertarget{lz4_8c_aa94b481965fc08c7d1a3cc637d3efdcd}\label{lz4_8c_aa94b481965fc08c7d1a3cc637d3efdcd}} 
+\index{lz4.c@{lz4.c}!ALLOC\_AND\_ZERO@{ALLOC\_AND\_ZERO}}
+\index{ALLOC\_AND\_ZERO@{ALLOC\_AND\_ZERO}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{ALLOC\_AND\_ZERO}{ALLOC\_AND\_ZERO}}
+{\footnotesize\ttfamily \#define ALLOC\+\_\+\+AND\+\_\+\+ZERO(\begin{DoxyParamCaption}\item[{}]{s }\end{DoxyParamCaption})~calloc(1,s)}
+
+\mbox{\Hypertarget{lz4_8c_acdcc5aaebf3f273c1762f24a6ece2e5e}\label{lz4_8c_acdcc5aaebf3f273c1762f24a6ece2e5e}} 
+\index{lz4.c@{lz4.c}!assert@{assert}}
+\index{assert@{assert}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{assert}{assert}}
+{\footnotesize\ttfamily \#define assert(\begin{DoxyParamCaption}\item[{}]{condition }\end{DoxyParamCaption})~((void)0)}
+
+\mbox{\Hypertarget{lz4_8c_a8728fe9e99fe783be28c0f38bb0d0761}\label{lz4_8c_a8728fe9e99fe783be28c0f38bb0d0761}} 
+\index{lz4.c@{lz4.c}!DEBUGLOG@{DEBUGLOG}}
+\index{DEBUGLOG@{DEBUGLOG}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{DEBUGLOG}{DEBUGLOG}}
+{\footnotesize\ttfamily \#define DEBUGLOG(\begin{DoxyParamCaption}\item[{}]{l,  }\item[{}]{... }\end{DoxyParamCaption})~\{\}    /$\ast$ disabled $\ast$/}
+
+\mbox{\Hypertarget{lz4_8c_a7d26a1c40d6107cf2f19558492591e67}\label{lz4_8c_a7d26a1c40d6107cf2f19558492591e67}} 
+\index{lz4.c@{lz4.c}!expect@{expect}}
+\index{expect@{expect}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{expect}{expect}}
+{\footnotesize\ttfamily \#define expect(\begin{DoxyParamCaption}\item[{}]{expr,  }\item[{}]{value }\end{DoxyParamCaption})~(expr)}
+
+\mbox{\Hypertarget{lz4_8c_aa7091dfd46e0c63c7974aa8cecae6207}\label{lz4_8c_aa7091dfd46e0c63c7974aa8cecae6207}} 
+\index{lz4.c@{lz4.c}!FASTLOOP\_SAFE\_DISTANCE@{FASTLOOP\_SAFE\_DISTANCE}}
+\index{FASTLOOP\_SAFE\_DISTANCE@{FASTLOOP\_SAFE\_DISTANCE}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{FASTLOOP\_SAFE\_DISTANCE}{FASTLOOP\_SAFE\_DISTANCE}}
+{\footnotesize\ttfamily \#define FASTLOOP\+\_\+\+SAFE\+\_\+\+DISTANCE~64}
+
+\mbox{\Hypertarget{lz4_8c_a9747598bddd9ac7a5f754ed567624f23}\label{lz4_8c_a9747598bddd9ac7a5f754ed567624f23}} 
+\index{lz4.c@{lz4.c}!FREEMEM@{FREEMEM}}
+\index{FREEMEM@{FREEMEM}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{FREEMEM}{FREEMEM}}
+{\footnotesize\ttfamily \#define FREEMEM(\begin{DoxyParamCaption}\item[{}]{p }\end{DoxyParamCaption})~free(p)}
+
+\mbox{\Hypertarget{lz4_8c_a44172ac633c517cb4c9e278cef36b000}\label{lz4_8c_a44172ac633c517cb4c9e278cef36b000}} 
+\index{lz4.c@{lz4.c}!GB@{GB}}
+\index{GB@{GB}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{GB}{GB}}
+{\footnotesize\ttfamily \#define GB~$\ast$(1U$<$$<$30)}
+
+\mbox{\Hypertarget{lz4_8c_aae700b88149456d76a68c28e04320048}\label{lz4_8c_aae700b88149456d76a68c28e04320048}} 
+\index{lz4.c@{lz4.c}!HASH\_UNIT@{HASH\_UNIT}}
+\index{HASH\_UNIT@{HASH\_UNIT}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{HASH\_UNIT}{HASH\_UNIT}}
+{\footnotesize\ttfamily \#define HASH\+\_\+\+UNIT~sizeof(\mbox{\hyperlink{lz4_8c_a2835baf742d73416e69ab571e9a9dacb}{reg\+\_\+t}})}
+
+\mbox{\Hypertarget{lz4_8c_a1841fd1a462d245d8c73dce55e2f45da}\label{lz4_8c_a1841fd1a462d245d8c73dce55e2f45da}} 
+\index{lz4.c@{lz4.c}!KB@{KB}}
+\index{KB@{KB}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{KB}{KB}}
+{\footnotesize\ttfamily \#define KB~$\ast$(1 $<$$<$10)}
+
+\mbox{\Hypertarget{lz4_8c_a7a912d9a1f869b93be505568dce7fa8c}\label{lz4_8c_a7a912d9a1f869b93be505568dce7fa8c}} 
+\index{lz4.c@{lz4.c}!LASTLITERALS@{LASTLITERALS}}
+\index{LASTLITERALS@{LASTLITERALS}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LASTLITERALS}{LASTLITERALS}}
+{\footnotesize\ttfamily \#define LASTLITERALS~5   /$\ast$ see ../doc/lz4\+\_\+\+Block\+\_\+format.\+md\#parsing-\/restrictions $\ast$/}
+
+\mbox{\Hypertarget{lz4_8c_aa0672ea7123854cc5f51902a06c473fb}\label{lz4_8c_aa0672ea7123854cc5f51902a06c473fb}} 
+\index{lz4.c@{lz4.c}!likely@{likely}}
+\index{likely@{likely}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{likely}{likely}}
+{\footnotesize\ttfamily \#define likely(\begin{DoxyParamCaption}\item[{}]{expr }\end{DoxyParamCaption})~\mbox{\hyperlink{lz4_8c_a7d26a1c40d6107cf2f19558492591e67}{expect}}((expr) != 0, 1)}
+
+\mbox{\Hypertarget{lz4_8c_adea34c0babc399b21c7a6438954c278b}\label{lz4_8c_adea34c0babc399b21c7a6438954c278b}} 
+\index{lz4.c@{lz4.c}!LZ4\_ACCELERATION\_DEFAULT@{LZ4\_ACCELERATION\_DEFAULT}}
+\index{LZ4\_ACCELERATION\_DEFAULT@{LZ4\_ACCELERATION\_DEFAULT}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_ACCELERATION\_DEFAULT}{LZ4\_ACCELERATION\_DEFAULT}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+ACCELERATION\+\_\+\+DEFAULT~1}
+
+\mbox{\Hypertarget{lz4_8c_ac43936b4b9066c8c0d524493a1813d8a}\label{lz4_8c_ac43936b4b9066c8c0d524493a1813d8a}} 
+\index{lz4.c@{lz4.c}!LZ4\_ACCELERATION\_MAX@{LZ4\_ACCELERATION\_MAX}}
+\index{LZ4\_ACCELERATION\_MAX@{LZ4\_ACCELERATION\_MAX}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_ACCELERATION\_MAX}{LZ4\_ACCELERATION\_MAX}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+ACCELERATION\+\_\+\+MAX~65537}
+
+\mbox{\Hypertarget{lz4_8c_a6c439b01b6c27280593774a911bfa4ac}\label{lz4_8c_a6c439b01b6c27280593774a911bfa4ac}} 
+\index{lz4.c@{lz4.c}!LZ4\_ALIGN\_TEST@{LZ4\_ALIGN\_TEST}}
+\index{LZ4\_ALIGN\_TEST@{LZ4\_ALIGN\_TEST}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_ALIGN\_TEST}{LZ4\_ALIGN\_TEST}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+ALIGN\+\_\+\+TEST~1}
+
+\mbox{\Hypertarget{lz4_8c_abc48339936d049baa5eef32ee0e9de75}\label{lz4_8c_abc48339936d049baa5eef32ee0e9de75}} 
+\index{lz4.c@{lz4.c}!LZ4\_DISABLE\_DEPRECATE\_WARNINGS@{LZ4\_DISABLE\_DEPRECATE\_WARNINGS}}
+\index{LZ4\_DISABLE\_DEPRECATE\_WARNINGS@{LZ4\_DISABLE\_DEPRECATE\_WARNINGS}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_DISABLE\_DEPRECATE\_WARNINGS}{LZ4\_DISABLE\_DEPRECATE\_WARNINGS}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+DISABLE\+\_\+\+DEPRECATE\+\_\+\+WARNINGS~/$\ast$ due to \mbox{\hyperlink{lz4_8c_a2ceb6bc3c28b8e95a220343c6c40bed6}{LZ4\+\_\+decompress\+\_\+safe\+\_\+with\+Prefix64k}} $\ast$/}
+
+\mbox{\Hypertarget{lz4_8c_a677dd41923a5dc079254ea9f689d78dd}\label{lz4_8c_a677dd41923a5dc079254ea9f689d78dd}} 
+\index{lz4.c@{lz4.c}!LZ4\_DISTANCE\_ABSOLUTE\_MAX@{LZ4\_DISTANCE\_ABSOLUTE\_MAX}}
+\index{LZ4\_DISTANCE\_ABSOLUTE\_MAX@{LZ4\_DISTANCE\_ABSOLUTE\_MAX}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_DISTANCE\_ABSOLUTE\_MAX}{LZ4\_DISTANCE\_ABSOLUTE\_MAX}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+DISTANCE\+\_\+\+ABSOLUTE\+\_\+\+MAX~65535}
+
+\mbox{\Hypertarget{lz4_8c_a3a953ec2c42892177653816eeeb91211}\label{lz4_8c_a3a953ec2c42892177653816eeeb91211}} 
+\index{lz4.c@{lz4.c}!LZ4\_FAST\_DEC\_LOOP@{LZ4\_FAST\_DEC\_LOOP}}
+\index{LZ4\_FAST\_DEC\_LOOP@{LZ4\_FAST\_DEC\_LOOP}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_FAST\_DEC\_LOOP}{LZ4\_FAST\_DEC\_LOOP}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+FAST\+\_\+\+DEC\+\_\+\+LOOP~0}
+
+\mbox{\Hypertarget{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}\label{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}} 
+\index{lz4.c@{lz4.c}!LZ4\_FORCE\_INLINE@{LZ4\_FORCE\_INLINE}}
+\index{LZ4\_FORCE\_INLINE@{LZ4\_FORCE\_INLINE}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_FORCE\_INLINE}{LZ4\_FORCE\_INLINE}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+FORCE\+\_\+\+INLINE~static}
+
+\mbox{\Hypertarget{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}\label{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}} 
+\index{lz4.c@{lz4.c}!LZ4\_FORCE\_O2@{LZ4\_FORCE\_O2}}
+\index{LZ4\_FORCE\_O2@{LZ4\_FORCE\_O2}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_FORCE\_O2}{LZ4\_FORCE\_O2}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+FORCE\+\_\+\+O2}
+
+\mbox{\Hypertarget{lz4_8c_aad22227b784a1d159d1afb79e0314ab0}\label{lz4_8c_aad22227b784a1d159d1afb79e0314ab0}} 
+\index{lz4.c@{lz4.c}!LZ4\_HEAPMODE@{LZ4\_HEAPMODE}}
+\index{LZ4\_HEAPMODE@{LZ4\_HEAPMODE}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_HEAPMODE}{LZ4\_HEAPMODE}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+HEAPMODE~0}
+
+\mbox{\Hypertarget{lz4_8c_a5ed8599ff9813a458df4a9d4d81bef58}\label{lz4_8c_a5ed8599ff9813a458df4a9d4d81bef58}} 
+\index{lz4.c@{lz4.c}!LZ4\_memcpy@{LZ4\_memcpy}}
+\index{LZ4\_memcpy@{LZ4\_memcpy}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_memcpy}{LZ4\_memcpy}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+memcpy(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}},  }\item[{}]{src,  }\item[{}]{size }\end{DoxyParamCaption})~memcpy(\mbox{\hyperlink{lz4_8h_a961c13eb7fcda15b167b953cac1ab3ec}{dst}}, src, size)}
+
+LZ4 relies on memcpy with a constant size being inlined. In freestanding environments, the compiler can\textquotesingle{}t assume the implementation of memcpy() is standard compliant, so it can\textquotesingle{}t apply its specialized memcpy() inlining logic. When possible, use \+\_\+\+\_\+builtin\+\_\+memcpy() to tell the compiler to analyze memcpy() as if it were standard compliant, so it can inline it in freestanding environments. This is needed when decompressing the Linux Kernel, for example. \mbox{\Hypertarget{lz4_8c_a484b22f8b4e0a1749aaf4ce38fa5a0c2}\label{lz4_8c_a484b22f8b4e0a1749aaf4ce38fa5a0c2}} 
+\index{lz4.c@{lz4.c}!LZ4\_SRC\_INCLUDED@{LZ4\_SRC\_INCLUDED}}
+\index{LZ4\_SRC\_INCLUDED@{LZ4\_SRC\_INCLUDED}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_SRC\_INCLUDED}{LZ4\_SRC\_INCLUDED}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+SRC\+\_\+\+INCLUDED~1}
+
+\mbox{\Hypertarget{lz4_8c_a233a86aeac0d8f5c00236b4d8d055761}\label{lz4_8c_a233a86aeac0d8f5c00236b4d8d055761}} 
+\index{lz4.c@{lz4.c}!LZ4\_STATIC\_ASSERT@{LZ4\_STATIC\_ASSERT}}
+\index{LZ4\_STATIC\_ASSERT@{LZ4\_STATIC\_ASSERT}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_STATIC\_ASSERT}{LZ4\_STATIC\_ASSERT}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+STATIC\+\_\+\+ASSERT(\begin{DoxyParamCaption}\item[{}]{c }\end{DoxyParamCaption})~\{ enum \{ LZ4\+\_\+static\+\_\+assert = 1/(int)(!!(c)) \}; \}   /$\ast$ use after variable declarations $\ast$/}
+
+\mbox{\Hypertarget{lz4_8c_a9f6dad34ffe2a398c20ed5ed3792152a}\label{lz4_8c_a9f6dad34ffe2a398c20ed5ed3792152a}} 
+\index{lz4.c@{lz4.c}!LZ4\_STATIC\_LINKING\_ONLY@{LZ4\_STATIC\_LINKING\_ONLY}}
+\index{LZ4\_STATIC\_LINKING\_ONLY@{LZ4\_STATIC\_LINKING\_ONLY}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_STATIC\_LINKING\_ONLY}{LZ4\_STATIC\_LINKING\_ONLY}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+STATIC\+\_\+\+LINKING\+\_\+\+ONLY}
+
+\mbox{\Hypertarget{lz4_8c_a9f6dad34ffe2a398c20ed5ed3792152a}\label{lz4_8c_a9f6dad34ffe2a398c20ed5ed3792152a}} 
+\index{lz4.c@{lz4.c}!LZ4\_STATIC\_LINKING\_ONLY@{LZ4\_STATIC\_LINKING\_ONLY}}
+\index{LZ4\_STATIC\_LINKING\_ONLY@{LZ4\_STATIC\_LINKING\_ONLY}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_STATIC\_LINKING\_ONLY}{LZ4\_STATIC\_LINKING\_ONLY}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define LZ4\+\_\+\+STATIC\+\_\+\+LINKING\+\_\+\+ONLY~/$\ast$ LZ4\+\_\+\+DISTANCE\+\_\+\+MAX $\ast$/}
+
+\mbox{\Hypertarget{lz4_8c_acd67b050f5c5a9c22357493223a620c0}\label{lz4_8c_acd67b050f5c5a9c22357493223a620c0}} 
+\index{lz4.c@{lz4.c}!MATCH\_SAFEGUARD\_DISTANCE@{MATCH\_SAFEGUARD\_DISTANCE}}
+\index{MATCH\_SAFEGUARD\_DISTANCE@{MATCH\_SAFEGUARD\_DISTANCE}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{MATCH\_SAFEGUARD\_DISTANCE}{MATCH\_SAFEGUARD\_DISTANCE}}
+{\footnotesize\ttfamily \#define MATCH\+\_\+\+SAFEGUARD\+\_\+\+DISTANCE~((2$\ast$\mbox{\hyperlink{lz4_8c_ade83a0730ce39465e00284b8d1b29784}{WILDCOPYLENGTH}}) -\/ \mbox{\hyperlink{lz4_8c_a2d835b35b6582451a75dc6ff464a9e75}{MINMATCH}})   /$\ast$ ensure it\textquotesingle{}s possible to write 2 x wildcopy\+Length without overflowing output buffer $\ast$/}
+
+\mbox{\Hypertarget{lz4_8c_aa6b38d492364d98453284934ed7caee9}\label{lz4_8c_aa6b38d492364d98453284934ed7caee9}} 
+\index{lz4.c@{lz4.c}!MB@{MB}}
+\index{MB@{MB}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{MB}{MB}}
+{\footnotesize\ttfamily \#define MB~$\ast$(1 $<$$<$20)}
+
+\mbox{\Hypertarget{lz4_8c_aac9d513b59141751b50b246e5b632f2d}\label{lz4_8c_aac9d513b59141751b50b246e5b632f2d}} 
+\index{lz4.c@{lz4.c}!MEM\_INIT@{MEM\_INIT}}
+\index{MEM\_INIT@{MEM\_INIT}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{MEM\_INIT}{MEM\_INIT}}
+{\footnotesize\ttfamily \#define MEM\+\_\+\+INIT(\begin{DoxyParamCaption}\item[{}]{p,  }\item[{}]{v,  }\item[{}]{s }\end{DoxyParamCaption})~memset((p),(v),(s))}
+
+\mbox{\Hypertarget{lz4_8c_a6bb5847a99cd90aca07870a394cbe70d}\label{lz4_8c_a6bb5847a99cd90aca07870a394cbe70d}} 
+\index{lz4.c@{lz4.c}!MFLIMIT@{MFLIMIT}}
+\index{MFLIMIT@{MFLIMIT}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{MFLIMIT}{MFLIMIT}}
+{\footnotesize\ttfamily \#define MFLIMIT~12   /$\ast$ see ../doc/lz4\+\_\+\+Block\+\_\+format.\+md\#parsing-\/restrictions $\ast$/}
+
+\mbox{\Hypertarget{lz4_8c_a3acffbd305ee72dcd4593c0d8af64a4f}\label{lz4_8c_a3acffbd305ee72dcd4593c0d8af64a4f}} 
+\index{lz4.c@{lz4.c}!MIN@{MIN}}
+\index{MIN@{MIN}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{MIN}{MIN}}
+{\footnotesize\ttfamily \#define MIN(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~( (a) $<$ (b) ? (a) \+: (b) )}
+
+\mbox{\Hypertarget{lz4_8c_a2d835b35b6582451a75dc6ff464a9e75}\label{lz4_8c_a2d835b35b6582451a75dc6ff464a9e75}} 
+\index{lz4.c@{lz4.c}!MINMATCH@{MINMATCH}}
+\index{MINMATCH@{MINMATCH}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{MINMATCH}{MINMATCH}}
+{\footnotesize\ttfamily \#define MINMATCH~4}
+
+\mbox{\Hypertarget{lz4_8c_aa84b594ef328b62b23e36c78abe2aaf0}\label{lz4_8c_aa84b594ef328b62b23e36c78abe2aaf0}} 
+\index{lz4.c@{lz4.c}!ML\_BITS@{ML\_BITS}}
+\index{ML\_BITS@{ML\_BITS}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{ML\_BITS}{ML\_BITS}}
+{\footnotesize\ttfamily \#define ML\+\_\+\+BITS~4}
+
+\mbox{\Hypertarget{lz4_8c_aa939dccc909b8b36baadb3265a72b37a}\label{lz4_8c_aa939dccc909b8b36baadb3265a72b37a}} 
+\index{lz4.c@{lz4.c}!ML\_MASK@{ML\_MASK}}
+\index{ML\_MASK@{ML\_MASK}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{ML\_MASK}{ML\_MASK}}
+{\footnotesize\ttfamily \#define ML\+\_\+\+MASK~((1U$<$$<$\mbox{\hyperlink{lz4_8c_aa84b594ef328b62b23e36c78abe2aaf0}{ML\+\_\+\+BITS}})-\/1)}
+
+\mbox{\Hypertarget{lz4_8c_ae6261d794dfe7c6816e3b342c643f56f}\label{lz4_8c_ae6261d794dfe7c6816e3b342c643f56f}} 
+\index{lz4.c@{lz4.c}!RUN\_BITS@{RUN\_BITS}}
+\index{RUN\_BITS@{RUN\_BITS}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{RUN\_BITS}{RUN\_BITS}}
+{\footnotesize\ttfamily \#define RUN\+\_\+\+BITS~(8-\/\mbox{\hyperlink{lz4_8c_aa84b594ef328b62b23e36c78abe2aaf0}{ML\+\_\+\+BITS}})}
+
+\mbox{\Hypertarget{lz4_8c_aec45fd08a68c07b74493e631ae52aca1}\label{lz4_8c_aec45fd08a68c07b74493e631ae52aca1}} 
+\index{lz4.c@{lz4.c}!RUN\_MASK@{RUN\_MASK}}
+\index{RUN\_MASK@{RUN\_MASK}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{RUN\_MASK}{RUN\_MASK}}
+{\footnotesize\ttfamily \#define RUN\+\_\+\+MASK~((1U$<$$<$\mbox{\hyperlink{lz4_8c_ae6261d794dfe7c6816e3b342c643f56f}{RUN\+\_\+\+BITS}})-\/1)}
+
+\mbox{\Hypertarget{lz4_8c_a0b31438dd90256ed47b3bea0eb62be06}\label{lz4_8c_a0b31438dd90256ed47b3bea0eb62be06}} 
+\index{lz4.c@{lz4.c}!STEPSIZE@{STEPSIZE}}
+\index{STEPSIZE@{STEPSIZE}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{STEPSIZE}{STEPSIZE}}
+{\footnotesize\ttfamily \#define STEPSIZE~sizeof(\mbox{\hyperlink{lz4_8c_a2835baf742d73416e69ab571e9a9dacb}{reg\+\_\+t}})}
+
+\mbox{\Hypertarget{lz4_8c_ad8700448546b3b5111404cc021061fd5}\label{lz4_8c_ad8700448546b3b5111404cc021061fd5}} 
+\index{lz4.c@{lz4.c}!unlikely@{unlikely}}
+\index{unlikely@{unlikely}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{unlikely}{unlikely}}
+{\footnotesize\ttfamily \#define unlikely(\begin{DoxyParamCaption}\item[{}]{expr }\end{DoxyParamCaption})~\mbox{\hyperlink{lz4_8c_a7d26a1c40d6107cf2f19558492591e67}{expect}}((expr) != 0, 0)}
+
+\mbox{\Hypertarget{lz4_8c_ade83a0730ce39465e00284b8d1b29784}\label{lz4_8c_ade83a0730ce39465e00284b8d1b29784}} 
+\index{lz4.c@{lz4.c}!WILDCOPYLENGTH@{WILDCOPYLENGTH}}
+\index{WILDCOPYLENGTH@{WILDCOPYLENGTH}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{WILDCOPYLENGTH}{WILDCOPYLENGTH}}
+{\footnotesize\ttfamily \#define WILDCOPYLENGTH~8}
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}\label{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}} 
+\index{lz4.c@{lz4.c}!BYTE@{BYTE}}
+\index{BYTE@{BYTE}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{BYTE}{BYTE}}
+{\footnotesize\ttfamily typedef unsigned char \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}}}
+
+\mbox{\Hypertarget{lz4_8c_a2835baf742d73416e69ab571e9a9dacb}\label{lz4_8c_a2835baf742d73416e69ab571e9a9dacb}} 
+\index{lz4.c@{lz4.c}!reg\_t@{reg\_t}}
+\index{reg\_t@{reg\_t}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{reg\_t}{reg\_t}}
+{\footnotesize\ttfamily typedef size\+\_\+t \mbox{\hyperlink{lz4_8c_a2835baf742d73416e69ab571e9a9dacb}{reg\+\_\+t}}}
+
+\mbox{\Hypertarget{lz4_8c_a57a2244776e01ad620c556de58eb7880}\label{lz4_8c_a57a2244776e01ad620c556de58eb7880}} 
+\index{lz4.c@{lz4.c}!S32@{S32}}
+\index{S32@{S32}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{S32}{S32}}
+{\footnotesize\ttfamily typedef signed int \mbox{\hyperlink{lz4_8c_a57a2244776e01ad620c556de58eb7880}{S32}}}
+
+\mbox{\Hypertarget{lz4_8c_adf928e51a60dba0df29d615401cc55a8}\label{lz4_8c_adf928e51a60dba0df29d615401cc55a8}} 
+\index{lz4.c@{lz4.c}!U16@{U16}}
+\index{U16@{U16}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{U16}{U16}}
+{\footnotesize\ttfamily typedef unsigned short \mbox{\hyperlink{lz4_8c_adf928e51a60dba0df29d615401cc55a8}{U16}}}
+
+\mbox{\Hypertarget{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}\label{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}} 
+\index{lz4.c@{lz4.c}!U32@{U32}}
+\index{U32@{U32}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{U32}{U32}}
+{\footnotesize\ttfamily typedef unsigned int \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}}}
+
+\mbox{\Hypertarget{lz4_8c_a24c386d3758eba951eb7532fdbb45804}\label{lz4_8c_a24c386d3758eba951eb7532fdbb45804}} 
+\index{lz4.c@{lz4.c}!U64@{U64}}
+\index{U64@{U64}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{U64}{U64}}
+{\footnotesize\ttfamily typedef unsigned long long \mbox{\hyperlink{lz4_8c_a24c386d3758eba951eb7532fdbb45804}{U64}}}
+
+\mbox{\Hypertarget{lz4_8c_ab750201a68131ce52397fad8a0c7ae79}\label{lz4_8c_ab750201a68131ce52397fad8a0c7ae79}} 
+\index{lz4.c@{lz4.c}!uptrval@{uptrval}}
+\index{uptrval@{uptrval}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{uptrval}{uptrval}}
+{\footnotesize\ttfamily typedef size\+\_\+t \mbox{\hyperlink{lz4_8c_ab750201a68131ce52397fad8a0c7ae79}{uptrval}}}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{lz4_8c_ab22d25a446ad3e8288401052deccda4c}\label{lz4_8c_ab22d25a446ad3e8288401052deccda4c}} 
+\index{lz4.c@{lz4.c}!dict\_directive@{dict\_directive}}
+\index{dict\_directive@{dict\_directive}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{dict\_directive}{dict\_directive}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4c}{dict\+\_\+directive}}}
+
+This enum distinguishes several different modes of accessing previous content in the stream.
+
+
+\begin{DoxyItemize}
+\item no\+Dict \+: There is no preceding content.
+\item with\+Prefix64k \+: Table entries up to ctx-\/\texorpdfstring{$>$}{>}dict\+Size before the current blob blob being compressed are valid and refer to the preceding content (of length ctx-\/\texorpdfstring{$>$}{>}dict\+Size), which is available contiguously preceding in memory the content currently being compressed.
+\item using\+Ext\+Dict \+: Like with\+Prefix64k, but the preceding content is somewhere else in memory, starting at ctx-\/\texorpdfstring{$>$}{>}dictionary with length ctx-\/\texorpdfstring{$>$}{>}dict\+Size.
+\item using\+Dict\+Ctx \+: Everything concerning the preceding content is in a separate context, pointed to by ctx-\/\texorpdfstring{$>$}{>}dict\+Ctx. ctx-\/\texorpdfstring{$>$}{>}dictionary, ctx-\/\texorpdfstring{$>$}{>}dict\+Size, and table entries in the current context that refer to positions preceding the beginning of the current compression are ignored. Instead, ctx-\/\texorpdfstring{$>$}{>}dict\+Ctx-\/\texorpdfstring{$>$}{>}dictionary and ctx-\/\texorpdfstring{$>$}{>}dict\+Ctx -\/\texorpdfstring{$>$}{>}dict\+Size describe the location and size of the preceding content, and matches are found by looking in the ctx -\/\texorpdfstring{$>$}{>}dict\+Ctx-\/\texorpdfstring{$>$}{>}hash\+Table. 
+\end{DoxyItemize}\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{noDict@{noDict}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!noDict@{noDict}}}\mbox{\Hypertarget{lz4_8c_ab22d25a446ad3e8288401052deccda4ca0c48f9478a9b96dcb96a1a8781aba13f}\label{lz4_8c_ab22d25a446ad3e8288401052deccda4ca0c48f9478a9b96dcb96a1a8781aba13f}} 
+no\+Dict&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{withPrefix64k@{withPrefix64k}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!withPrefix64k@{withPrefix64k}}}\mbox{\Hypertarget{lz4_8c_ab22d25a446ad3e8288401052deccda4ca34c34b9cfe0046130ff97acf6914519d}\label{lz4_8c_ab22d25a446ad3e8288401052deccda4ca34c34b9cfe0046130ff97acf6914519d}} 
+with\+Prefix64k&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{usingExtDict@{usingExtDict}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!usingExtDict@{usingExtDict}}}\mbox{\Hypertarget{lz4_8c_ab22d25a446ad3e8288401052deccda4caa8cc166c33fdfcd904c260136978913b}\label{lz4_8c_ab22d25a446ad3e8288401052deccda4caa8cc166c33fdfcd904c260136978913b}} 
+using\+Ext\+Dict&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{usingDictCtx@{usingDictCtx}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!usingDictCtx@{usingDictCtx}}}\mbox{\Hypertarget{lz4_8c_ab22d25a446ad3e8288401052deccda4caf6d955259638feac01c4e4cace77c617}\label{lz4_8c_ab22d25a446ad3e8288401052deccda4caf6d955259638feac01c4e4cace77c617}} 
+using\+Dict\+Ctx&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351}\label{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351}} 
+\index{lz4.c@{lz4.c}!dictIssue\_directive@{dictIssue\_directive}}
+\index{dictIssue\_directive@{dictIssue\_directive}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{dictIssue\_directive}{dictIssue\_directive}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351}{dict\+Issue\+\_\+directive}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{noDictIssue@{noDictIssue}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!noDictIssue@{noDictIssue}}}\mbox{\Hypertarget{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351a2a95ee19c5c0704200f9154a4abcf115}\label{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351a2a95ee19c5c0704200f9154a4abcf115}} 
+no\+Dict\+Issue&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{dictSmall@{dictSmall}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!dictSmall@{dictSmall}}}\mbox{\Hypertarget{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351a4609b423b2c861fd5968b33837c76236}\label{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351a4609b423b2c861fd5968b33837c76236}} 
+dict\+Small&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{lz4_8c_a2719d1421671f2c7fa3c68ca7465994c}\label{lz4_8c_a2719d1421671f2c7fa3c68ca7465994c}} 
+\index{lz4.c@{lz4.c}!earlyEnd\_directive@{earlyEnd\_directive}}
+\index{earlyEnd\_directive@{earlyEnd\_directive}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{earlyEnd\_directive}{earlyEnd\_directive}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{lz4_8c_a2719d1421671f2c7fa3c68ca7465994c}{early\+End\+\_\+directive}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{decode\_full\_block@{decode\_full\_block}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!decode\_full\_block@{decode\_full\_block}}}\mbox{\Hypertarget{lz4_8c_a2719d1421671f2c7fa3c68ca7465994ca5551916aeb552806ac850d0875151113}\label{lz4_8c_a2719d1421671f2c7fa3c68ca7465994ca5551916aeb552806ac850d0875151113}} 
+decode\+\_\+full\+\_\+block&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{partial\_decode@{partial\_decode}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!partial\_decode@{partial\_decode}}}\mbox{\Hypertarget{lz4_8c_a2719d1421671f2c7fa3c68ca7465994ca032ce1b03f03cde2ed5ab8cfdf0d5e7f}\label{lz4_8c_a2719d1421671f2c7fa3c68ca7465994ca032ce1b03f03cde2ed5ab8cfdf0d5e7f}} 
+partial\+\_\+decode&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746}\label{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746}} 
+\index{lz4.c@{lz4.c}!endCondition\_directive@{endCondition\_directive}}
+\index{endCondition\_directive@{endCondition\_directive}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{endCondition\_directive}{endCondition\_directive}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746}{end\+Condition\+\_\+directive}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{endOnOutputSize@{endOnOutputSize}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!endOnOutputSize@{endOnOutputSize}}}\mbox{\Hypertarget{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746a92d766b3022f9d86ccf764d716a46b2a}\label{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746a92d766b3022f9d86ccf764d716a46b2a}} 
+end\+On\+Output\+Size&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{endOnInputSize@{endOnInputSize}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!endOnInputSize@{endOnInputSize}}}\mbox{\Hypertarget{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746a2a30c7b77002529763d202e7ac636539}\label{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746a2a30c7b77002529763d202e7ac636539}} 
+end\+On\+Input\+Size&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{lz4_8c_ab93acf685743debab05876250a1cbe28}\label{lz4_8c_ab93acf685743debab05876250a1cbe28}} 
+\index{lz4.c@{lz4.c}!limitedOutput\_directive@{limitedOutput\_directive}}
+\index{limitedOutput\_directive@{limitedOutput\_directive}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{limitedOutput\_directive}{limitedOutput\_directive}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{lz4_8c_ab93acf685743debab05876250a1cbe28}{limited\+Output\+\_\+directive}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{notLimited@{notLimited}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!notLimited@{notLimited}}}\mbox{\Hypertarget{lz4_8c_ab93acf685743debab05876250a1cbe28adc568f9214a2932542608f43124efcff}\label{lz4_8c_ab93acf685743debab05876250a1cbe28adc568f9214a2932542608f43124efcff}} 
+not\+Limited&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{limitedOutput@{limitedOutput}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!limitedOutput@{limitedOutput}}}\mbox{\Hypertarget{lz4_8c_ab93acf685743debab05876250a1cbe28a06ce6334cca200bdb7d30cf1422ca5aa}\label{lz4_8c_ab93acf685743debab05876250a1cbe28a06ce6334cca200bdb7d30cf1422ca5aa}} 
+limited\+Output&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{fillOutput@{fillOutput}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!fillOutput@{fillOutput}}}\mbox{\Hypertarget{lz4_8c_ab93acf685743debab05876250a1cbe28a76ae01d59d140527a5540583923a0294}\label{lz4_8c_ab93acf685743debab05876250a1cbe28a76ae01d59d140527a5540583923a0294}} 
+fill\+Output&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}\label{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}} 
+\index{lz4.c@{lz4.c}!tableType\_t@{tableType\_t}}
+\index{tableType\_t@{tableType\_t}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{tableType\_t}{tableType\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{clearedTable@{clearedTable}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!clearedTable@{clearedTable}}}\mbox{\Hypertarget{lz4_8c_ae86e1d8a28953326b685d6ebb243a699a160636a34765ad36416d316e62406d31}\label{lz4_8c_ae86e1d8a28953326b685d6ebb243a699a160636a34765ad36416d316e62406d31}} 
+cleared\+Table&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{byPtr@{byPtr}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!byPtr@{byPtr}}}\mbox{\Hypertarget{lz4_8c_ae86e1d8a28953326b685d6ebb243a699a5c952c05e312cfc0589ef1d283397560}\label{lz4_8c_ae86e1d8a28953326b685d6ebb243a699a5c952c05e312cfc0589ef1d283397560}} 
+by\+Ptr&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{byU32@{byU32}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!byU32@{byU32}}}\mbox{\Hypertarget{lz4_8c_ae86e1d8a28953326b685d6ebb243a699ae7520fe8d6957f5029ddeb0652c65471}\label{lz4_8c_ae86e1d8a28953326b685d6ebb243a699ae7520fe8d6957f5029ddeb0652c65471}} 
+by\+U32&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{byU16@{byU16}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!byU16@{byU16}}}\mbox{\Hypertarget{lz4_8c_ae86e1d8a28953326b685d6ebb243a699a48aff40d7237850c996a1f6c266a598f}\label{lz4_8c_ae86e1d8a28953326b685d6ebb243a699a48aff40d7237850c996a1f6c266a598f}} 
+by\+U16&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3}\label{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3}} 
+\index{lz4.c@{lz4.c}!variable\_length\_error@{variable\_length\_error}}
+\index{variable\_length\_error@{variable\_length\_error}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{variable\_length\_error}{variable\_length\_error}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3}{variable\+\_\+length\+\_\+error}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{loop\_error@{loop\_error}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!loop\_error@{loop\_error}}}\mbox{\Hypertarget{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3a19c5cc5c8516ea67ef3b2ec2de6fc484}\label{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3a19c5cc5c8516ea67ef3b2ec2de6fc484}} 
+loop\+\_\+error&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{initial\_error@{initial\_error}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!initial\_error@{initial\_error}}}\mbox{\Hypertarget{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3a4dd6136f5d290f53a4ac8864c0a12f99}\label{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3a4dd6136f5d290f53a4ac8864c0a12f99}} 
+initial\+\_\+error&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ok@{ok}!lz4.c@{lz4.c}}\index{lz4.c@{lz4.c}!ok@{ok}}}\mbox{\Hypertarget{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3ad8b76af209cd7ba83b4ebf33ba1637b2}\label{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3ad8b76af209cd7ba83b4ebf33ba1637b2}} 
+ok&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{lz4_8c_ae05f90c537857347fcd564a91241d45d}\label{lz4_8c_ae05f90c537857347fcd564a91241d45d}} 
+\index{lz4.c@{lz4.c}!LZ4\_attach\_dictionary@{LZ4\_attach\_dictionary}}
+\index{LZ4\_attach\_dictionary@{LZ4\_attach\_dictionary}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_attach\_dictionary()}{LZ4\_attach\_dictionary()}}
+{\footnotesize\ttfamily void LZ4\+\_\+attach\+\_\+dictionary (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{working\+Stream,  }\item[{const \mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{dictionary\+Stream }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_aa81c43ba8b3f5f2c3728aaecd44d6a02}\label{lz4_8c_aa81c43ba8b3f5f2c3728aaecd44d6a02}} 
+\index{lz4.c@{lz4.c}!LZ4\_clearHash@{LZ4\_clearHash}}
+\index{LZ4\_clearHash@{LZ4\_clearHash}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_clearHash()}{LZ4\_clearHash()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void LZ4\+\_\+clear\+Hash (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}}}]{h,  }\item[{void $\ast$}]{table\+Base,  }\item[{\mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const}]{table\+Type }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a5eae984914665109fd891ff2bed82331}\label{lz4_8c_a5eae984914665109fd891ff2bed82331}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress@{LZ4\_compress}}
+\index{LZ4\_compress@{LZ4\_compress}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress()}{LZ4\_compress()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress (\begin{DoxyParamCaption}\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dest,  }\item[{int}]{src\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a7936aa7dce7ba045f7daa578de555175}\label{lz4_8c_a7936aa7dce7ba045f7daa578de555175}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_continue@{LZ4\_compress\_continue}}
+\index{LZ4\_compress\_continue@{LZ4\_compress\_continue}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_continue()}{LZ4\_compress\_continue()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+continue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{LZ4\+\_\+stream,  }\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{input\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a4a0eddbe2e6f52ce91e259fa57459fbd}\label{lz4_8c_a4a0eddbe2e6f52ce91e259fa57459fbd}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_default@{LZ4\_compress\_default}}
+\index{LZ4\_compress\_default@{LZ4\_compress\_default}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_default()}{LZ4\_compress\_default()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+default (\begin{DoxyParamCaption}\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{src\+Size,  }\item[{int}]{dst\+Capacity }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_ad6b447bf1644cc92bbce027e91e16dc6}{LZ4\+\_\+compress\+\_\+default()}} \+: Compresses \textquotesingle{}src\+Size\textquotesingle{} bytes from buffer \textquotesingle{}src\textquotesingle{} into already allocated \textquotesingle{}dst\textquotesingle{} buffer of size \textquotesingle{}dst\+Capacity\textquotesingle{}. Compression is guaranteed to succeed if \textquotesingle{}dst\+Capacity\textquotesingle{} \texorpdfstring{$>$}{>}= LZ4\+\_\+compress\+Bound(src\+Size). It also runs faster, so it\textquotesingle{}s a recommended setting. If the function cannot compress \textquotesingle{}src\textquotesingle{} into a more limited \textquotesingle{}dst\textquotesingle{} budget, compression stops {\itshape immediately}, and the function result is zero. In which case, \textquotesingle{}dst\textquotesingle{} content is undefined (invalid). src\+Size \+: max supported value is LZ4\+\_\+\+MAX\+\_\+\+INPUT\+\_\+\+SIZE. dst\+Capacity \+: size of buffer \textquotesingle{}dst\textquotesingle{} (which must be already allocated) \begin{DoxyReturn}{Returns}
+\+: the number of bytes written into buffer \textquotesingle{}dst\textquotesingle{} (necessarily \texorpdfstring{$<$}{<}= dst\+Capacity) or 0 if compression fails Note \+: This function is protected against buffer overflow scenarios (never writes outside \textquotesingle{}dst\textquotesingle{} buffer, nor read outside \textquotesingle{}source\textquotesingle{} buffer). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{lz4_8c_a54116374080dae219ffa71e484ce5f2a}\label{lz4_8c_a54116374080dae219ffa71e484ce5f2a}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_destSize@{LZ4\_compress\_destSize}}
+\index{LZ4\_compress\_destSize@{LZ4\_compress\_destSize}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_destSize()}{LZ4\_compress\_destSize()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+dest\+Size (\begin{DoxyParamCaption}\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int $\ast$}]{src\+Size\+Ptr,  }\item[{int}]{target\+Dst\+Size }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_ad0230438779ccb604c6de7053d74e668}{LZ4\+\_\+compress\+\_\+dest\+Size()}} \+: Reverse the logic \+: compresses as much data as possible from \textquotesingle{}src\textquotesingle{} buffer into already allocated buffer \textquotesingle{}dst\textquotesingle{}, of size \texorpdfstring{$>$}{>}= \textquotesingle{}target\+Dest\+Size\textquotesingle{}. This function either compresses the entire \textquotesingle{}src\textquotesingle{} content into \textquotesingle{}dst\textquotesingle{} if it\textquotesingle{}s large enough, or fill \textquotesingle{}dst\textquotesingle{} buffer completely with as much data as possible from \textquotesingle{}src\textquotesingle{}. note\+: acceleration parameter is fixed to \char`\"{}default\char`\"{}.
+
+$\ast$src\+Size\+Ptr \+: will be modified to indicate how many bytes where read from \textquotesingle{}src\textquotesingle{} to fill \textquotesingle{}dst\textquotesingle{}. New value is necessarily \texorpdfstring{$<$}{<}= input value. \begin{DoxyReturn}{Returns}
+\+: Nb bytes written into \textquotesingle{}dst\textquotesingle{} (necessarily \texorpdfstring{$<$}{<}= target\+Dest\+Size) or 0 if compression fails.
+\end{DoxyReturn}
+Note \+: from v1.\+8.\+2 to v1.\+9.\+1, this function had a bug (fixed un v1.\+9.\+2+)\+: the produced compressed content could, in specific circumstances, require to be decompressed into a destination buffer larger by at least 1 byte than the content to decompress. If an application uses {\ttfamily \mbox{\hyperlink{lz4_8h_ad0230438779ccb604c6de7053d74e668}{LZ4\+\_\+compress\+\_\+dest\+Size()}}}, it\textquotesingle{}s highly recommended to update liblz4 to v1.\+9.\+2 or better. If this can\textquotesingle{}t be done or ensured, the receiving decompression function should provide a dst\+Capacity which is \texorpdfstring{$>$}{>} decompressed\+Size, by at least 1 byte. See \href{https://github.com/lz4/lz4/issues/859}{\texttt{ https\+://github.\+com/lz4/lz4/issues/859}} for details \mbox{\Hypertarget{lz4_8c_a7466a8eca8f7b2eeec7887c9371d21e1}\label{lz4_8c_a7466a8eca8f7b2eeec7887c9371d21e1}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_fast@{LZ4\_compress\_fast}}
+\index{LZ4\_compress\_fast@{LZ4\_compress\_fast}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_fast()}{LZ4\_compress\_fast()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+fast (\begin{DoxyParamCaption}\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{src\+Size,  }\item[{int}]{dst\+Capacity,  }\item[{int}]{acceleration }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_a220fb40214b023f3fdb7e71df36b557e}{LZ4\+\_\+compress\+\_\+fast()}} \+: Same as \mbox{\hyperlink{lz4_8h_ad6b447bf1644cc92bbce027e91e16dc6}{LZ4\+\_\+compress\+\_\+default()}}, but allows selection of \char`\"{}acceleration\char`\"{} factor. The larger the acceleration value, the faster the algorithm, but also the lesser the compression. It\textquotesingle{}s a trade-\/off. It can be fine tuned, with each successive value providing roughly +$\sim$3\% to speed. An acceleration value of \char`\"{}1\char`\"{} is the same as regular \mbox{\hyperlink{lz4_8h_ad6b447bf1644cc92bbce027e91e16dc6}{LZ4\+\_\+compress\+\_\+default()}} Values \texorpdfstring{$<$}{<}= 0 will be replaced by LZ4\+\_\+\+ACCELERATION\+\_\+\+DEFAULT (currently == 1, see \mbox{\hyperlink{lz4_8c}{lz4.\+c}}). Values \texorpdfstring{$>$}{>} LZ4\+\_\+\+ACCELERATION\+\_\+\+MAX will be replaced by LZ4\+\_\+\+ACCELERATION\+\_\+\+MAX (currently == 65537, see \mbox{\hyperlink{lz4_8c}{lz4.\+c}}). \mbox{\Hypertarget{lz4_8c_abee2872be58007aae02ca0ca467dae4f}\label{lz4_8c_abee2872be58007aae02ca0ca467dae4f}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_fast\_continue@{LZ4\_compress\_fast\_continue}}
+\index{LZ4\_compress\_fast\_continue@{LZ4\_compress\_fast\_continue}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_fast\_continue()}{LZ4\_compress\_fast\_continue()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+fast\+\_\+continue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{stream\+Ptr,  }\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{src\+Size,  }\item[{int}]{dst\+Capacity,  }\item[{int}]{acceleration }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_a03a0f96ab87158e1d291128f31f42203}{LZ4\+\_\+compress\+\_\+fast\+\_\+continue()}} \+: Compress \textquotesingle{}src\textquotesingle{} content using data from previously compressed blocks, for better compression ratio. \textquotesingle{}dst\textquotesingle{} buffer must be already allocated. If dst\+Capacity \texorpdfstring{$>$}{>}= LZ4\+\_\+compress\+Bound(src\+Size), compression is guaranteed to succeed, and runs faster.
+
+\begin{DoxyReturn}{Returns}
+\+: size of compressed block or 0 if there is an error (typically, cannot fit into \textquotesingle{}dst\textquotesingle{}).
+\end{DoxyReturn}
+Note 1 \+: Each invocation to \mbox{\hyperlink{lz4_8h_a03a0f96ab87158e1d291128f31f42203}{LZ4\+\_\+compress\+\_\+fast\+\_\+continue()}} generates a new block. Each block has precise boundaries. Each block must be decompressed separately, calling LZ4\+\_\+decompress\+\_\+$\ast$() with relevant metadata. It\textquotesingle{}s not possible to append blocks together and expect a single invocation of LZ4\+\_\+decompress\+\_\+$\ast$() to decompress them together.
+
+Note 2 \+: The previous 64KB of source data is {\bfseries{assumed}} to remain present, unmodified, at same address in memory !
+
+Note 3 \+: When input is structured as a double-\/buffer, each buffer can have any size, including \texorpdfstring{$<$}{<} 64 KB. Make sure that buffers are separated, by at least one byte. This construction ensures that each block only depends on previous block.
+
+Note 4 \+: If input buffer is a ring-\/buffer, it can have any size, including \texorpdfstring{$<$}{<} 64 KB.
+
+Note 5 \+: After an error, the stream status is undefined (invalid), it can only be reset or freed. \mbox{\Hypertarget{lz4_8c_a19a6258c0092d5b3255a41d7566248d7}\label{lz4_8c_a19a6258c0092d5b3255a41d7566248d7}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_fast\_extState@{LZ4\_compress\_fast\_extState}}
+\index{LZ4\_compress\_fast\_extState@{LZ4\_compress\_fast\_extState}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_fast\_extState()}{LZ4\_compress\_fast\_extState()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+fast\+\_\+ext\+State (\begin{DoxyParamCaption}\item[{void $\ast$}]{state,  }\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{input\+Size,  }\item[{int}]{max\+Output\+Size,  }\item[{int}]{acceleration }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_ad9ca3cfc174b63e4ecf1897c32f146a7}\label{lz4_8c_ad9ca3cfc174b63e4ecf1897c32f146a7}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_fast\_extState\_fastReset@{LZ4\_compress\_fast\_extState\_fastReset}}
+\index{LZ4\_compress\_fast\_extState\_fastReset@{LZ4\_compress\_fast\_extState\_fastReset}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_fast\_extState\_fastReset()}{LZ4\_compress\_fast\_extState\_fastReset()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+fast\+\_\+ext\+State\+\_\+fast\+Reset (\begin{DoxyParamCaption}\item[{void $\ast$}]{state,  }\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{src\+Size,  }\item[{int}]{dst\+Capacity,  }\item[{int}]{acceleration }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8c_ad9ca3cfc174b63e4ecf1897c32f146a7}{LZ4\+\_\+compress\+\_\+fast\+\_\+ext\+State\+\_\+fast\+Reset()}} \+: A variant of \mbox{\hyperlink{lz4_8c_a19a6258c0092d5b3255a41d7566248d7}{LZ4\+\_\+compress\+\_\+fast\+\_\+ext\+State()}}.
+
+Using this variant avoids an expensive initialization step. It is only safe to call if the state buffer is known to be correctly initialized already (see comment in \mbox{\hyperlink{lz4_8h}{lz4.\+h}} on \mbox{\hyperlink{lz4_8c_a679ba06947df2172511239fecedd3a11}{LZ4\+\_\+reset\+Stream\+\_\+fast()}} for a definition of \char`\"{}correctly initialized\char`\"{}). \mbox{\Hypertarget{lz4_8c_aa21d9d803f8efcb91ecbb99062fd6b9e}\label{lz4_8c_aa21d9d803f8efcb91ecbb99062fd6b9e}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_forceExtDict@{LZ4\_compress\_forceExtDict}}
+\index{LZ4\_compress\_forceExtDict@{LZ4\_compress\_forceExtDict}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_forceExtDict()}{LZ4\_compress\_forceExtDict()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+force\+Ext\+Dict (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{LZ4\+\_\+dict,  }\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{src\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a2c16b0c1f9b51bb73e155876011fc97a}\label{lz4_8c_a2c16b0c1f9b51bb73e155876011fc97a}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_generic@{LZ4\_compress\_generic}}
+\index{LZ4\_compress\_generic@{LZ4\_compress\_generic}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_generic()}{LZ4\_compress\_generic()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} int LZ4\+\_\+compress\+\_\+generic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\+\_\+stream\+\_\+t\+\_\+internal}} $\ast$const}]{cctx,  }\item[{const char $\ast$const}]{src,  }\item[{char $\ast$const}]{dst,  }\item[{const int}]{src\+Size,  }\item[{int $\ast$}]{input\+Consumed,  }\item[{const int}]{dst\+Capacity,  }\item[{const \mbox{\hyperlink{lz4_8c_ab93acf685743debab05876250a1cbe28}{limited\+Output\+\_\+directive}}}]{output\+Directive,  }\item[{const \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}}}]{table\+Type,  }\item[{const \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4c}{dict\+\_\+directive}}}]{dict\+Directive,  }\item[{const \mbox{\hyperlink{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351}{dict\+Issue\+\_\+directive}}}]{dict\+Issue,  }\item[{const int}]{acceleration }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8c_a2c16b0c1f9b51bb73e155876011fc97a}{LZ4\+\_\+compress\+\_\+generic()}} \+: inlined, to ensure branches are decided at compilation time; takes care of src == (NULL, 0) and forward the rest to LZ4\+\_\+compress\+\_\+generic\+\_\+validated \mbox{\Hypertarget{lz4_8c_aaf9d82d99a9a4f4d33da21867c6aa751}\label{lz4_8c_aaf9d82d99a9a4f4d33da21867c6aa751}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_generic\_validated@{LZ4\_compress\_generic\_validated}}
+\index{LZ4\_compress\_generic\_validated@{LZ4\_compress\_generic\_validated}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_generic\_validated()}{LZ4\_compress\_generic\_validated()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} int LZ4\+\_\+compress\+\_\+generic\+\_\+validated (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\+\_\+stream\+\_\+t\+\_\+internal}} $\ast$const}]{cctx,  }\item[{const char $\ast$const}]{source,  }\item[{char $\ast$const}]{dest,  }\item[{const int}]{input\+Size,  }\item[{int $\ast$}]{input\+Consumed,  }\item[{const int}]{max\+Output\+Size,  }\item[{const \mbox{\hyperlink{lz4_8c_ab93acf685743debab05876250a1cbe28}{limited\+Output\+\_\+directive}}}]{output\+Directive,  }\item[{const \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}}}]{table\+Type,  }\item[{const \mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4c}{dict\+\_\+directive}}}]{dict\+Directive,  }\item[{const \mbox{\hyperlink{lz4_8c_a9f23ad1797bc66e6b6dff6cf3acfd351}{dict\+Issue\+\_\+directive}}}]{dict\+Issue,  }\item[{const int}]{acceleration }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8c_a2c16b0c1f9b51bb73e155876011fc97a}{LZ4\+\_\+compress\+\_\+generic()}} \+: inlined, to ensure branches are decided at compilation time. Presumed already validated at this stage\+:
+\begin{DoxyItemize}
+\item source != NULL
+\item input\+Size \texorpdfstring{$>$}{>} 0 
+\end{DoxyItemize}\mbox{\Hypertarget{lz4_8c_a464e8e2a2ad215e0d94042722eb75551}\label{lz4_8c_a464e8e2a2ad215e0d94042722eb75551}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_limitedOutput@{LZ4\_compress\_limitedOutput}}
+\index{LZ4\_compress\_limitedOutput@{LZ4\_compress\_limitedOutput}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_limitedOutput()}{LZ4\_compress\_limitedOutput()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+limited\+Output (\begin{DoxyParamCaption}\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{input\+Size,  }\item[{int}]{max\+Output\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a4a6e82d1e76a274fe351f9d090c44e59}\label{lz4_8c_a4a6e82d1e76a274fe351f9d090c44e59}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_limitedOutput\_continue@{LZ4\_compress\_limitedOutput\_continue}}
+\index{LZ4\_compress\_limitedOutput\_continue@{LZ4\_compress\_limitedOutput\_continue}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_limitedOutput\_continue()}{LZ4\_compress\_limitedOutput\_continue()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+limited\+Output\+\_\+continue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{LZ4\+\_\+stream,  }\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{src\+Size,  }\item[{int}]{dst\+Capacity }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_ab9e6911a8271745f3a45490edeae135b}\label{lz4_8c_ab9e6911a8271745f3a45490edeae135b}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_limitedOutput\_withState@{LZ4\_compress\_limitedOutput\_withState}}
+\index{LZ4\_compress\_limitedOutput\_withState@{LZ4\_compress\_limitedOutput\_withState}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_limitedOutput\_withState()}{LZ4\_compress\_limitedOutput\_withState()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+limited\+Output\+\_\+with\+State (\begin{DoxyParamCaption}\item[{void $\ast$}]{state,  }\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{src\+Size,  }\item[{int}]{dst\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a9fa2e6e61caea57ae1c3ef996f0e9ac9}\label{lz4_8c_a9fa2e6e61caea57ae1c3ef996f0e9ac9}} 
+\index{lz4.c@{lz4.c}!LZ4\_compress\_withState@{LZ4\_compress\_withState}}
+\index{LZ4\_compress\_withState@{LZ4\_compress\_withState}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compress\_withState()}{LZ4\_compress\_withState()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+\_\+with\+State (\begin{DoxyParamCaption}\item[{void $\ast$}]{state,  }\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{src\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a2b09f5ca41ce609bb136d3637beffe04}\label{lz4_8c_a2b09f5ca41ce609bb136d3637beffe04}} 
+\index{lz4.c@{lz4.c}!LZ4\_compressBound@{LZ4\_compressBound}}
+\index{LZ4\_compressBound@{LZ4\_compressBound}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_compressBound()}{LZ4\_compressBound()}}
+{\footnotesize\ttfamily int LZ4\+\_\+compress\+Bound (\begin{DoxyParamCaption}\item[{int}]{input\+Size }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_a7d92f596953d35893e39db626ae321ee}{LZ4\+\_\+compress\+Bound()}} \+: Provides the maximum size that LZ4 compression may output in a \char`\"{}worst case\char`\"{} scenario (input data not compressible) This function is primarily useful for memory allocation purposes (destination buffer size). Macro \mbox{\hyperlink{lz4_8h_a2453a423fd34640a0afbbf57ed0a5399}{LZ4\+\_\+\+COMPRESSBOUND()}} is also provided for compilation-\/time evaluation (stack memory allocation for example). Note that \mbox{\hyperlink{lz4_8h_ad6b447bf1644cc92bbce027e91e16dc6}{LZ4\+\_\+compress\+\_\+default()}} compresses faster when dst\+Capacity is \texorpdfstring{$>$}{>}= LZ4\+\_\+compress\+Bound(src\+Size) input\+Size \+: max supported value is LZ4\+\_\+\+MAX\+\_\+\+INPUT\+\_\+\+SIZE return \+: maximum output size in a \char`\"{}worst case\char`\"{} scenario or 0, if input size is incorrect (too large or negative) \mbox{\Hypertarget{lz4_8c_a94258766267d7286a6962c805eb56fea}\label{lz4_8c_a94258766267d7286a6962c805eb56fea}} 
+\index{lz4.c@{lz4.c}!LZ4\_count@{LZ4\_count}}
+\index{LZ4\_count@{LZ4\_count}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_count()}{LZ4\_count()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} unsigned LZ4\+\_\+count (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$}]{p\+In,  }\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$}]{p\+Match,  }\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$}]{p\+In\+Limit }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_afe9770c9f4098735952ff6d5464ef26e}\label{lz4_8c_afe9770c9f4098735952ff6d5464ef26e}} 
+\index{lz4.c@{lz4.c}!LZ4\_create@{LZ4\_create}}
+\index{LZ4\_create@{LZ4\_create}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_create()}{LZ4\_create()}}
+{\footnotesize\ttfamily void $\ast$ LZ4\+\_\+create (\begin{DoxyParamCaption}\item[{char $\ast$}]{input\+Buffer }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a9f7c46cabd525df03c0a4b79634a041b}\label{lz4_8c_a9f7c46cabd525df03c0a4b79634a041b}} 
+\index{lz4.c@{lz4.c}!LZ4\_createStream@{LZ4\_createStream}}
+\index{LZ4\_createStream@{LZ4\_createStream}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_createStream()}{LZ4\_createStream()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$ LZ4\+\_\+create\+Stream (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_afe5b34a42176888d7e31d79c25dc052b}\label{lz4_8c_afe5b34a42176888d7e31d79c25dc052b}} 
+\index{lz4.c@{lz4.c}!LZ4\_createStreamDecode@{LZ4\_createStreamDecode}}
+\index{LZ4\_createStreamDecode@{LZ4\_createStreamDecode}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_createStreamDecode()}{LZ4\_createStreamDecode()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8h_a76a1eaa4729efddb43040217daad4d4e}{LZ4\+\_\+stream\+Decode\+\_\+t}} $\ast$ LZ4\+\_\+create\+Stream\+Decode (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_aa886b47ec53a8e9c235a9f9027eadba4}{LZ4\+\_\+create\+Stream\+Decode()}} and \mbox{\hyperlink{lz4_8h_a37c487a088c1be5aa3924f51bb1529ab}{LZ4\+\_\+free\+Stream\+Decode()}} \+: creation / destruction of streaming decompression tracking context. A tracking context can be re-\/used multiple times. \mbox{\Hypertarget{lz4_8c_a48c320b65924a5e535cf8d8cee7f6755}\label{lz4_8c_a48c320b65924a5e535cf8d8cee7f6755}} 
+\index{lz4.c@{lz4.c}!LZ4\_decoderRingBufferSize@{LZ4\_decoderRingBufferSize}}
+\index{LZ4\_decoderRingBufferSize@{LZ4\_decoderRingBufferSize}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decoderRingBufferSize()}{LZ4\_decoderRingBufferSize()}}
+{\footnotesize\ttfamily int LZ4\+\_\+decoder\+Ring\+Buffer\+Size (\begin{DoxyParamCaption}\item[{int}]{max\+Block\+Size }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8c_a48c320b65924a5e535cf8d8cee7f6755}{LZ4\+\_\+decoder\+Ring\+Buffer\+Size()}} \+: when setting a ring buffer for streaming decompression (optional scenario), provides the minimum size of this ring buffer to be compatible with any source respecting max\+Block\+Size condition. Note \+: in a ring buffer scenario, blocks are presumed decompressed next to each other. When not enough space remains for next block (remaining\+Size \texorpdfstring{$<$}{<} max\+Block\+Size), decoding resumes from beginning of ring buffer. \begin{DoxyReturn}{Returns}
+\+: minimum ring buffer size, or 0 if there is an error (invalid max\+Block\+Size). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{lz4_8c_ab6434fcc90ca0e0725503bf440b68294}\label{lz4_8c_ab6434fcc90ca0e0725503bf440b68294}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_fast@{LZ4\_decompress\_fast}}
+\index{LZ4\_decompress\_fast@{LZ4\_decompress\_fast}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_fast()}{LZ4\_decompress\_fast()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int LZ4\+\_\+decompress\+\_\+fast (\begin{DoxyParamCaption}\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{original\+Size }\end{DoxyParamCaption})}
+
+Obsolete LZ4\+\_\+decompress\+\_\+fast variants (since v1.\+9.\+0) \+: These functions used to be faster than \mbox{\hyperlink{lz4_8h_a7e5d0cbb5c4a4b540c38fa80808228fb}{LZ4\+\_\+decompress\+\_\+safe()}}, but this is no longer the case. They are now slower. This is because \mbox{\hyperlink{lz4_8h_ad312b3a8741d421bbe6fbab8f5e2cb92}{LZ4\+\_\+decompress\+\_\+fast()}} doesn\textquotesingle{}t know the input size, and therefore must progress more cautiously into the input buffer to not read beyond the end of block. On top of that {\ttfamily \mbox{\hyperlink{lz4_8h_ad312b3a8741d421bbe6fbab8f5e2cb92}{LZ4\+\_\+decompress\+\_\+fast()}}} is not protected vs malformed or malicious inputs, making it a security liability. As a consequence, \mbox{\hyperlink{lz4_8h_ad312b3a8741d421bbe6fbab8f5e2cb92}{LZ4\+\_\+decompress\+\_\+fast()}} is strongly discouraged, and deprecated.
+
+The last remaining \mbox{\hyperlink{lz4_8h_ad312b3a8741d421bbe6fbab8f5e2cb92}{LZ4\+\_\+decompress\+\_\+fast()}} specificity is that it can decompress a block without knowing its compressed size. Such functionality can be achieved in a more secure manner by employing \mbox{\hyperlink{lz4_8h_aaba8ca0bd1f23633bdd834b36bb38989}{LZ4\+\_\+decompress\+\_\+safe\+\_\+partial()}}.
+
+Parameters\+: original\+Size \+: is the uncompressed size to regenerate. {\ttfamily dst} must be already allocated, its size must be \texorpdfstring{$>$}{>}= \textquotesingle{}original\+Size\textquotesingle{} bytes. \begin{DoxyReturn}{Returns}
+\+: number of bytes read from source buffer (== compressed size). The function expects to finish at block\textquotesingle{}s end exactly. If the source stream is detected malformed, the function stops decoding and returns a negative result. note \+: LZ4\+\_\+decompress\+\_\+fast$\ast$() requires original\+Size. Thanks to this information, it never writes past the output buffer. However, since it doesn\textquotesingle{}t know its \textquotesingle{}src\textquotesingle{} size, it may read an unknown amount of input, past input buffer bounds. Also, since match offsets are not validated, match reads from \textquotesingle{}src\textquotesingle{} may underflow too. These issues never happen if input (compressed) data is correct. But they may happen if input data is invalid (error or intentional tampering). As a consequence, use these functions in trusted environments with trusted data {\bfseries{only}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{lz4_8c_a5863feb1caa76aa91d23c14e57282bc8}\label{lz4_8c_a5863feb1caa76aa91d23c14e57282bc8}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_fast\_continue@{LZ4\_decompress\_fast\_continue}}
+\index{LZ4\_decompress\_fast\_continue@{LZ4\_decompress\_fast\_continue}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_fast\_continue()}{LZ4\_decompress\_fast\_continue()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int LZ4\+\_\+decompress\+\_\+fast\+\_\+continue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a76a1eaa4729efddb43040217daad4d4e}{LZ4\+\_\+stream\+Decode\+\_\+t}} $\ast$}]{LZ4\+\_\+stream\+Decode,  }\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{original\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a35d5ee5e0fbdca149b72d45837cfdc7b}\label{lz4_8c_a35d5ee5e0fbdca149b72d45837cfdc7b}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_fast\_doubleDict@{LZ4\_decompress\_fast\_doubleDict}}
+\index{LZ4\_decompress\_fast\_doubleDict@{LZ4\_decompress\_fast\_doubleDict}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_fast\_doubleDict()}{LZ4\_decompress\_fast\_doubleDict()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} int LZ4\+\_\+decompress\+\_\+fast\+\_\+double\+Dict (\begin{DoxyParamCaption}\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{original\+Size,  }\item[{size\+\_\+t}]{prefix\+Size,  }\item[{const void $\ast$}]{dict\+Start,  }\item[{size\+\_\+t}]{dict\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a1af9f7a2df20389dd9a0a31706c683b7}\label{lz4_8c_a1af9f7a2df20389dd9a0a31706c683b7}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_fast\_usingDict@{LZ4\_decompress\_fast\_usingDict}}
+\index{LZ4\_decompress\_fast\_usingDict@{LZ4\_decompress\_fast\_usingDict}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_fast\_usingDict()}{LZ4\_decompress\_fast\_usingDict()}}
+{\footnotesize\ttfamily int LZ4\+\_\+decompress\+\_\+fast\+\_\+using\+Dict (\begin{DoxyParamCaption}\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{original\+Size,  }\item[{const char $\ast$}]{dict\+Start,  }\item[{int}]{dict\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_aef3d7b7bead970344b439ac9bd672065}\label{lz4_8c_aef3d7b7bead970344b439ac9bd672065}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_fast\_withPrefix64k@{LZ4\_decompress\_fast\_withPrefix64k}}
+\index{LZ4\_decompress\_fast\_withPrefix64k@{LZ4\_decompress\_fast\_withPrefix64k}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_fast\_withPrefix64k()}{LZ4\_decompress\_fast\_withPrefix64k()}}
+{\footnotesize\ttfamily int LZ4\+\_\+decompress\+\_\+fast\+\_\+with\+Prefix64k (\begin{DoxyParamCaption}\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{original\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_ac53b33bff098af0f44931aaae87ef585}\label{lz4_8c_ac53b33bff098af0f44931aaae87ef585}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_generic@{LZ4\_decompress\_generic}}
+\index{LZ4\_decompress\_generic@{LZ4\_decompress\_generic}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_generic()}{LZ4\_decompress\_generic()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} int LZ4\+\_\+decompress\+\_\+generic (\begin{DoxyParamCaption}\item[{const char $\ast$const}]{src,  }\item[{char $\ast$const}]{dst,  }\item[{int}]{src\+Size,  }\item[{int}]{output\+Size,  }\item[{\mbox{\hyperlink{lz4_8c_a23fcfcea9fce4ad48b37485e3b6e8746}{end\+Condition\+\_\+directive}}}]{end\+On\+Input,  }\item[{\mbox{\hyperlink{lz4_8c_a2719d1421671f2c7fa3c68ca7465994c}{early\+End\+\_\+directive}}}]{partial\+Decoding,  }\item[{\mbox{\hyperlink{lz4_8c_ab22d25a446ad3e8288401052deccda4c}{dict\+\_\+directive}}}]{dict,  }\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$const}]{low\+Prefix,  }\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$const}]{dict\+Start,  }\item[{const size\+\_\+t}]{dict\+Size }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8c_ac53b33bff098af0f44931aaae87ef585}{LZ4\+\_\+decompress\+\_\+generic()}} \+: This generic decompression function covers all use cases. It shall be instantiated several times, using different sets of directives. Note that it is important for performance that this function really get inlined, in order to remove useless branches during compilation optimization. \mbox{\Hypertarget{lz4_8c_ae753d1e5bc9c6a1529b1fe73d39a4972}\label{lz4_8c_ae753d1e5bc9c6a1529b1fe73d39a4972}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_safe@{LZ4\_decompress\_safe}}
+\index{LZ4\_decompress\_safe@{LZ4\_decompress\_safe}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_safe()}{LZ4\_decompress\_safe()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int LZ4\+\_\+decompress\+\_\+safe (\begin{DoxyParamCaption}\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{compressed\+Size,  }\item[{int}]{dst\+Capacity }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_a7e5d0cbb5c4a4b540c38fa80808228fb}{LZ4\+\_\+decompress\+\_\+safe()}} \+: compressed\+Size \+: is the exact complete size of the compressed block. dst\+Capacity \+: is the size of destination buffer (which must be already allocated), presumed an upper bound of decompressed size. \begin{DoxyReturn}{Returns}
+\+: the number of bytes decompressed into destination buffer (necessarily \texorpdfstring{$<$}{<}= dst\+Capacity) If destination buffer is not large enough, decoding will stop and output an error code (negative value). If the source stream is detected malformed, the function will stop decoding and return a negative result. Note 1 \+: This function is protected against malicious data packets \+: it will never writes outside \textquotesingle{}dst\textquotesingle{} buffer, nor read outside \textquotesingle{}source\textquotesingle{} buffer, even if the compressed block is maliciously modified to order the decoder to do these actions. In such case, the decoder stops immediately, and considers the compressed block malformed. Note 2 \+: compressed\+Size and dst\+Capacity must be provided to the function, the compressed block does not contain them. The implementation is free to send / store / derive this information in whichever way is most beneficial. If there is a need for a different format which bundles together both compressed data and its metadata, consider looking at lz4frame.\+h instead. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{lz4_8c_aa04e6d12be3e13001d9b01cd73c58111}\label{lz4_8c_aa04e6d12be3e13001d9b01cd73c58111}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_safe\_continue@{LZ4\_decompress\_safe\_continue}}
+\index{LZ4\_decompress\_safe\_continue@{LZ4\_decompress\_safe\_continue}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_safe\_continue()}{LZ4\_decompress\_safe\_continue()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int LZ4\+\_\+decompress\+\_\+safe\+\_\+continue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a76a1eaa4729efddb43040217daad4d4e}{LZ4\+\_\+stream\+Decode\+\_\+t}} $\ast$}]{LZ4\+\_\+stream\+Decode,  }\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{src\+Size,  }\item[{int}]{dst\+Capacity }\end{DoxyParamCaption})}
+
+LZ4\+\_\+decompress\+\_\+$\ast$\+\_\+continue() \+: These decoding functions allow decompression of consecutive blocks in \char`\"{}streaming\char`\"{} mode. A block is an unsplittable entity, it must be presented entirely to a decompression function. Decompression functions only accepts one block at a time. The last 64KB of previously decoded data {\itshape must} remain available and unmodified at the memory position where they were decoded. If less than 64KB of data has been decoded, all the data must be present.
+
+Special \+: if decompression side sets a ring buffer, it must respect one of the following conditions \+:
+\begin{DoxyItemize}
+\item Decompression buffer size is {\itshape at least} LZ4\+\_\+decoder\+Ring\+Buffer\+Size(max\+Block\+Size). max\+Block\+Size is the maximum size of any single block. It can have any value \texorpdfstring{$>$}{>} 16 bytes. In which case, encoding and decoding buffers do not need to be synchronized. Actually, data can be produced by any source compliant with LZ4 format specification, and respecting max\+Block\+Size.
+\item Synchronized mode \+: Decompression buffer size is {\itshape exactly} the same as compression buffer size, and follows exactly same update rule (block boundaries at same positions), and decoding function is provided with exact decompressed size of each block (exception for last block of the stream), {\itshape then} decoding \& encoding ring buffer can have any size, including small ones ( \texorpdfstring{$<$}{<} 64 KB).
+\item Decompression buffer is larger than encoding buffer, by a minimum of max\+Block\+Size more bytes. In which case, encoding and decoding buffers do not need to be synchronized, and encoding ring buffer can have any size, including small ones ( \texorpdfstring{$<$}{<} 64 KB).
+\end{DoxyItemize}
+
+Whenever these conditions are not possible, save the last 64KB of decoded data into a safe buffer where it can\textquotesingle{}t be modified during decompression, then indicate where this data is saved using \mbox{\hyperlink{lz4_8h_a81965fd474a946db05698f9aff385603}{LZ4\+\_\+set\+Stream\+Decode()}}, before decompressing next block. \mbox{\Hypertarget{lz4_8c_a8dbbbc837a88da1386c24d27d5cffe81}\label{lz4_8c_a8dbbbc837a88da1386c24d27d5cffe81}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_safe\_doubleDict@{LZ4\_decompress\_safe\_doubleDict}}
+\index{LZ4\_decompress\_safe\_doubleDict@{LZ4\_decompress\_safe\_doubleDict}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_safe\_doubleDict()}{LZ4\_decompress\_safe\_doubleDict()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} int LZ4\+\_\+decompress\+\_\+safe\+\_\+double\+Dict (\begin{DoxyParamCaption}\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{compressed\+Size,  }\item[{int}]{max\+Output\+Size,  }\item[{size\+\_\+t}]{prefix\+Size,  }\item[{const void $\ast$}]{dict\+Start,  }\item[{size\+\_\+t}]{dict\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a8bb3038074030f03d5b70229b9841a51}\label{lz4_8c_a8bb3038074030f03d5b70229b9841a51}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_safe\_forceExtDict@{LZ4\_decompress\_safe\_forceExtDict}}
+\index{LZ4\_decompress\_safe\_forceExtDict@{LZ4\_decompress\_safe\_forceExtDict}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_safe\_forceExtDict()}{LZ4\_decompress\_safe\_forceExtDict()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int LZ4\+\_\+decompress\+\_\+safe\+\_\+force\+Ext\+Dict (\begin{DoxyParamCaption}\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{compressed\+Size,  }\item[{int}]{max\+Output\+Size,  }\item[{const void $\ast$}]{dict\+Start,  }\item[{size\+\_\+t}]{dict\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_aba0e874c2e4d3532e86526a55d2228fa}\label{lz4_8c_aba0e874c2e4d3532e86526a55d2228fa}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_safe\_partial@{LZ4\_decompress\_safe\_partial}}
+\index{LZ4\_decompress\_safe\_partial@{LZ4\_decompress\_safe\_partial}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_safe\_partial()}{LZ4\_decompress\_safe\_partial()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int LZ4\+\_\+decompress\+\_\+safe\+\_\+partial (\begin{DoxyParamCaption}\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{src\+Size,  }\item[{int}]{target\+Output\+Size,  }\item[{int}]{dst\+Capacity }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_aaba8ca0bd1f23633bdd834b36bb38989}{LZ4\+\_\+decompress\+\_\+safe\+\_\+partial()}} \+: Decompress an LZ4 compressed block, of size \textquotesingle{}src\+Size\textquotesingle{} at position \textquotesingle{}src\textquotesingle{}, into destination buffer \textquotesingle{}dst\textquotesingle{} of size \textquotesingle{}dst\+Capacity\textquotesingle{}. Up to \textquotesingle{}target\+Output\+Size\textquotesingle{} bytes will be decoded. The function stops decoding on reaching this objective. This can be useful to boost performance whenever only the beginning of a block is required.
+
+\begin{DoxyReturn}{Returns}
+\+: the number of bytes decoded in {\ttfamily dst} (necessarily \texorpdfstring{$<$}{<}= target\+Output\+Size) If source stream is detected malformed, function returns a negative result.
+\end{DoxyReturn}
+Note 1 \+: \begin{DoxyReturn}{Returns}
+can be \texorpdfstring{$<$}{<} target\+Output\+Size, if compressed block contains less data.
+\end{DoxyReturn}
+Note 2 \+: target\+Output\+Size must be \texorpdfstring{$<$}{<}= dst\+Capacity
+
+Note 3 \+: this function effectively stops decoding on reaching target\+Output\+Size, so dst\+Capacity is kind of redundant. This is because in older versions of this function, decoding operation would still write complete sequences. Therefore, there was no guarantee that it would stop writing at exactly target\+Output\+Size, it could write more bytes, though only up to dst\+Capacity. Some \char`\"{}margin\char`\"{} used to be required for this operation to work properly. Thankfully, this is no longer necessary. The function nonetheless keeps the same signature, in an effort to preserve API compatibility.
+
+Note 4 \+: If src\+Size is the exact size of the block, then target\+Output\+Size can be any value, including larger than the block\textquotesingle{}s decompressed size. The function will, at most, generate block\textquotesingle{}s decompressed size.
+
+Note 5 \+: If src\+Size is {\itshape larger} than block\textquotesingle{}s compressed size, then target\+Output\+Size {\bfseries{MUST}} be \texorpdfstring{$<$}{<}= block\textquotesingle{}s decompressed size. Otherwise, {\itshape silent corruption will occur}. \mbox{\Hypertarget{lz4_8c_a36c8331cc4609de05d87da6c0eea574e}\label{lz4_8c_a36c8331cc4609de05d87da6c0eea574e}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_safe\_usingDict@{LZ4\_decompress\_safe\_usingDict}}
+\index{LZ4\_decompress\_safe\_usingDict@{LZ4\_decompress\_safe\_usingDict}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_safe\_usingDict()}{LZ4\_decompress\_safe\_usingDict()}}
+{\footnotesize\ttfamily int LZ4\+\_\+decompress\+\_\+safe\+\_\+using\+Dict (\begin{DoxyParamCaption}\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{dst,  }\item[{int}]{src\+Size,  }\item[{int}]{dst\+Capcity,  }\item[{const char $\ast$}]{dict\+Start,  }\item[{int}]{dict\+Size }\end{DoxyParamCaption})}
+
+LZ4\+\_\+decompress\+\_\+$\ast$\+\_\+using\+Dict() \+: These decoding functions work the same as a combination of \mbox{\hyperlink{lz4_8h_a81965fd474a946db05698f9aff385603}{LZ4\+\_\+set\+Stream\+Decode()}} followed by LZ4\+\_\+decompress\+\_\+$\ast$\+\_\+continue() They are stand-\/alone, and don\textquotesingle{}t need an LZ4\+\_\+stream\+Decode\+\_\+t structure. Dictionary is presumed stable \+: it must remain accessible and unmodified during decompression. Performance tip \+: Decompression speed can be substantially increased when dst == dict\+Start + dict\+Size. \mbox{\Hypertarget{lz4_8c_a2ceb6bc3c28b8e95a220343c6c40bed6}\label{lz4_8c_a2ceb6bc3c28b8e95a220343c6c40bed6}} 
+\index{lz4.c@{lz4.c}!LZ4\_decompress\_safe\_withPrefix64k@{LZ4\_decompress\_safe\_withPrefix64k}}
+\index{LZ4\_decompress\_safe\_withPrefix64k@{LZ4\_decompress\_safe\_withPrefix64k}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_decompress\_safe\_withPrefix64k()}{LZ4\_decompress\_safe\_withPrefix64k()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_aef1e79d6717ef83db09e5ab432c0f085}{LZ4\+\_\+\+FORCE\+\_\+\+O2}} int LZ4\+\_\+decompress\+\_\+safe\+\_\+with\+Prefix64k (\begin{DoxyParamCaption}\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{compressed\+Size,  }\item[{int}]{max\+Output\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a6a4702cac776d39c52074280d8fb84db}\label{lz4_8c_a6a4702cac776d39c52074280d8fb84db}} 
+\index{lz4.c@{lz4.c}!LZ4\_freeStream@{LZ4\_freeStream}}
+\index{LZ4\_freeStream@{LZ4\_freeStream}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_freeStream()}{LZ4\_freeStream()}}
+{\footnotesize\ttfamily int LZ4\+\_\+free\+Stream (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{LZ4\+\_\+stream }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_afdcbf92c1921ecf2838db322c77c1485}\label{lz4_8c_afdcbf92c1921ecf2838db322c77c1485}} 
+\index{lz4.c@{lz4.c}!LZ4\_freeStreamDecode@{LZ4\_freeStreamDecode}}
+\index{LZ4\_freeStreamDecode@{LZ4\_freeStreamDecode}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_freeStreamDecode()}{LZ4\_freeStreamDecode()}}
+{\footnotesize\ttfamily int LZ4\+\_\+free\+Stream\+Decode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a76a1eaa4729efddb43040217daad4d4e}{LZ4\+\_\+stream\+Decode\+\_\+t}} $\ast$}]{LZ4\+\_\+stream }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a53d709e1ac9aff4321467ffe1fef571f}\label{lz4_8c_a53d709e1ac9aff4321467ffe1fef571f}} 
+\index{lz4.c@{lz4.c}!LZ4\_getIndexOnHash@{LZ4\_getIndexOnHash}}
+\index{LZ4\_getIndexOnHash@{LZ4\_getIndexOnHash}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_getIndexOnHash()}{LZ4\_getIndexOnHash()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} LZ4\+\_\+get\+Index\+On\+Hash (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}}}]{h,  }\item[{const void $\ast$}]{table\+Base,  }\item[{\mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}}}]{table\+Type }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_aae6e31487a50e9124929fd1fa710d58e}\label{lz4_8c_aae6e31487a50e9124929fd1fa710d58e}} 
+\index{lz4.c@{lz4.c}!LZ4\_getPosition@{LZ4\_getPosition}}
+\index{LZ4\_getPosition@{LZ4\_getPosition}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_getPosition()}{LZ4\_getPosition()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$ LZ4\+\_\+get\+Position (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$}]{p,  }\item[{const void $\ast$}]{table\+Base,  }\item[{\mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}}}]{table\+Type,  }\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$}]{src\+Base }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a4b2bca18b9716c1b14c20ef98c00706a}\label{lz4_8c_a4b2bca18b9716c1b14c20ef98c00706a}} 
+\index{lz4.c@{lz4.c}!LZ4\_hash4@{LZ4\_hash4}}
+\index{LZ4\_hash4@{LZ4\_hash4}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_hash4()}{LZ4\_hash4()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} LZ4\+\_\+hash4 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}}}]{sequence,  }\item[{\mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const}]{table\+Type }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_adc69f36cc4b0eec011a50a195eadfecc}\label{lz4_8c_adc69f36cc4b0eec011a50a195eadfecc}} 
+\index{lz4.c@{lz4.c}!LZ4\_hash5@{LZ4\_hash5}}
+\index{LZ4\_hash5@{LZ4\_hash5}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_hash5()}{LZ4\_hash5()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} LZ4\+\_\+hash5 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8c_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{sequence,  }\item[{\mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const}]{table\+Type }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_ac12a7e2c99e027f4890aa543dc3fc367}\label{lz4_8c_ac12a7e2c99e027f4890aa543dc3fc367}} 
+\index{lz4.c@{lz4.c}!LZ4\_hashPosition@{LZ4\_hashPosition}}
+\index{LZ4\_hashPosition@{LZ4\_hashPosition}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_hashPosition()}{LZ4\_hashPosition()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} \mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}} LZ4\+\_\+hash\+Position (\begin{DoxyParamCaption}\item[{const void $\ast$const}]{p,  }\item[{\mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const}]{table\+Type }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a7a89d0d01282953dc67d3215cf4bbde4}\label{lz4_8c_a7a89d0d01282953dc67d3215cf4bbde4}} 
+\index{lz4.c@{lz4.c}!LZ4\_initStream@{LZ4\_initStream}}
+\index{LZ4\_initStream@{LZ4\_initStream}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_initStream()}{LZ4\_initStream()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$ LZ4\+\_\+init\+Stream (\begin{DoxyParamCaption}\item[{void $\ast$}]{buffer,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_a0da60953abe0734aee6a462864fd9aa3}{LZ4\+\_\+init\+Stream()}} \+: v1.\+9.\+0+ An LZ4\+\_\+stream\+\_\+t structure must be initialized at least once. This is automatically done when invoking \mbox{\hyperlink{lz4_8h_a62561f6ed380269f1f2d20e659cd5865}{LZ4\+\_\+create\+Stream()}}, but it\textquotesingle{}s not when the structure is simply declared on stack (for example).
+
+Use \mbox{\hyperlink{lz4_8h_a0da60953abe0734aee6a462864fd9aa3}{LZ4\+\_\+init\+Stream()}} to properly initialize a newly declared LZ4\+\_\+stream\+\_\+t. It can also initialize any arbitrary buffer of sufficient size, and will \begin{DoxyReturn}{Returns}
+a pointer of proper type upon initialization.
+\end{DoxyReturn}
+Note \+: initialization fails if size and alignment conditions are not respected. In which case, the function will \begin{DoxyReturn}{Returns}
+NULL. Note2\+: An LZ4\+\_\+stream\+\_\+t structure guarantees correct alignment and size. Note3\+: Before v1.\+9.\+0, use \mbox{\hyperlink{lz4_8h_ac8d5c49bc84243e6b69df1ecc25d2425}{LZ4\+\_\+reset\+Stream()}} instead 
+\end{DoxyReturn}
+\mbox{\Hypertarget{lz4_8c_a2b94615ba633a2c5511758d5f2cb34f5}\label{lz4_8c_a2b94615ba633a2c5511758d5f2cb34f5}} 
+\index{lz4.c@{lz4.c}!LZ4\_loadDict@{LZ4\_loadDict}}
+\index{LZ4\_loadDict@{LZ4\_loadDict}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_loadDict()}{LZ4\_loadDict()}}
+{\footnotesize\ttfamily int LZ4\+\_\+load\+Dict (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{stream\+Ptr,  }\item[{const char $\ast$}]{dictionary,  }\item[{int}]{dict\+Size }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_ac14454c14304d2df9bfeaa81216053c1}{LZ4\+\_\+load\+Dict()}} \+: Use this function to reference a static dictionary into LZ4\+\_\+stream\+\_\+t. The dictionary must remain available during compression. \mbox{\hyperlink{lz4_8h_ac14454c14304d2df9bfeaa81216053c1}{LZ4\+\_\+load\+Dict()}} triggers a reset, so any previous data will be forgotten. The same dictionary will have to be loaded on decompression side for successful decoding. Dictionary are useful for better compression of small data (KB range). While LZ4 accept any input as dictionary, results are generally better when using Zstandard\textquotesingle{}s Dictionary Builder. Loading a size of 0 is allowed, and is the same as reset. \begin{DoxyReturn}{Returns}
+\+: loaded dictionary size, in bytes (necessarily \texorpdfstring{$<$}{<}= 64 KB) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{lz4_8c_a89986cece123f15fc68536ad0244ee0d}\label{lz4_8c_a89986cece123f15fc68536ad0244ee0d}} 
+\index{lz4.c@{lz4.c}!LZ4\_prepareTable@{LZ4\_prepareTable}}
+\index{LZ4\_prepareTable@{LZ4\_prepareTable}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_prepareTable()}{LZ4\_prepareTable()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void LZ4\+\_\+prepare\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structLZ4__stream__t__internal}{LZ4\+\_\+stream\+\_\+t\+\_\+internal}} $\ast$const}]{cctx,  }\item[{const int}]{input\+Size,  }\item[{const \mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}}}]{table\+Type }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_aa691b9fc80f3e34c2b3e776a4a488911}\label{lz4_8c_aa691b9fc80f3e34c2b3e776a4a488911}} 
+\index{lz4.c@{lz4.c}!LZ4\_putIndexOnHash@{LZ4\_putIndexOnHash}}
+\index{LZ4\_putIndexOnHash@{LZ4\_putIndexOnHash}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_putIndexOnHash()}{LZ4\_putIndexOnHash()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void LZ4\+\_\+put\+Index\+On\+Hash (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}}}]{idx,  }\item[{\mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}}}]{h,  }\item[{void $\ast$}]{table\+Base,  }\item[{\mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const}]{table\+Type }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a6efaf92ef3c802858a2246a5a588dcb9}\label{lz4_8c_a6efaf92ef3c802858a2246a5a588dcb9}} 
+\index{lz4.c@{lz4.c}!LZ4\_putPosition@{LZ4\_putPosition}}
+\index{LZ4\_putPosition@{LZ4\_putPosition}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_putPosition()}{LZ4\_putPosition()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void LZ4\+\_\+put\+Position (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$}]{p,  }\item[{void $\ast$}]{table\+Base,  }\item[{\mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}}}]{table\+Type,  }\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$}]{src\+Base }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a0eba3b95eb6fc95a7796c30657417ac1}\label{lz4_8c_a0eba3b95eb6fc95a7796c30657417ac1}} 
+\index{lz4.c@{lz4.c}!LZ4\_putPositionOnHash@{LZ4\_putPositionOnHash}}
+\index{LZ4\_putPositionOnHash@{LZ4\_putPositionOnHash}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_putPositionOnHash()}{LZ4\_putPositionOnHash()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void LZ4\+\_\+put\+Position\+On\+Hash (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{lz4_8c_ac3df7cf3c8cb172a588adec881447d68}{U32}}}]{h,  }\item[{void $\ast$}]{table\+Base,  }\item[{\mbox{\hyperlink{lz4_8c_ae86e1d8a28953326b685d6ebb243a699}{table\+Type\+\_\+t}} const}]{table\+Type,  }\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$}]{src\+Base }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a62d9f1ebf60fd83bf2f0d1a58e80a64c}\label{lz4_8c_a62d9f1ebf60fd83bf2f0d1a58e80a64c}} 
+\index{lz4.c@{lz4.c}!LZ4\_resetStream@{LZ4\_resetStream}}
+\index{LZ4\_resetStream@{LZ4\_resetStream}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_resetStream()}{LZ4\_resetStream()}}
+{\footnotesize\ttfamily void LZ4\+\_\+reset\+Stream (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{stream\+Ptr }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_ac8d5c49bc84243e6b69df1ecc25d2425}{LZ4\+\_\+reset\+Stream()}} \+: An LZ4\+\_\+stream\+\_\+t structure must be initialized at least once. This is done with \mbox{\hyperlink{lz4_8h_a0da60953abe0734aee6a462864fd9aa3}{LZ4\+\_\+init\+Stream()}}, or \mbox{\hyperlink{lz4_8h_ac8d5c49bc84243e6b69df1ecc25d2425}{LZ4\+\_\+reset\+Stream()}}. Consider switching to \mbox{\hyperlink{lz4_8h_a0da60953abe0734aee6a462864fd9aa3}{LZ4\+\_\+init\+Stream()}}, invoking \mbox{\hyperlink{lz4_8h_ac8d5c49bc84243e6b69df1ecc25d2425}{LZ4\+\_\+reset\+Stream()}} will trigger deprecation warnings in the future. \mbox{\Hypertarget{lz4_8c_a679ba06947df2172511239fecedd3a11}\label{lz4_8c_a679ba06947df2172511239fecedd3a11}} 
+\index{lz4.c@{lz4.c}!LZ4\_resetStream\_fast@{LZ4\_resetStream\_fast}}
+\index{LZ4\_resetStream\_fast@{LZ4\_resetStream\_fast}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_resetStream\_fast()}{LZ4\_resetStream\_fast()}}
+{\footnotesize\ttfamily void LZ4\+\_\+reset\+Stream\+\_\+fast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{stream\+Ptr }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_a2298f038b5c1c52e77d9222add683a0a}{LZ4\+\_\+reset\+Stream\+\_\+fast()}} \+: v1.\+9.\+0+ Use this to prepare an LZ4\+\_\+stream\+\_\+t for a new chain of dependent blocks (e.\+g., \mbox{\hyperlink{lz4_8h_a03a0f96ab87158e1d291128f31f42203}{LZ4\+\_\+compress\+\_\+fast\+\_\+continue()}}).
+
+An LZ4\+\_\+stream\+\_\+t must be initialized once before usage. This is automatically done when created by \mbox{\hyperlink{lz4_8h_a62561f6ed380269f1f2d20e659cd5865}{LZ4\+\_\+create\+Stream()}}. However, should the LZ4\+\_\+stream\+\_\+t be simply declared on stack (for example), it\textquotesingle{}s necessary to initialize it first, using \mbox{\hyperlink{lz4_8h_a0da60953abe0734aee6a462864fd9aa3}{LZ4\+\_\+init\+Stream()}}.
+
+After init, start any new stream with \mbox{\hyperlink{lz4_8h_a2298f038b5c1c52e77d9222add683a0a}{LZ4\+\_\+reset\+Stream\+\_\+fast()}}. A same LZ4\+\_\+stream\+\_\+t can be re-\/used multiple times consecutively and compress multiple streams, provided that it starts each new stream with \mbox{\hyperlink{lz4_8h_a2298f038b5c1c52e77d9222add683a0a}{LZ4\+\_\+reset\+Stream\+\_\+fast()}}.
+
+\mbox{\hyperlink{lz4_8h_a2298f038b5c1c52e77d9222add683a0a}{LZ4\+\_\+reset\+Stream\+\_\+fast()}} is much faster than \mbox{\hyperlink{lz4_8h_a0da60953abe0734aee6a462864fd9aa3}{LZ4\+\_\+init\+Stream()}}, but is not compatible with memory regions containing garbage data.
+
+Note\+: it\textquotesingle{}s only useful to call \mbox{\hyperlink{lz4_8h_a2298f038b5c1c52e77d9222add683a0a}{LZ4\+\_\+reset\+Stream\+\_\+fast()}} in the context of streaming compression. The {\itshape ext\+State} functions perform their own resets. Invoking \mbox{\hyperlink{lz4_8h_a2298f038b5c1c52e77d9222add683a0a}{LZ4\+\_\+reset\+Stream\+\_\+fast()}} before is redundant, and even counterproductive. \mbox{\Hypertarget{lz4_8c_acc12a443b49ec045db2399d57c0afde7}\label{lz4_8c_acc12a443b49ec045db2399d57c0afde7}} 
+\index{lz4.c@{lz4.c}!LZ4\_resetStreamState@{LZ4\_resetStreamState}}
+\index{LZ4\_resetStreamState@{LZ4\_resetStreamState}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_resetStreamState()}{LZ4\_resetStreamState()}}
+{\footnotesize\ttfamily int LZ4\+\_\+reset\+Stream\+State (\begin{DoxyParamCaption}\item[{void $\ast$}]{state,  }\item[{char $\ast$}]{input\+Buffer }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_abb233b63fc3488ce647ee9c7b0a95a76}\label{lz4_8c_abb233b63fc3488ce647ee9c7b0a95a76}} 
+\index{lz4.c@{lz4.c}!LZ4\_saveDict@{LZ4\_saveDict}}
+\index{LZ4\_saveDict@{LZ4\_saveDict}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_saveDict()}{LZ4\_saveDict()}}
+{\footnotesize\ttfamily int LZ4\+\_\+save\+Dict (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a4fb9ac4ce6d5e25edc9188f9d6633498}{LZ4\+\_\+stream\+\_\+t}} $\ast$}]{LZ4\+\_\+dict,  }\item[{char $\ast$}]{safe\+Buffer,  }\item[{int}]{dict\+Size }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8c_abb233b63fc3488ce647ee9c7b0a95a76}{LZ4\+\_\+save\+Dict()}} \+: If previously compressed data block is not guaranteed to remain available at its memory location, save it into a safer place (char$\ast$ safe\+Buffer). Note \+: no need to call \mbox{\hyperlink{lz4_8c_a2b94615ba633a2c5511758d5f2cb34f5}{LZ4\+\_\+load\+Dict()}} afterwards, dictionary is immediately usable, one can therefore call \mbox{\hyperlink{lz4_8c_abee2872be58007aae02ca0ca467dae4f}{LZ4\+\_\+compress\+\_\+fast\+\_\+continue()}} right after. \begin{DoxyReturn}{Returns}
+\+: saved dictionary size in bytes (necessarily \texorpdfstring{$<$}{<}= dict\+Size), or 0 if error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{lz4_8c_a971624e4abed2ab679a8c1728875663b}\label{lz4_8c_a971624e4abed2ab679a8c1728875663b}} 
+\index{lz4.c@{lz4.c}!LZ4\_setStreamDecode@{LZ4\_setStreamDecode}}
+\index{LZ4\_setStreamDecode@{LZ4\_setStreamDecode}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_setStreamDecode()}{LZ4\_setStreamDecode()}}
+{\footnotesize\ttfamily int LZ4\+\_\+set\+Stream\+Decode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lz4_8h_a76a1eaa4729efddb43040217daad4d4e}{LZ4\+\_\+stream\+Decode\+\_\+t}} $\ast$}]{LZ4\+\_\+stream\+Decode,  }\item[{const char $\ast$}]{dictionary,  }\item[{int}]{dict\+Size }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8c_a971624e4abed2ab679a8c1728875663b}{LZ4\+\_\+set\+Stream\+Decode()}} \+: Use this function to instruct where to find the dictionary. This function is not necessary if previous data is still available where it was decoded. Loading a size of 0 is allowed (same effect as no dictionary). \begin{DoxyReturn}{Returns}
+\+: 1 if OK, 0 if error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{lz4_8c_a5533b6e13559d2c75ac5ac6d4eb13beb}\label{lz4_8c_a5533b6e13559d2c75ac5ac6d4eb13beb}} 
+\index{lz4.c@{lz4.c}!LZ4\_sizeofState@{LZ4\_sizeofState}}
+\index{LZ4\_sizeofState@{LZ4\_sizeofState}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_sizeofState()}{LZ4\_sizeofState()}}
+{\footnotesize\ttfamily int LZ4\+\_\+sizeof\+State (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{lz4_8h_aa96a44c19a21b077143f501a8f092e92}{LZ4\+\_\+compress\+\_\+fast\+\_\+ext\+State()}} \+: Same as \mbox{\hyperlink{lz4_8h_a220fb40214b023f3fdb7e71df36b557e}{LZ4\+\_\+compress\+\_\+fast()}}, using an externally allocated memory space for its state. Use \mbox{\hyperlink{lz4_8h_a6b79b9da156ef5597696201f2e218a5a}{LZ4\+\_\+sizeof\+State()}} to know how much memory must be allocated, and allocate it on 8-\/bytes boundaries (using {\ttfamily malloc()} typically). Then, provide this buffer as {\ttfamily void$\ast$ state} to compression function. \mbox{\Hypertarget{lz4_8c_a92f20fa55554d00760fb6fb4108a2825}\label{lz4_8c_a92f20fa55554d00760fb6fb4108a2825}} 
+\index{lz4.c@{lz4.c}!LZ4\_sizeofStreamState@{LZ4\_sizeofStreamState}}
+\index{LZ4\_sizeofStreamState@{LZ4\_sizeofStreamState}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_sizeofStreamState()}{LZ4\_sizeofStreamState()}}
+{\footnotesize\ttfamily int LZ4\+\_\+sizeof\+Stream\+State (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a78cb8b4ee777318e773f631700279e73}\label{lz4_8c_a78cb8b4ee777318e773f631700279e73}} 
+\index{lz4.c@{lz4.c}!LZ4\_slideInputBuffer@{LZ4\_slideInputBuffer}}
+\index{LZ4\_slideInputBuffer@{LZ4\_slideInputBuffer}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_slideInputBuffer()}{LZ4\_slideInputBuffer()}}
+{\footnotesize\ttfamily char $\ast$ LZ4\+\_\+slide\+Input\+Buffer (\begin{DoxyParamCaption}\item[{void $\ast$}]{state }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a76994c12731075f0d8a96239c8856192}\label{lz4_8c_a76994c12731075f0d8a96239c8856192}} 
+\index{lz4.c@{lz4.c}!LZ4\_uncompress@{LZ4\_uncompress}}
+\index{LZ4\_uncompress@{LZ4\_uncompress}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_uncompress()}{LZ4\_uncompress()}}
+{\footnotesize\ttfamily int LZ4\+\_\+uncompress (\begin{DoxyParamCaption}\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{output\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a81aa900c172d655f8a4f0a75739791f0}\label{lz4_8c_a81aa900c172d655f8a4f0a75739791f0}} 
+\index{lz4.c@{lz4.c}!LZ4\_uncompress\_unknownOutputSize@{LZ4\_uncompress\_unknownOutputSize}}
+\index{LZ4\_uncompress\_unknownOutputSize@{LZ4\_uncompress\_unknownOutputSize}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_uncompress\_unknownOutputSize()}{LZ4\_uncompress\_unknownOutputSize()}}
+{\footnotesize\ttfamily int LZ4\+\_\+uncompress\+\_\+unknown\+Output\+Size (\begin{DoxyParamCaption}\item[{const char $\ast$}]{source,  }\item[{char $\ast$}]{dest,  }\item[{int}]{isize,  }\item[{int}]{max\+Output\+Size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a9a7a69397b6452fcf6a35caa40493776}\label{lz4_8c_a9a7a69397b6452fcf6a35caa40493776}} 
+\index{lz4.c@{lz4.c}!LZ4\_versionNumber@{LZ4\_versionNumber}}
+\index{LZ4\_versionNumber@{LZ4\_versionNumber}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_versionNumber()}{LZ4\_versionNumber()}}
+{\footnotesize\ttfamily int LZ4\+\_\+version\+Number (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+library version number; useful to check dll version \mbox{\Hypertarget{lz4_8c_a6ef97df81fadbddc3a58c1b96ca0a81d}\label{lz4_8c_a6ef97df81fadbddc3a58c1b96ca0a81d}} 
+\index{lz4.c@{lz4.c}!LZ4\_versionString@{LZ4\_versionString}}
+\index{LZ4\_versionString@{LZ4\_versionString}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_versionString()}{LZ4\_versionString()}}
+{\footnotesize\ttfamily const char $\ast$ LZ4\+\_\+version\+String (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+library version string; useful to check dll version \mbox{\Hypertarget{lz4_8c_a07728e73c2d01917fa46e28357fb6fd1}\label{lz4_8c_a07728e73c2d01917fa46e28357fb6fd1}} 
+\index{lz4.c@{lz4.c}!LZ4\_wildCopy8@{LZ4\_wildCopy8}}
+\index{LZ4\_wildCopy8@{LZ4\_wildCopy8}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{LZ4\_wildCopy8()}{LZ4\_wildCopy8()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} void LZ4\+\_\+wild\+Copy8 (\begin{DoxyParamCaption}\item[{void $\ast$}]{dst\+Ptr,  }\item[{const void $\ast$}]{src\+Ptr,  }\item[{void $\ast$}]{dst\+End }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lz4_8c_a54ff5f47024f14f6cbc486fa483811f4}\label{lz4_8c_a54ff5f47024f14f6cbc486fa483811f4}} 
+\index{lz4.c@{lz4.c}!read\_variable\_length@{read\_variable\_length}}
+\index{read\_variable\_length@{read\_variable\_length}!lz4.c@{lz4.c}}
+\doxysubsubsection{\texorpdfstring{read\_variable\_length()}{read\_variable\_length()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lz4_8c_abd6e1d7970097a25e9ceadcfec049a2e}{LZ4\+\_\+\+FORCE\+\_\+\+INLINE}} unsigned read\+\_\+variable\+\_\+length (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$$\ast$}]{ip,  }\item[{const \mbox{\hyperlink{lz4_8c_a4ae1dab0fb4b072a66584546209e7d58}{BYTE}} $\ast$}]{lencheck,  }\item[{int}]{loop\+\_\+check,  }\item[{int}]{initial\+\_\+check,  }\item[{\mbox{\hyperlink{lz4_8c_a9d0df14b4296f06cf7c7b141f26d29b3}{variable\+\_\+length\+\_\+error}} $\ast$}]{error }\end{DoxyParamCaption})}
+
