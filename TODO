@@ -1,0 +1,29 @@
+
+Todo:
+  ☐ Match
+    ☐ Table
+      ☐ Deck
+      ☐ Cards
+
+      ☐ Players
+        ☐ Player
+          ☐ Hand
+          ☐ Deck
+          ☐ Match Statistics
+    
+    ☐ Gameplay
+    ☐ Save
+      ☐ Write matchsave.dat
+      ☐ Load  matchsave.dat
+    ☐ History
+      ☐ Read  matchlog.dat
+      ☐ Write matchlog.dat
+  ☐ User
+    ☐ e-mail
+    ☐ password
+    ☐ Login()
+      ☐ Load users .dat
+    ☐ Logout()
+    ☐ Register
+      ☐ Write users .dat
+    ☐ Statistics
