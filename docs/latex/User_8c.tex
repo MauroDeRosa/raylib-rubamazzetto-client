@@ -1,0 +1,131 @@
+\hypertarget{User_8c}{}\doxysection{source/\+User.c File Reference}
+\label{User_8c}\index{source/User.c@{source/User.c}}
+{\ttfamily \#include \char`\"{}User.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Config.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utils/logger.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utils/stringutils.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{User_8c_a7e9d3252ec30fe4752a88a4a3fd2e2a4}{USERS\+\_\+\+LOG\+\_\+\+PREFIX}}~\mbox{\hyperlink{logger_8h_a74416ee2437694c75a11e27a158eeb5c}{LOG\+\_\+\+COLOR\+\_\+\+YELLOW}} \char`\"{}\mbox{[}Users\mbox{]} \char`\"{} LOG\+\_\+\+COLOR\+\_\+\+RESET
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{User_8c_a49d47d77241942c154deb16d5cb77061}{User\+Username\+Check\+Length}} (char $\ast$username)
+\item 
+bool \mbox{\hyperlink{User_8c_a9c59cfc7e1c6e6ba5b6ace9c1baa31ce}{User\+Password\+Check\+Length}} (char $\ast$password)
+\item 
+size\+\_\+t \mbox{\hyperlink{User_8c_aa02a5e7e781c595eab532c6ad20cd2ca}{Users\+Count}} ()
+\item 
+bool \mbox{\hyperlink{User_8c_aed197eefe6bd8666fc7b9cd070fb1e25}{Users\+Load}} (const char $\ast$path)
+\item 
+bool \mbox{\hyperlink{User_8c_a14b717e85d071896a85cf13cafbf4a91}{Users\+Write}} (const char $\ast$path)
+\item 
+\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ \mbox{\hyperlink{User_8c_a1ab309f12101a78a2c8462e0cf8fb66d}{User\+Register}} (char $\ast$username, char $\ast$password)
+\item 
+bool \mbox{\hyperlink{User_8c_a2309c27dd38cd084ee6c6bc5aa39af17}{User\+Update}} (\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$user, char $\ast$password)
+\item 
+bool \mbox{\hyperlink{User_8c_a31ff40785efb889b9de9ac0765e22777}{User\+Delete}} (\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$user)
+\item 
+\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ \mbox{\hyperlink{User_8c_a3607afd580a49a5df5a37b536ca6eb5c}{User\+Login}} (char $\ast$username, char $\ast$password)
+\item 
+\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ \mbox{\hyperlink{User_8c_ad10f31f9f134e0ffa3af993658840010}{User\+Find}} (char $\ast$username)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ \mbox{\hyperlink{User_8c_a498b4eb303a8ac3cf12ffb0a614b0784}{users}}
+\item 
+size\+\_\+t \mbox{\hyperlink{User_8c_a88af289091495c7ab8753f2363ebd0c4}{users\+Count}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{User_8c_a7e9d3252ec30fe4752a88a4a3fd2e2a4}\label{User_8c_a7e9d3252ec30fe4752a88a4a3fd2e2a4}} 
+\index{User.c@{User.c}!USERS\_LOG\_PREFIX@{USERS\_LOG\_PREFIX}}
+\index{USERS\_LOG\_PREFIX@{USERS\_LOG\_PREFIX}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{USERS\_LOG\_PREFIX}{USERS\_LOG\_PREFIX}}
+{\footnotesize\ttfamily \#define USERS\+\_\+\+LOG\+\_\+\+PREFIX~\mbox{\hyperlink{logger_8h_a74416ee2437694c75a11e27a158eeb5c}{LOG\+\_\+\+COLOR\+\_\+\+YELLOW}} \char`\"{}\mbox{[}Users\mbox{]} \char`\"{} LOG\+\_\+\+COLOR\+\_\+\+RESET}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{User_8c_a31ff40785efb889b9de9ac0765e22777}\label{User_8c_a31ff40785efb889b9de9ac0765e22777}} 
+\index{User.c@{User.c}!UserDelete@{UserDelete}}
+\index{UserDelete@{UserDelete}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{UserDelete()}{UserDelete()}}
+{\footnotesize\ttfamily bool User\+Delete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$}]{user }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8c_ad10f31f9f134e0ffa3af993658840010}\label{User_8c_ad10f31f9f134e0ffa3af993658840010}} 
+\index{User.c@{User.c}!UserFind@{UserFind}}
+\index{UserFind@{UserFind}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{UserFind()}{UserFind()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ User\+Find (\begin{DoxyParamCaption}\item[{char $\ast$}]{username }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8c_a3607afd580a49a5df5a37b536ca6eb5c}\label{User_8c_a3607afd580a49a5df5a37b536ca6eb5c}} 
+\index{User.c@{User.c}!UserLogin@{UserLogin}}
+\index{UserLogin@{UserLogin}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{UserLogin()}{UserLogin()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ User\+Login (\begin{DoxyParamCaption}\item[{char $\ast$}]{username,  }\item[{char $\ast$}]{password }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8c_a9c59cfc7e1c6e6ba5b6ace9c1baa31ce}\label{User_8c_a9c59cfc7e1c6e6ba5b6ace9c1baa31ce}} 
+\index{User.c@{User.c}!UserPasswordCheckLength@{UserPasswordCheckLength}}
+\index{UserPasswordCheckLength@{UserPasswordCheckLength}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{UserPasswordCheckLength()}{UserPasswordCheckLength()}}
+{\footnotesize\ttfamily bool User\+Password\+Check\+Length (\begin{DoxyParamCaption}\item[{char $\ast$}]{password }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8c_a1ab309f12101a78a2c8462e0cf8fb66d}\label{User_8c_a1ab309f12101a78a2c8462e0cf8fb66d}} 
+\index{User.c@{User.c}!UserRegister@{UserRegister}}
+\index{UserRegister@{UserRegister}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{UserRegister()}{UserRegister()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ User\+Register (\begin{DoxyParamCaption}\item[{char $\ast$}]{username,  }\item[{char $\ast$}]{password }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8c_aa02a5e7e781c595eab532c6ad20cd2ca}\label{User_8c_aa02a5e7e781c595eab532c6ad20cd2ca}} 
+\index{User.c@{User.c}!UsersCount@{UsersCount}}
+\index{UsersCount@{UsersCount}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{UsersCount()}{UsersCount()}}
+{\footnotesize\ttfamily size\+\_\+t Users\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8c_aed197eefe6bd8666fc7b9cd070fb1e25}\label{User_8c_aed197eefe6bd8666fc7b9cd070fb1e25}} 
+\index{User.c@{User.c}!UsersLoad@{UsersLoad}}
+\index{UsersLoad@{UsersLoad}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{UsersLoad()}{UsersLoad()}}
+{\footnotesize\ttfamily bool Users\+Load (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8c_a14b717e85d071896a85cf13cafbf4a91}\label{User_8c_a14b717e85d071896a85cf13cafbf4a91}} 
+\index{User.c@{User.c}!UsersWrite@{UsersWrite}}
+\index{UsersWrite@{UsersWrite}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{UsersWrite()}{UsersWrite()}}
+{\footnotesize\ttfamily bool Users\+Write (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8c_a2309c27dd38cd084ee6c6bc5aa39af17}\label{User_8c_a2309c27dd38cd084ee6c6bc5aa39af17}} 
+\index{User.c@{User.c}!UserUpdate@{UserUpdate}}
+\index{UserUpdate@{UserUpdate}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{UserUpdate()}{UserUpdate()}}
+{\footnotesize\ttfamily bool User\+Update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$}]{user,  }\item[{char $\ast$}]{password }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8c_a49d47d77241942c154deb16d5cb77061}\label{User_8c_a49d47d77241942c154deb16d5cb77061}} 
+\index{User.c@{User.c}!UserUsernameCheckLength@{UserUsernameCheckLength}}
+\index{UserUsernameCheckLength@{UserUsernameCheckLength}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{UserUsernameCheckLength()}{UserUsernameCheckLength()}}
+{\footnotesize\ttfamily bool User\+Username\+Check\+Length (\begin{DoxyParamCaption}\item[{char $\ast$}]{username }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{User_8c_a498b4eb303a8ac3cf12ffb0a614b0784}\label{User_8c_a498b4eb303a8ac3cf12ffb0a614b0784}} 
+\index{User.c@{User.c}!users@{users}}
+\index{users@{users}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{users}{users}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structUser__t}{User\+\_\+t}}$\ast$ users}
+
+\mbox{\Hypertarget{User_8c_a88af289091495c7ab8753f2363ebd0c4}\label{User_8c_a88af289091495c7ab8753f2363ebd0c4}} 
+\index{User.c@{User.c}!usersCount@{usersCount}}
+\index{usersCount@{usersCount}!User.c@{User.c}}
+\doxysubsubsection{\texorpdfstring{usersCount}{usersCount}}
+{\footnotesize\ttfamily size\+\_\+t users\+Count = 0}
+

@@ -31,5 +31,29 @@
 			"void ${TM_FILENAME_BASE:default}Exit()\n{\n\tstruct ${TM_FILENAME_BASE:default}Data* $ = &_${TM_FILENAME_BASE:default}Data;\n\t\n}\n",
 		],
 		"description": "A Scene Source for my SceneManager"
+	},
+	"LogInfo": {
+		"prefix": "loginf",
+		"scope": "c",
+		"body": [
+			"Log(LOG_INFO, ${1:prefix} ${2:message}${3:, args});"
+		],
+		"description": "Log(LOG_INFO, PREFIX_MACRO \"STRING\", ...) snippet"
+	},
+	"LogWarning": {
+		"prefix": "logwar",
+		"scope": "c",
+		"body": [
+			"Log(LOG_WARNING, ${1:prefix} ${2:message}${3:, args});"
+		],
+		"description": "Log(LOG_WARNING, PREFIX_MACRO \"STRING\", ...) snippet"
+	},
+	"LogError": {
+		"prefix": "logerr",
+		"scope": "c",
+		"body": [
+			"Log(LOG_ERROR, ${1:prefix} ${2:message}${3:, args});"
+		],
+		"description": "Log(LOG_ERROR, PREFIX_MACRO \"STRING\", ...) snippet"
 	}
 }

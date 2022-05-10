@@ -1,0 +1,45 @@
+\hypertarget{User_8h_source}{}\doxysection{User.\+h}
+\label{User_8h_source}\index{include/User.h@{include/User.h}}
+\mbox{\hyperlink{User_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_USER\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_USER\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <stdbool.h>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <inttypes.h>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <limits.h>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <external/uthash/uthash.h>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#define USERS\_FILE\_PATH "{}users.dat"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define USER\_USERNAME\_MAX\_LEN 40}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define USER\_PASSWORD\_MAX\_LEN 40}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{typedef} \textcolor{keyword}{struct}}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16     \textcolor{keywordtype}{char} username[\mbox{\hyperlink{User_8h_a748946f8128b6871f43efd3d6ed1aae4}{USER\_USERNAME\_MAX\_LEN}} + 1];}
+\DoxyCodeLine{17     \textcolor{keywordtype}{char} password[\mbox{\hyperlink{User_8h_afa75791ee2e85d4dfc209aa7e12d1088}{USER\_PASSWORD\_MAX\_LEN}} + 1];}
+\DoxyCodeLine{18     UT\_hash\_handle \mbox{\hyperlink{structUser__t_a29549c5c725ba095fad3bfb88d56a53c}{hh}};}
+\DoxyCodeLine{19 \} \mbox{\hyperlink{structUser__t}{User\_t}};}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{extern} \mbox{\hyperlink{structUser__t}{User\_t}} *\mbox{\hyperlink{User_8h_a498b4eb303a8ac3cf12ffb0a614b0784}{users}};}
+\DoxyCodeLine{22 \textcolor{keyword}{extern} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{User_8h_a88af289091495c7ab8753f2363ebd0c4}{usersCount}};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keywordtype}{int} \mbox{\hyperlink{User_8h_aee8f752e35c13e89a0d308101a7ebbc9}{UsersInit}}();}
+\DoxyCodeLine{25 \textcolor{keywordtype}{bool} \mbox{\hyperlink{User_8h_aed197eefe6bd8666fc7b9cd070fb1e25}{UsersLoad}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *path);}
+\DoxyCodeLine{26 \textcolor{keywordtype}{bool} \mbox{\hyperlink{User_8h_a14b717e85d071896a85cf13cafbf4a91}{UsersWrite}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *path);}
+\DoxyCodeLine{27 \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{User_8h_aa02a5e7e781c595eab532c6ad20cd2ca}{UsersCount}}();}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \mbox{\hyperlink{structUser__t}{User\_t}} *\mbox{\hyperlink{User_8h_a1ab309f12101a78a2c8462e0cf8fb66d}{UserRegister}}(\textcolor{keywordtype}{char} *username, \textcolor{keywordtype}{char} *password);}
+\DoxyCodeLine{30 \textcolor{keywordtype}{bool} \mbox{\hyperlink{User_8h_a2309c27dd38cd084ee6c6bc5aa39af17}{UserUpdate}}(\mbox{\hyperlink{structUser__t}{User\_t}} *user, \textcolor{keywordtype}{char} *password);}
+\DoxyCodeLine{31 \textcolor{keywordtype}{bool} \mbox{\hyperlink{User_8h_a31ff40785efb889b9de9ac0765e22777}{UserDelete}}(\mbox{\hyperlink{structUser__t}{User\_t}} *user);}
+\DoxyCodeLine{32 \mbox{\hyperlink{structUser__t}{User\_t}} *\mbox{\hyperlink{User_8h_a3607afd580a49a5df5a37b536ca6eb5c}{UserLogin}}(\textcolor{keywordtype}{char} *username, \textcolor{keywordtype}{char} *password);}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keywordtype}{bool} \mbox{\hyperlink{User_8h_a49d47d77241942c154deb16d5cb77061}{UserUsernameCheckLength}}(\textcolor{keywordtype}{char}* username);}
+\DoxyCodeLine{35 \textcolor{keywordtype}{bool} \mbox{\hyperlink{User_8h_a9c59cfc7e1c6e6ba5b6ace9c1baa31ce}{UserPasswordCheckLength}}(\textcolor{keywordtype}{char}* password);}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \mbox{\hyperlink{structUser__t}{User\_t}} *\mbox{\hyperlink{User_8h_ad10f31f9f134e0ffa3af993658840010}{UserFind}}(\textcolor{keywordtype}{char} *username);}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_\_USER\_H\_\_ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

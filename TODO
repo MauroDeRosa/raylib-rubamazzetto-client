@@ -1,5 +1,5 @@
 
-Todo:
+Da implementare:
   ☐ Match
     ☐ Table
       ☐ Deck
@@ -27,3 +27,12 @@ Todo:
     ☐ Register
       ☐ Write users .dat
     ☐ Statistics
+
+Todo:
+  ☐ Refactoring users
+    ☐ Documentazione
+    ☐ Commenta i test e users.c
+  ☐ Refactoring stringutils
+    ☐ Documentazione
+  ☐ Refactoring scenemanager
+    ☐ Documentazione

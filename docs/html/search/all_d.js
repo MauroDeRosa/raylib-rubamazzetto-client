@@ -12,9 +12,9 @@ var searchData=
   ['scenemanagerend_9',['SceneManagerEnd',['../SceneManager_8h.html#ace6637952d3b25e6c190f5bff979a21b',1,'SceneManagerEnd():&#160;SceneManager.c'],['../SceneManager_8c.html#ace6637952d3b25e6c190f5bff979a21b',1,'SceneManagerEnd():&#160;SceneManager.c']]],
   ['scenemanagerinit_10',['SceneManagerInit',['../SceneManager_8h.html#a201825c571f765bf2927cdb4e27a13db',1,'SceneManagerInit():&#160;SceneManager.c'],['../SceneManager_8c.html#a201825c571f765bf2927cdb4e27a13db',1,'SceneManagerInit():&#160;SceneManager.c']]],
   ['scenemanagerloop_11',['SceneManagerLoop',['../SceneManager_8h.html#ac0dbdaa597832eddec9a82b0bc99b1bb',1,'SceneManagerLoop():&#160;SceneManager.c'],['../SceneManager_8c.html#ac0dbdaa597832eddec9a82b0bc99b1bb',1,'SceneManagerLoop():&#160;SceneManager.c']]],
-  ['scenemanagernext_12',['SceneManagerNext',['../SceneManager_8h.html#a246608ea9a91fa28c99b9ba087e18132',1,'SceneManagerNext(const char *name):&#160;SceneManager.c'],['../SceneManager_8c.html#a246608ea9a91fa28c99b9ba087e18132',1,'SceneManagerNext(const char *name):&#160;SceneManager.c']]],
-  ['scenemanagerregister_13',['SceneManagerRegister',['../SceneManager_8h.html#a7fd82ab80a5c0b2153e45da109ab4744',1,'SceneManagerRegister(const char *name, struct Scene_t *scene):&#160;SceneManager.c'],['../SceneManager_8c.html#a7fd82ab80a5c0b2153e45da109ab4744',1,'SceneManagerRegister(const char *name, struct Scene_t *scene):&#160;SceneManager.c']]],
-  ['scenemanagerstart_14',['SceneManagerStart',['../SceneManager_8h.html#a2c56496d76cf003bc892fb176d06caed',1,'SceneManagerStart(const char *firstSceneName):&#160;SceneManager.c'],['../SceneManager_8c.html#a2c56496d76cf003bc892fb176d06caed',1,'SceneManagerStart(const char *firstSceneName):&#160;SceneManager.c']]],
+  ['scenemanagernext_12',['SceneManagerNext',['../SceneManager_8c.html#a246608ea9a91fa28c99b9ba087e18132',1,'SceneManagerNext(const char *name):&#160;SceneManager.c'],['../SceneManager_8h.html#a246608ea9a91fa28c99b9ba087e18132',1,'SceneManagerNext(const char *name):&#160;SceneManager.c']]],
+  ['scenemanagerregister_13',['SceneManagerRegister',['../SceneManager_8c.html#a7fd82ab80a5c0b2153e45da109ab4744',1,'SceneManagerRegister(const char *name, struct Scene_t *scene):&#160;SceneManager.c'],['../SceneManager_8h.html#a7fd82ab80a5c0b2153e45da109ab4744',1,'SceneManagerRegister(const char *name, struct Scene_t *scene):&#160;SceneManager.c']]],
+  ['scenemanagerstart_14',['SceneManagerStart',['../SceneManager_8c.html#a2c56496d76cf003bc892fb176d06caed',1,'SceneManagerStart(const char *firstSceneName):&#160;SceneManager.c'],['../SceneManager_8h.html#a2c56496d76cf003bc892fb176d06caed',1,'SceneManagerStart(const char *firstSceneName):&#160;SceneManager.c']]],
   ['scenemanagertime_15',['SceneManagerTime',['../SceneManager_8c.html#ad510fb497ec0f663cae2df0a48019279',1,'SceneManagerTime():&#160;SceneManager.c'],['../SceneManager_8h.html#ad510fb497ec0f663cae2df0a48019279',1,'SceneManagerTime():&#160;SceneManager.c']]],
   ['scenes_2ec_16',['Scenes.c',['../Scenes_8c.html',1,'']]],
   ['scenes_2eh_17',['Scenes.h',['../Scenes_8h.html',1,'']]],
@@ -22,5 +22,9 @@ var searchData=
   ['screen_5fwidth_19',['SCREEN_WIDTH',['../Config_8h.html#a2cd109632a6dcccaa80b43561b1ab700',1,'Config.h']]],
   ['sound_20',['Sound',['../unionResource__u.html#a57721eb85e16a3fbc8a0744c26dc25ab',1,'Resource_u']]],
   ['start_21',['Start',['../structScene__t.html#aff1f6aadfaa367d820dc523687c8955b',1,'Scene_t::Start()'],['../structSceneManager__t.html#a0ec7d564b6bac0ae8901c70fd9c651d2',1,'SceneManager_t::Start()']]],
-  ['starttime_22',['startTime',['../structScene__t.html#a3cca5e7f5e39527d319ba4a9db747919',1,'Scene_t']]]
+  ['starttime_22',['startTime',['../structScene__t.html#a3cca5e7f5e39527d319ba4a9db747919',1,'Scene_t']]],
+  ['stringlength_23',['StringLength',['../stringutils_8h.html#a920e746cc2841287de873d8408ebe96c',1,'stringutils.h']]],
+  ['stringlimit_24',['StringLimit',['../stringutils_8h.html#a035c418bd51073b027b8206d17366dd9',1,'StringLimit(char *string, size_t maxlen):&#160;stringutils.c'],['../stringutils_8c.html#a035c418bd51073b027b8206d17366dd9',1,'StringLimit(char *string, size_t maxlen):&#160;stringutils.c']]],
+  ['stringutils_2ec_25',['stringutils.c',['../stringutils_8c.html',1,'']]],
+  ['stringutils_2eh_26',['stringutils.h',['../stringutils_8h.html',1,'']]]
 ];

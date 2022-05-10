@@ -1,15 +1,14 @@
 var searchData=
 [
-  ['scenemanagerend_0',['SceneManagerEnd',['../SceneManager_8c.html#ace6637952d3b25e6c190f5bff979a21b',1,'SceneManagerEnd():&#160;SceneManager.c'],['../SceneManager_8h.html#ace6637952d3b25e6c190f5bff979a21b',1,'SceneManagerEnd():&#160;SceneManager.c']]],
-  ['scenemanagerinit_1',['SceneManagerInit',['../SceneManager_8h.html#a201825c571f765bf2927cdb4e27a13db',1,'SceneManagerInit():&#160;SceneManager.c'],['../SceneManager_8c.html#a201825c571f765bf2927cdb4e27a13db',1,'SceneManagerInit():&#160;SceneManager.c']]],
-  ['scenemanagerloop_2',['SceneManagerLoop',['../SceneManager_8h.html#ac0dbdaa597832eddec9a82b0bc99b1bb',1,'SceneManagerLoop():&#160;SceneManager.c'],['../SceneManager_8c.html#ac0dbdaa597832eddec9a82b0bc99b1bb',1,'SceneManagerLoop():&#160;SceneManager.c']]],
-  ['scenemanagernext_3',['SceneManagerNext',['../SceneManager_8h.html#a246608ea9a91fa28c99b9ba087e18132',1,'SceneManagerNext(const char *name):&#160;SceneManager.c'],['../SceneManager_8c.html#a246608ea9a91fa28c99b9ba087e18132',1,'SceneManagerNext(const char *name):&#160;SceneManager.c']]],
-  ['scenemanagerregister_4',['SceneManagerRegister',['../SceneManager_8c.html#a7fd82ab80a5c0b2153e45da109ab4744',1,'SceneManagerRegister(const char *name, struct Scene_t *scene):&#160;SceneManager.c'],['../SceneManager_8h.html#a7fd82ab80a5c0b2153e45da109ab4744',1,'SceneManagerRegister(const char *name, struct Scene_t *scene):&#160;SceneManager.c']]],
-  ['scenemanagerstart_5',['SceneManagerStart',['../SceneManager_8h.html#a2c56496d76cf003bc892fb176d06caed',1,'SceneManagerStart(const char *firstSceneName):&#160;SceneManager.c'],['../SceneManager_8c.html#a2c56496d76cf003bc892fb176d06caed',1,'SceneManagerStart(const char *firstSceneName):&#160;SceneManager.c']]],
-  ['scenemanagertime_6',['SceneManagerTime',['../SceneManager_8h.html#ad510fb497ec0f663cae2df0a48019279',1,'SceneManagerTime():&#160;SceneManager.c'],['../SceneManager_8c.html#ad510fb497ec0f663cae2df0a48019279',1,'SceneManagerTime():&#160;SceneManager.c']]],
-  ['scenesplashscreenexit_7',['SceneSplashScreenExit',['../SceneSplashScreen_8c.html#a7e98fc2b07145eacd5b1c4ff1a0b8849',1,'SceneSplashScreen.c']]],
-  ['scenesplashscreenfixedupdate_8',['SceneSplashScreenFixedUpdate',['../SceneSplashScreen_8c.html#a73c19ea62d8fe97cbd4cdadad7b5ee61',1,'SceneSplashScreen.c']]],
-  ['scenesplashscreenrender_9',['SceneSplashScreenRender',['../SceneSplashScreen_8c.html#a4ada333b57934b2d249f46a65f8ed052',1,'SceneSplashScreen.c']]],
-  ['scenesplashscreenstart_10',['SceneSplashScreenStart',['../SceneSplashScreen_8c.html#a575b4fdfbe8033619bb2fa7018625961',1,'SceneSplashScreen.c']]],
-  ['scenesplashscreenupdate_11',['SceneSplashScreenUpdate',['../SceneSplashScreen_8c.html#aa1aff5e9e622ca0fe5b919e07cc92baa',1,'SceneSplashScreen.c']]]
+  ['userdelete_0',['UserDelete',['../User_8c.html#a31ff40785efb889b9de9ac0765e22777',1,'UserDelete(User_t *user):&#160;User.c'],['../User_8h.html#a31ff40785efb889b9de9ac0765e22777',1,'UserDelete(User_t *user):&#160;User.c']]],
+  ['userfind_1',['UserFind',['../User_8h.html#ad10f31f9f134e0ffa3af993658840010',1,'UserFind(char *username):&#160;User.c'],['../User_8c.html#ad10f31f9f134e0ffa3af993658840010',1,'UserFind(char *username):&#160;User.c']]],
+  ['userlogin_2',['UserLogin',['../User_8h.html#a3607afd580a49a5df5a37b536ca6eb5c',1,'UserLogin(char *username, char *password):&#160;User.c'],['../User_8c.html#a3607afd580a49a5df5a37b536ca6eb5c',1,'UserLogin(char *username, char *password):&#160;User.c']]],
+  ['userpasswordchecklength_3',['UserPasswordCheckLength',['../User_8h.html#a9c59cfc7e1c6e6ba5b6ace9c1baa31ce',1,'UserPasswordCheckLength(char *password):&#160;User.c'],['../User_8c.html#a9c59cfc7e1c6e6ba5b6ace9c1baa31ce',1,'UserPasswordCheckLength(char *password):&#160;User.c']]],
+  ['userregister_4',['UserRegister',['../User_8h.html#a1ab309f12101a78a2c8462e0cf8fb66d',1,'UserRegister(char *username, char *password):&#160;User.c'],['../User_8c.html#a1ab309f12101a78a2c8462e0cf8fb66d',1,'UserRegister(char *username, char *password):&#160;User.c']]],
+  ['userscount_5',['UsersCount',['../User_8h.html#aa02a5e7e781c595eab532c6ad20cd2ca',1,'UsersCount():&#160;User.c'],['../User_8c.html#aa02a5e7e781c595eab532c6ad20cd2ca',1,'UsersCount():&#160;User.c']]],
+  ['usersinit_6',['UsersInit',['../User_8h.html#aee8f752e35c13e89a0d308101a7ebbc9',1,'User.h']]],
+  ['usersload_7',['UsersLoad',['../User_8h.html#aed197eefe6bd8666fc7b9cd070fb1e25',1,'UsersLoad(const char *path):&#160;User.c'],['../User_8c.html#aed197eefe6bd8666fc7b9cd070fb1e25',1,'UsersLoad(const char *path):&#160;User.c']]],
+  ['userswrite_8',['UsersWrite',['../User_8h.html#a14b717e85d071896a85cf13cafbf4a91',1,'UsersWrite(const char *path):&#160;User.c'],['../User_8c.html#a14b717e85d071896a85cf13cafbf4a91',1,'UsersWrite(const char *path):&#160;User.c']]],
+  ['userupdate_9',['UserUpdate',['../User_8h.html#a2309c27dd38cd084ee6c6bc5aa39af17',1,'UserUpdate(User_t *user, char *password):&#160;User.c'],['../User_8c.html#a2309c27dd38cd084ee6c6bc5aa39af17',1,'UserUpdate(User_t *user, char *password):&#160;User.c']]],
+  ['userusernamechecklength_10',['UserUsernameCheckLength',['../User_8h.html#a49d47d77241942c154deb16d5cb77061',1,'UserUsernameCheckLength(char *username):&#160;User.c'],['../User_8c.html#a49d47d77241942c154deb16d5cb77061',1,'UserUsernameCheckLength(char *username):&#160;User.c']]]
 ];

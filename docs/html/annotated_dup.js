@@ -5,5 +5,6 @@ var annotated_dup =
     [ "ResourceManager_t", "structResourceManager__t.html", "structResourceManager__t" ],
     [ "Scene_t", "structScene__t.html", "structScene__t" ],
     [ "SceneManager_t", "structSceneManager__t.html", "structSceneManager__t" ],
-    [ "SceneManagerAttribute_t", "structSceneManagerAttribute__t.html", "structSceneManagerAttribute__t" ]
+    [ "SceneManagerAttribute_t", "structSceneManagerAttribute__t.html", "structSceneManagerAttribute__t" ],
+    [ "User_t", "structUser__t.html", "structUser__t" ]
 ];

@@ -1,0 +1,109 @@
+.TH "source/User.c" 3 "Tue May 10 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+source/User.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'User\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include 'Config\&.h'\fP
+.br
+\fC#include 'utils/logger\&.h'\fP
+.br
+\fC#include 'utils/stringutils\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUSERS_LOG_PREFIX\fP   \fBLOG_COLOR_YELLOW\fP '[Users] ' LOG_COLOR_RESET"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBUserUsernameCheckLength\fP (char *username)"
+.br
+.ti -1c
+.RI "bool \fBUserPasswordCheckLength\fP (char *password)"
+.br
+.ti -1c
+.RI "size_t \fBUsersCount\fP ()"
+.br
+.ti -1c
+.RI "bool \fBUsersLoad\fP (const char *path)"
+.br
+.ti -1c
+.RI "bool \fBUsersWrite\fP (const char *path)"
+.br
+.ti -1c
+.RI "\fBUser_t\fP * \fBUserRegister\fP (char *username, char *password)"
+.br
+.ti -1c
+.RI "bool \fBUserUpdate\fP (\fBUser_t\fP *user, char *password)"
+.br
+.ti -1c
+.RI "bool \fBUserDelete\fP (\fBUser_t\fP *user)"
+.br
+.ti -1c
+.RI "\fBUser_t\fP * \fBUserLogin\fP (char *username, char *password)"
+.br
+.ti -1c
+.RI "\fBUser_t\fP * \fBUserFind\fP (char *username)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBUser_t\fP * \fBusers\fP"
+.br
+.ti -1c
+.RI "size_t \fBusersCount\fP = 0"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define USERS_LOG_PREFIX   \fBLOG_COLOR_YELLOW\fP '[Users] ' LOG_COLOR_RESET"
+
+.SH "Function Documentation"
+.PP 
+.SS "bool UserDelete (\fBUser_t\fP * user)"
+
+.SS "\fBUser_t\fP * UserFind (char * username)"
+
+.SS "\fBUser_t\fP * UserLogin (char * username, char * password)"
+
+.SS "bool UserPasswordCheckLength (char * password)"
+
+.SS "\fBUser_t\fP * UserRegister (char * username, char * password)"
+
+.SS "size_t UsersCount ()"
+
+.SS "bool UsersLoad (const char * path)"
+
+.SS "bool UsersWrite (const char * path)"
+
+.SS "bool UserUpdate (\fBUser_t\fP * user, char * password)"
+
+.SS "bool UserUsernameCheckLength (char * username)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "\fBUser_t\fP* users"
+
+.SS "size_t usersCount = 0"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

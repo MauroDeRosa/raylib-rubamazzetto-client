@@ -1,5 +1,26 @@
 var searchData=
 [
   ['unload_0',['Unload',['../structResourceManager__t.html#a03eef65f3197b491f7bdcca1174ae422',1,'ResourceManager_t']]],
-  ['update_1',['Update',['../structScene__t.html#abe190aad531d292437ec94b43ead26b3',1,'Scene_t']]]
+  ['update_1',['Update',['../structScene__t.html#abe190aad531d292437ec94b43ead26b3',1,'Scene_t']]],
+  ['user_2ec_2',['User.c',['../User_8c.html',1,'']]],
+  ['user_2eh_3',['User.h',['../User_8h.html',1,'']]],
+  ['user_5fpassword_5fmax_5flen_4',['USER_PASSWORD_MAX_LEN',['../User_8h.html#afa75791ee2e85d4dfc209aa7e12d1088',1,'User.h']]],
+  ['user_5ft_5',['User_t',['../structUser__t.html',1,'']]],
+  ['user_5fusername_5fmax_5flen_6',['USER_USERNAME_MAX_LEN',['../User_8h.html#a748946f8128b6871f43efd3d6ed1aae4',1,'User.h']]],
+  ['userdelete_7',['UserDelete',['../User_8h.html#a31ff40785efb889b9de9ac0765e22777',1,'UserDelete(User_t *user):&#160;User.c'],['../User_8c.html#a31ff40785efb889b9de9ac0765e22777',1,'UserDelete(User_t *user):&#160;User.c']]],
+  ['userfind_8',['UserFind',['../User_8h.html#ad10f31f9f134e0ffa3af993658840010',1,'UserFind(char *username):&#160;User.c'],['../User_8c.html#ad10f31f9f134e0ffa3af993658840010',1,'UserFind(char *username):&#160;User.c']]],
+  ['userlogin_9',['UserLogin',['../User_8h.html#a3607afd580a49a5df5a37b536ca6eb5c',1,'UserLogin(char *username, char *password):&#160;User.c'],['../User_8c.html#a3607afd580a49a5df5a37b536ca6eb5c',1,'UserLogin(char *username, char *password):&#160;User.c']]],
+  ['username_10',['username',['../structUser__t.html#a5dd5998f0165aa60432d200c75a5b525',1,'User_t']]],
+  ['userpasswordchecklength_11',['UserPasswordCheckLength',['../User_8h.html#a9c59cfc7e1c6e6ba5b6ace9c1baa31ce',1,'UserPasswordCheckLength(char *password):&#160;User.c'],['../User_8c.html#a9c59cfc7e1c6e6ba5b6ace9c1baa31ce',1,'UserPasswordCheckLength(char *password):&#160;User.c']]],
+  ['userregister_12',['UserRegister',['../User_8c.html#a1ab309f12101a78a2c8462e0cf8fb66d',1,'UserRegister(char *username, char *password):&#160;User.c'],['../User_8h.html#a1ab309f12101a78a2c8462e0cf8fb66d',1,'UserRegister(char *username, char *password):&#160;User.c']]],
+  ['users_13',['users',['../User_8h.html#a498b4eb303a8ac3cf12ffb0a614b0784',1,'users():&#160;User.c'],['../User_8c.html#a498b4eb303a8ac3cf12ffb0a614b0784',1,'users():&#160;User.c']]],
+  ['users_5ffile_5fpath_14',['USERS_FILE_PATH',['../User_8h.html#a2afd731b1b8528a3ccfb40a5657bd1c8',1,'User.h']]],
+  ['users_5flog_5fprefix_15',['USERS_LOG_PREFIX',['../User_8c.html#a7e9d3252ec30fe4752a88a4a3fd2e2a4',1,'User.c']]],
+  ['userscount_16',['UsersCount',['../User_8h.html#aa02a5e7e781c595eab532c6ad20cd2ca',1,'UsersCount():&#160;User.c'],['../User_8c.html#aa02a5e7e781c595eab532c6ad20cd2ca',1,'UsersCount():&#160;User.c']]],
+  ['userscount_17',['usersCount',['../User_8h.html#a88af289091495c7ab8753f2363ebd0c4',1,'usersCount():&#160;User.c'],['../User_8c.html#a88af289091495c7ab8753f2363ebd0c4',1,'usersCount():&#160;User.c']]],
+  ['usersinit_18',['UsersInit',['../User_8h.html#aee8f752e35c13e89a0d308101a7ebbc9',1,'User.h']]],
+  ['usersload_19',['UsersLoad',['../User_8h.html#aed197eefe6bd8666fc7b9cd070fb1e25',1,'UsersLoad(const char *path):&#160;User.c'],['../User_8c.html#aed197eefe6bd8666fc7b9cd070fb1e25',1,'UsersLoad(const char *path):&#160;User.c']]],
+  ['userswrite_20',['UsersWrite',['../User_8h.html#a14b717e85d071896a85cf13cafbf4a91',1,'UsersWrite(const char *path):&#160;User.c'],['../User_8c.html#a14b717e85d071896a85cf13cafbf4a91',1,'UsersWrite(const char *path):&#160;User.c']]],
+  ['userupdate_21',['UserUpdate',['../User_8h.html#a2309c27dd38cd084ee6c6bc5aa39af17',1,'UserUpdate(User_t *user, char *password):&#160;User.c'],['../User_8c.html#a2309c27dd38cd084ee6c6bc5aa39af17',1,'UserUpdate(User_t *user, char *password):&#160;User.c']]],
+  ['userusernamechecklength_22',['UserUsernameCheckLength',['../User_8h.html#a49d47d77241942c154deb16d5cb77061',1,'UserUsernameCheckLength(char *username):&#160;User.c'],['../User_8c.html#a49d47d77241942c154deb16d5cb77061',1,'UserUsernameCheckLength(char *username):&#160;User.c']]]
 ];

@@ -2,6 +2,7 @@
 
 #include <stdarg.h>
 #include <time.h>
+#include <stdio.h>
 #include <raylib.h>
 
 void Log(int msgType, const char *text, ...)

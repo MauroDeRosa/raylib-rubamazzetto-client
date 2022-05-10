@@ -1,8 +1,7 @@
 #ifndef __LOGGER_H__
 #define __LOGGER_H__
 
-#include <stdio.h>
-#include <raylib.h>
+#include <raylib.h> // required for LOG_INFO, LOG_WARNING, LOG_ERROR, LOG_DEBUG 
 
 // #define LOG_STYLE_INDENTED 
 #define LOG_STYLE_BLANK_LINE 
