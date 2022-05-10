@@ -1,0 +1,158 @@
+\hypertarget{User_8h}{}\doxysection{include/\+User.h File Reference}
+\label{User_8h}\index{include/User.h@{include/User.h}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$inttypes.\+h$>$}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$external/uthash/uthash.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structUser__t}{User\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{User_8h_a2afd731b1b8528a3ccfb40a5657bd1c8}{USERS\+\_\+\+FILE\+\_\+\+PATH}}~\char`\"{}users.\+dat\char`\"{}
+\item 
+\#define \mbox{\hyperlink{User_8h_a748946f8128b6871f43efd3d6ed1aae4}{USER\+\_\+\+USERNAME\+\_\+\+MAX\+\_\+\+LEN}}~40
+\item 
+\#define \mbox{\hyperlink{User_8h_afa75791ee2e85d4dfc209aa7e12d1088}{USER\+\_\+\+PASSWORD\+\_\+\+MAX\+\_\+\+LEN}}~40
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{User_8h_aee8f752e35c13e89a0d308101a7ebbc9}{Users\+Init}} ()
+\item 
+bool \mbox{\hyperlink{User_8h_aed197eefe6bd8666fc7b9cd070fb1e25}{Users\+Load}} (const char $\ast$path)
+\item 
+bool \mbox{\hyperlink{User_8h_a14b717e85d071896a85cf13cafbf4a91}{Users\+Write}} (const char $\ast$path)
+\item 
+size\+\_\+t \mbox{\hyperlink{User_8h_aa02a5e7e781c595eab532c6ad20cd2ca}{Users\+Count}} ()
+\item 
+\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ \mbox{\hyperlink{User_8h_a1ab309f12101a78a2c8462e0cf8fb66d}{User\+Register}} (char $\ast$username, char $\ast$password)
+\item 
+bool \mbox{\hyperlink{User_8h_a2309c27dd38cd084ee6c6bc5aa39af17}{User\+Update}} (\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$user, char $\ast$password)
+\item 
+bool \mbox{\hyperlink{User_8h_a31ff40785efb889b9de9ac0765e22777}{User\+Delete}} (\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$user)
+\item 
+\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ \mbox{\hyperlink{User_8h_a3607afd580a49a5df5a37b536ca6eb5c}{User\+Login}} (char $\ast$username, char $\ast$password)
+\item 
+bool \mbox{\hyperlink{User_8h_a49d47d77241942c154deb16d5cb77061}{User\+Username\+Check\+Length}} (char $\ast$username)
+\item 
+bool \mbox{\hyperlink{User_8h_a9c59cfc7e1c6e6ba5b6ace9c1baa31ce}{User\+Password\+Check\+Length}} (char $\ast$password)
+\item 
+\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ \mbox{\hyperlink{User_8h_ad10f31f9f134e0ffa3af993658840010}{User\+Find}} (char $\ast$username)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ \mbox{\hyperlink{User_8h_a498b4eb303a8ac3cf12ffb0a614b0784}{users}}
+\item 
+size\+\_\+t \mbox{\hyperlink{User_8h_a88af289091495c7ab8753f2363ebd0c4}{users\+Count}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{User_8h_afa75791ee2e85d4dfc209aa7e12d1088}\label{User_8h_afa75791ee2e85d4dfc209aa7e12d1088}} 
+\index{User.h@{User.h}!USER\_PASSWORD\_MAX\_LEN@{USER\_PASSWORD\_MAX\_LEN}}
+\index{USER\_PASSWORD\_MAX\_LEN@{USER\_PASSWORD\_MAX\_LEN}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{USER\_PASSWORD\_MAX\_LEN}{USER\_PASSWORD\_MAX\_LEN}}
+{\footnotesize\ttfamily \#define USER\+\_\+\+PASSWORD\+\_\+\+MAX\+\_\+\+LEN~40}
+
+\mbox{\Hypertarget{User_8h_a748946f8128b6871f43efd3d6ed1aae4}\label{User_8h_a748946f8128b6871f43efd3d6ed1aae4}} 
+\index{User.h@{User.h}!USER\_USERNAME\_MAX\_LEN@{USER\_USERNAME\_MAX\_LEN}}
+\index{USER\_USERNAME\_MAX\_LEN@{USER\_USERNAME\_MAX\_LEN}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{USER\_USERNAME\_MAX\_LEN}{USER\_USERNAME\_MAX\_LEN}}
+{\footnotesize\ttfamily \#define USER\+\_\+\+USERNAME\+\_\+\+MAX\+\_\+\+LEN~40}
+
+\mbox{\Hypertarget{User_8h_a2afd731b1b8528a3ccfb40a5657bd1c8}\label{User_8h_a2afd731b1b8528a3ccfb40a5657bd1c8}} 
+\index{User.h@{User.h}!USERS\_FILE\_PATH@{USERS\_FILE\_PATH}}
+\index{USERS\_FILE\_PATH@{USERS\_FILE\_PATH}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{USERS\_FILE\_PATH}{USERS\_FILE\_PATH}}
+{\footnotesize\ttfamily \#define USERS\+\_\+\+FILE\+\_\+\+PATH~\char`\"{}users.\+dat\char`\"{}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{User_8h_a31ff40785efb889b9de9ac0765e22777}\label{User_8h_a31ff40785efb889b9de9ac0765e22777}} 
+\index{User.h@{User.h}!UserDelete@{UserDelete}}
+\index{UserDelete@{UserDelete}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UserDelete()}{UserDelete()}}
+{\footnotesize\ttfamily bool User\+Delete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$}]{user }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8h_ad10f31f9f134e0ffa3af993658840010}\label{User_8h_ad10f31f9f134e0ffa3af993658840010}} 
+\index{User.h@{User.h}!UserFind@{UserFind}}
+\index{UserFind@{UserFind}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UserFind()}{UserFind()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ User\+Find (\begin{DoxyParamCaption}\item[{char $\ast$}]{username }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8h_a3607afd580a49a5df5a37b536ca6eb5c}\label{User_8h_a3607afd580a49a5df5a37b536ca6eb5c}} 
+\index{User.h@{User.h}!UserLogin@{UserLogin}}
+\index{UserLogin@{UserLogin}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UserLogin()}{UserLogin()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ User\+Login (\begin{DoxyParamCaption}\item[{char $\ast$}]{username,  }\item[{char $\ast$}]{password }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8h_a9c59cfc7e1c6e6ba5b6ace9c1baa31ce}\label{User_8h_a9c59cfc7e1c6e6ba5b6ace9c1baa31ce}} 
+\index{User.h@{User.h}!UserPasswordCheckLength@{UserPasswordCheckLength}}
+\index{UserPasswordCheckLength@{UserPasswordCheckLength}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UserPasswordCheckLength()}{UserPasswordCheckLength()}}
+{\footnotesize\ttfamily bool User\+Password\+Check\+Length (\begin{DoxyParamCaption}\item[{char $\ast$}]{password }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8h_a1ab309f12101a78a2c8462e0cf8fb66d}\label{User_8h_a1ab309f12101a78a2c8462e0cf8fb66d}} 
+\index{User.h@{User.h}!UserRegister@{UserRegister}}
+\index{UserRegister@{UserRegister}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UserRegister()}{UserRegister()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$ User\+Register (\begin{DoxyParamCaption}\item[{char $\ast$}]{username,  }\item[{char $\ast$}]{password }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8h_aa02a5e7e781c595eab532c6ad20cd2ca}\label{User_8h_aa02a5e7e781c595eab532c6ad20cd2ca}} 
+\index{User.h@{User.h}!UsersCount@{UsersCount}}
+\index{UsersCount@{UsersCount}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UsersCount()}{UsersCount()}}
+{\footnotesize\ttfamily size\+\_\+t Users\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8h_aee8f752e35c13e89a0d308101a7ebbc9}\label{User_8h_aee8f752e35c13e89a0d308101a7ebbc9}} 
+\index{User.h@{User.h}!UsersInit@{UsersInit}}
+\index{UsersInit@{UsersInit}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UsersInit()}{UsersInit()}}
+{\footnotesize\ttfamily int Users\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8h_aed197eefe6bd8666fc7b9cd070fb1e25}\label{User_8h_aed197eefe6bd8666fc7b9cd070fb1e25}} 
+\index{User.h@{User.h}!UsersLoad@{UsersLoad}}
+\index{UsersLoad@{UsersLoad}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UsersLoad()}{UsersLoad()}}
+{\footnotesize\ttfamily bool Users\+Load (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8h_a14b717e85d071896a85cf13cafbf4a91}\label{User_8h_a14b717e85d071896a85cf13cafbf4a91}} 
+\index{User.h@{User.h}!UsersWrite@{UsersWrite}}
+\index{UsersWrite@{UsersWrite}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UsersWrite()}{UsersWrite()}}
+{\footnotesize\ttfamily bool Users\+Write (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8h_a2309c27dd38cd084ee6c6bc5aa39af17}\label{User_8h_a2309c27dd38cd084ee6c6bc5aa39af17}} 
+\index{User.h@{User.h}!UserUpdate@{UserUpdate}}
+\index{UserUpdate@{UserUpdate}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UserUpdate()}{UserUpdate()}}
+{\footnotesize\ttfamily bool User\+Update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structUser__t}{User\+\_\+t}} $\ast$}]{user,  }\item[{char $\ast$}]{password }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{User_8h_a49d47d77241942c154deb16d5cb77061}\label{User_8h_a49d47d77241942c154deb16d5cb77061}} 
+\index{User.h@{User.h}!UserUsernameCheckLength@{UserUsernameCheckLength}}
+\index{UserUsernameCheckLength@{UserUsernameCheckLength}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{UserUsernameCheckLength()}{UserUsernameCheckLength()}}
+{\footnotesize\ttfamily bool User\+Username\+Check\+Length (\begin{DoxyParamCaption}\item[{char $\ast$}]{username }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{User_8h_a498b4eb303a8ac3cf12ffb0a614b0784}\label{User_8h_a498b4eb303a8ac3cf12ffb0a614b0784}} 
+\index{User.h@{User.h}!users@{users}}
+\index{users@{users}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{users}{users}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structUser__t}{User\+\_\+t}}$\ast$ users\hspace{0.3cm}{\ttfamily [extern]}}
+
+\mbox{\Hypertarget{User_8h_a88af289091495c7ab8753f2363ebd0c4}\label{User_8h_a88af289091495c7ab8753f2363ebd0c4}} 
+\index{User.h@{User.h}!usersCount@{usersCount}}
+\index{usersCount@{usersCount}!User.h@{User.h}}
+\doxysubsubsection{\texorpdfstring{usersCount}{usersCount}}
+{\footnotesize\ttfamily size\+\_\+t users\+Count\hspace{0.3cm}{\ttfamily [extern]}}
+

@@ -1,0 +1,127 @@
+.TH "include/User.h" 3 "Tue May 10 2022" "Ruba Mazzetto" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/User.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <inttypes\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include <external/uthash/uthash\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBUser_t\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUSERS_FILE_PATH\fP   'users\&.dat'"
+.br
+.ti -1c
+.RI "#define \fBUSER_USERNAME_MAX_LEN\fP   40"
+.br
+.ti -1c
+.RI "#define \fBUSER_PASSWORD_MAX_LEN\fP   40"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBUsersInit\fP ()"
+.br
+.ti -1c
+.RI "bool \fBUsersLoad\fP (const char *path)"
+.br
+.ti -1c
+.RI "bool \fBUsersWrite\fP (const char *path)"
+.br
+.ti -1c
+.RI "size_t \fBUsersCount\fP ()"
+.br
+.ti -1c
+.RI "\fBUser_t\fP * \fBUserRegister\fP (char *username, char *password)"
+.br
+.ti -1c
+.RI "bool \fBUserUpdate\fP (\fBUser_t\fP *user, char *password)"
+.br
+.ti -1c
+.RI "bool \fBUserDelete\fP (\fBUser_t\fP *user)"
+.br
+.ti -1c
+.RI "\fBUser_t\fP * \fBUserLogin\fP (char *username, char *password)"
+.br
+.ti -1c
+.RI "bool \fBUserUsernameCheckLength\fP (char *username)"
+.br
+.ti -1c
+.RI "bool \fBUserPasswordCheckLength\fP (char *password)"
+.br
+.ti -1c
+.RI "\fBUser_t\fP * \fBUserFind\fP (char *username)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBUser_t\fP * \fBusers\fP"
+.br
+.ti -1c
+.RI "size_t \fBusersCount\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define USER_PASSWORD_MAX_LEN   40"
+
+.SS "#define USER_USERNAME_MAX_LEN   40"
+
+.SS "#define USERS_FILE_PATH   'users\&.dat'"
+
+.SH "Function Documentation"
+.PP 
+.SS "bool UserDelete (\fBUser_t\fP * user)"
+
+.SS "\fBUser_t\fP * UserFind (char * username)"
+
+.SS "\fBUser_t\fP * UserLogin (char * username, char * password)"
+
+.SS "bool UserPasswordCheckLength (char * password)"
+
+.SS "\fBUser_t\fP * UserRegister (char * username, char * password)"
+
+.SS "size_t UsersCount ()"
+
+.SS "int UsersInit ()"
+
+.SS "bool UsersLoad (const char * path)"
+
+.SS "bool UsersWrite (const char * path)"
+
+.SS "bool UserUpdate (\fBUser_t\fP * user, char * password)"
+
+.SS "bool UserUsernameCheckLength (char * username)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "\fBUser_t\fP* users\fC [extern]\fP"
+
+.SS "size_t usersCount\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Ruba Mazzetto from the source code\&.

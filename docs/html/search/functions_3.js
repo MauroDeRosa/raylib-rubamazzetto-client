@@ -1,10 +1,12 @@
 var searchData=
 [
-  ['scenemanagerend_0',['SceneManagerEnd',['../SceneManager_8h.html#ace6637952d3b25e6c190f5bff979a21b',1,'SceneManagerEnd():&#160;SceneManager.c'],['../SceneManager_8c.html#ace6637952d3b25e6c190f5bff979a21b',1,'SceneManagerEnd():&#160;SceneManager.c']]],
+  ['scenemanagerend_0',['SceneManagerEnd',['../SceneManager_8c.html#ace6637952d3b25e6c190f5bff979a21b',1,'SceneManagerEnd():&#160;SceneManager.c'],['../SceneManager_8h.html#ace6637952d3b25e6c190f5bff979a21b',1,'SceneManagerEnd():&#160;SceneManager.c']]],
   ['scenemanagerinit_1',['SceneManagerInit',['../SceneManager_8h.html#a201825c571f765bf2927cdb4e27a13db',1,'SceneManagerInit():&#160;SceneManager.c'],['../SceneManager_8c.html#a201825c571f765bf2927cdb4e27a13db',1,'SceneManagerInit():&#160;SceneManager.c']]],
   ['scenemanagerloop_2',['SceneManagerLoop',['../SceneManager_8h.html#ac0dbdaa597832eddec9a82b0bc99b1bb',1,'SceneManagerLoop():&#160;SceneManager.c'],['../SceneManager_8c.html#ac0dbdaa597832eddec9a82b0bc99b1bb',1,'SceneManagerLoop():&#160;SceneManager.c']]],
   ['scenemanagernext_3',['SceneManagerNext',['../SceneManager_8h.html#a246608ea9a91fa28c99b9ba087e18132',1,'SceneManagerNext(const char *name):&#160;SceneManager.c'],['../SceneManager_8c.html#a246608ea9a91fa28c99b9ba087e18132',1,'SceneManagerNext(const char *name):&#160;SceneManager.c']]],
   ['scenemanagerregister_4',['SceneManagerRegister',['../SceneManager_8h.html#a7fd82ab80a5c0b2153e45da109ab4744',1,'SceneManagerRegister(const char *name, struct Scene_t *scene):&#160;SceneManager.c'],['../SceneManager_8c.html#a7fd82ab80a5c0b2153e45da109ab4744',1,'SceneManagerRegister(const char *name, struct Scene_t *scene):&#160;SceneManager.c']]],
   ['scenemanagerstart_5',['SceneManagerStart',['../SceneManager_8h.html#a2c56496d76cf003bc892fb176d06caed',1,'SceneManagerStart(const char *firstSceneName):&#160;SceneManager.c'],['../SceneManager_8c.html#a2c56496d76cf003bc892fb176d06caed',1,'SceneManagerStart(const char *firstSceneName):&#160;SceneManager.c']]],
-  ['scenemanagertime_6',['SceneManagerTime',['../SceneManager_8h.html#ad510fb497ec0f663cae2df0a48019279',1,'SceneManagerTime():&#160;SceneManager.c'],['../SceneManager_8c.html#ad510fb497ec0f663cae2df0a48019279',1,'SceneManagerTime():&#160;SceneManager.c']]]
+  ['scenemanagertime_6',['SceneManagerTime',['../SceneManager_8h.html#ad510fb497ec0f663cae2df0a48019279',1,'SceneManagerTime():&#160;SceneManager.c'],['../SceneManager_8c.html#ad510fb497ec0f663cae2df0a48019279',1,'SceneManagerTime():&#160;SceneManager.c']]],
+  ['stringlength_7',['StringLength',['../stringutils_8h.html#a920e746cc2841287de873d8408ebe96c',1,'stringutils.h']]],
+  ['stringlimit_8',['StringLimit',['../stringutils_8h.html#a035c418bd51073b027b8206d17366dd9',1,'StringLimit(char *string, size_t maxlen):&#160;stringutils.c'],['../stringutils_8c.html#a035c418bd51073b027b8206d17366dd9',1,'StringLimit(char *string, size_t maxlen):&#160;stringutils.c']]]
 ];
