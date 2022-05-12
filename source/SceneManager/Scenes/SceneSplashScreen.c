@@ -1,7 +1,7 @@
 #include "SceneManager/Scenes/SceneSplashScreen.h"
-#include "card.h"
 #include "external/easings.h"
 #include <raymath.h>
+#include "gui/gui.h"
 struct SceneSplashScreenData
 {
     // insert your scene variables here
