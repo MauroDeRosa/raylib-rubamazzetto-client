@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-#include "card.h"
+#include "game/card.h"
 
 
 int main(int argc, char const *argv[])

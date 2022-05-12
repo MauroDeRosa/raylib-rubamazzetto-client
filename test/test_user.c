@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include "utils/logger.h"
-#include "User.h"
+#include "game/User.h"
 #include <unistd.h>
 #include <inttypes.h>
 #include <limits.h>
