@@ -4,11 +4,12 @@
 #include <string.h>
 #include "Config.h"
 
-#define RESOURCE_MANAGER_PREFIX LOG_COLOR_YELLOW "[ResourceManager] " LOG_COLOR_RESET
+#define RM_LOG_PREFIX LOG_COLOR_YELLOW "[ResourceManager] " LOG_COLOR_RESET
 
-#pragma region externs_definition
-
-const char *ResourceTypeString[] = {
+/**
+ * @brief The string representation of the Resource Type
+ */
+const char *rmResourceTypeString[] = {
     "Image",     ///< @see Image
     "Texture2D", ///< @see Texture2D
     "Font",      ///< @see Font
@@ -17,99 +18,113 @@ const char *ResourceTypeString[] = {
     "Music"      ///< @see Music
 };
 
-struct Resource_t *ResourceManagerMap = NULL;
+struct rmResource_t *rmMap = NULL;
 
-ResourceManager_t ResourceManager = {
-    ResourceManagerInit,            ///< @see ResourceManagerInit
-    ResourceManagerAddResource,     ///< @see ResourceManagerAddResource
-    ResourceManagerRemoveResource,  ///< @see ResourceManagerRemoveResource
-    ResourceManagerLoad,            ///< @see ResourceManagerLoad
-    ResourceManagerGet,             ///< @see ResourceManagerGet
-    ResourceManagerUnload,          ///< @see ResourceManagerUnload
-    ResourceManagerDestroy,         ///< @see ResourceManagerDestroy
-};
+/**
+ * @brief Get a string in the form "rmResourceType_name"
+ *
+ * @param type the type of the Resource to get @see rmResourceType
+ * @param name the name of the resource to get (key value of the Resource HashMap element) @see rmResource_t
+ * @return char* a string containing "rmResourceType_name" (must be freed) @see rmResourceType @see rmResource_t
+ */
+char *rmGetResourceName(rmResourceType type, const char *name);
 
-#pragma endregion externs_definition
+/**
+ * @brief
+ *
+ * @param fullName A string in the form "rmResourceType_name" used as key value in the rmMap HashMap
+ * @return struct rmResource_t* The pointer to the Resource element found in Hasmap. NULL if nothing was found @see rmResource_t
+ */
+struct rmResource_t *rmGetResourcePointer(char *fullName);
 
-int ResourceManagerInit()
+/**
+ * @brief
+ *
+ * @param resource
+ * @return void*
+ */
+void *rmGetResourceDataPointer(struct rmResource_t *resource);
+
+
+int rmInit()
 {
-    Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Initializing Resource Manager...");
-    ResourceManagerMap = NULL; // sets Resource HashMap to NULL (required by uthash as initial HashMap pointer value)
+    Log(LOG_INFO, RM_LOG_PREFIX "Initializing Resource Manager...");
+    rmMap = NULL; // sets Resource HashMap to NULL (required by uthash as initial HashMap pointer value)
     return APP_SUCCESS;
 }
 
-int ResourceManagerAddResource(ResourceType type, const char *name, const char *path)
+int rmAddResource(rmResourceType type, const char *name, const char *path)
 {
-    char *fullName = ResourceManagerGetResourceName(type, name); // creates temporary variable containing "ResourceType_name"
+    char *fullName = rmGetResourceName(type, name); // creates temporary variable containing "rmResourceType_name"
 
-    struct Resource_t *res = ResourceManagerGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
+    struct rmResource_t *res = rmGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
 
-    if (res == NULL) // if resource named ResourceType_name is not in the Resource HashMap
+    if (res == NULL) // if resource named rmResourceType_name is not in the Resource HashMap
     {
-        Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Adding %s resource \"%s\" path: \"%s\"", ResourceTypeString[type], name, path);
-        res = malloc(sizeof(*res));                  // allocates memory for the given resource (Resource_t)
-        strcpy(res->name, fullName);                 // sets Resource HashMap item key to ResourceType_name
-        res->type = type;                            // sets ResourceType to the given type
-        HASH_ADD_STR(ResourceManagerMap, name, res); // adds the Resource to the Resource HashMap
+        Log(LOG_INFO, RM_LOG_PREFIX "Adding %s resource \"%s\" path: \"%s\"", rmResourceTypeString[type], name, path);
+        res = malloc(sizeof(*res));     // allocates memory for the given resource (rmResource_t)
+        strcpy(res->name, fullName);    // sets Resource HashMap item key to rmResourceType_name
+        res->type = type;               // sets rmResourceType to the given type
+        HASH_ADD_STR(rmMap, name, res); // adds the Resource to the Resource HashMap
     }
-    else // if resource named ResourceType_name is yet in the Resource HashMap
+    else // if resource named rmResourceType_name is yet in the Resource HashMap
     {
-        Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Updating %s resource \"%s\" path: \"%s\"", ResourceTypeString[type], name, path);
+        Log(LOG_INFO, RM_LOG_PREFIX "Updating %s resource \"%s\" path: \"%s\"", rmResourceTypeString[type], name, path);
     }
 
     strcpy(res->path, path); // sets Resource path or updates it
-    free(fullName);          // free temporary variable containing "ResourceType_name"
+    free(fullName);          // free temporary variable containing "rmResourceType_name"
     return APP_SUCCESS;
 }
 
-int ResourceManagerRemoveResource(ResourceType type, const char *name)
+int rmRemoveResource(rmResourceType type, const char *name)
 {
-    char *fullName = ResourceManagerGetResourceName(type, name);          // creates temporary variable containing "ResourceType_name"
-    struct Resource_t *res = ResourceManagerGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
+    char *fullName = rmGetResourceName(type, name);            // creates temporary variable containing "rmResourceType_name"
+    struct rmResource_t *res = rmGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
 
-    if (res != NULL) // if resource named ResourceType_name is in the Resource HashMap
+    if (res != NULL) // if resource named rmResourceType_name is in the Resource HashMap
     {
-        Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Removing %s resource \"%s\" path: \"%s\"", ResourceTypeString[type], name, res->path);
-        HASH_DEL(ResourceManagerMap, res); // removes 'ResourceType_name' from the Resource HashMap
-        free(res);                         // free memory of the resource removed from the Resource HashMap (Resource_t)
+        Log(LOG_INFO, RM_LOG_PREFIX "Removing %s resource \"%s\" path: \"%s\"", rmResourceTypeString[type], name, res->path);
+        HASH_DEL(rmMap, res); // removes 'rmResourceType_name' from the Resource HashMap
+        free(res);            // free memory of the resource removed from the Resource HashMap (rmResource_t)
         return APP_SUCCESS;
     }
-    else // if resource named ResourceType_name is not in the Resource HashMap
+    else // if resource named rmResourceType_name is not in the Resource HashMap
     {
-        Log(LOG_WARNING, RESOURCE_MANAGER_PREFIX "Can't remove %s resurce named \"%s\", resource doesn't exist", ResourceTypeString[type], name);
+        Log(LOG_WARNING, RM_LOG_PREFIX "Can't remove %s resurce named \"%s\", resource doesn't exist", rmResourceTypeString[type], name);
         return APP_WARNING;
     }
 
-    free(fullName); // free temporary variable containing "ResourceType_name"
+    free(fullName); // free temporary variable containing "rmResourceType_name"
 }
 
-int ResourceManagerLoad()
+int rmLoad()
 {
-    struct Resource_t *res, *tmp;
-    Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Loading resources...");
+    struct rmResource_t *res, *tmp;
+    Log(LOG_INFO, RM_LOG_PREFIX "Loading resources...");
 
-    HASH_ITER(hh, ResourceManagerMap, res, tmp) // iterates the full Resource HashMap
+    HASH_ITER(hh, rmMap, res, tmp) // iterates the full Resource HashMap
     {
-        Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Loading %s resource \"%s\"", ResourceTypeString[res->type], res->name);
+        Log(LOG_DEBUG, RM_LOG_PREFIX "Loading %s resource \"%s\"", rmResourceTypeString[res->type], res->name);
 
-        switch (res->type) // based on the resource type calls the right RayLib Load function and sets data.ResourceType with it
+        switch (res->type) // based on the resource type calls the right RayLib Load function and sets data.rmResourceType with it
         {
-        case RESOURCE_IMAGE:
+        case RM_IMAGE:
             res->data.Image = LoadImage(res->path);
             break;
-        case RESOURCE_TEXTURE2D:
+        case RM_TEXTURE2D:
             res->data.Texture2D = LoadTexture(res->path);
             break;
-        case RESOURCE_FONT:
+        case RM_FONT:
             res->data.Font = LoadFont(res->path);
             break;
-        case RESOURCE_WAVE:
+        case RM_WAVE:
             res->data.Wave = LoadWave(res->path);
             break;
-        case RESOURCE_SOUND:
+        case RM_SOUND:
             res->data.Sound = LoadSound(res->path);
             break;
-        case RESOURCE_MUSIC:
+        case RM_MUSIC:
             res->data.Music = LoadMusicStream(res->path);
             break;
         }
@@ -118,52 +133,52 @@ int ResourceManagerLoad()
     return APP_SUCCESS;
 }
 
-void *ResourceManagerGet(ResourceType type, const char *name)
+void *rmGet(rmResourceType type, const char *name)
 {
-    char *fullName = ResourceManagerGetResourceName(type, name);          // creates temporary variable containing "ResourceType_name"
-    struct Resource_t *res = ResourceManagerGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
+    char *fullName = rmGetResourceName(type, name);            // creates temporary variable containing "rmResourceType_name"
+    struct rmResource_t *res = rmGetResourcePointer(fullName); // check if resource exists in hashmap otherwise returns NULL
 
-    if (res != NULL) // if resource named ResourceType_name is in the Resource HashMap
+    if (res != NULL) // if resource named rmResourceType_name is in the Resource HashMap
     {
-        Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Getting %s resource \"%s\"", ResourceTypeString[type], name);
-        return ResourceManagerGetResourceDataPointer(res); // returns a void* pointer to the resource data.ResourceType
+        Log(LOG_INFO, RM_LOG_PREFIX "Getting %s resource \"%s\"", rmResourceTypeString[type], name);
+        return rmGetResourceDataPointer(res); // returns a void* pointer to the resource data.rmResourceType
     }
-    else // if resource named ResourceType_name is not in the Resource HashMap
+    else // if resource named rmResourceType_name is not in the Resource HashMap
     {
-        Log(LOG_WARNING, RESOURCE_MANAGER_PREFIX "Can't get %s resurce named \"%s\", resource doesn't exist", ResourceTypeString[type], name);
+        Log(LOG_WARNING, RM_LOG_PREFIX "Can't get %s resurce named \"%s\", resource doesn't exist", rmResourceTypeString[type], name);
         return NULL; // returns NULL to indicate that the Resource doesn't exists
     }
 
     free(fullName);
 }
 
-int ResourceManagerUnload()
+int rmUnload()
 {
-    struct Resource_t *res, *tmp;
-    Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Unloading resources...");
+    struct rmResource_t *res, *tmp;
+    Log(LOG_INFO, RM_LOG_PREFIX "Unloading resources...");
 
-    HASH_ITER(hh, ResourceManagerMap, res, tmp) // iterates the full Resource HashMap
+    HASH_ITER(hh, rmMap, res, tmp) // iterates the full Resource HashMap
     {
-        Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Unloading %s resource \"%s\"", ResourceTypeString[res->type], res->name);
+        Log(LOG_DEBUG, RM_LOG_PREFIX "Unloading %s resource \"%s\"", rmResourceTypeString[res->type], res->name);
 
         switch (res->type) // based on the resource type calls the right RayLib Unload function
         {
-        case RESOURCE_IMAGE:
+        case RM_IMAGE:
             UnloadImage(res->data.Image);
             break;
-        case RESOURCE_TEXTURE2D:
+        case RM_TEXTURE2D:
             UnloadTexture(res->data.Texture2D);
             break;
-        case RESOURCE_FONT:
+        case RM_FONT:
             UnloadFont(res->data.Font);
             break;
-        case RESOURCE_WAVE:
+        case RM_WAVE:
             UnloadWave(res->data.Wave);
             break;
-        case RESOURCE_SOUND:
+        case RM_SOUND:
             UnloadSound(res->data.Sound);
             break;
-        case RESOURCE_MUSIC:
+        case RM_MUSIC:
             UnloadMusicStream(res->data.Music);
             break;
         }
@@ -172,61 +187,61 @@ int ResourceManagerUnload()
     return APP_SUCCESS;
 }
 
-int ResourceManagerDestroy()
+int rmDestroy()
 {
-    struct Resource_t *res, *tmp;
-    Log(LOG_INFO, RESOURCE_MANAGER_PREFIX "Cleaning resource table...");
+    struct rmResource_t *res, *tmp;
+    Log(LOG_INFO, RM_LOG_PREFIX "Cleaning resource table...");
 
-    HASH_ITER(hh, ResourceManagerMap, res, tmp) // iterates the full Resource HashMap
+    HASH_ITER(hh, rmMap, res, tmp) // iterates the full Resource HashMap
     {
-        Log(LOG_DEBUG, RESOURCE_MANAGER_PREFIX "Removing %s resource \"%s\"", ResourceTypeString[res->type], res->name);
-        HASH_DEL(ResourceManagerMap, res); // removes 'ResourceType_name' from the Resource HashMap
-        free(res);                         // free memory of the resource removed from the Resource HashMap (Resource_t)
+        Log(LOG_DEBUG, RM_LOG_PREFIX "Removing %s resource \"%s\"", rmResourceTypeString[res->type], res->name);
+        HASH_DEL(rmMap, res); // removes 'rmResourceType_name' from the Resource HashMap
+        free(res);            // free memory of the resource removed from the Resource HashMap (rmResource_t)
     }
 
     return APP_SUCCESS;
 }
 
-char *ResourceManagerGetResourceName(ResourceType type, const char *name)
+char *rmGetResourceName(rmResourceType type, const char *name)
 {
     char *out = calloc(100, sizeof(char));
-    strcat(out, ResourceTypeString[type]);
+    strcat(out, rmResourceTypeString[type]);
     strcat(out, "_");
     strcat(out, name);
     out[100 - 1] = '\0';
-    return out; // returns "ResourceType_name"
+    return out; // returns "rmResourceType_name"
 }
 
-struct Resource_t *ResourceManagerGetResourcePointer(char *fullName)
+struct rmResource_t *rmGetResourcePointer(char *fullName)
 {
-    struct Resource_t *res = NULL;
-    HASH_FIND_STR(ResourceManagerMap, fullName, res); // returns *Resource_t if 'ResourceType_name' exists, NULL otherwise
+    struct rmResource_t *res = NULL;
+    HASH_FIND_STR(rmMap, fullName, res); // returns *rmResource_t if 'rmResourceType_name' exists, NULL otherwise
     return res;
 }
 
-void *ResourceManagerGetResourceDataPointer(struct Resource_t *resource)
+void *rmGetResourceDataPointer(struct rmResource_t *resource)
 {
     if (resource == NULL)
         return NULL;
 
-    switch (resource->type) // based on ResourceType returns pointer to resource's data.DataType
+    switch (resource->type) // based on rmResourceType returns pointer to resource's data.DataType
     {
-    case RESOURCE_IMAGE:
+    case RM_IMAGE:
         return &(resource->data.Image);
         break;
-    case RESOURCE_TEXTURE2D:
+    case RM_TEXTURE2D:
         return &(resource->data.Texture2D);
         break;
-    case RESOURCE_FONT:
+    case RM_FONT:
         return &(resource->data.Font);
         break;
-    case RESOURCE_WAVE:
+    case RM_WAVE:
         return &(resource->data.Wave);
         break;
-    case RESOURCE_SOUND:
+    case RM_SOUND:
         return &(resource->data.Sound);
         break;
-    case RESOURCE_MUSIC:
+    case RM_MUSIC:
         return &(resource->data.Music);
         break;
     }
