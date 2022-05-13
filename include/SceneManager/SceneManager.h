@@ -14,27 +14,15 @@ typedef struct
     struct Scene_t *nextScene;
     bool isSceneEnded;
     float fixedStepTimer;
-} SceneManagerAttribute_t;
+} smData_t;
 
-typedef struct
-{
-    SceneManagerAttribute_t attr;
-    int (*Init)();
-    int (*Register)(const char *name, struct Scene_t *scene);
-    int (*Start)(const char *firstSceneName);
-    double (*Time)();
-    int (*Next)(const char *name);
-} SceneManager_t;
+int smInit();
+int smRegister(const char *name, struct Scene_t *scene);
+int smStart(const char *firstSceneName);
+double smTime();
+int smNext(const char *name);
 
-int SceneManagerInit();
-int SceneManagerRegister(const char *name, struct Scene_t *scene);
-int SceneManagerStart(const char *firstSceneName);
-double SceneManagerTime();
-int SceneManagerNext(const char *name);
-
-int SceneManagerLoop();
-int SceneManagerEnd();
-
-extern SceneManager_t SceneManager;
+int smLoop();
+int smEnd();
 
 #endif /* __SCENEMANAGER_H__ */

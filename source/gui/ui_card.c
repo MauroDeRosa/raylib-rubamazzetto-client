@@ -11,7 +11,7 @@ void DrawCard(Card card, Vector2 position, float rotation, float scale, bool cen
         origin = (Vector2){(CARD_WIDTH * scale) / 2.0f, (CARD_HEIGHT * scale) / 2.0f};
     }
 
-    Texture2D *cardsheet = (Texture2D *)ResourceManager.Get(RESOURCE_TEXTURE2D, "cardsheet");
+    Texture2D *cardsheet = (Texture2D *)rmGet(RM_TEXTURE2D, "cardsheet");
 
     if (cardsheet != NULL)
     {

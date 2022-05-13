@@ -19,14 +19,16 @@ int main(int argc, char** argv)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
 
-    ResourceManager.Init();
+    rmInit();
+    rmAddResource(RM_TEXTURE2D, "cardsheet", "resources/texture/cardsheet.png");
+    // TODO: register resources here
 
-    SceneManager.Init();
+    smInit();
     RegisterScenes();
-    SceneManager.Start("SceneSplashScreen");
+    smStart("SceneSplashScreen");
 
-    ResourceManager.Unload();
-    ResourceManager.Destroy();
+    rmUnload();
+    rmDestroy();
 
     CloseWindow();
 
