@@ -10,6 +10,12 @@ const char *CardSuitString[4] = {
     "Bastoni",
     "Coppe"};
 
+const char *CardSuitStringShort[4] = {
+    "D",
+    "S",
+    "B",
+    "C"};
+
 Card cards[40];
 
 void CardsInit()
@@ -27,7 +33,7 @@ void PrintCard(Card card, bool verbose)
 {
     char cardString[11] = "";
     sprintf(cardString, "%s%s%u",
-            verbose ? CardSuitString[card.suit] : CardSuitString[card.suit][0],
+            verbose ? CardSuitString[card.suit] : CardSuitStringShort[card.suit],
             verbose ? " " : "",
             card.value);
     printf("%s", cardString);
