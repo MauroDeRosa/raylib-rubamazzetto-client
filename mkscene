@@ -1,0 +1,6 @@
+#!/bin/bash
+echo creating scene: \'Scene$1\'
+
+code ./source/SceneManager/Scenes.c
+code ./source/SceneManager/Scenes/Scene$1.c
+code ./include/SceneManager/Scenes/Scene$1.h

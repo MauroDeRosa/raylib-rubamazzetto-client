@@ -5,7 +5,7 @@
 #define APP_WARNING 1
 #define APP_ERROR 2
 
-#define APPLICATION_VERSION "1.0.0"
+#define APPLICATION_VERSION "1.0.0 pre-alpha"
 #define WINDOW_TITLE "Ruba Mazzetto " APPLICATION_VERSION
 
 #define SCREEN_WIDTH 1280

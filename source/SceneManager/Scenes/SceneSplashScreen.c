@@ -28,7 +28,7 @@ void SceneSplashScreenFixedUpdate()
 {
     struct SceneSplashScreenData *$ = _SceneSplashScreenData;
     // update scene, called every fixed timestep
-    if(smTime() > 4.0f)
+    if(smTime() > 3.0f)
         smNext("SceneLoadingScreen");
 }
 

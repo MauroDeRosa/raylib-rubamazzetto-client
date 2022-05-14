@@ -23,6 +23,7 @@
 			"#include <raymath.h> ",
 			"#include \"external/raygui.h\"",
 			"#include \"external/easings.h\" ",
+			"#include \"utils/logger.h\" ",
 			"#include \"gui/gui.h\" ",
 			"",
 			"struct ${TM_FILENAME_BASE:default}Data\n{",
