@@ -1,8 +1,12 @@
 #include "ResourceManager/ResourceManager.h"
 #include "utils/logger.h"
 
+#include <stdatomic.h>
+#include <pthread.h>
 #include <string.h>
 #include "Config.h"
+
+// TODO: PLS FIX DOCUMENTATION
 
 #define RM_LOG_PREFIX LOG_COLOR_YELLOW "[ResourceManager] " LOG_COLOR_RESET
 
@@ -19,6 +23,11 @@ const char *rmResourceTypeString[] = {
 };
 
 struct rmResource_t *rmMap = NULL;
+
+static atomic_bool isLoaded = ATOMIC_VAR_INIT(false);
+static atomic_uint progress = ATOMIC_VAR_INIT(0);
+pthread_t loadThreadId;
+static void *rmLoadThread(void *arg);
 
 /**
  * @brief Get a string in the form "rmResourceType_name"
@@ -98,10 +107,31 @@ int rmRemoveResource(rmResourceType type, const char *name)
     free(fullName); // free temporary variable containing "rmResourceType_name"
 }
 
-int rmLoad()
+void rmLoad()
+{
+    int error = pthread_create(&loadThreadId, NULL, rmLoadThread, NULL);
+    if (error != 0)
+    {
+        Log(LOG_ERROR, "Error creating loading thread");
+    }
+    else
+    {
+        Log(LOG_INFO, "Loading thread initialized successfully");
+    }
+}
+
+static void *rmLoadThread(void *arg)
 {
     struct rmResource_t *res, *tmp;
     Log(LOG_INFO, RM_LOG_PREFIX "Loading resources...");
+
+    // TODO: load user file
+    // TODO: load match log file
+
+    int toLoadCount = HASH_COUNT(rmMap);
+    float percentage = 0.0f;
+
+
 
     HASH_ITER(hh, rmMap, res, tmp) // iterates the full Resource HashMap
     {
@@ -113,7 +143,7 @@ int rmLoad()
             res->data.Image = LoadImage(res->path);
             break;
         case RM_TEXTURE2D:
-            res->data.Texture2D = LoadTexture(res->path);
+            res->data.Image = LoadImage(res->path); // can't use glContext out of main thread to do GPU operations
             break;
         case RM_FONT:
             res->data.Font = LoadFont(res->path);
@@ -128,9 +158,12 @@ int rmLoad()
             res->data.Music = LoadMusicStream(res->path);
             break;
         }
+        
+        percentage += (100.0f/toLoadCount);
+        atomic_store(&progress, (unsigned int)(percentage) );
     }
 
-    return APP_SUCCESS;
+    atomic_store(&isLoaded, true);
 }
 
 void *rmGet(rmResourceType type, const char *name)
@@ -140,7 +173,7 @@ void *rmGet(rmResourceType type, const char *name)
 
     if (res != NULL) // if resource named rmResourceType_name is in the Resource HashMap
     {
-        Log(LOG_INFO, RM_LOG_PREFIX "Getting %s resource \"%s\"", rmResourceTypeString[type], name);
+        Log(LOG_DEBUG, RM_LOG_PREFIX "Getting %s resource \"%s\"", rmResourceTypeString[type], name);
         return rmGetResourceDataPointer(res); // returns a void* pointer to the resource data.rmResourceType
     }
     else // if resource named rmResourceType_name is not in the Resource HashMap
@@ -167,7 +200,7 @@ int rmUnload()
             UnloadImage(res->data.Image);
             break;
         case RM_TEXTURE2D:
-            UnloadTexture(res->data.Texture2D);
+            UnloadImage(res->data.Image);
             break;
         case RM_FONT:
             UnloadFont(res->data.Font);
@@ -182,6 +215,8 @@ int rmUnload()
             UnloadMusicStream(res->data.Music);
             break;
         }
+
+        
     }
 
     return APP_SUCCESS;
@@ -230,7 +265,12 @@ void *rmGetResourceDataPointer(struct rmResource_t *resource)
         return &(resource->data.Image);
         break;
     case RM_TEXTURE2D:
-        return &(resource->data.Texture2D);
+        if(resource->isTextureConverted == false)
+        {
+            resource->convertedTexture = LoadTextureFromImage(resource->data.Image);
+            resource->isTextureConverted = true;
+        }
+        return &(resource->convertedTexture);
         break;
     case RM_FONT:
         return &(resource->data.Font);
@@ -245,4 +285,14 @@ void *rmGetResourceDataPointer(struct rmResource_t *resource)
         return &(resource->data.Music);
         break;
     }
+}
+
+bool rmGetIsLoaded()
+{
+    return atomic_load(&isLoaded);
+}
+
+float rmGetProgress()
+{
+    return atomic_load(&progress) / 100.0f;
 }

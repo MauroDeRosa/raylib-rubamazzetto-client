@@ -5,36 +5,18 @@
 #include "external/easings.h"
 #include "gui/gui.h"
 #include "utils/logger.h"
-
-#include <pthread.h>   // POSIX style threads management
-#include <stdatomic.h> // C11 atomic data types
-#include <time.h>      // Required for: clock()
-
-// Using C11 atomics for synchronization. A plain bool (or any plain data type for that matter) can't be used for inter-thread synchronization
-static atomic_bool dataLoaded = ATOMIC_VAR_INIT(false); // Data Loaded completion indicator
-static int dataProgress = 0; // Data progress accumulator
-static void *LoadDataThread(void *arg);
-
-static void *LoadDataThread(void *arg)
-{
-    rmLoad();
-    atomic_store(&dataLoaded, true);
-
-    return NULL;
-}
-
 struct SceneLoadingScreenData
 {
     // insert your scene variables here
-    pthread_t threadId; // Loading data thread id
-
     enum
     {
         STATE_WAITING,
         STATE_LOADING,
         STATE_FINISHED
     } state;
-    int framesCounter;
+
+    float progress;
+    double elapsed;
 };
 struct SceneLoadingScreenData *_SceneLoadingScreenData;
 
@@ -43,7 +25,8 @@ void SceneLoadingScreenStart()
     struct SceneLoadingScreenData *$ = _SceneLoadingScreenData = calloc(1, sizeof(struct SceneLoadingScreenData));
     // memory and variables initialization here
     $->state = STATE_WAITING;
-    $->framesCounter = 0;
+    $->elapsed = 0;
+    $->progress = 0;
 }
 
 void SceneLoadingScreenUpdate()
@@ -54,31 +37,22 @@ void SceneLoadingScreenUpdate()
     {
     case STATE_WAITING:
     {
-        if (IsKeyPressed(KEY_ENTER))
-        {
-            int error = pthread_create(&$->threadId, NULL, &LoadDataThread, NULL);
-            if (error != 0)
-                Log(LOG_ERROR, "Error creating loading thread");
-            else
-                Log(LOG_INFO, "Loading thread initialized successfully");
-
-            $->state = STATE_LOADING;
-        }
+        rmLoad();
+        $->state = STATE_LOADING;
     }
     break;
     case STATE_LOADING:
     {
-        $->framesCounter++;
-        if (atomic_load(&dataLoaded))
+        $->elapsed += GetFrameTime();
+        if (rmGetIsLoaded() && $->progress == 1.0f)
         {
-            $->framesCounter = 0;
             $->state = STATE_FINISHED;
         }
     }
     break;
     case STATE_FINISHED:
     {
-        smNext("END");
+        // smNext("END");
     }
     break;
     }
@@ -102,16 +76,23 @@ void SceneLoadingScreenRender()
         break;
     case STATE_LOADING:
     {
-        // draw progress bar
-        if (($->framesCounter / 15) % 2)
-            DrawText("LOADING...", SCREEN_WIDTH/2 - (40*9)/2, SCREEN_HEIGHT/2 - 20, 40, DARKBLUE);
-    }
-    break;
-    default:
+        float timePercentage = 0;
+        // x= 100*elapsed/3
+        $->progress = Clamp(
+            (rmGetProgress() + $->elapsed/3.0f) / 2.0f, 0.0f, 1.0f);
+        GuiProgressBar(
+            (Rectangle){.x = 30, .y = SCREEN_HEIGHT / 2.0f + 20.0f, .width = SCREEN_WIDTH - 60, .height = 40},
+            NULL, NULL,
+            $->progress, 0, 1);
+        DrawText("LOADING...", SCREEN_WIDTH / 2.0f - MeasureText("Loading...", 40) / 2.0f, SCREEN_HEIGHT / 2 - 20, 40, GRAY);
         break;
     }
-
-    DrawRectangleLines(150, 200, 500, 60, DARKGRAY);
+    case STATE_FINISHED:
+    {
+        DrawCard(cards[20], (Vector2){SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2}, 0, .5f, true, 255, ((int)smTime() / 2) % 2 == 0 ? true : false);
+        break;
+    }
+    }
 }
 
 void SceneLoadingScreenExit()
