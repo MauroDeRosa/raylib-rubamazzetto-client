@@ -18,6 +18,8 @@ const char *CardSuitStringShort[4] = {
 
 Card cards[40];
 
+Texture2D *cardsTexture;
+
 void CardsInit()
 {
     for (enum CardSuit i = SUIT_DENARI; i <= SUIT_COPPE; i++)
@@ -27,6 +29,7 @@ void CardsInit()
             cards[(10*i)+(j-1)] = (Card){.suit=i, .value=j};
         }    
     }
+    cardsTexture = rmGet(RM_TEXTURE2D, "cardsheet");
 }
 
 void PrintCard(Card card, bool verbose)

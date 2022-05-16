@@ -86,5 +86,6 @@ void SceneLoadingScreenExit()
 {
     struct SceneLoadingScreenData *$ = _SceneLoadingScreenData;
     // TODO: clean memory here pls :3
+    CardsInit();
     free(_SceneLoadingScreenData);
 }

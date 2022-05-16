@@ -13,6 +13,7 @@ enum CardSuit {
 
 extern const char *CardSuitString[4];
 
+
 typedef struct
 {
     enum CardSuit suit;
@@ -20,6 +21,7 @@ typedef struct
 }  Card;
 
 extern Card cards[40];
+extern Texture2D *cardsTexture;
 
 void CardsInit();
 void PrintCard(Card card, bool verbose);

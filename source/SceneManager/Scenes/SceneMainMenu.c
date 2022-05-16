@@ -5,6 +5,7 @@
 #include "external/easings.h"
 #include "utils/logger.h"
 #include "gui/gui.h"
+#include "ResourceManager/ResourceManager.h"
 
 struct SceneMainMenuData
 {
@@ -13,7 +14,7 @@ struct SceneMainMenuData
     float btnWidth;
     float btnHeight;
     float btnPosY;
-    // insert your scene variables here
+
     bool isBtnPlayPressed;
     bool isBtnLeaderboardPressed;
     bool isBtnProfilePressed;
@@ -23,7 +24,6 @@ struct SceneMainMenuData *_SceneMainMenuData;
 void SceneMainMenuStart()
 {
     struct SceneMainMenuData *$ = _SceneMainMenuData = calloc(1, sizeof(struct SceneMainMenuData));
-
     // memory and variables initialization here
 
     $->isBtnPlayPressed = false;
@@ -33,12 +33,6 @@ void SceneMainMenuStart()
     $->btnWidth = 200.0f;
     $->btnHeight = 100.0f;
     $->btnPosY = SCREEN_HEIGHT - ($->btnHeight * 1.5f) - 50.0f;
-    GuiSetStyle(DEFAULT, TEXT_SIZE, 30);
-
-
-    Image noiseImage = GenImageWhiteNoise(SCREEN_WIDTH, SCREEN_HEIGHT, 0.4f);
-    $->noise = LoadTextureFromImage(noiseImage);
-    UnloadImage(noiseImage);
 }
 
 void SceneMainMenuUpdate()
@@ -48,7 +42,7 @@ void SceneMainMenuUpdate()
 
     if ($->isBtnPlayPressed)
     {
-        smNext("END");
+        smNext("ScenePlayMenu");
     }
     else if ($->isBtnProfilePressed)
     {
@@ -71,12 +65,11 @@ void SceneMainMenuRender()
 {
     struct SceneMainMenuData *$ = _SceneMainMenuData;
     // render scene, draw your art here <3
-    ClearBackground(DARKGREEN);
-    DrawTexture($->noise, 0, 0, (Color){0xFF,0xFF,0xFF, 0x22});
+    uiCarpetRender();
     
     DrawText("Ruba Mazzetto",
     SCREEN_WIDTH/2.0f - MeasureText("Ruba Mazzetto", 100)/2,
-    250, 100, ColorAlpha(RED, Clamp(smTime()/2, 0.0f, 1.0f) )
+    250, 100, ColorAlpha(RED, Clamp(smTime()/2, 0.0f, 1.0f))
     );
 
     $->isBtnProfilePressed = GuiButton((Rectangle){SCREEN_WIDTH * (1.0f / 4.0f) - $->btnWidth / 2, $->btnPosY, $->btnWidth, $->btnHeight}, "Profile");
@@ -88,7 +81,5 @@ void SceneMainMenuExit()
 {
     struct SceneMainMenuData *$ = _SceneMainMenuData;
     // TODO: clean memory here pls :3
-
-    UnloadTexture($->noise);
     free(_SceneMainMenuData);
 }
