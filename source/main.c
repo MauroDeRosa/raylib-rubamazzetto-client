@@ -1,8 +1,4 @@
 #include <raylib.h>
-#define RAYGUI_IMPLEMENTATION
-#include "external/raygui.h"
-#undef RAYGUI_IMPLEMENTATION
-
 #include "utils/logger.h"
 #include "ResourceManager/ResourceManager.h"
 #include "SceneManager/SceneManager.h"
@@ -18,6 +14,8 @@ int main(int argc, char** argv)
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
+
+    GuiSetStyle(DEFAULT, TEXT_SIZE, 30);
 
     rmInit();
     rmAddResource(RM_TEXTURE2D, "cardsheet", "resources/texture/cardsheet.png");

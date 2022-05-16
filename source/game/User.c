@@ -44,13 +44,6 @@ size_t UsersCount()
 
 bool UsersLoad(const char *path)
 {
-    //file doesn't exist
-    if(access(path, F_OK) != true)
-    {
-        Log(LOG_ERROR, USERS_LOG_PREFIX "Can't load '%s' file doesn't exist", path);
-        return false;
-    }
-
     FILE *file = fopen(path, "rb");
     
     if(file == NULL)
@@ -59,15 +52,19 @@ bool UsersLoad(const char *path)
         return false;
     }
 
-    User_t *tmpUser = NULL;
+    User_t *tmpUser = malloc(sizeof(User_t));
 
     while (!feof(file))
     {
         fread(tmpUser, sizeof(User_t), 1, file);
-        Log(LOG_DEBUG, USERS_LOG_PREFIX "loaded user '%s':'%s'", tmpUser->username, tmpUser->password);
-        UserRegister(tmpUser->username, tmpUser->password);
+        if(tmpUser)
+        {
+            Log(LOG_DEBUG, USERS_LOG_PREFIX "loaded user '%s':'%s'", tmpUser->username, tmpUser->password);
+            UserRegister(tmpUser->username, tmpUser->password);
+        }
     }
 
+    free(tmpUser);
     fclose(file);
     return true;
 }

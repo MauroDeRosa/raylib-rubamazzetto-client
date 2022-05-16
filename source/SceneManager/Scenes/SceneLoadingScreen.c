@@ -11,8 +11,7 @@ struct SceneLoadingScreenData
     enum
     {
         STATE_WAITING,
-        STATE_LOADING,
-        STATE_FINISHED
+        STATE_LOADING
     } state;
 
     float progress;
@@ -46,13 +45,8 @@ void SceneLoadingScreenUpdate()
         $->elapsed += GetFrameTime();
         if (rmGetIsLoaded() && $->progress == 1.0f)
         {
-            $->state = STATE_FINISHED;
+            smNext("SceneMainMenu");
         }
-    }
-    break;
-    case STATE_FINISHED:
-    {
-        // smNext("END");
     }
     break;
     }
@@ -77,19 +71,12 @@ void SceneLoadingScreenRender()
     case STATE_LOADING:
     {
         float timePercentage = 0;
-        // x= 100*elapsed/3
-        $->progress = Clamp(
-            (rmGetProgress() + $->elapsed/3.0f) / 2.0f, 0.0f, 1.0f);
+        $->progress = Clamp( (rmGetProgress() + $->elapsed/3.0f) / 2.0f, 0.0f, 1.0f);
         GuiProgressBar(
             (Rectangle){.x = 30, .y = SCREEN_HEIGHT / 2.0f + 20.0f, .width = SCREEN_WIDTH - 60, .height = 40},
             NULL, NULL,
             $->progress, 0, 1);
-        DrawText("LOADING...", SCREEN_WIDTH / 2.0f - MeasureText("Loading...", 40) / 2.0f, SCREEN_HEIGHT / 2 - 20, 40, GRAY);
-        break;
-    }
-    case STATE_FINISHED:
-    {
-        DrawCard(cards[20], (Vector2){SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2}, 0, .5f, true, 255, ((int)smTime() / 2) % 2 == 0 ? true : false);
+        DrawText("LOADING...", SCREEN_WIDTH / 2.0f - MeasureText("Loading...", 40) / 2.0f, SCREEN_HEIGHT / 2 - 20, 40, (int)(smTime()/1.0f)% 2 == 0 ? GRAY : LIGHTGRAY);
         break;
     }
     }
@@ -99,5 +86,6 @@ void SceneLoadingScreenExit()
 {
     struct SceneLoadingScreenData *$ = _SceneLoadingScreenData;
     // TODO: clean memory here pls :3
+    CardsInit();
     free(_SceneLoadingScreenData);
 }

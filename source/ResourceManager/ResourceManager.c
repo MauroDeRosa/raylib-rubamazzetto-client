@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include <string.h>
 #include "Config.h"
+#include "gui/gui.h"
 
 // TODO: PLS FIX DOCUMENTATION
 
@@ -118,6 +119,8 @@ void rmLoad()
     {
         Log(LOG_INFO, "Loading thread initialized successfully");
     }
+
+    uiCarpetInit();
 }
 
 static void *rmLoadThread(void *arg)
@@ -215,9 +218,9 @@ int rmUnload()
             UnloadMusicStream(res->data.Music);
             break;
         }
-
-        
     }
+
+    uiCarpetUnload();
 
     return APP_SUCCESS;
 }

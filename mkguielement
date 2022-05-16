@@ -1,0 +1,6 @@
+#!/bin/bash
+echo creating gui element: \'ui_$1\'
+
+code ./include/gui/gui.h
+code ./source/gui/ui_$1.c
+code ./include/gui/ui_$1.h
