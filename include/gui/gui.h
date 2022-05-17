@@ -4,7 +4,7 @@
 #include "gui/ui_card.h"
 #include "gui/ui_login.h"
 #include "gui/ui_carpet.h"
-
-void DrawCard(Card card, Vector2 position, float rotation, float scale, bool centerOrigin, float alpha, bool back);
+#include "gui/ui_text.h"
+#include "gui/ui_textbox.h"
 
 #endif /* __GUI_H__ */

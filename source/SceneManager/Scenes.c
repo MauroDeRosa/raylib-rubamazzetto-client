@@ -5,6 +5,7 @@
 #include "SceneManager/Scenes/SceneLoadingScreen.h"
 #include "SceneManager/Scenes/SceneMainMenu.h"
 #include "SceneManager/Scenes/ScenePlayMenu.h"
+#include "SceneManager/Scenes/SceneProfileLogin.h"
 
 #define RAYGUI_IMPLEMENTATION
 #include "external/raygui.h"
@@ -16,4 +17,5 @@ void RegisterScenes()
     smRegister(SceneLoadingScreen.name, &SceneLoadingScreen);
     smRegister(SceneMainMenu.name, &SceneMainMenu);
     smRegister(ScenePlayMenu.name, &ScenePlayMenu);
+    smRegister(SceneProfileLogin.name, &SceneProfileLogin);
 }

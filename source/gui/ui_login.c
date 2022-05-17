@@ -9,12 +9,12 @@
 #define LOGIN_BOX_HEIGHT (350.0f)
 #define LOGIN_BOX_WIDTH (300.0f)
 
-struct uiLoginBox_t *UiLoginBoxCreate(Vector2 position)
+struct uiLoginBox_t *uiLoginBoxCreate(Vector2 position)
 {
-    return UiLoginBoxCreateEx(position, BLACK, WHITE, GRAY, 1.0f);
+    return uiLoginBoxCreateEx(position, BLACK, WHITE, GRAY, 1.0f);
 }
 
-struct uiLoginBox_t *UiLoginBoxCreateEx(Vector2 position, Color backgroundColor, Color foregroundColor, Color borderColor, float borderSize)
+struct uiLoginBox_t *uiLoginBoxCreateEx(Vector2 position, Color backgroundColor, Color foregroundColor, Color borderColor, float borderSize)
 {
     struct uiLoginBox_t *lbox = calloc(1, sizeof(struct uiLoginBox_t));
 
@@ -129,7 +129,7 @@ void uiRenderLoginBox(struct uiLoginBox_t *lbox)
     }
 }
 
-void UiLoginBoxFree(struct uiLoginBox_t *lbox)
+void uiLoginBoxFree(struct uiLoginBox_t *lbox)
 {
     free(lbox);
 }

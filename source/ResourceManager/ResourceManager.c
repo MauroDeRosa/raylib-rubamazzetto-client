@@ -4,7 +4,7 @@
 #include <stdatomic.h>
 #include <pthread.h>
 #include <string.h>
-#include "Config.h"
+#include "config.h"
 #include "gui/gui.h"
 
 // TODO: PLS FIX DOCUMENTATION

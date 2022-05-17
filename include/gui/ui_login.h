@@ -33,15 +33,14 @@ struct uiLoginBox_t
     bool isLoginFailed;
 
     double startTime;
-    double endTime;
 };
 
-struct uiLoginBox_t* UiLoginBoxCreate(Vector2 position);
-struct uiLoginBox_t* UiLoginBoxCreateEx(Vector2 position, Color backgroundColor, Color foregroundColor, Color borderColor, float borderSize);
+struct uiLoginBox_t* uiLoginBoxCreate(Vector2 position);
+struct uiLoginBox_t* uiLoginBoxCreateEx(Vector2 position, Color backgroundColor, Color foregroundColor, Color borderColor, float borderSize);
 
-void uiUpdateLoginBox(struct uiLoginBox_t* lbox);
+void uiUpdateLoginBox(struct uiLoginBox_t* loginBox);
 void uiRenderLoginBox(struct uiLoginBox_t* loginBox);
 
-void UiLoginBoxFree(struct uiLoginBox_t *loginBox);
+void uiLoginBoxFree(struct uiLoginBox_t *loginBox);
 
 #endif /* __UI_LOGIN_H__ */

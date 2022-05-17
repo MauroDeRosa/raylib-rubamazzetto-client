@@ -27,7 +27,7 @@ void ScenePlayMenuStart()
     Vector2 pos = (Vector2){10.0f, 200.0f};
     for (size_t i = 0; i < 4; i++)
     {
-        $->loginBox[i] = UiLoginBoxCreate(pos);
+        $->loginBox[i] = uiLoginBoxCreate(pos);
         pos.x += $->loginBox[i]->size.x + 20.0f;
     }
 }
@@ -97,7 +97,7 @@ void ScenePlayMenuExit()
     // TODO: clean memory here pls :3
     for (size_t i = 0; i < 4; i++)
     {
-        UiLoginBoxFree($->loginBox[i]);
+        uiLoginBoxFree($->loginBox[i]);
     }
     free(_ScenePlayMenuData);
 }

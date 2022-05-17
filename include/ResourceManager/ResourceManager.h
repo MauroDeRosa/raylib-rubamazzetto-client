@@ -3,7 +3,7 @@
 
 #include <raylib.h>
 #include "external/uthash/uthash.h"
-#include "Config.h"
+#include "config.h"
 #include <stdatomic.h>
 
 

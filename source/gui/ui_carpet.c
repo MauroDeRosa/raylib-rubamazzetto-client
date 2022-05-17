@@ -1,7 +1,7 @@
 #include <raylib.h>
 #include "external/raygui.h"
 
-#include "Config.h"
+#include "config.h"
 #include "gui/gui.h"
 #include "gui/ui_carpet.h"
 

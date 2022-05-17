@@ -46,7 +46,7 @@ void SceneMainMenuUpdate()
     }
     else if ($->isBtnProfilePressed)
     {
-        smNext("END");
+        smNext("SceneProfileLogin");
     }
     else if ($->isBtnLeaderboardPressed)
     {
@@ -67,10 +67,7 @@ void SceneMainMenuRender()
     // render scene, draw your art here <3
     uiCarpetRender();
     
-    DrawText("Ruba Mazzetto",
-    SCREEN_WIDTH/2.0f - MeasureText("Ruba Mazzetto", 100)/2,
-    250, 100, ColorAlpha(RED, Clamp(smTime()/2, 0.0f, 1.0f))
-    );
+    uiTextDraw("Ruba Mazzetto", (Vector2){ScreenCenter.x,  250}, UI_HALIGN_CENTER, UI_VALIGN_TOP, 100, ColorAlpha(RED, Clamp(smTime()/2, 0.0f, 1.0f)), true);
 
     $->isBtnProfilePressed = GuiButton((Rectangle){SCREEN_WIDTH * (1.0f / 4.0f) - $->btnWidth / 2, $->btnPosY, $->btnWidth, $->btnHeight}, "Profile");
     $->isBtnPlayPressed = GuiButton((Rectangle){SCREEN_WIDTH * (1.0f / 2.0f) - $->btnWidth / 2, $->btnPosY, $->btnWidth, $->btnHeight}, "Play");

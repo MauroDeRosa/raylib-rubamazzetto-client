@@ -7,7 +7,7 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <time.h>
-#include "Config.h"
+#include "config.h"
 #include <string.h>
 #include <stdbool.h>
 #include "utils/stringutils.h"

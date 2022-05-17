@@ -1,9 +1,8 @@
 #include "gui/ui_card.h"
-#include "gui/gui.h"
 #include "ResourceManager/ResourceManager.h"
 #include "utils/logger.h"
 
-void DrawCard(Card card, Vector2 position, float rotation, float scale, bool centerOrigin, float alpha, bool back)
+void uiCardDraw(Card card, Vector2 position, float rotation, float scale, bool centerOrigin, float alpha, bool back)
 {
     Vector2 origin = (Vector2){.x = 0, .y = 0};
     if (centerOrigin)

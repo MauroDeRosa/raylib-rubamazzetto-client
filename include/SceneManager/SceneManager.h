@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "Config.h"
+#include "config.h"
 #include "SceneManager/Scene.h"
 
 typedef struct
