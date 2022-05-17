@@ -4,3 +4,4 @@ build/*
 !build/resources
 Testing/
 test_*.dat
+.DS_Store
