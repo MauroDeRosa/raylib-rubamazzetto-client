@@ -6,7 +6,7 @@
 struct listNode_t
 {
     void *item;
-    struct listNode *next;
+    struct listNode_t *next;
 };
 
 /**
