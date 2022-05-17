@@ -3,7 +3,7 @@
 #include "ResourceManager/ResourceManager.h"
 #include "SceneManager/SceneManager.h"
 #include "SceneManager/Scenes.h"
-#include "Config.h"
+#include "config.h"
 
 #include <libgen.h>
 #include <string.h>
