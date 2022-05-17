@@ -21,7 +21,7 @@ void listPushFront(struct listNode_t **head, void *);
  *
  * @param head
  */
-void listPushBack(struct listNode_t *head, void *);
+void listPushBack(struct listNode_t **head, void *);
 
 /**
  * @brief
