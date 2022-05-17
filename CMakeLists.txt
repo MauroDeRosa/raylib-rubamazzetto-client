@@ -12,7 +12,7 @@ include_directories( ${PROJECT_SOURCE_DIR}/include )
 # Traversal file
 file(GLOB_RECURSE all_source source/*.c)
 
-add_compile_options(-mcmodel=large -m64)
+add_compile_options(-mcmodel=medium -m64)
 
 # Generate target executable
 add_executable(RubamazzettoClient ${all_source})
