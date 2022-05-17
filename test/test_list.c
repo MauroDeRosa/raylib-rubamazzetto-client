@@ -21,5 +21,11 @@ int main(int argc, char const *argv[])
     assert(list->next->item != NULL);
     assert(strcmp((char *)list->item, str_test2) == 0);
 
+    char *str_test3 = "test 3";
+    listPushBack(list, str_test3);
+    assert(list->next->next != NULL);
+    assert(list->next->next->item != NULL);
+    assert(strcmp((char *)list->next->next->item, str_test3) == 0);
+
     return 0;
 }
