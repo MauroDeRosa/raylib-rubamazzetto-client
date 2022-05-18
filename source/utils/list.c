@@ -85,3 +85,58 @@ void *listPopBack(struct listNode_t *head)
     
     return item;
 }
+
+void *listDeleteByIndex(struct listNode_t **head, size_t index)
+{
+    struct listNode_t *listNodeCurrent = *head;
+    struct listNode_t *listNodeTemp = NULL;
+
+    if (index == 0)
+    {
+        listPopFront(head); //fix
+    }
+
+    //iterates to the node before the node to delete
+    for (size_t i = 0; i < index - 1; i++)
+    {   
+        if (listNodeCurrent->next == NULL)
+        {
+            Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
+            return NULL;
+        }
+
+        listNodeCurrent = listNodeCurrent->next;
+    }
+
+    listNodeTemp = listNodeCurrent->next;
+    listNodeCurrent->next = listNodeTemp->next;
+
+    free(listNodeTemp);
+}
+
+void *listGetByIndex(struct listNode_t **head, size_t index)
+{
+    struct listNode_t *listNodeCurrent = *head;
+    void *item;
+
+    if (index == 0)
+    {
+        item = (*head)->item;
+        return item;
+    }
+
+    for (size_t i = 0; i < index - 1; i++)
+    {   
+        if (listNodeCurrent->next == NULL)
+        {
+            Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
+            return NULL;
+        }
+
+        listNodeCurrent = listNodeCurrent->next;
+    }
+
+    item = listNodeCurrent->item;
+    
+    return item;
+}
