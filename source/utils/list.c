@@ -55,3 +55,33 @@ void *listPopFront(struct listNode_t **head)
 
     return item;
 }
+
+void *listPopBack(struct listNode_t *head)
+{
+    struct listNode_t *listNodeCurrent = head;
+    void *item;
+
+    //checks if list is empty or else if there's only one item in the list and removes it
+    if (head == NULL)
+    {
+        Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "List is empty", NULL);
+        return NULL;
+    }
+    else if (head->next == NULL)
+    {
+        item = head->item;
+        free(head);
+        return item;
+    }
+
+    //set current on the second last position
+    while (listNodeCurrent->next->next != NULL)
+    {
+        listNodeCurrent = listNodeCurrent->next;
+    }
+
+    item = listNodeCurrent->next->item;
+    free(listNodeCurrent->next);
+    
+    return item;
+}

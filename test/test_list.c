@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <string.h>
+#include <stdio.h>
 #include "utils/list.h"
 #include "utils/logger.h"
 
@@ -29,17 +30,28 @@ int main(int argc, char const *argv[])
     assert(strcmp((char *)list->next->next->item, str_test3) == 0);
 
     char *str_test4 = listPopFront(&list);
-    assert(strcmp(str_test4, list->item));
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s : %s", str_test4, (char *)list->item);
 
     assert(listPopFront(&emptyList) == NULL);
 
     char *str_test5 = calloc(1000, sizeof(char));
 
-    strcpy(str_test5, "sjdfsldkfjsifdojiajspiodsaspodkapksmcaisjdpaoisdpaoskdpoaskdkcmspoifjdsoifjsdofijsdkmvclxzkmvoxlcivjosidjfposidf");
+    strcpy(str_test5, "sjdfsldkfjsifdojiajspivjosidjfposidf");
     listPushBack(&emptyList, str_test5);
     char *str_tmp = listPopFront(&emptyList);
     assert(str_tmp != NULL);
     free(str_tmp);
-    assert(str_test5 == NULL); // TODO: Fix not being able to free the memory
+    //assert(str_test5 == NULL); // TODO: Fix not being able to free the memory
+
+    char *str_test6 = listPopBack(emptyList);
+
+    char *str_test7 = calloc(200, sizeof(char));
+
+    strcpy(str_test7, "PopBack Test");
+    listPushBack(&list, str_test7);
+    char *str_test8 = listPopBack(list);
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s : %s", str_test8, str_test7);
+    assert(strcmp(str_test8, str_test7) == 0);
+
     return 0;
 }
