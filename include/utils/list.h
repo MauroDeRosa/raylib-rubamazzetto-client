@@ -43,22 +43,6 @@ void *listPopBack(struct listNode_t *head);
  * @brief
  *
  * @param head
- * @return void* memory allocation is let to be freed by the user
- */
-void *listDeleteFront(struct listNode_t **head);
-
-/**
- * @brief
- *
- * @param head
- * @return void* memory allocation is let to be freed by the user
- */
-void *listDeleteBack(struct listNode_t *head);
-
-/**
- * @brief
- *
- * @param head
  * @param index
  * @return void* memory allocation is let to be freed by the user
  */
