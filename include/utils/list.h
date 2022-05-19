@@ -66,13 +66,4 @@ void *listGetByIndex(struct listNode_t **head, size_t index);
  * @return void* 
  */
 void *listInsertByIndex(struct listNode_t **head, size_t index, void *);
-
-/**
- * @brief 
- * 
- * @param head 
- * @param index 
- * @return void* 
- */
-void *listIterateTo(struct listNode_t *head, size_t index);
 #endif /* __LIST_H__ */

@@ -80,17 +80,5 @@ int main(int argc, char const *argv[])
     char *strGetMiddle = listGetByIndex(&list, 1);
     Log(LOG_INFO, LIST_LOG_PREFIX "%s", strGetMiddle);
 
-    listInsertByIndex(&list, 1, "AAAA");
-    Log(LOG_INFO, LIST_LOG_PREFIX "%zu", list->itemCount);
-
-    listDeleteByIndex(&list, 1);
-    Log(LOG_INFO, LIST_LOG_PREFIX "%zu", list->itemCount);
-
-    listTempIt = listIterateTo(list, 2);
-    Log(LOG_INFO, LIST_LOG_PREFIX "%s", listTempIt->item);
-
-    listTempIt = listIterateTo(list, 1);
-    Log(LOG_INFO, LIST_LOG_PREFIX "%s", listTempIt->item);
-
     return 0;
 }
