@@ -7,6 +7,7 @@ void listPushFront(struct listNode_t **head, void *item)
     listNodeCurrent = (struct listNode_t *)malloc(sizeof(struct listNode_t));
 
     listNodeCurrent->item = item;
+    listNodeCurrent->itemCount++;
     listNodeCurrent->next = *head;
     *head = listNodeCurrent;
 }
@@ -21,6 +22,7 @@ void listPushBack(struct listNode_t **head, void *item)
     {
         *head = (struct listNode_t *)malloc(sizeof(struct listNode_t));
         (*head)->item = item;
+        listNodeCurrent->itemCount++;
         (*head)->next = NULL;
     }
     else
@@ -33,6 +35,7 @@ void listPushBack(struct listNode_t **head, void *item)
 
         listNodeCurrent->next = (struct listNode_t *)malloc(sizeof(struct listNode_t));
         listNodeCurrent->next->item = item;
+        listNodeCurrent->itemCount++;
         listNodeCurrent->next->next = NULL;
     }
 }
@@ -50,6 +53,7 @@ void *listPopFront(struct listNode_t **head)
 
     listNodeCurrent = (*head)->next;
     item = (*head)->item;
+    listNodeCurrent->itemCount--;
     free(*head);
     *head = listNodeCurrent;
 
@@ -70,6 +74,7 @@ void *listPopBack(struct listNode_t *head)
     else if (head->next == NULL)
     {
         item = head->item;
+        listNodeCurrent->itemCount--;
         free(head);
         return item;
     }
@@ -81,6 +86,7 @@ void *listPopBack(struct listNode_t *head)
     }
 
     item = listNodeCurrent->next->item;
+    listNodeCurrent->itemCount--;
     free(listNodeCurrent->next);
     
     return item;
@@ -100,6 +106,7 @@ void *listDeleteByIndex(struct listNode_t **head, size_t index)
     {
         (*head) = (*head)->next;
         listNodeTemp->next = NULL;
+        listNodeTemp->itemCount--;
 
         free(listNodeTemp);
     }
@@ -123,6 +130,7 @@ void *listDeleteByIndex(struct listNode_t **head, size_t index)
 
         listNodeTemp->next = listNodeTemp->next->next;
         listNodeToDelete->next = NULL;
+        listNodeTemp->itemCount--;
 
         free(listNodeToDelete);
     }
@@ -177,7 +185,7 @@ void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
     if(listNodeCurrent == NULL && index == 0)
     {   
         listPushFront(&listNodeToBeAdded, item);
-        size++;
+        listNodeCurrent->itemCount++;
     }
     else
     {
@@ -198,7 +206,7 @@ void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
         {
             listNodeCurrent->next = listNodeToBeAdded;
             listNodeCurrent->next->next == NULL;
-            size++;
+            listNodeCurrent->itemCount++;
         }
         else
         {   
@@ -206,7 +214,7 @@ void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
             listNodeToBeAdded->next = listNodeCurrent->next;
             //next node of the current position points to the node to be added 
             listNodeCurrent->next = listNodeToBeAdded;
-            size++;
+            listNodeCurrent->itemCount++;
         }
     }
 }

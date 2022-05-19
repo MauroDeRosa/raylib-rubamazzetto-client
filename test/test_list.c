@@ -79,5 +79,11 @@ int main(int argc, char const *argv[])
     char *strGetMiddle = listGetByIndex(&list, 1);
     Log(LOG_INFO, LIST_LOG_PREFIX "%s", strGetMiddle);
 
+    listInsertByIndex(&list, 1, "AAAA");
+    Log(LOG_INFO, LIST_LOG_PREFIX "%zu", list->itemCount);
+
+    listDeleteByIndex(&list, 1);
+    Log(LOG_INFO, LIST_LOG_PREFIX "%zu", list->itemCount);
+
     return 0;
 }
