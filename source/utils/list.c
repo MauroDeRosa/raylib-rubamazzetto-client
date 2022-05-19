@@ -88,30 +88,44 @@ void *listPopBack(struct listNode_t *head)
 
 void *listDeleteByIndex(struct listNode_t **head, size_t index)
 {
-    struct listNode_t *listNodeCurrent = *head;
-    struct listNode_t *listNodeTemp = NULL;
+    struct listNode_t *listNodeTemp = *head;
+    struct listNode_t *listNodeToDelete = NULL;
 
-    if (index == 0)
+    if ((*head) == NULL)
     {
-        listPopFront(head); //fix
+        Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "List is empty", NULL);
+        return NULL;
     }
+    else if (index == 0)
+    {
+        (*head) = (*head)->next;
+        listNodeTemp->next = NULL;
 
-    //iterates to the node before the node to delete
-    for (size_t i = 0; i < index - 1; i++)
+        free(listNodeTemp);
+    }
+    else
     {   
-        if (listNodeCurrent->next == NULL)
-        {
-            Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
-            return NULL;
+        //iterates to the node before the node to delete
+        for (size_t i = 0; i < index - 1; i++)
+        {   
+            if (listNodeTemp->next == NULL)
+            {
+                Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
+                return NULL;
+            }
+
+            //points to the node before the desired one
+            listNodeTemp = listNodeTemp->next;
         }
 
-        listNodeCurrent = listNodeCurrent->next;
+        //points to the actual node to be deleted
+        listNodeToDelete = listNodeTemp->next;
+
+        listNodeTemp->next = listNodeTemp->next->next;
+        listNodeToDelete->next = NULL;
+
+        free(listNodeToDelete);
     }
-
-    listNodeTemp = listNodeCurrent->next;
-    listNodeCurrent->next = listNodeTemp->next;
-
-    free(listNodeTemp);
 }
 
 void *listGetByIndex(struct listNode_t **head, size_t index)
@@ -119,13 +133,19 @@ void *listGetByIndex(struct listNode_t **head, size_t index)
     struct listNode_t *listNodeCurrent = *head;
     void *item;
 
+    if ((*head) == NULL)
+    {
+        Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "List is empty", NULL);
+        return NULL;
+    }
+
     if (index == 0)
     {
         item = (*head)->item;
         return item;
     }
 
-    for (size_t i = 0; i < index - 1; i++)
+    for (size_t i = 0; i < index; i++)
     {   
         if (listNodeCurrent->next == NULL)
         {

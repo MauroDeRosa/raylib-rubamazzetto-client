@@ -10,6 +10,7 @@ int main(int argc, char const *argv[])
 {
     struct listNode_t *list = NULL;
     struct listNode_t *emptyList = NULL;
+    struct listNode_t *listDeleteTest = NULL;
     assert(list == NULL);
 
     char *str_test1 = "test";
@@ -52,6 +53,18 @@ int main(int argc, char const *argv[])
     char *str_test8 = listPopBack(list);
     Log(LOG_INFO, LIST_LOG_PREFIX "%s : %s", str_test8, str_test7);
     assert(strcmp(str_test8, str_test7) == 0);
+
+    char *strTest = "terza posizione";
+    listPushFront(&listDeleteTest, strTest);
+    char *strTest2 = "seconda posizione";
+    listPushFront(&listDeleteTest, strTest2);
+    char *strTest3 = "prima posizione";
+    listPushFront(&listDeleteTest, strTest3);
+
+    listDeleteByIndex(&listDeleteTest, 1);
+
+    char *str = listGetByIndex(&listDeleteTest, 0);
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s", str);
 
     return 0;
 }
