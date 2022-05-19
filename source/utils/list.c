@@ -3,12 +3,12 @@
 
 void listPushFront(struct listNode_t **head, void *item)
 {
-    struct listNode_t *listNode;
-    listNode = (struct listNode_t *)malloc(sizeof(struct listNode_t));
+    struct listNode_t *listNodeCurrent;
+    listNodeCurrent = (struct listNode_t *)malloc(sizeof(struct listNode_t));
 
-    listNode->item = item;
-    listNode->next = *head;
-    *head = listNode;
+    listNodeCurrent->item = item;
+    listNodeCurrent->next = *head;
+    *head = listNodeCurrent;
 }
 
 void listPushBack(struct listNode_t **head, void *item)
@@ -39,7 +39,7 @@ void listPushBack(struct listNode_t **head, void *item)
 
 void *listPopFront(struct listNode_t **head)
 {
-    struct listNode_t *listNode = NULL;
+    struct listNode_t *listNodeCurrent = NULL;
     void *item;
 
     if (*head == NULL)
@@ -48,10 +48,10 @@ void *listPopFront(struct listNode_t **head)
         return NULL;
     }
 
-    listNode = (*head)->next;
+    listNodeCurrent = (*head)->next;
     item = (*head)->item;
     free(*head);
-    *head = listNode;
+    *head = listNodeCurrent;
 
     return item;
 }
