@@ -57,4 +57,13 @@ void *listDeleteByIndex(struct listNode_t **head, size_t index);
  */
 void *listGetByIndex(struct listNode_t **head, size_t index);
 
+/**
+ * @brief 
+ * 
+ * @param head 
+ * @param index 
+ * @return void* 
+ */
+void *listInsertByIndex(struct listNode_t **head, size_t index, void *);
+
 #endif /* __LIST_H__ */

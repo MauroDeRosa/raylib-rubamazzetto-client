@@ -11,7 +11,7 @@ int main(int argc, char const *argv[])
     struct listNode_t *list = NULL;
     struct listNode_t *emptyList = NULL;
     struct listNode_t *listDeleteTest = NULL;
-    assert(list == NULL);
+    /*assert(list == NULL);
 
     char *str_test1 = "test";
     listPushFront(&list, str_test1);
@@ -52,9 +52,9 @@ int main(int argc, char const *argv[])
     listPushBack(&list, str_test7);
     char *str_test8 = listPopBack(list);
     Log(LOG_INFO, LIST_LOG_PREFIX "%s : %s", str_test8, str_test7);
-    assert(strcmp(str_test8, str_test7) == 0);
+    assert(strcmp(str_test8, str_test7) == 0);*/
 
-    char *strTest = "terza posizione";
+    /*char *strTest = "terza posizione";
     listPushFront(&listDeleteTest, strTest);
     char *strTest2 = "seconda posizione";
     listPushFront(&listDeleteTest, strTest2);
@@ -64,7 +64,20 @@ int main(int argc, char const *argv[])
     listDeleteByIndex(&listDeleteTest, 1);
 
     char *str = listGetByIndex(&listDeleteTest, 0);
-    Log(LOG_INFO, LIST_LOG_PREFIX "%s", str);
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s", str);*/
+
+    listPushFront(&list, "ciao");
+    //Log(LOG_INFO, LIST_LOG_PREFIX "%s", (char *)list->item);
+
+    listInsertByIndex(&list, 1, "ciao 2");
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s", (char *)list->next->item);
+
+    char *strGet = listGetByIndex(&list, 0);
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s", strGet);
+
+    listInsertByIndex(&list, 1, "ciao middle");
+    char *strGetMiddle = listGetByIndex(&list, 1);
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s", strGetMiddle);
 
     return 0;
 }

@@ -152,11 +152,61 @@ void *listGetByIndex(struct listNode_t **head, size_t index)
             Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
             return NULL;
         }
-
+        
         listNodeCurrent = listNodeCurrent->next;
     }
 
     item = listNodeCurrent->item;
     
     return item;
+}
+
+void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
+{   
+    struct listNode_t *listNodeCurrent = *head;
+    struct listNode_t *listNodeToBeAdded = (struct listNode_t *)malloc(sizeof(struct listNode_t));
+    listNodeToBeAdded->item = item;
+    size_t size = 0;
+
+    if(listNodeCurrent == NULL && index > size)
+    {
+        Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
+        return NULL;
+    }
+
+    if(listNodeCurrent == NULL && index == 0)
+    {   
+        listPushFront(&listNodeToBeAdded, item);
+        size++;
+    }
+    else
+    {
+        for (size_t i = 0; i < index - 1; i++)
+        {   
+            if (listNodeCurrent->next == NULL)
+            {
+                Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
+                return NULL;
+            }
+
+            //points to the node before the desired one
+            listNodeCurrent = listNodeCurrent->next;
+        }
+
+        //checks if current node is the last one
+        if (listNodeCurrent->next == NULL)
+        {
+            listNodeCurrent->next = listNodeToBeAdded;
+            listNodeCurrent->next->next == NULL;
+            size++;
+        }
+        else
+        {   
+            //node to be added points to the next node of the current position
+            listNodeToBeAdded->next = listNodeCurrent->next;
+            //next node of the current position points to the node to be added 
+            listNodeCurrent->next = listNodeToBeAdded;
+            size++;
+        }
+    }
 }
