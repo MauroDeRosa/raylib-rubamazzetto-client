@@ -245,7 +245,7 @@ void *listIterateTo(struct listNode_t *head, size_t index)
 
             listNodeCurrent = listNodeCurrent->next;
         }
-    }
 
-    return listNodeCurrent;
+        return listNodeCurrent;
+    }
 }

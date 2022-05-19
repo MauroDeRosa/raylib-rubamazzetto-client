@@ -11,6 +11,7 @@ int main(int argc, char const *argv[])
     struct listNode_t *list = NULL;
     struct listNode_t *emptyList = NULL;
     struct listNode_t *listDeleteTest = NULL;
+    struct listNode_t *listTempIt = NULL;
     /*assert(list == NULL);
 
     char *str_test1 = "test";
@@ -85,8 +86,11 @@ int main(int argc, char const *argv[])
     listDeleteByIndex(&list, 1);
     Log(LOG_INFO, LIST_LOG_PREFIX "%zu", list->itemCount);
 
-    list = listIterateTo(list, 2);
-    Log(LOG_INFO, LIST_LOG_PREFIX "%s", list->item);
+    listTempIt = listIterateTo(list, 2);
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s", listTempIt->item);
+
+    listTempIt = listIterateTo(list, 1);
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s", listTempIt->item);
 
     return 0;
 }
