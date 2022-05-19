@@ -85,5 +85,8 @@ int main(int argc, char const *argv[])
     listDeleteByIndex(&list, 1);
     Log(LOG_INFO, LIST_LOG_PREFIX "%zu", list->itemCount);
 
+    list = listIterateTo(list, 2);
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s", list->item);
+
     return 0;
 }

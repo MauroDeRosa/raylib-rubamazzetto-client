@@ -218,3 +218,34 @@ void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
         }
     }
 }
+
+void *listIterateTo(struct listNode_t *head, size_t index)
+{
+    struct listNode_t *listNodeCurrent = head;
+
+    if(listNodeCurrent == NULL)
+    {
+        Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "List is empty", NULL);
+        return NULL;
+    }
+
+    if(index == 0)
+    {
+        return listNodeCurrent;
+    }
+    else
+    {
+        for (size_t i = 0; i < index; i++)
+        {
+            if(listNodeCurrent->next == NULL)
+            {
+                Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
+                return NULL;
+            }
+
+            listNodeCurrent = listNodeCurrent->next;
+        }
+    }
+
+    return listNodeCurrent;
+}
