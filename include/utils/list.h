@@ -6,7 +6,6 @@
 struct listNode_t
 {
     void *item;
-    size_t itemCount;
     struct listNode_t *next;
 };
 
