@@ -1,13 +1,18 @@
 #include "utils/list.h"
 #include "utils/logger.h"
+#include <stdio.h>
 
 void listPushFront(struct listNode_t **head, void *item)
 {
-    struct listNode_t *listNodeCurrent;
-    listNodeCurrent = (struct listNode_t *)malloc(sizeof(struct listNode_t));
+    struct listNode_t *listNodeCurrent = (struct listNode_t *)malloc(sizeof(struct listNode_t));
 
-    listNodeCurrent->item = item;
-    
+    if (item == NULL)
+    {
+        Log(LOG_ERROR, LOG_COLOR_RED "[Error] " LOG_COLOR_RESET "Item is not valid", NULL);
+        return;
+    }
+
+    listNodeCurrent->item = item;  
     listNodeCurrent->next = (*head);
     (*head) = listNodeCurrent;
 }
@@ -15,6 +20,12 @@ void listPushFront(struct listNode_t **head, void *item)
 void listPushBack(struct listNode_t **head, void *item)
 {
     struct listNode_t *listNodeCurrent = *head;
+
+    if (item == NULL)
+    {
+        Log(LOG_ERROR, LOG_COLOR_RED "[Error] " LOG_COLOR_RESET "Item is not valid", NULL);
+        return;
+    }
 
     // if list is empty 
     if (*head == NULL)
@@ -34,7 +45,6 @@ void listPushBack(struct listNode_t **head, void *item)
 
         listNodeCurrent->next = (struct listNode_t *)malloc(sizeof(struct listNode_t));
         listNodeCurrent->next->item = item;
-        
         listNodeCurrent->next->next = NULL;
     }
 }
@@ -59,22 +69,22 @@ void *listPopFront(struct listNode_t **head)
     return item;
 }
 
-void *listPopBack(struct listNode_t *head)
+void *listPopBack(struct listNode_t **head)
 {
-    struct listNode_t *listNodeCurrent = head;
+    struct listNode_t *listNodeCurrent = *head;
     void *item;
 
     //checks if list is empty or else if there's only one item in the list and removes it
-    if (head == NULL)
+    if (*head == NULL)
     {
         Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "List is empty", NULL);
         return NULL;
     }
-    else if (head->next == NULL)
+    else if ((*head)->next == NULL)
     {
-        item = head->item;
+        item = (*head)->item;
         
-        free(head);
+        free(*head);
         return item;
     }
 
@@ -105,7 +115,6 @@ void *listDeleteByIndex(struct listNode_t **head, size_t index)
     {
         (*head) = (*head)->next;
         listNodeTemp->next = NULL;
-        
 
         free(listNodeTemp);
     }
@@ -126,7 +135,6 @@ void *listDeleteByIndex(struct listNode_t **head, size_t index)
 
         //points to the actual node to be deleted
         listNodeToDelete = listNodeTemp->next;
-
         listNodeTemp->next = listNodeTemp->next->next;
         listNodeToDelete->next = NULL;
         
@@ -181,10 +189,10 @@ void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
         return NULL;
     }
 
-    if(listNodeCurrent == NULL && index == 0)
+    if(index == 0)
     {   
-        listPushFront(listNodeToBeAdded, item);
-        
+        listPushFront(&listNodeToBeAdded, item);
+        size++;
     }
     else
     {
@@ -205,7 +213,7 @@ void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
         {
             listNodeCurrent->next = listNodeToBeAdded;
             listNodeCurrent->next->next == NULL;
-            
+            size++;
         }
         else
         {   
@@ -213,7 +221,7 @@ void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
             listNodeToBeAdded->next = listNodeCurrent->next;
             //next node of the current position points to the node to be added 
             listNodeCurrent->next = listNodeToBeAdded;
-            
+            size++;
         }
     }
-}
+} 

@@ -37,7 +37,7 @@ void *listPopFront(struct listNode_t **head);
  * @param head
  * @return void* memory allocation is let to be freed by the user
  */
-void *listPopBack(struct listNode_t *head);
+void *listPopBack(struct listNode_t **head);
 
 /**
  * @brief
