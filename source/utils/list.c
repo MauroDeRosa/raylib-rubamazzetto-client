@@ -1,6 +1,5 @@
 #include "utils/list.h"
 #include "utils/logger.h"
-#include <stdio.h>
 
 void listPushFront(struct listNode_t **head, void *item)
 {
@@ -182,6 +181,13 @@ void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
     struct listNode_t *listNodeToBeAdded = (struct listNode_t *)malloc(sizeof(struct listNode_t));
     listNodeToBeAdded->item = item;
     size_t size = 0;
+    
+
+    if (item == NULL)
+    {
+        Log(LOG_ERROR, LOG_COLOR_RED "[Error] " LOG_COLOR_RESET "Item is not valid", NULL);
+        return NULL;
+    }
 
     if(listNodeCurrent == NULL && index > size)
     {
@@ -191,7 +197,8 @@ void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
 
     if(index == 0)
     {   
-        listPushFront(&listNodeToBeAdded, item);
+        listNodeToBeAdded->next = (*head);
+        (*head) = listNodeToBeAdded;
         size++;
     }
     else

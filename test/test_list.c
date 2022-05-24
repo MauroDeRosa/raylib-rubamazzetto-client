@@ -38,9 +38,9 @@ int main(int argc, char const *argv[])
 
     listPushFront(&emptyList, "TEST");
     listInsertByIndex(&emptyList, 1, "TEST 2");
-    listInsertByIndex(&emptyList, 2, "TEST 3");
     listPushFront(&emptyList, "TEST 4");
-    Log(LOG_INFO, LIST_LOG_PREFIX "%s", (char *)listGetByIndex(&emptyList, 1));
+    listInsertByIndex(&emptyList, 0, "TEST 3");
+    Log(LOG_INFO, LIST_LOG_PREFIX "%s", (char *)listGetByIndex(&emptyList, 0));
 
     return 0;
 }
