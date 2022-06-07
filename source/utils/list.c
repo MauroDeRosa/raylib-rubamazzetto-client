@@ -1,234 +1,274 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "utils/list.h"
-#include "utils/logger.h"
 
-void listPushFront(struct listNode_t **head, void *item)
+void ListInit(List *list, freeCallback freeCbk)
 {
-    struct listNode_t *listNodeCurrent = (struct listNode_t *)malloc(sizeof(struct listNode_t));
-
-    if (item == NULL)
-    {
-        Log(LOG_ERROR, LOG_COLOR_RED "[Error] " LOG_COLOR_RESET "Item is not valid", NULL);
-        return;
-    }
-
-    listNodeCurrent->item = item;  
-    listNodeCurrent->next = (*head);
-    (*head) = listNodeCurrent;
+    list->head = NULL;
+    list->count = 0;
+    list->freeCbk = freeCbk;
 }
 
-void listPushBack(struct listNode_t **head, void *item)
+void ListPushFront(List *list, void *item)
 {
-    struct listNode_t *listNodeCurrent = *head;
-
     if (item == NULL)
     {
-        Log(LOG_ERROR, LOG_COLOR_RED "[Error] " LOG_COLOR_RESET "Item is not valid", NULL);
-        return;
+        fprintf(stderr, "Item is not valid.");
+        exit(EXIT_FAILURE);
     }
 
-    // if list is empty 
-    if (*head == NULL)
+    ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
+    
+    newNode->item = item;
+    newNode->next = list->head;
+    list->head = newNode;
+
+    list->count++;
+}
+
+void ListPushBack(List *list, void *item)
+{
+    ListNode *current = list->head;
+    
+    if (item == NULL)
     {
-        *head = (struct listNode_t *)malloc(sizeof(struct listNode_t));
-        (*head)->item = item;
-        
-        (*head)->next = NULL;
+        fprintf(stderr, "Item is not valid.");
+        exit(EXIT_FAILURE);
+    }
+
+    if (current == NULL)
+    {
+        ListPushFront(list, item);
     }
     else
     {
-        // set current node to the tail by cycling through the list
-        while (listNodeCurrent->next != NULL)
+        while (current->next != NULL)
         {
-            listNodeCurrent = listNodeCurrent->next;
+            current = current->next;
         }
-
-        listNodeCurrent->next = (struct listNode_t *)malloc(sizeof(struct listNode_t));
-        listNodeCurrent->next->item = item;
-        listNodeCurrent->next->next = NULL;
-    }
-}
-
-void *listPopFront(struct listNode_t **head)
-{
-    struct listNode_t *listNodeCurrent = NULL;
-    void *item;
-
-    if (*head == NULL)
-    {
-        Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "List is empty", NULL);
-        return NULL;
-    }
-
-    listNodeCurrent = (*head)->next;
-    item = (*head)->item;
-    
-    free(*head);
-    *head = listNodeCurrent;
-
-    return item;
-}
-
-void *listPopBack(struct listNode_t **head)
-{
-    struct listNode_t *listNodeCurrent = *head;
-    void *item;
-
-    //checks if list is empty or else if there's only one item in the list and removes it
-    if (*head == NULL)
-    {
-        Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "List is empty", NULL);
-        return NULL;
-    }
-    else if ((*head)->next == NULL)
-    {
-        item = (*head)->item;
         
-        free(*head);
-        return item;
-    }
+        ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
+        newNode->item = item;
+        newNode->next = NULL;
+        current->next = newNode;
 
-    //set current on the second last position
-    while (listNodeCurrent->next->next != NULL)
+        list->count++;
+    }
+}
+
+void *ListPopFront(List *list)
+{
+    ListNode *oldHead = list->head;
+
+    if (oldHead == NULL)
     {
-        listNodeCurrent = listNodeCurrent->next;
+        fprintf(stderr, "List is empty.");
+        exit(EXIT_FAILURE);
     }
 
-    item = listNodeCurrent->next->item;
-    
-    free(listNodeCurrent->next);
-    
+    void *item = oldHead->item;
+
+    list->head = oldHead->next;
+    free(oldHead);
+    list->count--;
     return item;
 }
 
-void *listDeleteByIndex(struct listNode_t **head, size_t index)
+void *ListPopBack(List *list)
 {
-    struct listNode_t *listNodeTemp = *head;
-    struct listNode_t *listNodeToDelete = NULL;
+    ListNode *current = list->head;
+    ListNode *prev = list->head;
 
-    if ((*head) == NULL)
+    void *item;
+    
+    if (current == NULL)
     {
-        Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "List is empty", NULL);
-        return NULL;
+        fprintf(stderr, "List is empty.");
+        exit(EXIT_FAILURE);
+    }
+
+    while (current->next != NULL)
+    {
+        prev = current;
+        current = current->next;
+    }
+    
+    item = current->item;
+    free(current);
+    prev->next = NULL;
+    list->count--;
+    return item;
+}
+
+void *ListDeleteAt(List *list, uint16_t index, bool mustFree)
+{
+    ListNode *prev = list->head;
+    void *item;
+
+    if (prev == NULL)
+    {
+        fprintf(stderr, "List is empty.");
+        exit(EXIT_FAILURE);
     }
     else if (index == 0)
     {
-        (*head) = (*head)->next;
-        listNodeTemp->next = NULL;
-
-        free(listNodeTemp);
-    }
-    else
-    {   
-        //iterates to the node before the node to delete
-        for (size_t i = 0; i < index - 1; i++)
-        {   
-            if (listNodeTemp->next == NULL)
-            {
-                Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
-                return NULL;
-            }
-
-            //points to the node before the desired one
-            listNodeTemp = listNodeTemp->next;
+        item = prev->item; 
+        list->head = list->head->next;
+        
+        if (mustFree)
+        {
+            list->freeCbk(item);
+            prev->item = NULL;
         }
 
-        //points to the actual node to be deleted
-        listNodeToDelete = listNodeTemp->next;
-        listNodeTemp->next = listNodeTemp->next->next;
-        listNodeToDelete->next = NULL;
+        free(prev);
+        list->count--;
         
-
-        free(listNodeToDelete);
+        return mustFree ? NULL : item;
     }
+
+    for (uint16_t i = 1; i < index; i++)
+    {
+        if (prev->next == NULL)
+        {
+            fprintf(stderr, "Index out of bounds.");
+            exit(EXIT_FAILURE);
+        }
+
+        prev = prev->next;
+    }
+
+    ListNode *toDelete = prev->next;
+    item = toDelete->item;
+    prev->next = toDelete->next;
+
+    if (mustFree)
+    {
+        list->freeCbk(item);
+        toDelete->item = NULL;
+    }
+
+    free(toDelete);
+    list->count--;
+
+    return mustFree ? NULL : item;
 }
 
-void *listGetByIndex(struct listNode_t **head, size_t index)
+void *ListGetAt(List *list, uint16_t index)
 {
-    struct listNode_t *listNodeCurrent = *head;
+    ListNode *current = list->head;
     void *item;
 
-    if ((*head) == NULL)
+    if (current == NULL)
     {
-        Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "List is empty", NULL);
-        return NULL;
+        fprintf(stderr, "List is empty.");
+        exit(EXIT_FAILURE);
     }
+
+    for (uint16_t i = 0; i < index; i++)
+    {
+        if (current->next == NULL)
+        {
+            fprintf(stderr, "Index out of bounds.");
+            exit(EXIT_FAILURE);
+        }
+
+        current = current->next;
+    }
+    
+    return item = current->item;
+}
+
+void ListInsertAt(List *list, uint16_t index, void *item)
+{
+    if (item == NULL)
+    {
+        fprintf(stderr, "Item is not valid.");
+        exit(EXIT_FAILURE);
+    }
+
+    ListNode *current = list->head;
+    ListNode *prev = list->head;
+
+    if (current == NULL)
+    {
+        fprintf(stderr, "List is empty.");
+        exit(EXIT_FAILURE);
+    }
+
+    for (uint16_t i = 0; i < index; i++)
+    {
+        if (current->next == NULL)
+        {
+            fprintf(stderr, "Index out of bounds.");
+            exit(EXIT_FAILURE);
+        }
+        prev = current;
+        current = current->next;
+    }
+
+    ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
+    newNode->item = item;
 
     if (index == 0)
     {
-        item = (*head)->item;
-        return item;
-    }
-
-    for (size_t i = 0; i < index; i++)
-    {   
-        if (listNodeCurrent->next == NULL)
-        {
-            Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
-            return NULL;
-        }
-        
-        listNodeCurrent = listNodeCurrent->next;
-    }
-
-    item = listNodeCurrent->item;
-    
-    return item;
-}
-
-void *listInsertByIndex(struct listNode_t **head, size_t index, void *item)
-{   
-    struct listNode_t *listNodeCurrent = *head;
-    struct listNode_t *listNodeToBeAdded = (struct listNode_t *)malloc(sizeof(struct listNode_t));
-    listNodeToBeAdded->item = item;
-    size_t size = 0;
-    
-
-    if (item == NULL)
-    {
-        Log(LOG_ERROR, LOG_COLOR_RED "[Error] " LOG_COLOR_RESET "Item is not valid", NULL);
-        return NULL;
-    }
-
-    if(listNodeCurrent == NULL && index > size)
-    {
-        Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
-        return NULL;
-    }
-
-    if(index == 0)
-    {   
-        listNodeToBeAdded->next = (*head);
-        (*head) = listNodeToBeAdded;
-        size++;
+        newNode->next = list->head;
+        list->head = newNode;
     }
     else
     {
-        for (size_t i = 0; i < index - 1; i++)
-        {   
-            if (listNodeCurrent->next == NULL)
-            {
-                Log(LOG_ERROR, LOG_COLOR_RED "[List] " LOG_COLOR_RESET "Index error, out of bounds", NULL);
-                return NULL;
-            }
-
-            //points to the node before the desired one
-            listNodeCurrent = listNodeCurrent->next;
-        }
-
-        //checks if current node is the last one
-        if (listNodeCurrent->next == NULL)
-        {
-            listNodeCurrent->next = listNodeToBeAdded;
-            listNodeCurrent->next->next == NULL;
-            size++;
-        }
-        else
-        {   
-            //node to be added points to the next node of the current position
-            listNodeToBeAdded->next = listNodeCurrent->next;
-            //next node of the current position points to the node to be added 
-            listNodeCurrent->next = listNodeToBeAdded;
-            size++;
-        }
+        prev->next = newNode;
+        newNode->next = current;
     }
-} 
+
+    list->count++;
+}
+
+
+ListIterator *ListIteratorInit(List *list, uint16_t index)
+{
+    if (list == NULL || list->head == NULL)
+    {
+        fprintf(stderr, "List is empty.");
+        exit(EXIT_FAILURE);
+    }
+
+    if (index >= list->count)
+    {
+        fprintf(stderr, "Index out of bounds.");
+        exit(EXIT_FAILURE);
+    }
+
+    ListIterator *iterator = (ListIterator *)malloc(sizeof(ListIterator));
+
+    iterator->current = list->head;
+    iterator->isStarted = false;
+
+    for (uint16_t i = 0; i < index; i++)
+    {
+        iterator->current = iterator->current->next;
+    }
+    
+    return iterator;
+}
+
+void *ListIteratorNext(ListIterator *listIterator)
+{
+    if (listIterator->isStarted && listIterator->current != NULL)
+    {
+        listIterator->current = listIterator->current->next;
+    }
+    else
+    {
+        listIterator->isStarted = true;
+    }
+
+    if (listIterator->current == NULL)
+    {
+        return NULL;
+    }
+    else
+    {
+        return listIterator->current->item;
+    }
+}

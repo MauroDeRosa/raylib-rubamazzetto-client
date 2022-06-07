@@ -1,68 +1,49 @@
 #ifndef __LIST_H__
 #define __LIST_H__
 
-#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
 
-struct listNode_t
+typedef void (*freeCallback)(void*);
+
+typedef struct ListNode_t
 {
     void *item;
-    struct listNode_t *next;
-};
+    struct ListNode_t *next;
+}ListNode;
 
-/**
- * @brief
- *
- * @param head
- */
-void listPushFront(struct listNode_t **head, void *);
+typedef struct
+{
+    ListNode *head;
+    uint16_t count;
+    freeCallback freeCbk;
+}List;
 
-/**
- * @brief
- *
- * @param head
- */
-void listPushBack(struct listNode_t **head, void *);
+typedef struct 
+{
+    ListNode *current;
+    bool isStarted;
+}ListIterator;
 
-/**
- * @brief
- *
- * @param head
- * @return void* memory allocation is let to be freed by the user
- */
-void *listPopFront(struct listNode_t **head);
 
-/**
- * @brief
- *
- * @param head
- * @return void* memory allocation is let to be freed by the user
- */
-void *listPopBack(struct listNode_t **head);
+void ListInit(List *list, freeCallback freeCbk);
 
-/**
- * @brief
- *
- * @param head
- * @param index
- * @return void* memory allocation is let to be freed by the user
- */
-void *listDeleteByIndex(struct listNode_t **head, size_t index);
+void ListPushFront(List *list, void *);
 
-/**
- * @brief
- *
- * @param head
- * @param index
- * @return item at the specified index
- */
-void *listGetByIndex(struct listNode_t **head, size_t index);
+void ListPushBack(List *list, void *);
 
-/**
- * @brief 
- * 
- * @param head 
- * @param index 
- * @return void* 
- */
-void *listInsertByIndex(struct listNode_t **head, size_t index, void *);
-#endif /* __LIST_H__ */
+void *ListPopFront(List *list);
+
+void *ListPopBack(List *list);
+
+void *ListDeleteAt(List *list, uint16_t index, bool mustFree);
+
+void *ListGetAt(List *list, uint16_t index);
+
+void ListInsertAt(List *list, uint16_t index, void *);
+
+ListIterator *ListIteratorInit(List *list, uint16_t index);
+
+void *ListIteratorNext(ListIterator *listIterator);
+
+#endif // __LIST_H__
